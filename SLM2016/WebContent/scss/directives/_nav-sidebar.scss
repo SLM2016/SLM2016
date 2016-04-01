@@ -1,0 +1,33 @@
+#nav-sidebar {
+    position: fixed;
+    display: inline-block;
+    padding: 8px 0;
+    top: 110px;
+    width: 240px;
+    max-height: calc(100vh - 40px - 110px);
+    background-color: #FFF;
+    z-index: 99;
+    @include box-shadow(0px 1px 3px 0px rgba(0, 0, 0, 0.1));
+    @include border-radius(3px);
+    .action-list {
+        .action-item {
+            width: 100%;
+            height: 40px;
+            font-size: 16px;
+            line-height: 40px;
+            padding: 0 14px;
+            color: #565151;
+            cursor: pointer;
+            @include display-flex(flex);
+            i {
+                margin-right: 10px;
+                height: 40px;
+                line-height: 42px;
+            }
+            span {}
+            &.active {
+                background-color: rgba(#5BC0DE, .2);
+            }
+        }
+    }
+}

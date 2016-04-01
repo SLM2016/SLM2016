@@ -1,0 +1,1 @@
+var connectUrl = "http://localhost:8080/SLM2016";
