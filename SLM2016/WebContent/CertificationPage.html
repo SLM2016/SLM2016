@@ -6,15 +6,19 @@
 
 <body>
 	<div id="debugDiv"></div>
-	<div align="center">
-				<button id="generateButton" style="display" onclick="ClickGenerateButton()">Generate</button>
-				<button id="lastButton"  style="display:none"  onclick="ClickLastButton()">Last</button>
-				<button id="nextButton" style="display:none" onclick="ClickNextButton()">Next</button>
+
+	<div style="text-align:center">
+		<label for="studentName">學員姓名: </label>
+		<input type="text" id="studentName" value="陳泰迪"><br> 
+		<label for="certificationNumber">證書編號: </label>
+		<input type="text" id="certificationId" value="SCRUM1603-33"><br>
+		<br>
+		<input type="button" value="Generate" onclick="ClickGenerateButton()">
 	</div>
 	
-	<div align="center" width="85%">
-		<img id="someImg"></img>
-	</div>
+	<br>
+	
+	<img style="display: block; margin: auto" id="someImg" width="60%"></img>
 </body>
 
 </html>
