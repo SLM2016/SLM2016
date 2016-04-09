@@ -27,6 +27,10 @@ app.directive('navSidebar', ['$rootScope',
                         return $state.includes(STATES.EXAMPLE2);
                     }
 
+                    var isInvoiceView = function() {
+                        return $state.includes(STATES.INVOICE);
+                    }
+
                     /*==========================
                         Events
                     ==========================*/
@@ -41,6 +45,7 @@ app.directive('navSidebar', ['$rootScope',
 
                     $scope.isExample1View = isExample1View;
                     $scope.isExample2View = isExample2View;
+                    $scope.isInvoiceView = isInvoiceView;
 
                     /*==========================
                         init

@@ -10,6 +10,7 @@
 // -------------------------------------
 
 @import "templates/_example";
+@import "templates/_invoice";
 
 // -------------------------------------
 //  Directives
@@ -30,7 +31,7 @@ $global-title-font-style : "Open Sans", "Lato", "Helvetica Neue", Helvetica, Ari
 }
 
 html, body {
-	height: 100%;
+	// height: 100%;
 	background-color: #E9E9E9;
 }
 
@@ -69,4 +70,20 @@ input, textarea {
 #container {
 	background-color: #E9E9E9;
 	margin-top: 70px;
+}
+
+.btn {
+	&.btn-orange {
+		background-image: linear-gradient(to bottom, #ffb489 0%, #ff7323 100%);
+		border-color: #FF5D01;
+		&:hover, &:focus{
+			background-color: #FF7323;
+			outline: none;
+		}
+		&:active {
+			&:focus {
+				border-color: #cd4a00;
+			}
+		}
+	}
 }
