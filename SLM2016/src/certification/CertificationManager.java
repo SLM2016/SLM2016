@@ -44,9 +44,9 @@ public class CertificationManager {
 	public void setCertificationText(Image img, TemplateCertification template, Certification certification) {
 		Graphics2D graphics = (Graphics2D) img.getGraphics();
 		graphics.setPaint(Color.black);
-		graphics.setFont(new Font("æ¨™æ¥·é«”", Font.PLAIN, template.getIdTextSize()));
+		graphics.setFont(new Font("¼Ð·¢Åé", Font.PLAIN, template.getIdTextSize()));
 		graphics.drawString(certification.getId(), template.getIdLocation().x, template.getIdLocation().y);
-		graphics.setFont(new Font("æ¨™æ¥·é«”", Font.PLAIN, template.getOwnerTextSize()));
+		graphics.setFont(new Font("¼Ð·¢Åé", Font.PLAIN, template.getOwnerTextSize()));
 		graphics.drawString(certification.getOwner(), template.getOwnerLocation().x, template.getOwnerLocation().y);
 		graphics.dispose();
 	}
