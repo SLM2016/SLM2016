@@ -270,18 +270,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 /* line 127, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result.result-show .result-wrapper {
-  height: 400px;
+  display: block;
 }
 /* line 131, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper {
+  display: none;
   width: 600px;
-  height: 0;
+  height: 400px;
   padding: 10px 30px;
   margin: 35px auto 0;
   text-align: center;
   border: 2px dashed #ccc;
 }
-/* line 138, ../scss/templates/_invoice.scss */
+/* line 139, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .invoice-title {
   font-size: 18px;
   height: 24px;
@@ -289,39 +290,39 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   margin-bottom: 8px;
   color: #333;
 }
-/* line 144, ../scss/templates/_invoice.scss */
+/* line 145, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .invoice-title span {
   margin: 0 10px;
 }
-/* line 148, ../scss/templates/_invoice.scss */
+/* line 149, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .invoice-desc {
   color: #333;
   font-size: 14px;
   margin-bottom: 8px;
 }
-/* line 153, ../scss/templates/_invoice.scss */
+/* line 154, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content {
   text-align: left;
   font-size: 14px;
   color: #333;
 }
-/* line 157, ../scss/templates/_invoice.scss */
+/* line 158, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-buyer {
   margin-bottom: 8px;
 }
-/* line 159, ../scss/templates/_invoice.scss */
+/* line 160, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-buyer span {
   color: #FF5D01;
 }
-/* line 163, ../scss/templates/_invoice.scss */
+/* line 164, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-meta {
   margin-bottom: 15px;
 }
-/* line 165, ../scss/templates/_invoice.scss */
+/* line 166, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-meta .invoice-companyid {
   display: inline-block;
 }
-/* line 167, ../scss/templates/_invoice.scss */
+/* line 168, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-meta .invoice-companyid .id-item {
   width: 18px;
   height: 18px;
@@ -333,11 +334,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   vertical-align: top;
   color: #FF5D01;
 }
-/* line 177, ../scss/templates/_invoice.scss */
+/* line 178, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-meta .invoice-companyid .id-item:last-child {
   border-right: 1px solid #333;
 }
-/* line 182, ../scss/templates/_invoice.scss */
+/* line 183, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-meta .invoice-date {
   display: inline-block;
   margin-left: 10px;
@@ -345,42 +346,42 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   line-height: 18px;
   vertical-align: top;
 }
-/* line 188, ../scss/templates/_invoice.scss */
+/* line 189, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-meta .invoice-date span {
   color: #FF5D01;
 }
-/* line 193, ../scss/templates/_invoice.scss */
+/* line 194, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table {
   height: 200px;
 }
-/* line 197, ../scss/templates/_invoice.scss */
+/* line 198, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table thead tr th {
   border: 1px solid #C38293;
   font-size: 12px;
   padding: 4px 8px;
 }
-/* line 206, ../scss/templates/_invoice.scss */
+/* line 207, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td {
   height: 26px;
   border: 1px solid #C38293;
   font-size: 12px;
   padding: 5px 8px;
 }
-/* line 211, ../scss/templates/_invoice.scss */
+/* line 212, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td.td-answer {
   color: #FF5D01;
 }
-/* line 214, ../scss/templates/_invoice.scss */
+/* line 215, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td.td-word {
   text-align: right;
 }
-/* line 216, ../scss/templates/_invoice.scss */
+/* line 217, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td.td-word .word-item {
   display: inline-block;
   width: 40px;
   margin-left: 5px;
 }
-/* line 220, ../scss/templates/_invoice.scss */
+/* line 221, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td.td-word .word-item .word {
   display: inline-block;
   width: 25px;

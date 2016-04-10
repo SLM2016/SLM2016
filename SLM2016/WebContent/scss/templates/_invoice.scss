@@ -125,12 +125,13 @@
                             opacity: 1;
                             @include transition(all ease-in-out 150ms);
                             .result-wrapper {
-                                height: 400px;
+                                display: block;
                             }
                         }
                         .result-wrapper {
+                            display: none;
                             width: 600px;
-                            height: 0;
+                            height: 400px;
                             padding: 10px 30px;
                             margin: 35px auto 0;
                             text-align: center;
