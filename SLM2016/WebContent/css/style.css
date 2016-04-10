@@ -256,15 +256,28 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 /* line 12, ../scss/directives/_topbar.scss */
 #topbar .left {
-  display: inline-block;
-}
-/* line 14, ../scss/directives/_topbar.scss */
-#topbar .left h1 {
+  display: -webkit-inline-flex;
+  display: inline-flex;
   height: 70px;
-  line-height: 70px;
-  font-size: 20px;
+}
+/* line 15, ../scss/directives/_topbar.scss */
+#topbar .left .logo {
+  margin: auto 0;
+  margin-right: 14px;
+  width: 105px;
+  height: 50px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* line 24, ../scss/directives/_topbar.scss */
+#topbar .left .slogan {
+  margin: auto 0 10px;
+  font-size: 18px;
+  height: 20px;
+  line-height: 20px;
+  color: #FF5D01;
   font-weight: bold;
-  color: #5bc0de;
 }
 
 /* line 1, ../scss/directives/_nav-sidebar.scss */
@@ -304,7 +317,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 /* line 28, ../scss/directives/_nav-sidebar.scss */
 #nav-sidebar .action-list .action-item.active {
-  background-color: rgba(91, 192, 222, 0.2);
+  background-color: rgba(255, 93, 1, 0.2);
 }
 
 /* line 28, ../scss/style.scss */
@@ -365,4 +378,28 @@ input:focus, textarea:focus {
 #container {
   background-color: #E9E9E9;
   margin-top: 70px;
+}
+
+/* line 75, ../scss/style.scss */
+.btn.btn-orange {
+  background-image: linear-gradient(to bottom, #ffb489 0%, #ff7323 100%);
+  border-color: #FF5D01;
+}
+/* line 78, ../scss/style.scss */
+.btn.btn-orange:hover, .btn.btn-orange:focus {
+  background-color: #FF7323;
+  outline: none;
+}
+/* line 83, ../scss/style.scss */
+.btn.btn-orange:active:focus {
+  border-color: #cd4a00;
+}
+
+/* line 91, ../scss/style.scss */
+.form-group.has-error .form-control {
+  border-color: #F14342;
+}
+/* line 93, ../scss/style.scss */
+.form-group.has-error .form-control:focus {
+  border-color: #F14342;
 }
