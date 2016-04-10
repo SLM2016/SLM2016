@@ -87,3 +87,13 @@ input, textarea {
 		}
 	}
 }
+.form-group {
+	&.has-error {
+		.form-control {
+			border-color: #F14342;
+			&:focus {
+				border-color: #F14342;
+			}
+		}
+	}
+}

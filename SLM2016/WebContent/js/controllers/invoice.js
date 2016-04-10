@@ -2,6 +2,7 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 	function($scope, $state, $timeout, $rootScope){
 
         var changeInvoiceType = function(type) {
+            clearInvoiceResult();
             $scope.invoiceType = type;
         }
 
@@ -11,14 +12,249 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
             var mm = today.getMonth() + 1;
             var yyyy = today.getFullYear() - 1911;
             $scope.today = "中華民國 " + yyyy + " 年 " + mm + " 月 " + dd + " 日";
+            $scope.todayDD = dd;
+            $scope.todayMM = mm;
+            $scope.todayYY = yyyy;
+            var dateWord = ['O','一','二','三','四','五','六','七','八','九','十','十一','十二'];
+            if(mm == 1 || mm == 2) {
+                $scope.invoiceMonth = dateWord[1] + "、" + dateWord[2];
+            }
+            else if(mm == 3 || mm == 4) {
+                $scope.invoiceMonth = dateWord[3] + "、" + dateWord[4];
+            }
+            else if(mm == 5 || mm == 6) {
+                $scope.invoiceMonth = dateWord[5] + "、" + dateWord[6];
+            }
+            else if(mm == 7 || mm == 8) {
+                $scope.invoiceMonth = dateWord[7] + "、" + dateWord[8];
+            }
+            else if(mm == 9 || mm == 10) {
+                $scope.invoiceMonth = dateWord[9] + "、" + dateWord[10];
+            }
+            else if(mm == 11 || mm == 12) {
+                $scope.invoiceMonth = dateWord[11] + "、" + dateWord[12];
+            }
+            var yyArray = yyyy.toString().split("");
+            $scope.invoiceYear = dateWord[yyArray[0]]  + " " + dateWord[yyArray[1]] + " " + dateWord[yyArray[2]];
         }
 
         var showInvoiceResult = function() {
-            $scope.isResultShow = true;
+
+            if($scope.data.company == "") {
+                $scope.isCompanyEmpty = true;
+            }
+            else {
+                $scope.isCompanyEmpty = false;
+            }
+
+            if($scope.data.companyid == "") {
+                $scope.isCompanyIdEmpty = true;
+            }
+            else {
+                $scope.isCompanyIdEmpty = false;
+            }
+
+            if(!$scope.data.salesDollar) {
+                $scope.isSalesDollarEmpty = true;
+            }
+            else {
+                $scope.isSalesDollarEmpty = false;
+            }
+
+            if(!$scope.data.totalDollar) {
+                $scope.isTotalDollarEmpty = true;
+            }
+            else {
+                $scope.isTotalDollarEmpty = false;
+            }
+
+            if($scope.data.itemName == "") {
+                $scope.isItemNameEmpty = true;
+            }
+            else {
+                $scope.isItemNameEmpty = false;
+            }
+
+            if(!$scope.data.itemNumber) {
+                $scope.isItemNumberEmpty = true;
+            }
+            else {
+                $scope.isItemNumberEmpty = false;
+            }
+
+            if(!$scope.data.itemDollar) {
+                $scope.isItemDollarEmpty = true;
+            }
+            else {
+                $scope.isItemDollarEmpty = false;
+            }
+
+            if($scope.isCompanyEmpty || $scope.isCompanyIdEmpty || $scope.isCompanyIdError ||
+               $scope.isCompanyIdNotFinished || $scope.isSalesDollarEmpty || $scope.isTotalDollarEmpty ||
+               $scope.isItemNameEmpty || $scope.isItemNumberEmpty ||
+               $scope.isItemDollarEmpty) {
+                return;
+            }
+            else {
+                $scope.isResultShow = true;
+            }
         }
 
         var clearInvoiceResult = function() {
+            $scope.data = {
+                company: "",
+                companyid: "",
+                companyidArray:[],
+                salesDollar: undefined,
+                taxRate: 5,
+                businessTax: undefined,
+                totalDollar: undefined,
+                itemName: "",
+                itemNumber: undefined,
+                itemDollar: undefined,
+                itemTotalDollar: undefined
+            }
+            $scope.isResultShow = false;
+            $scope.isCompanyIdNotFinished = false;
+            $scope.isCompanyIdError = false;
+            $scope.isCompanyIdSuccess = false;
+
+            $scope.isCompanyEmpty = false;
+            $scope.isCompanyIdEmpty = false;
+            $scope.isSalesDollarEmpty = false;
+            $scope.isTotalDollarEmpty = false;
+            $scope.isItemNameEmpty = false;
+            $scope.isItemNumberEmpty = false;
+            $scope.isItemDollarEmpty = false;
+            clearTotalWord();
         }
+
+        var onCompanyIdChange = function() {
+            $scope.data.companyidArray = $scope.data.companyid.split("");
+            if($scope.data.companyid.length == 0) {
+                $scope.isCompanyIdSuccess = false;
+                $scope.isCompanyIdNotFinished = false;
+                $scope.isCompanyIdError = false;
+            }
+            else if($scope.data.companyid.length < 8) {
+                $scope.isCompanyIdSuccess = false;
+                $scope.isCompanyIdError = false;
+                $scope.isCompanyIdNotFinished = true;
+            }
+            else if($scope.data.companyid.length == 8) {
+                $scope.isCompanyIdNotFinished = false;
+                if(!isNumber($scope.data.companyid)) {
+                    $scope.isCompanyIdError = true;
+                }
+                else {
+                    $scope.isCompanyIdSuccess = true
+                }
+            }
+            else {
+                $scope.data.companyid = $scope.data.companyid.substring(0, 8);
+            }
+        }
+
+        var onSalesDollarChange = function() {
+            if($scope.data.salesDollar == "") {
+                $scope.data.salesDollar = undefined;
+                $scope.data.totalDollar = undefined;
+                $scope.data.businessTax = 0;
+                clearTotalWord();
+                return;
+            }
+            if($scope.data.salesDollar.length > 9) {
+                $scope.data.salesDollar = $scope.data.salesDollar.substring(0, 9);
+                return;
+            }
+            if(!isNumber($scope.data.salesDollar)) {
+                $timeout(function() {
+                    var errorNumString = $scope.data.salesDollar.toString();
+                    var rightNumString = errorNumString.substring(0, errorNumString.length - 1);
+                    $scope.data.salesDollar = parseInt(rightNumString);
+                }, 100);
+            }
+            else {
+                $scope.data.businessTax = Math.round($scope.data.salesDollar * $scope.data.taxRate / 100);
+                $scope.data.totalDollar = parseInt($scope.data.businessTax) + parseInt($scope.data.salesDollar);
+                getNumWordArray($scope.data.totalDollar);
+            }
+        }
+
+        var onTotalDollarChange = function() {
+            if($scope.data.totalDollar == "") {
+                $scope.data.salesDollar = undefined;
+                $scope.data.totalDollar = undefined;
+                $scope.data.businessTax = 0;
+                clearTotalWord();
+                return;
+            }
+            if($scope.data.totalDollar.length > 9) {
+                $scope.data.totalDollar = $scope.data.totalDollar.substring(0, 9);
+                return;
+            }
+            if(!isNumber($scope.data.totalDollar)) {
+                $timeout(function() {
+                    var errorNumString = $scope.data.totalDollar.toString();
+                    var rightNumString = errorNumString.substring(0, errorNumString.length - 1);
+                    $scope.data.totalDollar = parseInt(rightNumString);
+                }, 100);
+            }
+            else {
+                $scope.data.salesDollar = Math.round($scope.data.totalDollar / (($scope.data.taxRate + 100) / 100));
+                $scope.data.businessTax = $scope.data.totalDollar - $scope.data.salesDollar
+                getNumWordArray($scope.data.totalDollar);
+            }
+        }
+
+        var onTaxRateChange = function() {
+            if(!isNumber($scope.data.taxRate)) {
+                $timeout(function() {
+                    var errorNumString = $scope.data.taxRate.toString();
+                    var rightNumString = errorNumString.substring(0, errorNumString.length - 1);
+                    $scope.data.taxRate = parseInt(rightNumString);
+                }, 100);
+            }
+            else {
+                $scope.data.businessTax = Math.round($scope.data.salesDollar * $scope.data.taxRate / 100);
+                $scope.data.totalDollar = parseInt($scope.data.businessTax) + parseInt($scope.data.salesDollar);
+                getNumWordArray($scope.data.totalDollar);
+            }
+            if($scope.data.taxRate == "") {
+                $scope.data.totalDollar = $scope.data.salesDollar;
+                $scope.data.businessTax = 0;
+                getNumWordArray($scope.data.totalDollar);
+            }
+        }
+
+        var getNumWordArray = function(num) {
+            clearTotalWord();
+            var cWord = ['零','壹','貳','參','肆','伍','陸','柒','捌','玖'];
+            var numArray = num.toString().split("");
+
+            var wordCt = $scope.totalWord.length - 1;
+            for (var i = numArray.length - 1; i >= 0; i--) {
+                $scope.totalWord[wordCt].numberWord = cWord[numArray[i]];
+                wordCt--;
+            }
+        };
+
+        var clearTotalWord = function() {
+            for (var i = 0; i < $scope.totalWord.length; i++) {
+                $scope.totalWord[i].numberWord = "";
+            }
+        }
+
+        var onItemChange = function() {
+            if($scope.data.itemNumber && $scope.data.itemDollar) {
+                $scope.data.itemTotalDollar = $scope.data.itemNumber * $scope.data.itemDollar;
+            }
+            else {
+                $scope.data.itemTotalDollar = undefined;
+            }
+        }
+
+
 
         var init = function() {
             setTodayString();
@@ -35,7 +271,75 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 
         $scope.invoiceType = "THREE";
         $scope.today;
-        $scope.isResultShow = true;
+        $scope.todayDD = "";
+        $scope.todayMM = "";
+        $scope.todayYY = ""
+        $scope.invoiceMonth = "";
+        $scope.invoiceYear = ""
+        $scope.isResultShow = false;
+        $scope.data = {
+            company: "",
+            companyid: "",
+            companyidArray:[],
+            salesDollar: undefined,
+            taxRate: 5,
+            businessTax: undefined,
+            totalDollar: undefined,
+            itemName: "",
+            itemNumber: undefined,
+            itemDollar: undefined,
+            itemTotalDollar: undefined
+        }
+        $scope.totalWord = [
+            {
+                numberWord: "",
+                unit: "億"
+            },
+            {
+                numberWord: "",
+                unit: "仟"
+            },
+            {
+                numberWord: "",
+                unit: "佰"
+            },
+            {
+                numberWord: "",
+                unit: "拾"
+            },
+            {
+                numberWord: "",
+                unit: "萬"
+            },
+            {
+                numberWord: "",
+                unit: "仟"
+            },
+            {
+                numberWord: "",
+                unit: "佰"
+            },
+            {
+                numberWord: "",
+                unit: "拾"
+            },
+            {
+                numberWord: "",
+                unit: "元"
+            }
+        ]
+
+        $scope.isCompanyIdNotFinished = false;
+        $scope.isCompanyIdError = false;
+        $scope.isCompanyIdSuccess = false;
+
+        $scope.isCompanyEmpty = false;
+        $scope.isCompanyIdEmpty = false;
+        $scope.isSalesDollarEmpty = false;
+        $scope.isTotalDollarEmpty = false;
+        $scope.isItemNameEmpty = false;
+        $scope.isItemNumberEmpty = false;
+        $scope.isItemDollarEmpty = false;
         /*==========================
              Methods
         ==========================*/
@@ -43,6 +347,12 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
         $scope.changeInvoiceType = changeInvoiceType;
         $scope.showInvoiceResult = showInvoiceResult;
         $scope.clearInvoiceResult = clearInvoiceResult;
+
+        $scope.onCompanyIdChange = onCompanyIdChange;
+        $scope.onSalesDollarChange = onSalesDollarChange;
+        $scope.onTotalDollarChange = onTotalDollarChange;
+        $scope.onTaxRateChange = onTaxRateChange;
+        $scope.onItemChange = onItemChange;
 
         /*==========================
              init
