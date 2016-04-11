@@ -109,8 +109,8 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
                 taxRate: 5,
                 businessTax: undefined,
                 totalDollar: undefined,
-                itemName: "",
-                itemNumber: undefined,
+                itemName: "教育訓練",
+                itemNumber: 1,
                 itemDollar: undefined,
                 itemTotalDollar: undefined
             }
@@ -175,8 +175,10 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
                 }, 100);
             }
             else {
+                $scope.data.itemDollar = $scope.data.salesDollar;
                 $scope.data.businessTax = Math.round($scope.data.salesDollar * $scope.data.taxRate / 100);
                 $scope.data.totalDollar = parseInt($scope.data.businessTax) + parseInt($scope.data.salesDollar);
+                $scope.data.itemTotalDollar = $scope.data.itemNumber * $scope.data.itemDollar;
                 getNumWordArray($scope.data.totalDollar);
             }
         }
@@ -202,7 +204,9 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
             }
             else {
                 $scope.data.salesDollar = Math.round($scope.data.totalDollar / (($scope.data.taxRate + 100) / 100));
-                $scope.data.businessTax = $scope.data.totalDollar - $scope.data.salesDollar
+                $scope.data.businessTax = $scope.data.totalDollar - $scope.data.salesDollar;
+                $scope.data.itemDollar = $scope.data.salesDollar;
+                $scope.data.itemTotalDollar = $scope.data.itemNumber * $scope.data.itemDollar;
                 getNumWordArray($scope.data.totalDollar);
             }
         }
@@ -285,10 +289,11 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
             taxRate: 5,
             businessTax: undefined,
             totalDollar: undefined,
-            itemName: "",
-            itemNumber: undefined,
+            itemName: "教育訓練",
+            itemNumber: 1,
             itemDollar: undefined,
             itemTotalDollar: undefined
+
         }
         $scope.totalWord = [
             {

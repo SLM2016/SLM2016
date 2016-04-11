@@ -30,10 +30,11 @@
 						<div class="input-content">
 							<div class="input-title">金額</div>
 							<div class="input-wrapper dollar">
-								<div class="form-group" ng-class="{'has-error': isSalesDollarEmpty}">
-								    <label for="sales-dollar">銷售額（未稅）</label>
-								    <input type="text" class="form-control" id="sales-dollar" placeholder="請輸入銷售額" ng-model="data.salesDollar" ng-change="onSalesDollarChange()">
+								<div class="form-group" ng-class="{'has-error': isTotalDollarEmpty}">
+								    <label for="total-dollar">總計金額（含稅）</label>
+								    <input type="text" class="form-control" id="total-dollar" placeholder="請輸入總計金額" ng-model="data.totalDollar" ng-change="onTotalDollarChange()" ng-enter="showInvoiceResult()">
 								</div>
+								
 								<div class="form-group">
 								    <label for="tax-rate">稅率</label>
 								    <div class="input-group">
@@ -46,9 +47,9 @@
 								    <label for="business-tax">營業稅額</label>
 								    <input type="text" class="form-control" id="business-tax" disabled ng-model="data.businessTax">
 								</div>
-								<div class="form-group" ng-class="{'has-error': isTotalDollarEmpty}">
-								    <label for="total-dollar">總計金額（含稅）</label>
-								    <input type="text" class="form-control" id="total-dollar" placeholder="請輸入總計金額" ng-model="data.totalDollar" ng-change="onTotalDollarChange()">
+								<div class="form-group" ng-class="{'has-error': isSalesDollarEmpty}">
+								    <label for="sales-dollar">銷售額（未稅）</label>
+								    <input type="text" class="form-control" id="sales-dollar" placeholder="請輸入銷售額" ng-model="data.salesDollar" ng-change="onSalesDollarChange()">
 								</div>
 							</div>
 						</div>
@@ -99,10 +100,10 @@
 									<thead>
 										<tr>
 											<th width="150px">品名</th>
-											<th width="70px">數量</th>
-											<th width="70px">單價</th>
+											<th width="80px">數量</th>
+											<th width="80px">單價</th>
 											<th>金額</th>
-											<th width="110px">備註</th>
+											<th width="100px">備註</th>
 										</tr>
 									</thead>
 									<tbody>
