@@ -275,7 +275,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 131, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper {
   display: none;
-  width: 600px;
+  width: 700px;
   height: 470px;
   padding: 10px 30px;
   margin: 35px auto 0;
@@ -391,7 +391,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 229, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td.td-word .word-item {
   display: inline-block;
-  width: 40px;
+  width: 50px;
   margin-left: 5px;
 }
 /* line 233, ../scss/templates/_invoice.scss */
