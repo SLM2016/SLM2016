@@ -148,9 +148,104 @@
 						
 					</div>
                 </div>
-                <!-- 二聯式 -->
+               <!-- 二聯式 -->
                 <div class="invoice" ng-show="invoiceType == 'TWO'">
-                    <div>二聯式</div>
+                    <div class="invoice-input">
+						<div class="input-content">
+							<div class="input-title">買受人</div>
+							<div class="input-wrapper company">
+								<div class="form-group name" ng-class="{'has-error': isCompanyEmpty}">
+								    <label for="companyName">名稱</label>
+								    <input type="text" class="form-control" id="companyName" placeholder="請輸入名稱" ng-model="data.company">
+								</div>
+							</div>
+						</div>
+						<div class="input-content">
+							<div class="input-title">金額</div>
+							<div class="input-wrapper dollar">
+								<div class="form-group" ng-class="{'has-error': isTotalDollarEmpty}">
+								    <label for="total-dollar">總計金額</label>
+								    <input type="text" class="form-control" id="total-dollar" placeholder="請輸入總計金額" ng-model="data.totalDollar" ng-change="onDoubleTotalDollarChange()" ng-enter="showDoubleInvoiceResult()">
+								</div>
+							</div>
+						</div>
+						<div class="input-content">
+							<div class="input-title">品項</div>
+							<div class="input-wrapper dollar">
+								<div class="form-group" ng-class="{'has-error': isItemNameEmpty}">
+								    <label for="item-name">品名</label>
+								    <input type="text" class="form-control" id="item-name" placeholder="請輸入品名" ng-model="data.itemName">
+								</div>
+								<div class="form-group" ng-class="{'has-error': isItemNumberEmpty}">
+								    <label for="item-number">數量</label>
+								    <input type="text" class="form-control" id="item-number" placeholder="請輸入數量" ng-model="data.itemNumber" ng-change="onDoubleItemChange()">
+								    
+								</div>
+								<div class="form-group" ng-class="{'has-error': isItemDollarEmpty}">
+								    <label for="item-dollar">單價</label>
+								    <input type="text" class="form-control" id="item-dollar" placeholder="請輸入單價" ng-model="data.itemDollar" ng-change="onDoubleItemChange()">
+								</div>
+								<div class="form-group">
+								    <label for="total-item-dollar">金額</label>
+								    <input type="text" class="form-control" id="total-item-dollar" disabled ng-model="data.itemTotalDollar">
+								</div>
+							</div>
+						</div>
+						<div class="action">
+							<button class="btn btn-info btn-orange" type="submit" ng-click="showDoubleInvoiceResult()">預覽</button>
+							<button class="btn btn-default" type="submit" ng-click="clearInvoiceResult()">清除</button>
+						</div>
+					</div>
+					<div class="invoice-result" ng-class="{'result-show': isDoubleResultShow}">
+						<div class="result-wrapper">					
+							<div class="invoice-title">
+								<span>統</span><span>一</span>
+								<span>發</span><span>票</span>（二聯式）
+							</div>
+							<div class="invoice-desc">{{invoiceYear}} 年 {{invoiceMonth}} 月 份</div>
+							<div class="invoice-date">中華民國 <span>{{todayYY}}</span> 年 <span>{{todayMM}}</span> 月 <span>{{todayDD}}</span> 日</div>
+							<div class="result-content">
+								<div class="invoice-buyer">買受人：<span>{{data.company}}</span></div>
+								<table class="table table-bordered invoice-table">
+									<thead>
+										<tr>
+											<th width="150px">品名</th>
+											<th width="70px">數量</th>
+											<th width="70px">單價</th>
+											<th>金額</th>
+											<th width="110px">備註</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td class="td-answer">{{data.itemName}}</td>
+											<td class="td-answer">{{data.itemNumber}}</td>
+											<td class="td-answer">{{data.itemDollar | number : fractionSize}}</td>
+											<td class="td-answer">{{data.itemTotalDollar | number : fractionSize}}</td>
+											<td></td>
+										</tr>
+										<tr ng-repeat="i in [0, 1, 2, 3 , 4 , 5]">
+											<td ng-repeat="j in [0, 1, 2, 3, 4]"></td>
+										</tr>
+										<tr>
+											<td colspan="3">總計</td>
+											<td class="td-answer">{{data.itemTotalDollar | number : fractionSize}}</td>
+											<td></td>
+										</tr>
+										<tr>
+											<td colspan="4" class="td-word">
+												<div class="word-item" ng-repeat="w in totalWord">
+													<span class="word">{{w.numberWord}}</span>
+													<span>{{w.unit}}</span>
+												</div>
+											</td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
                 </div>
             </div>
         </div>

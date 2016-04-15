@@ -100,6 +100,46 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
             }
         }
 
+        var showDoubleInvoiceResult = function() {
+            if($scope.data.itemName == "") {
+                $scope.isItemNameEmpty = true;
+            }
+            else {
+                $scope.isItemNameEmpty = false;
+            }
+
+            if(!$scope.data.itemNumber) {
+                $scope.isItemNumberEmpty = true;
+            }
+            else {
+                $scope.isItemNumberEmpty = false;
+            }
+
+            if(!$scope.data.totalDollar) {
+                $scope.isTotalDollarEmpty = true;
+            }
+            else {
+                $scope.isTotalDollarEmpty = false;
+            }
+
+            if(!$scope.data.itemDollar ) {
+                $scope.isItemDollarEmpty = true;
+            }
+            else {
+                $scope.isItemDollarEmpty = false;
+            }
+
+            if($scope.isCompanyEmpty || $scope.isItemNameEmpty || $scope.isItemNumberEmpty 
+                || $scope.isItemDollarEmpty) {
+                return;
+            }
+            else {
+                $scope.isDoubleResultShow = true;
+            }
+        }
+
+
+
         var clearInvoiceResult = function() {
             $scope.data = {
                 company: "",
@@ -126,6 +166,7 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
             $scope.isItemNameEmpty = false;
             $scope.isItemNumberEmpty = false;
             $scope.isItemDollarEmpty = false;
+            $scope.isDoubleResultShow = false;
             clearTotalWord();
         }
 
@@ -179,13 +220,6 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
                 $scope.data.businessTax = Math.round($scope.data.salesDollar * $scope.data.taxRate / 100);
                 $scope.data.totalDollar = parseInt($scope.data.businessTax) + parseInt($scope.data.salesDollar);
                 $scope.data.itemTotalDollar = $scope.data.itemNumber * $scope.data.itemDollar;
-                if($scope.data.totalDollar.toString().length > 9) {
-                    $scope.data.salesDollar = $scope.data.salesDollar.substring(0, 8);
-                    $scope.data.itemDollar = $scope.data.salesDollar;
-                    $scope.data.businessTax = Math.round($scope.data.salesDollar * $scope.data.taxRate / 100);
-                    $scope.data.totalDollar = parseInt($scope.data.businessTax) + parseInt($scope.data.salesDollar);
-                    $scope.data.itemTotalDollar = $scope.data.itemNumber * $scope.data.itemDollar;
-                }
                 getNumWordArray($scope.data.totalDollar);
             }
         }
@@ -217,6 +251,34 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
                 getNumWordArray($scope.data.totalDollar);
             }
         }
+
+        var onDoubleTotalDollarChange = function() {
+            if($scope.data.totalDollar == "") {
+                $scope.data.totalDollar = undefined;
+                $scope.data.itemTotalDollar = undefined;
+                $scope.data.itemDollar = undefined;
+                clearTotalWord();
+                return;
+            }
+            if($scope.data.totalDollar.length > 9) {
+                $scope.data.totalDollar = $scope.data.totalDollar.substring(0, 9);
+                return;
+            }
+            if(!isNumber($scope.data.totalDollar)) {
+                $timeout(function() {
+                    var errorNumString = $scope.data.totalDollar.toString();
+                    var rightNumString = errorNumString.substring(0, errorNumString.length - 1);
+                    $scope.data.totalDollar = parseInt(rightNumString);
+                }, 100);
+            }
+            else {
+                $scope.data.itemTotalDollar = $scope.data.totalDollar;
+                $scope.data.itemNumber = 1;
+                $scope.data.itemDollar = $scope.data.totalDollar;
+                getNumWordArray($scope.data.totalDollar);
+            }
+        }
+
 
         var onTaxRateChange = function() {
             if(!isNumber($scope.data.taxRate)) {
@@ -257,34 +319,30 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
         }
 
         var onItemChange = function() {
-            if($scope.data.itemDollar.length > 9) {
-                $scope.data.itemDollar = $scope.data.itemDollar.substring(0, 9);
-                return;
-            }
             if($scope.data.itemNumber && $scope.data.itemDollar) {
                 $scope.data.itemTotalDollar = $scope.data.itemNumber * $scope.data.itemDollar;
-                $scope.data.salesDollar = $scope.data.itemTotalDollar;
-                $scope.data.businessTax = Math.round($scope.data.salesDollar * $scope.data.taxRate / 100);
-                $scope.data.totalDollar = parseInt($scope.data.businessTax) + parseInt($scope.data.salesDollar);
-                if($scope.data.totalDollar.toString().length > 9) {
-                    $scope.data.itemDollar = $scope.data.itemDollar.substring(0, 8);
-                    $scope.data.itemTotalDollar = $scope.data.itemNumber * $scope.data.itemDollar;
-                    $scope.data.salesDollar = $scope.data.itemTotalDollar;
-                    $scope.data.businessTax = Math.round($scope.data.salesDollar * $scope.data.taxRate / 100);
-                    $scope.data.totalDollar = parseInt($scope.data.businessTax) + parseInt($scope.data.salesDollar);
-                }
-                getNumWordArray($scope.data.totalDollar);
             }
             else {
                 $scope.data.itemTotalDollar = undefined;
-                $scope.data.businessTax = 0;
-                $scope.data.salesDollar = undefined;
-                $scope.data.totalDollar = undefined;
-                clearTotalWord();
             }
         }
 
-
+         var onDoubleItemChange = function() {
+            if($scope.data.itemNumber && $scope.data.itemDollar) {
+                if($scope.data.itemDollar.length > 9) {
+                    $scope.data.itemDollar = $scope.data.itemDollar.substring(0, 9);
+                    return
+                }
+                $scope.data.itemTotalDollar = $scope.data.itemNumber * $scope.data.itemDollar;
+                $scope.data.totalDollar = $scope.data.itemTotalDollar;
+                getNumWordArray($scope.data.itemTotalDollar);
+            }
+            else {
+                $scope.data.itemTotalDollar = undefined;
+                $scope.data.totalDollar = undefined;
+            }
+        }
+        
 
         var init = function() {
             setTodayString();
@@ -377,13 +435,17 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 
         $scope.changeInvoiceType = changeInvoiceType;
         $scope.showInvoiceResult = showInvoiceResult;
+        $scope.showDoubleInvoiceResult = showDoubleInvoiceResult;
         $scope.clearInvoiceResult = clearInvoiceResult;
 
         $scope.onCompanyIdChange = onCompanyIdChange;
         $scope.onSalesDollarChange = onSalesDollarChange;
         $scope.onTotalDollarChange = onTotalDollarChange;
+        $scope.onDoubleTotalDollarChange = onDoubleTotalDollarChange;
+        
         $scope.onTaxRateChange = onTaxRateChange;
         $scope.onItemChange = onItemChange;
+        $scope.onDoubleItemChange = onDoubleItemChange;
 
         /*==========================
              init
