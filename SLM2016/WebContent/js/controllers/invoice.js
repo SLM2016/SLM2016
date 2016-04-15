@@ -319,11 +319,30 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
         }
 
         var onItemChange = function() {
+            if($scope.data.itemDollar.length > 9) {
+                $scope.data.itemDollar = $scope.data.itemDollar.substring(0, 9);
+                return;
+            }
             if($scope.data.itemNumber && $scope.data.itemDollar) {
                 $scope.data.itemTotalDollar = $scope.data.itemNumber * $scope.data.itemDollar;
+                $scope.data.salesDollar = $scope.data.itemTotalDollar;
+                $scope.data.businessTax = Math.round($scope.data.salesDollar * $scope.data.taxRate / 100);
+                $scope.data.totalDollar = parseInt($scope.data.businessTax) + parseInt($scope.data.salesDollar);
+                if($scope.data.totalDollar.toString().length > 9) {
+                    $scope.data.itemDollar = $scope.data.itemDollar.substring(0, 8);
+                    $scope.data.itemTotalDollar = $scope.data.itemNumber * $scope.data.itemDollar;
+                    $scope.data.salesDollar = $scope.data.itemTotalDollar;
+                    $scope.data.businessTax = Math.round($scope.data.salesDollar * $scope.data.taxRate / 100);
+                    $scope.data.totalDollar = parseInt($scope.data.businessTax) + parseInt($scope.data.salesDollar);
+                }
+                getNumWordArray($scope.data.totalDollar);
             }
             else {
                 $scope.data.itemTotalDollar = undefined;
+                $scope.data.businessTax = 0;
+                $scope.data.salesDollar = undefined;
+                $scope.data.totalDollar = undefined;
+                clearTotalWord();
             }
         }
 
