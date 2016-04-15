@@ -10,6 +10,7 @@
 // -------------------------------------
 
 @import "templates/_example";
+@import "templates/_invoice";
 
 // -------------------------------------
 //  Directives
@@ -30,7 +31,7 @@ $global-title-font-style : "Open Sans", "Lato", "Helvetica Neue", Helvetica, Ari
 }
 
 html, body {
-	height: 100%;
+	// height: 100%;
 	background-color: #E9E9E9;
 }
 

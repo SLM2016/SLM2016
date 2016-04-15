@@ -1,6 +1,7 @@
 var STATES = {
     EXAMPLE1: "example1",
-    EXAMPLE2: "example2"
+    EXAMPLE2: "example2",
+    INVOICE: "invoice"
 }
 
 var app = angular.module('app', [
@@ -42,6 +43,15 @@ var app = angular.module('app', [
                 }
             }
         })
+        .state(STATES.INVOICE, {
+            url: "/invoice",
+            views: {
+                'invoice@': {
+                    templateUrl: "templates/invoice.html",
+                    controller: 'InvoiceController',
+                }
+            }
+        })
 	}
 ])
 
@@ -55,6 +65,10 @@ var app = angular.module('app', [
 
         var isExample2View = function() {
             return $state.includes(STATES.EXAMPLE2);
+        }
+
+        var isInvoiceView = function() {
+            return $state.includes(STATES.INVOICE);
         }
 
         var init = function() {
@@ -74,6 +88,7 @@ var app = angular.module('app', [
         ==========================*/
         $scope.isExample1View = isExample1View;
         $scope.isExample2View = isExample2View;
+        $scope.isInvoiceView = isInvoiceView;
 
         /*==========================
              init

@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="Teddy Software 泰迪軟體" />
+    <meta property="og:title" content="泰迪軟體TeddySoft" />
     <meta property="og:description" content="泰迪軟體，敏捷開發、實務、課程、顧問服務" />
     <link rel="shortcut icon" href="images/favicon.ico">
-    <title>Teddy Software 泰迪軟體</title>
+    <title>泰迪軟體TeddySoft</title>
 
      <!-- build:css -->
     <link rel="stylesheet" href="css/vendors/bootstrap/bootstrap.css" />
@@ -27,6 +27,7 @@
             <nav-sidebar></nav-sidebar>
             <div ui-view="example1" ng-show="isExample1View()"></div>
             <div ui-view="example2" ng-show="isExample2View()"></div>
+            <div ui-view="invoice" ng-show="isInvoiceView()"></div>
         </div>
         
         
@@ -55,5 +56,6 @@
 
     <script src="js/controllers/example1.js"></script>
     <script src="js/controllers/example2.js"></script>
+    <script src="js/controllers/invoice.js"></script>
 
 </body>
