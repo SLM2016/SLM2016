@@ -1,4 +1,4 @@
-package dao;
+package database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,15 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import dbConnect.DBConnector;
-import model.Account;
-
-public class AccountDAO {
-	private static AccountDAO mInstance;
+public class AccountDao {
+	private static AccountDao mInstance;
 	
-	public static AccountDAO getInstance(){
+	public static AccountDao getInstance(){
 		if(mInstance == null){
-			mInstance = new AccountDAO();
+			mInstance = new AccountDao();
 		}
 		return mInstance;
 	}
@@ -23,7 +20,7 @@ public class AccountDAO {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
-			con = DBConnector.connectToMySQL();
+			con = DbConnector.connectToMySQL();
 			pstm = con.prepareStatement("INSERT INTO account SET user_name=?, nick_name=?, mail=?, phone=?, company=?, department=?, position=?");
 			pstm.setString(1, account.getUserName());
 			return true;
@@ -44,7 +41,7 @@ public class AccountDAO {
 		boolean updateStatus = false;
 		Connection con = null;
 		PreparedStatement pstm = null;
-		con = DBConnector.connectToMySQL();
+		con = DbConnector.connectToMySQL();
 		try {
 			pstm = con.prepareStatement("UPDATE account SET  user_name=?, nick_name=?, mail=?, phone=?, company=?, department=?, position=?");
 			pstm.setString(1, account.getUserName());
@@ -79,7 +76,7 @@ public class AccountDAO {
 		ResultSet rs = null;
 		Account account = null;
 		try {
-			con = DBConnector.connectToMySQL();
+			con = DbConnector.connectToMySQL();
 			stm = con.createStatement();
 			rs = stm.executeQuery("SELECT * FROM account WHERE user_name=" + "'" + name + "'");
 			if(rs.next()) {
@@ -116,7 +113,7 @@ public class AccountDAO {
 		Connection con = null;
 		Statement stm = null;
 		ResultSet rs = null;
-		con = DBConnector.connectToMySQL();
+		con = DbConnector.connectToMySQL();
 		
 		try {
 			stm = con.createStatement();

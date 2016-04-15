@@ -1,4 +1,4 @@
-package model;
+package database;
 
 public class Account {
 	private int mId = -1;

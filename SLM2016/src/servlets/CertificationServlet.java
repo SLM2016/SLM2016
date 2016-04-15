@@ -1,4 +1,4 @@
-package certification;
+package servlets;
 
 import java.io.IOException;
 
@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+
+import certification.Certification;
+import certification.CertificationManager;
+import certification.TemplateCertification;
+import certification.TemplateCertificationMaker;
 
 @WebServlet("/CertificationServlet")
 public class CertificationServlet extends HttpServlet {

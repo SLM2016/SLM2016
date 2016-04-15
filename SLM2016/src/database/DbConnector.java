@@ -1,8 +1,10 @@
-package dbConnect;
+package database;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-public class DBConnector {
+
+public class DbConnector {
 	public static Connection connectToMySQL(){
 		Connection connection = null;
 		String connectionURL = "";
