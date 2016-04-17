@@ -10,8 +10,8 @@ public class CertificationMaker {
 	{
 		//connect to DB require certification data which according courseId or studentId
 		Certification certification=new Certification();
-		certification.setId("");
-		certification.setOwner("");
+		certification.setId(courseId);
+		certification.setOwner(studentId);
 		return certification;
 	}
 }

@@ -23,11 +23,11 @@ public class CertificationServlet extends HttpServlet {
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Gson son=new Gson();
 		Certification certification=son.fromJson(request.getReader().readLine(), Certification.class);

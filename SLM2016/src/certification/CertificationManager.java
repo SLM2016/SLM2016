@@ -38,10 +38,7 @@ public class CertificationManager {
 		}
 	}
 
-	public CertificationManager() {
-	}
-
-	public void setCertificationText(Image img, TemplateCertification template, Certification certification) {
+	private void setCertificationText(Image img, TemplateCertification template, Certification certification) {
 		Graphics2D graphics = (Graphics2D) img.getGraphics();
 		graphics.setPaint(Color.black);
 		graphics.setFont(new Font("標楷體", Font.PLAIN, template.getIdTextSize()));
@@ -49,6 +46,9 @@ public class CertificationManager {
 		graphics.setFont(new Font("標楷體", Font.PLAIN, template.getOwnerTextSize()));
 		graphics.drawString(certification.getOwner(), template.getOwnerLocation().x, template.getOwnerLocation().y);
 		graphics.dispose();
+	}
+
+	public CertificationManager() {
 	}
 
 	public String getCertificationJsonString() {
