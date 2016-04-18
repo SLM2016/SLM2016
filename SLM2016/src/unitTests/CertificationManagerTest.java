@@ -39,6 +39,7 @@ public class CertificationManagerTest {
 		Method method = manager.getClass().getDeclaredMethod("getFileExtendsion", String.class);
 		method.setAccessible(true);
 
+		assertEquals((String) method.invoke(manager, ""), "");
 		assertEquals((String) method.invoke(manager, "asdf.txt"), "txt");
 		assertEquals((String) method.invoke(manager, "C:\\Users\\User\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\SLM2016\\Images\\download.png"), "png");
 	}

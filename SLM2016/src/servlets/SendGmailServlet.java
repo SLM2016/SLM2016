@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 
 import mailSending.ClassInfomation;
 import mailSending.GmailSender;
-import mailSending.SendStudentIndex;
+import mailSending.StudentSelectedIndex;
 import mailSending.StudentInfomation;
 
 @WebServlet("/SendGmailServlet")
@@ -25,24 +25,19 @@ public class SendGmailServlet extends HttpServlet {
 
 	public SendGmailServlet() {
 		super();
-		studentInfomation.SetStudents();
-		studentInfomation.SetMailAddress();
-		
-		List<String> name = studentInfomation.GetStudents();
+		studentInfomation.setStudents();
+		studentInfomation.setMailAddress();
+
+		List<String> name = studentInfomation.getStudents();
 		int size = 30;
 		for (int i = 0; i < size; i++) {
-			classInfomation.AddStudent(name.get(i));
+			classInfomation.addStudent(name.get(i));
 		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		
-		
 		String json = new Gson().toJson(classInfomation);
-		// System.out.println(json);
-		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
@@ -51,27 +46,30 @@ public class SendGmailServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Gson gson = new Gson();
-		SendStudentIndex sendStudentIndex = gson.fromJson(request.getReader().readLine(), SendStudentIndex.class);
-		List<Integer> studentIndex = sendStudentIndex.GetIndexes();
+		StudentSelectedIndex sendStudentIndex = gson.fromJson(request.getReader().readLine(),
+				StudentSelectedIndex.class);
+		List<Integer> studentIndex = sendStudentIndex.getIndexes();
 		List<String> studentName = new ArrayList<String>();
 		List<String> addresses = new ArrayList<String>();
-		for (int i = 0; i < studentIndex.size(); i++)
-			if (i == studentIndex.get(i).intValue()) {
-				studentName.add(studentInfomation.GetStudents().get(i));
-				addresses.add(studentInfomation.GetMailAddress().get(i));
+		for (int i = 0; i < studentIndex.size(); i++) {
+			for (int j = 0; j < studentInfomation.getStudents().size(); j++) {
+				if (j == studentIndex.get(i).intValue()) {
+					studentName.add(studentInfomation.getStudents().get(j));
+					addresses.add(studentInfomation.getMailAddress().get(j));
+					System.out.println(j);
+				}
 			}
+		}
 		
 		String username = "news.teddysoft.tw@gmail.com";
 		String password = "SLMTaipeiTech2016";
-		GmailSender gmailSender=new GmailSender(username,password);
+		GmailSender gmailSender = new GmailSender(username, password);
 		String subject = "泰迪軟體課程通知";
-		String result="";
-		for(int i=0;i<studentName.size();i++)
-			result = gmailSender.Send(addresses.get(i),subject,studentName.get(i),classInfomation.GetClassName());
-		
-		String json = new Gson().toJson(result);
-		System.out.println(result);
+		String result = "";
+		for (int i = 0; i < studentName.size(); i++)
+			result = gmailSender.send(addresses.get(i), subject, studentName.get(i), classInfomation.getClassName());
 
+		String json = new Gson().toJson(result);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);

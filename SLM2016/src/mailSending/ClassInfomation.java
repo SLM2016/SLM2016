@@ -4,31 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClassInfomation {
-	private String className;
-	private List<String> students;
+	private String className_;
+	private List<String> students_;
 
 	public ClassInfomation(String className) {
-		this.className = className;
-		students = new ArrayList<String>();
+		this.className_ = className;
+		students_ = new ArrayList<String>();
 	}
 
-	public ClassInfomation Clone() {
-		ClassInfomation cloneObject = new ClassInfomation(this.className);
-		cloneObject.students = new ArrayList<String>();
-		for (int i = 0; i < this.students.size(); i++)
-			cloneObject.students.add(this.students.get(i));
+	public ClassInfomation clone() {
+		ClassInfomation cloneObject = new ClassInfomation(this.className_);
+		cloneObject.students_ = new ArrayList<String>();
+		for (int i = 0; i < this.students_.size(); i++)
+			cloneObject.students_.add(this.students_.get(i));
 		return cloneObject;
 	}
 
-	public void AddStudent(String studentName) {
-		students.add(studentName);
+	public void addStudent(String studentName) {
+		students_.add(studentName);
 	}
 
-	public String GetClassName() {
-		return className;
+	public String getClassName() {
+		return className_;
 	}
 
-	public List<String> GetStudents() {
-		return students;
+	public List<String> getStudents() {
+		return students_;
 	}
 }

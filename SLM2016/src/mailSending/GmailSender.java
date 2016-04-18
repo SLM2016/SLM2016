@@ -1,6 +1,5 @@
 package mailSending;
 
-
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -13,41 +12,39 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class GmailSender {
-	private final String host = "smtp.gmail.com";
-	private final int port = 587;
-	private String username;
-	private String password;
-	private Properties props = new Properties();
-	private Session session;
+	private final String host_ = "smtp.gmail.com";
+	private final int port_ = 587;
+	private String username_;
+	private String password_;
+	private Properties props_ = new Properties();
+	private Session session_;
 
 	public GmailSender(String username, String password) {
-		this.username = username;
-		this.password = password;
+		username_ = username;
+		password_ = password;
 		System.setProperty("mail.mime.charset", "big5");
-		props.put("mail.smtp.host", host);
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.port", port);
-		session = Session.getInstance(props, new Authenticator() {
+		props_.put("mail.smtp.host", host_);
+		props_.put("mail.smtp.auth", "true");
+		props_.put("mail.smtp.starttls.enable", "true");
+		props_.put("mail.smtp.port", port_);
+		session_ = Session.getInstance(props_, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, password);
 			}
 		});
 	}
 
-	public String Send(String address, String subject, String name, String className) {
+	public String send(String address, String subject, String name, String className) {
 		try {
-
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(username));
+			Message message = new MimeMessage(session_);
+			message.setFrom(new InternetAddress(username_));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
 			message.setSubject(subject);
 			String text = "Hi " + name + "，\n您好，歡迎報名" + className + "，以下是您的上課通知，請參考。\n若有任何問題，歡迎隨時聯絡我們。\n泰迪軟體 Erica";
 			message.setText(text);
 
-			Transport transport = session.getTransport("smtp");
-			transport.connect(host, port, username, password);
-
+			Transport transport = session_.getTransport("smtp");
+			transport.connect(host_, port_, username_, password_);
 			Transport.send(message);
 
 			return "寄送email結束.";
@@ -71,11 +68,9 @@ public class GmailSender {
 			} 
 			else {
 				return e.getMessage().toString();
-
 				// "Could not connect to SMTP host: smtp.gmail.com, port: 465, response: -1"
 				// Unknown SMTP host: smtp.gmail.com
 			}
-			// throw new RuntimeException(e);
 		}
 	}
 }

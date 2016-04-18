@@ -21,23 +21,23 @@ public class ClassInfomationTest {
 
 	@Test
 	public void testClone() {
-		classInfomation.AddStudent("Alice");
-		classInfomation.AddStudent("Bob");
-		ClassInfomation cloneObject = classInfomation.Clone();
-		assertEquals("Scurm敏捷發法實作班", cloneObject.GetClassName());
-		assertEquals("Alice", cloneObject.GetStudents().get(0));
-		assertEquals("Bob", cloneObject.GetStudents().get(1));
+		classInfomation.addStudent("Alice");
+		classInfomation.addStudent("Bob");
+		ClassInfomation cloneObject = classInfomation.clone();
+		assertEquals("Scurm敏捷發法實作班", cloneObject.getClassName());
+		assertEquals("Alice", cloneObject.getStudents().get(0));
+		assertEquals("Bob", cloneObject.getStudents().get(1));
 	}
 
 	@Test
 	public void testAddStudent() {
-		classInfomation.AddStudent("Alice");
-		assertEquals("Alice", classInfomation.GetStudents().get(0));
+		classInfomation.addStudent("Alice");
+		assertEquals("Alice", classInfomation.getStudents().get(0));
 	}
 
 	@Test
 	public void testGetClassName() {
-		assertEquals("Scurm敏捷發法實作班", classInfomation.GetClassName());
+		assertEquals("Scurm敏捷發法實作班", classInfomation.getClassName());
 	}
 
 }

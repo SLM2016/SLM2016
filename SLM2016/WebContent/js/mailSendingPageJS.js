@@ -158,7 +158,7 @@ function sendmail(){
 		}
 	}
 	if(checked==1){
-		data.indexes=data_buffer;
+		data.indexes_=data_buffer;
 		console.log(data);
 	$.post("http://localhost:8080/SLM2016/SendGmailServlet",JSON.stringify(data))
 	.done(function(data)
@@ -170,21 +170,13 @@ function sendmail(){
 	
 	if(checked==0)
 		window.alert("Please choose Recipient!!");
-		
-	
-	
-	
-
-	
-	
-		  
 }
 
 function getclassname(){
 	
 	$.get("http://localhost:8080/SLM2016/SendGmailServlet", 
 			function(responseText) {
-		document.myForm.inpText_Course.options[j]=new Option(responseText.className, responseText.className);
+		document.myForm.inpText_Course.options[j]=new Option(responseText.className_, responseText.className_);
 		    });
 }
 
@@ -192,7 +184,7 @@ function getstudentname(){
 	
 	$.get("http://localhost:8080/SLM2016/SendGmailServlet", 
     function(responseText) {
-		department[0]=responseText.students;	
+		department[0]=responseText.students_;	
       });
 }
 

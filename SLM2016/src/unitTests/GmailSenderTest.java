@@ -28,7 +28,7 @@ public class GmailSenderTest {
 		String subject = "泰迪軟體課程通知";
 		String name = "Alice";
 		String className = "Scurm敏捷發法實作班";
-		String result = gmailSender.Send(address, subject, name, className);
+		String result = gmailSender.send(address, subject, name, className);
 
 		assertEquals("寄送email結束.", result);
 	}
@@ -42,7 +42,7 @@ public class GmailSenderTest {
 		String subject = "泰迪軟體課程通知";
 		String name = "Alice";
 		String className = "Scurm敏捷發法實作班";
-		String result = gmailSender.Send(address, subject, name, className);
+		String result = gmailSender.send(address, subject, name, className);
 
 		assertEquals("帳號密碼不正確", result);
 	}
@@ -56,7 +56,7 @@ public class GmailSenderTest {
 		String subject = "泰迪軟體課程通知";
 		String name = "Alice";
 		String className = "Scurm敏捷發法實作班";
-		String result = gmailSender.Send(address, subject, name, className);
+		String result = gmailSender.send(address, subject, name, className);
 
 		assertEquals("請開啟    安全性較低的應用程式存取權限", result);
 	}
@@ -70,7 +70,7 @@ public class GmailSenderTest {
 		String subject = "泰迪軟體課程通知";
 		String name = "Alice";
 		String className = "Scurm敏捷發法實作班";
-		String result = gmailSender.Send(address, subject, name, className);
+		String result = gmailSender.send(address, subject, name, className);
 
 		assertEquals("送信位址格式不正確", result);
 	}
@@ -84,7 +84,7 @@ public class GmailSenderTest {
 		String subject = "泰迪軟體課程通知";
 		String name = "Alice";
 		String className = "Scurm敏捷發法實作班";
-		String result = gmailSender.Send(address, subject, name, className);
+		String result = gmailSender.send(address, subject, name, className);
 
 		assertNotEquals("無法連線到SMTP host，請檢察防火牆或Proxy設定", result);
 	}
@@ -98,7 +98,7 @@ public class GmailSenderTest {
 		String subject = "泰迪軟體課程通知";
 		String name = "Alice";
 		String className = "Scurm敏捷發法實作班";
-		String result = gmailSender.Send(address, subject, name, className);
+		String result = gmailSender.send(address, subject, name, className);
 
 		assertNotEquals("Unknown SMTP host: smtp.gmail.com，請檢察網路連線", result);
 	}
