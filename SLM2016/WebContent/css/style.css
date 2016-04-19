@@ -696,3 +696,26 @@ input:focus, textarea:focus {
 .form-group.has-error .form-control:focus {
   border-color: #F14342;
 }
+
+
+.si-table, thread, th{
+  margin-top : 15px;
+  border : 1px solid grey;
+  background-color : #4CAF50;
+  color : white;
+   nowrap : nowrap;
+}
+.si-table, tbody, td{
+  width : auto;
+  height : auto;
+  border : 1px solid grey;
+  color : black;
+  nowrap : nowrap;
+}
+
+.si-table td:nth-child(odd) {  
+  background-color : #fffafa;  
+}  
+.si-table td:nth-child(even){  
+  background-color : #e6e6fa;  
+} 

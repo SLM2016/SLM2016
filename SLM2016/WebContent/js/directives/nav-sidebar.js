@@ -31,6 +31,9 @@ app.directive('navSidebar', ['$rootScope',
                         return $state.includes(STATES.INVOICE);
                     }
 
+                    var studentInfoView = function() {
+                        return $state.includes(STATES.STUDENTINFO);
+                    }
                     /*==========================
                         Events
                     ==========================*/
@@ -46,7 +49,7 @@ app.directive('navSidebar', ['$rootScope',
                     $scope.isExample1View = isExample1View;
                     $scope.isExample2View = isExample2View;
                     $scope.isInvoiceView = isInvoiceView;
-
+                    $scope.studentInfoView = studentInfoView;
                     /*==========================
                         init
                     ==========================*/

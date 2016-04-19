@@ -1,13 +1,15 @@
 var STATES = {
     EXAMPLE1: "example1",
     EXAMPLE2: "example2",
-    INVOICE: "invoice"
+    INVOICE: "invoice",
+    STUDENTINFO: "studentInfo"
 }
 
 var app = angular.module('app', [
 	'ui.router',
 	'ct.ui.router.extras',
-    'ngScrollbar'
+    'ngScrollbar',
+    'ngFileUpload'
 ])
 
 .config(['$sceProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$animateProvider', '$stickyStateProvider',
@@ -52,6 +54,16 @@ var app = angular.module('app', [
                 }
             }
         })
+        
+        .state(STATES.STUDENTINFO, {
+            url: "/studentInfo",
+            views: {
+                'studentInfo@': {
+                    templateUrl: "templates/studentInfo.html",
+                    controller: 'StudentInfoController',
+                }
+            }
+        })
 	}
 ])
 
@@ -71,6 +83,9 @@ var app = angular.module('app', [
             return $state.includes(STATES.INVOICE);
         }
 
+        var studentInfoView = function() {
+            return $state.includes(STATES.STUDENTINFO);
+        }
         var init = function() {
             
         }
@@ -89,6 +104,7 @@ var app = angular.module('app', [
         $scope.isExample1View = isExample1View;
         $scope.isExample2View = isExample2View;
         $scope.isInvoiceView = isInvoiceView;
+        $scope.studentInfoView = studentInfoView;
 
         /*==========================
              init
