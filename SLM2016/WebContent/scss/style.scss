@@ -11,12 +11,14 @@
 
 @import "templates/_example";
 @import "templates/_invoice";
+@import "templates/_studentInfo";
 
 // -------------------------------------
 //  Directives
 // -------------------------------------
 
 @import "directives/_loading";
+@import "directives/_spin";
 @import "directives/_topbar";
 @import "directives/_nav-sidebar";
 
