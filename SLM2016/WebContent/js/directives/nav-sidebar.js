@@ -19,12 +19,19 @@ app.directive('navSidebar', ['$rootScope',
                     }
 
                     var isExample1View = function() {
-
                         return $state.includes(STATES.EXAMPLE1);
                     }
 
                     var isExample2View = function() {
                         return $state.includes(STATES.EXAMPLE2);
+                    }
+
+                    var isExample3View = function() {
+                        return $state.includes(STATES.EXAMPLE3);
+                    }
+                    
+                    var isExample4View = function() {
+                        return $state.includes(STATES.EXAMPLE4);
                     }
 
                     /*==========================
@@ -41,6 +48,8 @@ app.directive('navSidebar', ['$rootScope',
 
                     $scope.isExample1View = isExample1View;
                     $scope.isExample2View = isExample2View;
+                    $scope.isExample3View = isExample3View;
+                    $scope.isExample4View = isExample4View;
 
                     /*==========================
                         init
