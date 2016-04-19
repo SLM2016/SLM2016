@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `student_info` (
   `id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
-  `email.` varchar(200) NOT NULL,
+  `email` varchar(200) NOT NULL,
   `nickname` varchar(200) NOT NULL,
   `phone` varchar(200) NOT NULL,
   `company` varchar(200) NOT NULL,
