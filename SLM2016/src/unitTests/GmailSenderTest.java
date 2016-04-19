@@ -52,7 +52,7 @@ public class GmailSenderTest {
 		String username = "t100590334@ntut.org.tw";
 		String password = "angelbeats711529";
 		GmailSender gmailSender = new GmailSender(username, password);
-		String address = "angelbeats711529@gmail.com";
+		String address = "superchobits02@gmail.com";
 		String subject = "泰迪軟體課程通知";
 		String name = "Alice";
 		String className = "Scurm敏捷發法實作班";

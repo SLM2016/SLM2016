@@ -35,7 +35,7 @@ public class SendGmailServlet extends HttpServlet {
 		}
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String json = new Gson().toJson(classInfomation);
 		response.setContentType("application/json");
@@ -43,7 +43,7 @@ public class SendGmailServlet extends HttpServlet {
 		response.getWriter().write(json);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Gson gson = new Gson();
 		StudentSelectedIndex sendStudentIndex = gson.fromJson(request.getReader().readLine(),
@@ -56,7 +56,6 @@ public class SendGmailServlet extends HttpServlet {
 				if (j == studentIndex.get(i).intValue()) {
 					studentName.add(studentInfomation.getStudents().get(j));
 					addresses.add(studentInfomation.getMailAddress().get(j));
-					System.out.println(j);
 				}
 			}
 		}
@@ -68,7 +67,7 @@ public class SendGmailServlet extends HttpServlet {
 		String result = "";
 		for (int i = 0; i < studentName.size(); i++)
 			result = gmailSender.send(addresses.get(i), subject, studentName.get(i), classInfomation.getClassName());
-
+		System.out.println(result);
 		String json = new Gson().toJson(result);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
