@@ -1,42 +1,86 @@
-app.controller('StudentInfoController', ['StudentInfoService', 
-    function (StudentInfoService) {
-	    var si = this;
-	    si.showPreview = false; 
-	    si.showJSONPreview = true; 
-	    si.items = [];
-	    si.sheets = [];
+app.controller('StudentInfoController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 
+    function ($scope, $state, $timeout, $rootScope, StudentInfoService) {  
 
-	    si.fileChanged = function(files) {
-	    si.sheets = []; 
-	    si.excelFile = files[0];
-	    //console.log(si.excelFile);
-	    StudentInfoService.readFile(si.excelFile, si.showPreview, si.showJSONPreview)
-	        .then(function (xlsxData) {
-	        	si.sheets = xlsxData.sheets;
-	            console.log(si.sheets);
-	        });
+	    var fileChanged = function(files) {
+	    	init();
+		    $scope.excelFile = files;
+		    StudentInfoService.readFile($scope.excelFile, $scope.showPreview, $scope.showJSONPreview)
+		        .then(function (xlsxData) {
+		        	$scope.sheets = xlsxData.sheets;
+		            $scope.items = $scope.sheets[Object.keys($scope.sheets)[0]]
+		            updateItems();
+		        });
 	    };
 		
 	    // cell data handle
-	    si.updateItems = function() {
-		    si.items = si.sheets[si.selectedSheetName];
-		    si.terms = (Object.keys(si.items[0]));
-		    si.showData = si.items;
+	    var updateItems = function() {
+		    $scope.terms = (Object.keys($scope.items[0]));
+		    $scope.showData = $scope.items;
 		    
-	        for( arr1 = 0; arr1<=si.items.length; arr1++ ) {
-			    for( arr2 =0; arr2<si.terms.length; arr2++ ) {
-			       	si.showData[arr1][arr2] = si.items[arr1][si.terms[arr2]];
-			       	delete si.showData[arr1][si.terms[arr2]];
+	        for( arr1 = 0; arr1<=$scope.items.length; arr1++ ) {
+			    for( arr2 =0; arr2<$scope.terms.length; arr2++ ) {
+			       	$scope.showData[arr1][arr2] = $scope.items[arr1][$scope.terms[arr2]];
+			       	delete $scope.showData[arr1][$scope.terms[arr2]];
 			    }    
 		    }
 	    }
 	   	    
 	    // transfer data to server
-		si.ok = function () {
-			StudentInfoService.transferFile(si.excelFile).then(
-					function(result) {
-						console.log(result);
-					});
+		var uploadFile = function () {
+			$scope.isUploading = true;
+			StudentInfoService.transferFile($scope.excelFile).then(function(result) {
+				$scope.isUploading = false;
+				console.log(result.status)
+				if(result.status) {
+					$scope.isUploadSuccess = true;
+				}
+				else {
+					$scope.isUploadFail = true;
+				}
+			},function(error) {
+				$scope.isUploading = false;
+				$scope.isUploadFail = true;
+			});
 		};
+
+		var init = function() {
+			$scope.isUploading = false;
+	        $scope.isUploadSuccess = false;
+	        $scope.isUploadFail = false;
+	        $scope.showPreview = false; 
+	        $scope.items = [];
+	    	$scope.sheets = [];
+	    	$scope.excelFile = undefined;
+		}
+
+		/*==========================
+            Events
+        ==========================*/
+
+        /*==========================
+            Members
+        ==========================*/
+
+        $scope.isUploading = false;
+        $scope.isUploadSuccess = false;
+        $scope.isUploadFail = false;
+        $scope.showPreview = false; 
+	    $scope.showJSONPreview = true; 
+	    $scope.items = [];
+	    $scope.sheets = [];
+
+        /*==========================
+             Methods
+        ==========================*/
+
+        $scope.fileChanged = fileChanged;
+        $scope.updateItems = updateItems;
+        $scope.uploadFile = uploadFile;
+
+        /*==========================
+             init
+        ==========================*/
+
+        init();
 		
 }]);

@@ -403,6 +403,138 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-size: 20px;
 }
 
+/* line 1, ../scss/templates/_studentInfo.scss */
+.studentinfo {
+  background-color: #E9E9E9;
+  padding-top: 40px;
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+}
+/* line 7, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper {
+  position: relative;
+  width: calc(100% - 40px - 240px);
+  margin-left: 280px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #FFF;
+  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+}
+/* line 14, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info {
+  padding: 25px 40px;
+  height: calc(100vh - 150px);
+}
+/* line 17, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .title {
+  margin-bottom: 20px;
+  height: 57px;
+  font-size: 30px;
+  color: #333;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+/* line 25, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-control-group {
+  display: -webkit-flex;
+  display: flex;
+  height: 35px;
+}
+/* line 28, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-control-group .si-upload {
+  width: calc(100% - 400px);
+  margin-right: 20px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+/* line 34, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-control-group .si-upload .upload-title {
+  width: 80px;
+  height: 34px;
+  text-align: center;
+  line-height: 34px;
+  background-image: linear-gradient(to bottom, #ffb489 0%, #ff7323 100%);
+  display: inline-block;
+  -moz-border-radius: 3px 0 0 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px 0 0 3px;
+  font-size: 14px;
+  color: #FFF;
+}
+/* line 45, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-control-group .si-upload .upload-name {
+  display: inline-block;
+  width: 280px;
+  height: 34px;
+  line-height: 34px;
+  overflow: hidden;
+  vertical-align: top;
+  margin-left: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 14px;
+}
+/* line 58, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-control-group .si-control {
+  width: 300px;
+}
+/* line 60, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-control-group .si-control .form-control {
+  height: 36px;
+}
+/* line 64, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-control-group .upload-btn {
+  margin-left: 20px;
+}
+/* line 67, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-control-group .result-container {
+  display: none;
+  width: 100px;
+}
+/* line 70, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-control-group .result-container .label {
+  height: 24px;
+  line-height: 24px;
+  padding: 0 10px;
+  margin: auto;
+}
+/* line 76, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-control-group .result-container .spin-style {
+  margin: auto;
+}
+/* line 80, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-control-group .result-container.show-result {
+  display: -webkit-flex;
+  display: flex;
+}
+/* line 85, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-div {
+  display: none;
+  position: relative;
+  margin-top: 20px;
+  height: calc(100% - 140px);
+  width: 100%;
+  overflow: hidden;
+}
+/* line 94, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-div table tr th {
+  background-color: rgba(255, 93, 1, 0.8);
+  color: #FFF;
+}
+/* line 101, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .info .si-div.show {
+  display: block;
+  border: 2px solid #ccc;
+  border-top: none;
+}
+
 /* line 6, ../scss/directives/_loading.scss */
 .loader {
   margin: 0 auto;
@@ -531,6 +663,86 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     opacity: 0.2;
   }
 }
+/* ==========================================
+ *  http://codepen.io/Augus/pen/jPaXBo          
+ * ========================================== */
+/* line 6, ../scss/directives/_spin.scss */
+.spin:after {
+  display: block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin: 0 auto;
+  border-top: 2px solid #545a6a;
+  border-bottom: 2px solid #d4d4db;
+  border-left: 2px solid #545a6a;
+  border-right: 2px solid #d4d4db;
+  content: '';
+  opacity: 1;
+  -moz-border-radius: 100%;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+  -moz-animation: rotate 0.6s linear infinite;
+  -webkit-animation: rotate 0.6s linear infinite;
+  animation: rotate 0.6s linear infinite;
+}
+/* line 23, ../scss/directives/_spin.scss */
+.spin.spin-large:after {
+  width: 40px;
+  height: 40px;
+}
+/* line 29, ../scss/directives/_spin.scss */
+.spin.spin-medium:after {
+  width: 20px;
+  height: 20px;
+}
+/* line 35, ../scss/directives/_spin.scss */
+.spin.spin-small:after {
+  width: 12px;
+  height: 12px;
+}
+/* line 42, ../scss/directives/_spin.scss */
+.spin.throbber_green:after {
+  opacity: 1;
+  border-top: 1px solid #42a26e;
+  border-bottom: 1px solid #fff;
+  border-left: 1px solid #42a26e;
+  border-right: 1px solid #fff;
+}
+@-moz-keyframes rotate {
+  0% {
+    -moz-transform: rotateZ(-360deg);
+    transform: rotateZ(-360deg);
+  }
+  100% {
+    -moz-transform: rotateZ(0deg);
+    transform: rotateZ(0deg);
+  }
+}
+@-webkit-keyframes rotate {
+  0% {
+    -webkit-transform: rotateZ(-360deg);
+    transform: rotateZ(-360deg);
+  }
+  100% {
+    -webkit-transform: rotateZ(0deg);
+    transform: rotateZ(0deg);
+  }
+}
+@keyframes rotate {
+  0% {
+    -moz-transform: rotateZ(-360deg);
+    -ms-transform: rotateZ(-360deg);
+    -webkit-transform: rotateZ(-360deg);
+    transform: rotateZ(-360deg);
+  }
+  100% {
+    -moz-transform: rotateZ(0deg);
+    -ms-transform: rotateZ(0deg);
+    -webkit-transform: rotateZ(0deg);
+    transform: rotateZ(0deg);
+  }
+}
 /* line 1, ../scss/directives/_topbar.scss */
 #topbar {
   position: fixed;
@@ -614,33 +826,33 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   background-color: rgba(255, 93, 1, 0.2);
 }
 
-/* line 29, ../scss/style.scss */
+/* line 31, ../scss/style.scss */
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
 
-/* line 33, ../scss/style.scss */
+/* line 35, ../scss/style.scss */
 html, body {
   background-color: #E9E9E9;
 }
 
-/* line 38, ../scss/style.scss */
+/* line 40, ../scss/style.scss */
 body {
   margin: 0;
   padding: 0;
   font-family: "Open Sans", "Lato", "Helvetica Neue", Helvetica, Arial, "PingFang TC", "PingFang SC", "STHeiti", "微軟正黑體", "Microsoft Yahei", sans-serif;
 }
-/* line 42, ../scss/style.scss */
+/* line 44, ../scss/style.scss */
 body h1, body h2, body h3, body h4, body h5, body h6, body .headline {
   margin: 0;
   font-family: "Open Sans", "Lato", "Helvetica Neue", Helvetica, Arial, "PingFang TC", "PingFang SC", "STHeiti", "微軟正黑體", "Microsoft Yahei", sans-serif;
 }
-/* line 45, ../scss/style.scss */
+/* line 47, ../scss/style.scss */
 body h1 > *, body h2 > *, body h3 > *, body h4 > *, body h5 > *, body h6 > *, body .headline > * {
   font-family: "Open Sans", "Lato", "Helvetica Neue", Helvetica, Arial, "PingFang TC", "PingFang SC", "STHeiti", "微軟正黑體", "Microsoft Yahei", sans-serif;
 }
 
-/* line 50, ../scss/style.scss */
+/* line 52, ../scss/style.scss */
 input, div, textarea {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -648,18 +860,18 @@ input, div, textarea {
   font-family: "Open Sans", "Lato", "Helvetica Neue", Helvetica, Arial, "PingFang TC", "PingFang SC", "STHeiti", "微軟正黑體", "Microsoft Yahei", sans-serif;
 }
 
-/* line 54, ../scss/style.scss */
+/* line 56, ../scss/style.scss */
 textarea {
   resize: none;
 }
 
-/* line 58, ../scss/style.scss */
+/* line 60, ../scss/style.scss */
 input:focus, textarea:focus {
   outline-offset: 0;
   outline: none;
 }
 
-/* line 63, ../scss/style.scss */
+/* line 65, ../scss/style.scss */
 .wrapper {
   position: relative;
   max-width: 1260px;
@@ -667,55 +879,32 @@ input:focus, textarea:focus {
   margin: auto;
 }
 
-/* line 70, ../scss/style.scss */
+/* line 72, ../scss/style.scss */
 #container {
   background-color: #E9E9E9;
   margin-top: 70px;
 }
 
-/* line 76, ../scss/style.scss */
+/* line 78, ../scss/style.scss */
 .btn.btn-orange {
   background-image: linear-gradient(to bottom, #ffb489 0%, #ff7323 100%);
   border-color: #FF5D01;
 }
-/* line 79, ../scss/style.scss */
+/* line 81, ../scss/style.scss */
 .btn.btn-orange:hover, .btn.btn-orange:focus {
   background-color: #FF7323;
   outline: none;
 }
-/* line 84, ../scss/style.scss */
+/* line 86, ../scss/style.scss */
 .btn.btn-orange:active:focus {
   border-color: #cd4a00;
 }
 
-/* line 92, ../scss/style.scss */
+/* line 94, ../scss/style.scss */
 .form-group.has-error .form-control {
   border-color: #F14342;
 }
-/* line 94, ../scss/style.scss */
+/* line 96, ../scss/style.scss */
 .form-group.has-error .form-control:focus {
   border-color: #F14342;
 }
-
-
-.si-table, thread, th{
-  margin-top : 15px;
-  border : 1px solid grey;
-  background-color : #4CAF50;
-  color : white;
-   nowrap : nowrap;
-}
-.si-table, tbody, td{
-  width : auto;
-  height : auto;
-  border : 1px solid grey;
-  color : black;
-  nowrap : nowrap;
-}
-
-.si-table td:nth-child(odd) {  
-  background-color : #fffafa;  
-}  
-.si-table td:nth-child(even){  
-  background-color : #e6e6fa;  
-} 

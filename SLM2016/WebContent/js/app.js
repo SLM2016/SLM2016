@@ -121,3 +121,28 @@ app.directive('loading',  ['$timeout', function($timeout){
         templateUrl: "templates/directives/loading.html"
     };
 }]);
+
+app.directive('spin',  ['$timeout', function($timeout){
+  return {
+        restrict: 'E',
+        template: '<div class="spin"></div>',
+        link: function(scope, element, attrs, ctrls) {
+
+            var spinSize = attrs.spinSize;
+            switch (spinSize) {
+                case "large": 
+                    element.children().addClass("spin-large");
+                    break;
+                case "medium": 
+                    element.children().addClass("spin-medium");
+                    break;
+                case "small": 
+                    element.children().addClass("spin-small");
+                    break;
+                default:
+                    element.children().addClass("spin-small");
+                    break;
+            }
+        }
+    };
+}]);
