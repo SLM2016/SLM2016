@@ -53,11 +53,11 @@ public class StudentDBManager {
 			String companyNameAndEIN, String classInfo, String hasScrum, String flowOk, String teamMembers,
 			String comment, String timestamp) throws SQLException {
 		String sql = String.format(
-				"INSERT INTO `student_info`(`name`, `email.`, `nickname`, `phone`, `company`, `apartment`, `title`, `ticket_type`, `vege_meat`, `receipt_type`, `company_name_and_EIN`, `class_info`, `has_scrum`, `flow_ok`, `team_members`, `comment`, `timestamp`) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s') ",
+				"INSERT INTO `student_info`(`name`, `email`, `nickname`, `phone`, `company`, `apartment`, `title`, `ticket_type`, `vege_meat`, `receipt_type`, `company_name_and_EIN`, `class_info`, `has_scrum`, `flow_ok`, `team_members`, `comment`, `timestamp`) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s') ",
 				name, email, nickname, phone, company, apartment, title, ticketType, vegeMeat, receiptType,
 				companyNameAndEIN, classInfo, hasScrum, flowOk, teamMembers, comment, timestamp);
 		String duplicate = String.format(
-				"ON DUPLICATE KEY UPDATE `name` = '%s', `email.` = '%s', `nickname` = '%s', `phone` = '%s', `company` = '%s', `apartment` = '%s', `title` = '%s', `ticket_type` = '%s', `vege_meat` = '%s', `receipt_type` = '%s', `company_name_and_EIN` = '%s', `class_info` = '%s', `has_scrum` = '%s', `flow_ok` = '%s', `team_members` = '%s', `comment` = '%s', `timestamp` = '%s';",
+				"ON DUPLICATE KEY UPDATE `name` = '%s', `email` = '%s', `nickname` = '%s', `phone` = '%s', `company` = '%s', `apartment` = '%s', `title` = '%s', `ticket_type` = '%s', `vege_meat` = '%s', `receipt_type` = '%s', `company_name_and_EIN` = '%s', `class_info` = '%s', `has_scrum` = '%s', `flow_ok` = '%s', `team_members` = '%s', `comment` = '%s', `timestamp` = '%s';",
 				name, email, nickname, phone, company, apartment, title, ticketType, vegeMeat, receiptType,
 				companyNameAndEIN, classInfo, hasScrum, flowOk, teamMembers, comment, timestamp);
 
