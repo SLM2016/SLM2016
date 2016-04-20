@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="æ³°è¿ªè»Ÿé«”TeddySoft" />
-    <meta property="og:description" content="æ³°è¿ªè»Ÿé«”ï¼Œæ•æ·é–‹ç™¼ã€å¯¦å‹™ã€èª²ç¨‹ã€é¡§å•æœå‹™" />
+    <meta property="og:title" content="®õ­}³nÅéTeddySoft" />
+    <meta property="og:description" content="®õ­}³nÅé¡A±Ó±¶¶}µo¡B¹ê°È¡B½Òµ{¡BÅU°ÝªA°È" />
     <link rel="shortcut icon" href="images/favicon.ico">
-    <title>æ³°è¿ªè»Ÿé«”TeddySoft</title>
+    <title>®õ­}³nÅéTeddySoft</title>
 
      <!-- build:css -->
     <link rel="stylesheet" href="css/vendors/bootstrap/bootstrap.css" />
@@ -29,9 +29,8 @@
             <div ui-view="example2" ng-show="isExample2View()"></div>
             <div ui-view="invoice" ng-show="isInvoiceView()"></div>
             <div ui-view="studentInfo" ng-show="studentInfoView()"></div>
-        </div>
-        
-        
+            <div ui-view="example3" ng-show="isExample3View()"></div>
+            <div ui-view="example4" ng-show="isExample4View()"></div>        </div>
     </div>
     
     
@@ -43,6 +42,7 @@
     <script src="js/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="js/vendors/momentjs/moment.min.js"></script>
     <script src="js/vendors/momentjs/lang/zh-tw.js"></script>
+    <script src="js/vendors/jquery-latest.min.js"></script>
 
 
     <script src="js/vendors/lodash.js"></script>
@@ -66,9 +66,8 @@
 
     <script src="js/controllers/example1.js"></script>
     <script src="js/controllers/example2.js"></script>
-    <script src="js/controllers/invoice.js"></script>
+    <script src="js/controllers/certificationController.js"></script>
+    <script src="js/controllers/mailSendingController.js"></script>    <script src="js/controllers/invoice.js"></script>
     <script src="js/controllers/studentInfo.js"></script>
-    
-
 </body>
 </html>

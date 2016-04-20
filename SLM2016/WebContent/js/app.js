@@ -1,9 +1,9 @@
 var STATES = {
     EXAMPLE1: "example1",
     EXAMPLE2: "example2",
-    INVOICE: "invoice",
-    STUDENTINFO: "studentInfo"
-}
+    EXAMPLE3: "example3",
+    EXAMPLE4: "example4"    INVOICE: "invoice",
+    STUDENTINFO: "studentInfo"}
 
 var app = angular.module('app', [
 	'ui.router',
@@ -45,7 +45,24 @@ var app = angular.module('app', [
                 }
             }
         })
-        .state(STATES.INVOICE, {
+state(STATES.EXAMPLE3, {
+            url: "/example3",
+            views: {
+                'example3@': {
+                    templateUrl: "templates/certificationPage.html",
+                    controller: 'CertificationController',
+                }
+            }
+        })
+        .state(STATES.EXAMPLE4, {
+            url: "/example4",
+            views: {
+                'example4@': {
+                    templateUrl: "templates/mailSendingPage.html",
+                    controller: 'MailSendingController',
+                }
+            }
+        }).state(STATES.INVOICE, {
             url: "/invoice",
             views: {
                 'invoice@': {
@@ -63,8 +80,7 @@ var app = angular.module('app', [
                     controller: 'StudentInfoController',
                 }
             }
-        })
-	}
+        })	}
 ])
 
 .controller("RootController",['$scope', '$state', '$timeout', '$rootScope',
@@ -79,14 +95,19 @@ var app = angular.module('app', [
             return $state.includes(STATES.EXAMPLE2);
         }
 
-        var isInvoiceView = function() {
+        var isExample3View = function() {
+            return $state.includes(STATES.EXAMPLE3);
+        }
+
+        var isExample4View = function() {
+            return $state.includes(STATES.EXAMPLE4);
+                var isInvoiceView = function() {
             return $state.includes(STATES.INVOICE);
         }
 
         var studentInfoView = function() {
             return $state.includes(STATES.STUDENTINFO);
-        }
-        var init = function() {
+        }        var init = function() {
             
         }
 
@@ -103,9 +124,9 @@ var app = angular.module('app', [
         ==========================*/
         $scope.isExample1View = isExample1View;
         $scope.isExample2View = isExample2View;
-        $scope.isInvoiceView = isInvoiceView;
+        $scope.isExample3View = isExample3View;
+        $scope.isExample4View = isExample4View;        $scope.isInvoiceView = isInvoiceView;
         $scope.studentInfoView = studentInfoView;
-
         /*==========================
              init
         ==========================*/
