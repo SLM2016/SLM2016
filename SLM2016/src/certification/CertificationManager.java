@@ -44,7 +44,7 @@ public class CertificationManager {
 		graphics.setFont(new Font("DFKai-SB", Font.PLAIN, template.getIdTextSize()));
 		graphics.drawString(certification.getId(), template.getIdLocation().x, template.getIdLocation().y);
 		graphics.setFont(new Font("DFKai-SB", Font.PLAIN, template.getOwnerTextSize()));
-		graphics.drawString(certification.getOwner(), template.getOwnerLocation().x, template.getOwnerLocation().y);
+		graphics.drawString("廖振甫", template.getOwnerLocation().x, template.getOwnerLocation().y);
 		graphics.dispose();
 	}
 
