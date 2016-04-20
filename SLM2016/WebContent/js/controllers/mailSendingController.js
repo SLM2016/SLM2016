@@ -64,9 +64,7 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 			// Import students name into array for mail preview purpose
 			var array_name = inptext_name.split('\n');
 			var checkbox_list = document.getElementsByName('checkbox_name');
-			for (i = 0; i < array_name.length - 1; i++) {
-				document.temp.member.options[i] = null;
-			}
+			document.temp.member.length = 0;
 			for (i = 0; i < array_name.length - 1; i++) {
 				if (checkbox_list[i].checked) {
 					document.temp.member.options[selectedIndexCount] = new Option(
