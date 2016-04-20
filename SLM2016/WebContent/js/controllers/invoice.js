@@ -361,10 +361,77 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
                 $scope.data.totalDollar = undefined;
             }
         }
-        
+		
+		var companyNameService = {
+			API_URL: 'http://company.g0v.ronny.tw/api/',
+			getSingleCompanyName: function(companyData) {
+				if (typeof companyData['公司名稱'] === 'string') {
+					return companyData['公司名稱'];
+				}
+				return companyData['公司名稱'][0];
+			},
+			getCompanyFromId: function(companyId, callback) {
+				$.getJSON(
+					this.API_URL + 'show/' + companyId,
+					function(res) {
+						if (!res || !res.data) {
+							callback();
 
+							return;
+						}
+
+						var companyInfo = {
+							name: this.getSingleCompanyName(res.data),
+							fdi: !!res.data['在中華民國境內營運資金'],
+							id: companyId
+						};
+
+					callback(companyInfo);
+					}.bind(this)
+				);
+			}
+		}
+        
+		var getCompanyNameIdWidget = function getCompanyNameIdWidget(config) {
+			this.config = config = config || {};
+			config.companyIdElement =
+				config.companyIdElement || document.getElementById('companyid');
+			config.companyNameElement =
+				config.companyNameElement || document.getElementById('companyName');
+			
+			config.companyIdElement.addEventListener('blur', this);
+			
+			this.companyNameTimer = undefined;
+			this.apiRequestId = 0;
+		}
+		
+		getCompanyNameIdWidget.prototype.handleEvent = function(evt) {
+			this.checkCompanyId(evt.type === 'blur');
+		}
+		
+		getCompanyNameIdWidget.prototype.checkCompanyId = function(blur) {
+			var $id = $(this.config.companyIdElement);
+			var $name = $(this.config.companyNameElement);
+			var $checking = $(this.config.checkingElement);
+			var val = $.trim($id.val());
+			
+			clearTimeout(this.companyNameTimer);
+			this.apiRequestId++;
+			
+			var apiRequestId = this.apiRequestId;
+
+			companyNameService.getCompanyFromId(val, function(info) {
+				if (apiRequestId !== this.apiRequestId)
+					return;
+
+				if ($name.val() !== info.name)
+					$name.val(info.name);
+			}.bind(this));
+		}
+		
         var init = function() {
             setTodayString();
+			new getCompanyNameIdWidget();
         }
 
 

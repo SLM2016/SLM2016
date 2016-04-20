@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="泰迪軟體TeddySoft" />
-    <meta property="og:description" content="泰迪軟體，敏捷開發、實務、課程、顧問服務" />
+    <meta property="og:title" content="���}�n��TeddySoft" />
+    <meta property="og:description" content="���}�n��A�ӱ��}�o�B��ȡB�ҵ{�B�U�ݪA��" />
     <link rel="shortcut icon" href="images/favicon.ico">
     <title>泰迪軟體TeddySoft</title>
 
@@ -25,13 +25,14 @@
     <div id="container">
         <div class="wrapper">
             <nav-sidebar></nav-sidebar>
+            <div ui-view="home" ng-show="isHomeView()"></div>
             <div ui-view="example1" ng-show="isExample1View()"></div>
             <div ui-view="example2" ng-show="isExample2View()"></div>
             <div ui-view="invoice" ng-show="isInvoiceView()"></div>
             <div ui-view="studentInfo" ng-show="studentInfoView()"></div>
+            <div ui-view="example3" ng-show="isExample3View()"></div>
+            <div ui-view="example4" ng-show="isExample4View()"></div>        
         </div>
-        
-        
     </div>
     
     
@@ -43,6 +44,7 @@
     <script src="js/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="js/vendors/momentjs/moment.min.js"></script>
     <script src="js/vendors/momentjs/lang/zh-tw.js"></script>
+    <script src="js/vendors/jquery-latest.min.js"></script>
 
 
     <script src="js/vendors/lodash.js"></script>
@@ -66,9 +68,8 @@
 
     <script src="js/controllers/example1.js"></script>
     <script src="js/controllers/example2.js"></script>
-    <script src="js/controllers/invoice.js"></script>
+    <script src="js/controllers/certificationController.js"></script>
+    <script src="js/controllers/mailSendingController.js"></script>    <script src="js/controllers/invoice.js"></script>
     <script src="js/controllers/studentInfo.js"></script>
-    
-
 </body>
 </html>
