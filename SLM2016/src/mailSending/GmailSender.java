@@ -27,6 +27,7 @@ public class GmailSender {
 		props_.put("mail.smtp.auth", "true");
 		props_.put("mail.smtp.starttls.enable", "true");
 		props_.put("mail.smtp.port", port_);
+		props_.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 		session_ = Session.getInstance(props_, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, password);

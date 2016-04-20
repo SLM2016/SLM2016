@@ -2,12 +2,14 @@ var STATES = {
     EXAMPLE1: "example1",
     EXAMPLE2: "example2",
     EXAMPLE3: "example3",
-    EXAMPLE4: "example4"    INVOICE: "invoice",
-    STUDENTINFO: "studentInfo"}
+    EXAMPLE4: "example4",
+    INVOICE: "invoice",
+    STUDENTINFO: "studentInfo"
+}
 
 var app = angular.module('app', [
-	'ui.router',
-	'ct.ui.router.extras',
+    'ui.router',
+    'ct.ui.router.extras',
     'ngScrollbar',
     'ngFileUpload'
 ])
@@ -45,7 +47,7 @@ var app = angular.module('app', [
                 }
             }
         })
-state(STATES.EXAMPLE3, {
+        .state(STATES.EXAMPLE3, {
             url: "/example3",
             views: {
                 'example3@': {
@@ -62,7 +64,9 @@ state(STATES.EXAMPLE3, {
                     controller: 'MailSendingController',
                 }
             }
-        }).state(STATES.INVOICE, {
+        })
+
+	.state(STATES.INVOICE, {
             url: "/invoice",
             views: {
                 'invoice@': {
@@ -80,7 +84,8 @@ state(STATES.EXAMPLE3, {
                     controller: 'StudentInfoController',
                 }
             }
-        })	}
+        })	
+	}
 ])
 
 .controller("RootController",['$scope', '$state', '$timeout', '$rootScope',
@@ -101,13 +106,17 @@ state(STATES.EXAMPLE3, {
 
         var isExample4View = function() {
             return $state.includes(STATES.EXAMPLE4);
-                var isInvoiceView = function() {
+        }
+        
+        var isInvoiceView = function() {
             return $state.includes(STATES.INVOICE);
         }
 
         var studentInfoView = function() {
             return $state.includes(STATES.STUDENTINFO);
-        }        var init = function() {
+        }        
+
+        var init = function() {
             
         }
 
@@ -125,8 +134,10 @@ state(STATES.EXAMPLE3, {
         $scope.isExample1View = isExample1View;
         $scope.isExample2View = isExample2View;
         $scope.isExample3View = isExample3View;
-        $scope.isExample4View = isExample4View;        $scope.isInvoiceView = isInvoiceView;
+        $scope.isExample4View = isExample4View;
+        $scope.isInvoiceView = isInvoiceView;
         $scope.studentInfoView = studentInfoView;
+
         /*==========================
              init
         ==========================*/
@@ -140,30 +151,5 @@ app.directive('loading',  ['$timeout', function($timeout){
   return {
         restrict: 'E',
         templateUrl: "templates/directives/loading.html"
-    };
-}]);
-
-app.directive('spin',  ['$timeout', function($timeout){
-  return {
-        restrict: 'E',
-        template: '<div class="spin"></div>',
-        link: function(scope, element, attrs, ctrls) {
-
-            var spinSize = attrs.spinSize;
-            switch (spinSize) {
-                case "large": 
-                    element.children().addClass("spin-large");
-                    break;
-                case "medium": 
-                    element.children().addClass("spin-medium");
-                    break;
-                case "small": 
-                    element.children().addClass("spin-small");
-                    break;
-                default:
-                    element.children().addClass("spin-small");
-                    break;
-            }
-        }
     };
 }]);
