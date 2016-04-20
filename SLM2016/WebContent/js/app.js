@@ -1,4 +1,5 @@
 var STATES = {
+    HOME: "home",
     EXAMPLE1: "example1",
     EXAMPLE2: "example2",
     EXAMPLE3: "example3",
@@ -22,12 +23,22 @@ var app = angular.module('app', [
         $sceProvider.enabled(false);
 
         // Start Page
-        $urlRouterProvider.otherwise("/example1");
+        $urlRouterProvider.otherwise("/");
 
         $stickyStateProvider.enableDebug(false);
 
         // ui view setting
         $stateProvider
+
+        .state(STATES.HOME, {
+            url: "/",
+            views: {
+                'home@': {
+                    templateUrl: "templates/home.html",
+                    controller: 'HomeController',
+                }
+            }
+        })
 
         .state(STATES.EXAMPLE1, {
             url: "/example1",
@@ -91,6 +102,10 @@ var app = angular.module('app', [
 .controller("RootController",['$scope', '$state', '$timeout', '$rootScope',
 	function($scope, $state, $timeout, $rootScope){
 
+        var isHomeView = function() {
+            return $state.includes(STATES.HOME);
+        }
+
         var isExample1View = function() {
             
             return $state.includes(STATES.EXAMPLE1);
@@ -131,6 +146,8 @@ var app = angular.module('app', [
         /*==========================
              Methods
         ==========================*/
+
+        $scope.isHomeView = isHomeView;
         $scope.isExample1View = isExample1View;
         $scope.isExample2View = isExample2View;
         $scope.isExample3View = isExample3View;

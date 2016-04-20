@@ -25,12 +25,14 @@
     <div id="container">
         <div class="wrapper">
             <nav-sidebar></nav-sidebar>
+            <div ui-view="home" ng-show="isHomeView()"></div>
             <div ui-view="example1" ng-show="isExample1View()"></div>
             <div ui-view="example2" ng-show="isExample2View()"></div>
             <div ui-view="invoice" ng-show="isInvoiceView()"></div>
             <div ui-view="studentInfo" ng-show="studentInfoView()"></div>
             <div ui-view="example3" ng-show="isExample3View()"></div>
-            <div ui-view="example4" ng-show="isExample4View()"></div>        </div>
+            <div ui-view="example4" ng-show="isExample4View()"></div>        
+        </div>
     </div>
     
     
