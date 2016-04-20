@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,8 +30,9 @@ public class CertificationServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String data=URLDecoder.decode(request.getReader().readLine(),"utf-8");
 		Gson son=new Gson();
-		Certification certification=son.fromJson(request.getReader().readLine(), Certification.class);
+		Certification certification=son.fromJson(data, Certification.class);
 		TemplateCertificationMaker templateCertificationMaker = new TemplateCertificationMaker();
 		TemplateCertification template = templateCertificationMaker.MakeTemplateCertification("");
 

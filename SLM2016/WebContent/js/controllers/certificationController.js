@@ -7,7 +7,6 @@ app.controller("CertificationController",['$scope', '$state', '$timeout', '$root
 			var data=new Object();
 			data.id_=id;
 			data.owner_=name;
-			console.log(name);
 			
 			$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
 			.done(function(data)
