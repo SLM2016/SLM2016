@@ -32,17 +32,35 @@ public class StudentDBManager {
 
 	public ArrayList<HashMap> getStudents() throws SQLException {
 		ArrayList<HashMap> arrayList = new ArrayList<HashMap>();
-		String sql = "select * from `student`;";
+		String sql = "select * from `student_info`;";
 		ResultSet result = slmDBUtility.selectSQL(sql);
 		while (result.next()) {
 			// Retrieve by column name
 			HashMap map = new HashMap();
 			int id = result.getInt("id");
 			String name = result.getString("name");
-			String phone = result.getString("phone");
+			String phoneNumber = result.getString("phone");
 			map.put("id", id);
 			map.put("name", name);
-			map.put("phone", phone);
+			map.put("phone", phoneNumber);
+			arrayList.add(map);
+		}
+		return arrayList;
+	}
+
+	public ArrayList<HashMap> getStudentByPhone(String phone) throws SQLException {
+		ArrayList<HashMap> arrayList = new ArrayList<HashMap>();
+		String sql = String.format("select * from `student_info` where `phone` = '%s';", phone);
+		ResultSet result = slmDBUtility.selectSQL(sql);
+		while (result.next()) {
+			// Retrieve by column name
+			HashMap map = new HashMap();
+			int id = result.getInt("id");
+			String name = result.getString("name");
+			String phoneNumber = result.getString("phone");
+			map.put("id", id);
+			map.put("name", name);
+			map.put("phone", phoneNumber);
 			arrayList.add(map);
 		}
 		return arrayList;
@@ -62,6 +80,15 @@ public class StudentDBManager {
 				companyNameAndEIN, classInfo, hasScrum, flowOk, teamMembers, comment, timestamp);
 
 		if (slmDBUtility.insertSQL((sql + duplicate))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean deleteStudent(String phone) throws SQLException {
+		String sql = String.format("DELETE FROM `student_info` WHERE `student_info`.`phone` = '%s'", phone);
+		if (slmDBUtility.deleteSQL(sql)) {
 			return true;
 		} else {
 			return false;
