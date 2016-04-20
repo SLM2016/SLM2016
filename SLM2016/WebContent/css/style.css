@@ -64,6 +64,42 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 
+/* line 1, ../scss/templates/_home.scss */
+.home {
+  background-color: #E9E9E9;
+  padding-top: 40px;
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+}
+/* line 7, ../scss/templates/_home.scss */
+.home .inner-wrapper {
+  position: relative;
+  width: calc(100% - 40px - 240px);
+  margin-left: 280px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #FFF;
+  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+}
+/* line 14, ../scss/templates/_home.scss */
+.home .inner-wrapper .info {
+  padding: 25px 40px;
+  height: 1000px;
+}
+/* line 17, ../scss/templates/_home.scss */
+.home .inner-wrapper .info .title {
+  margin-bottom: 20px;
+  height: 57px;
+  font-size: 30px;
+  color: #333;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+
 /* line 1, ../scss/templates/_example.scss */
 .example {
   background-color: #E9E9E9;
@@ -826,33 +862,33 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   background-color: rgba(255, 93, 1, 0.2);
 }
 
-/* line 31, ../scss/style.scss */
+/* line 32, ../scss/style.scss */
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
 
-/* line 35, ../scss/style.scss */
+/* line 36, ../scss/style.scss */
 html, body {
   background-color: #E9E9E9;
 }
 
-/* line 40, ../scss/style.scss */
+/* line 41, ../scss/style.scss */
 body {
   margin: 0;
   padding: 0;
   font-family: "Open Sans", "Lato", "Helvetica Neue", Helvetica, Arial, "PingFang TC", "PingFang SC", "STHeiti", "微軟正黑體", "Microsoft Yahei", sans-serif;
 }
-/* line 44, ../scss/style.scss */
+/* line 45, ../scss/style.scss */
 body h1, body h2, body h3, body h4, body h5, body h6, body .headline {
   margin: 0;
   font-family: "Open Sans", "Lato", "Helvetica Neue", Helvetica, Arial, "PingFang TC", "PingFang SC", "STHeiti", "微軟正黑體", "Microsoft Yahei", sans-serif;
 }
-/* line 47, ../scss/style.scss */
+/* line 48, ../scss/style.scss */
 body h1 > *, body h2 > *, body h3 > *, body h4 > *, body h5 > *, body h6 > *, body .headline > * {
   font-family: "Open Sans", "Lato", "Helvetica Neue", Helvetica, Arial, "PingFang TC", "PingFang SC", "STHeiti", "微軟正黑體", "Microsoft Yahei", sans-serif;
 }
 
-/* line 52, ../scss/style.scss */
+/* line 53, ../scss/style.scss */
 input, div, textarea {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -860,18 +896,18 @@ input, div, textarea {
   font-family: "Open Sans", "Lato", "Helvetica Neue", Helvetica, Arial, "PingFang TC", "PingFang SC", "STHeiti", "微軟正黑體", "Microsoft Yahei", sans-serif;
 }
 
-/* line 56, ../scss/style.scss */
+/* line 57, ../scss/style.scss */
 textarea {
   resize: none;
 }
 
-/* line 60, ../scss/style.scss */
+/* line 61, ../scss/style.scss */
 input:focus, textarea:focus {
   outline-offset: 0;
   outline: none;
 }
 
-/* line 65, ../scss/style.scss */
+/* line 66, ../scss/style.scss */
 .wrapper {
   position: relative;
   max-width: 1260px;
@@ -879,32 +915,32 @@ input:focus, textarea:focus {
   margin: auto;
 }
 
-/* line 72, ../scss/style.scss */
+/* line 73, ../scss/style.scss */
 #container {
   background-color: #E9E9E9;
   margin-top: 70px;
 }
 
-/* line 78, ../scss/style.scss */
+/* line 79, ../scss/style.scss */
 .btn.btn-orange {
   background-image: linear-gradient(to bottom, #ffb489 0%, #ff7323 100%);
   border-color: #FF5D01;
 }
-/* line 81, ../scss/style.scss */
+/* line 82, ../scss/style.scss */
 .btn.btn-orange:hover, .btn.btn-orange:focus {
   background-color: #FF7323;
   outline: none;
 }
-/* line 86, ../scss/style.scss */
+/* line 87, ../scss/style.scss */
 .btn.btn-orange:active:focus {
   border-color: #cd4a00;
 }
 
-/* line 94, ../scss/style.scss */
+/* line 95, ../scss/style.scss */
 .form-group.has-error .form-control {
   border-color: #F14342;
 }
-/* line 96, ../scss/style.scss */
+/* line 97, ../scss/style.scss */
 .form-group.has-error .form-control:focus {
   border-color: #F14342;
 }
