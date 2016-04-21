@@ -373,7 +373,7 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 					return companyData['名稱'];
 				}
 
-				return companyData['公司名稱'][0];
+				return 'Can\'t found any company.';
 			},
 			getCompanyFromId: function(companyId, callback) {
 				$.getJSON(
