@@ -402,6 +402,7 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 			config.companyNameElement =
 				config.companyNameElement || document.getElementById('companyName');
 			
+			config.companyIdElement.addEventListener('input', this);
 			config.companyIdElement.addEventListener('blur', this);
 			
 			this.companyNameTimer = undefined;
