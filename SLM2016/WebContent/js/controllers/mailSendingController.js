@@ -2,7 +2,6 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 	function($scope, $state, $timeout, $rootScope){
 
 		var selectedIndexCount = 0;
-
 		function e_mail_preview(Name, Course) {
 			var temp_name = document.createElement('temp');
 			temp.previewBox.value = 'Hi ' + Name + ',\n' + ' 您好，歡迎報名' + Course
@@ -20,8 +19,11 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 		var updateStudentCheckList=function() {
 			var index=0;
 			var studentCheckList = document.getElementById("studentName");
+			var preview_submit_disable = document.getElementById("preview_submit");
+			var send_submit_disable = document.getElementById("send_submit");
 			studentCheckList.innerHTML = "";
-
+			preview_submit_disable.disabled = "";
+			send_submit_disable.disabled = "disabled";
 			for ( var student in studentArray[index]) {
 				if (studentArray[index].hasOwnProperty(student)) {
 					var studentName = studentArray[index][student];
@@ -31,10 +33,15 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 					checkbox.value = studentName;
 					checkbox.checked = true;
 					studentCheckList.appendChild(checkbox);
-
 					var label = document.createElement('label')
 					label.htmlFor = studentName;
 					label.appendChild(document.createTextNode(studentName));
+					/*
+					  var Mail_Address = Mail_Addresses[option]; 
+					  var Mail_Address_label = document.createElement('Mail_Address_label')
+					  Mail_Address_label.htmlFor= Mail_Address;
+					  Mail_Address_label.appendChild(document.createTextNode(Mail_Address));
+					*/
 					studentCheckList.appendChild(label);
 					studentCheckList.appendChild(document.createElement("br"));
 				}
@@ -59,6 +66,8 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 			selectedIndexCount = 0;
 			var studentCheckList = document.getElementById("studentName").childNodes[1].firstChild;
 			var inpText_Name = studentCheckList.parentNode;
+			var send_submit_disable = document.getElementById("send_submit");
+			send_submit_disable.disabled = "";
 			// Get students name
 			var inptext_name = inpText_Name.parentNode.innerText;
 			// Import students name into array for mail preview purpose
@@ -101,6 +110,7 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 			}
 			if (checked == 0)
 				window.alert("Please choose Recipient!!");
+			generatePreviewMail();
 		}
 
         var init = function() {
@@ -108,8 +118,8 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 			getClassStudentname();
         }
         
-        $scope.selectedValue1=0;
-        $scope.selectedValue2=0;
+        $scope.selectedValue1;
+        $scope.selectedValue2;
         $scope.generatePreviewMail = generatePreviewMail;
         $scope.sendmail = sendmail;
         $scope.updateMailContent = updateMailContent;
