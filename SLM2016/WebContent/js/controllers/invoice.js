@@ -368,9 +368,11 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 				if (typeof companyData['公司名稱'] === 'string') {
 					return companyData['公司名稱'];
 				}
+
 				if (typeof companyData['名稱'] === 'string') {
 					return companyData['名稱'];
 				}
+
 				return companyData['公司名稱'][0];
 			},
 			getCompanyFromId: function(companyId, callback) {
@@ -379,7 +381,6 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 					function(res) {
 						if (!res || !res.data) {
 							callback();
-				
 							return;
 						}
 
@@ -439,7 +440,6 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 					$name.val(info.name);
 					$scope.data.company = info.name;
 				}
-					
 			}.bind(this));
 		}
 		
