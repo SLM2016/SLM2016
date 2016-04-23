@@ -15,7 +15,7 @@ public class StudentSelectedIndexTest {
 
 	@Before
 	public void setUp() throws Exception {
-		sendStudentIndex = new StudentSelectedIndex();
+		sendStudentIndex = new StudentSelectedIndex(0);
 	}
 
 	@After
@@ -39,4 +39,8 @@ public class StudentSelectedIndexTest {
 		assertEquals(sendStudentIndex.getIndexes().get(0).intValue(), 0);
 	}
 
+	@Test
+	public void testGetClassIndex() {
+		assertEquals(sendStudentIndex.getClassIndex(), 0);
+	}
 }
