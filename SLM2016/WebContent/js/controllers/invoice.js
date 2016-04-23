@@ -368,7 +368,12 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 				if (typeof companyData['公司名稱'] === 'string') {
 					return companyData['公司名稱'];
 				}
-				return companyData['公司名稱'][0];
+
+				if (typeof companyData['名稱'] === 'string') {
+					return companyData['名稱'];
+				}
+
+				return 'Can\'t found any company.';
 			},
 			getCompanyFromId: function(companyId, callback) {
 				$.getJSON(
@@ -376,7 +381,6 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 					function(res) {
 						if (!res || !res.data) {
 							callback();
-
 							return;
 						}
 
@@ -399,6 +403,7 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 			config.companyNameElement =
 				config.companyNameElement || document.getElementById('companyName');
 			
+			config.companyIdElement.addEventListener('input', this);
 			config.companyIdElement.addEventListener('blur', this);
 			
 			this.companyNameTimer = undefined;
@@ -421,11 +426,20 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 			var apiRequestId = this.apiRequestId;
 
 			companyNameService.getCompanyFromId(val, function(info) {
-				if (apiRequestId !== this.apiRequestId)
-					return;
 
-				if ($name.val() !== info.name)
+				if (apiRequestId !== this.apiRequestId) {
+					$scope.data.company = "";
+					return;
+				}
+				
+				if (typeof(info) === "undefined"){
+					return;
+				}
+					
+				if ($name.val() !== info.name) {
 					$name.val(info.name);
+					$scope.data.company = info.name;
+				}
 			}.bind(this));
 		}
 		
