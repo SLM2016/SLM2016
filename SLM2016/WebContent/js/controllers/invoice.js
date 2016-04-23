@@ -2,7 +2,18 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 	function($scope, $state, $timeout, $rootScope){
 
         var changeInvoiceType = function(type) {
-            clearInvoiceResult();
+            $scope.isCompanyIdNotFinished = false;
+            $scope.isCompanyIdError = false;
+            $scope.isCompanyIdSuccess = false;
+
+            $scope.isCompanyEmpty = false;
+            $scope.isCompanyIdEmpty = false;
+            $scope.isSalesDollarEmpty = false;
+            $scope.isTotalDollarEmpty = false;
+            $scope.isItemNameEmpty = false;
+            $scope.isItemNumberEmpty = false;
+            $scope.isItemDollarEmpty = false;
+            $scope.isDoubleResultShow = $scope.isResultShow;
             $scope.invoiceType = type;
         }
 
@@ -216,10 +227,10 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
                 }, 100);
             }
             else {
-                $scope.data.itemDollar = $scope.data.salesDollar;
+                $scope.data.itemDollar = Math.round($scope.data.salesDollar / $scope.data.itemNumber);
                 $scope.data.businessTax = Math.round($scope.data.salesDollar * $scope.data.taxRate / 100);
                 $scope.data.totalDollar = parseInt($scope.data.businessTax) + parseInt($scope.data.salesDollar);
-                $scope.data.itemTotalDollar = $scope.data.itemNumber * $scope.data.itemDollar;
+                $scope.data.itemTotalDollar = $scope.data.salesDollar;
                 getNumWordArray($scope.data.totalDollar);
             }
         }
@@ -319,7 +330,7 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
         }
 
         var onItemChange = function() {
-            if($scope.data.itemDollar.length > 9) {
+            if($scope.data.itemDollar && $scope.data.itemDollar.length > 9) {
                 $scope.data.itemDollar = $scope.data.itemDollar.substring(0, 9);
                 return;
             }
@@ -442,10 +453,43 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
 				}
 			}.bind(this));
 		}
+
+        var openDatePicker = function() {
+            $scope.isDatePickerOpen = true;
+        }
+        var onDateTimeChange = function() {
+            var dd = $scope.data.time.getDate();
+            var mm = $scope.data.time.getMonth() + 1;
+            var yyyy = $scope.data.time.getFullYear() - 1911;
+            $scope.todayDD = dd;
+            $scope.todayMM = mm;
+            $scope.todayYY = yyyy;
+            var dateWord = ['O','一','二','三','四','五','六','七','八','九','十','十一','十二'];
+            if(mm == 1 || mm == 2) {
+                $scope.invoiceMonth = dateWord[1] + "、" + dateWord[2];
+            }
+            else if(mm == 3 || mm == 4) {
+                $scope.invoiceMonth = dateWord[3] + "、" + dateWord[4];
+            }
+            else if(mm == 5 || mm == 6) {
+                $scope.invoiceMonth = dateWord[5] + "、" + dateWord[6];
+            }
+            else if(mm == 7 || mm == 8) {
+                $scope.invoiceMonth = dateWord[7] + "、" + dateWord[8];
+            }
+            else if(mm == 9 || mm == 10) {
+                $scope.invoiceMonth = dateWord[9] + "、" + dateWord[10];
+            }
+            else if(mm == 11 || mm == 12) {
+                $scope.invoiceMonth = dateWord[11] + "、" + dateWord[12];
+            }
+            var yyArray = yyyy.toString().split("");
+            $scope.invoiceYear = dateWord[yyArray[0]]  + " " + dateWord[yyArray[1]] + " " + dateWord[yyArray[2]];
+        }
 		
         var init = function() {
-            setTodayString();
 			new getCompanyNameIdWidget();
+            setTodayString();
         }
 
 
@@ -476,8 +520,8 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
             itemName: "教育訓練",
             itemNumber: 1,
             itemDollar: undefined,
-            itemTotalDollar: undefined
-
+            itemTotalDollar: undefined,
+            time: new Date()
         }
         $scope.totalWord = [
             {
@@ -529,6 +573,12 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
         $scope.isItemNameEmpty = false;
         $scope.isItemNumberEmpty = false;
         $scope.isItemDollarEmpty = false;
+
+        $scope.isDatePickerOpen = false;
+        $scope.format = 'yyyy 年 MM 月 dd 日';
+        $scope.dateOptions = {
+            locale: 'ru'
+        };
         /*==========================
              Methods
         ==========================*/
@@ -546,6 +596,9 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
         $scope.onTaxRateChange = onTaxRateChange;
         $scope.onItemChange = onItemChange;
         $scope.onDoubleItemChange = onDoubleItemChange;
+
+        $scope.openDatePicker = openDatePicker;
+        $scope.onDateTimeChange = onDateTimeChange;
 
         /*==========================
              init

@@ -5,14 +5,13 @@
                 <div class="topbar-item" ng-click="changeInvoiceType('THREE')">三聯式</div>
                 <div class="topbar-item" ng-click="changeInvoiceType('TWO')">二聯式</div>
                 <div class="switcher" ng-class="{'right': invoiceType == 'TWO', 'left': invoiceType == 'THREE'}"></div>
-                <div class="date-info">今天日期：{{today}}</div>
             </div>
             <div class="invoice-info">
                 <!-- 三聯式 -->
                 <div class="invoice" ng-show="invoiceType == 'THREE'">
 					<div class="invoice-input">
 						<div class="input-content">
-							<div class="input-title">買受人</div>
+							<div class="input-title">基本資料</div>
 							<div class="input-wrapper company">
 								<div class="form-group id" ng-class="{'has-error': isCompanyIdEmpty}">
 								    <label for="companyid">統一編號</label>
@@ -24,6 +23,15 @@
 								<div class="form-group name" ng-class="{'has-error': isCompanyEmpty}">
 								    <label for="companyName">公司名稱</label>
 								    <input type="text" class="form-control" id="companyName" placeholder="請輸入公司名稱" ng-model="data.company">
+								</div>
+								<div class="form-group date" ng-class="{'has-error': isCompanyEmpty}">
+								    <label for="invoicetime">時間</label>
+								    <div class="input-group">
+								     	<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="data.time" is-open="isDatePickerOpen" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-change="onDateTimeChange()">
+								    	<span class="input-group-btn">
+							            	<button type="button" class="btn btn-default" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
+							        	</span>
+								    </div>
 								</div>
 							</div>
 						</div>

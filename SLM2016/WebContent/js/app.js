@@ -12,7 +12,8 @@ var app = angular.module('app', [
     'ui.router',
     'ct.ui.router.extras',
     'ngScrollbar',
-    'ngFileUpload'
+    'ngFileUpload',
+    'ui.bootstrap'
 ])
 
 .config(['$sceProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$animateProvider', '$stickyStateProvider',
