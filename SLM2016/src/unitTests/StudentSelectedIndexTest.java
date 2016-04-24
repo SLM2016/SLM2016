@@ -1,7 +1,5 @@
 package unitTests;
 
-
-
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -15,7 +13,7 @@ public class StudentSelectedIndexTest {
 
 	@Before
 	public void setUp() throws Exception {
-		sendStudentIndex = new StudentSelectedIndex(0);
+		sendStudentIndex = new StudentSelectedIndex(0, "test@test");
 	}
 
 	@After
@@ -28,6 +26,8 @@ public class StudentSelectedIndexTest {
 		sendStudentIndex.add(2);
 		sendStudentIndex.add(6);
 		StudentSelectedIndex cloneObject = sendStudentIndex.clone();
+		assertEquals(cloneObject.getClassIndex(), 0);
+		assertEquals(cloneObject.getCCAddresses(), "test@test");
 		assertEquals(cloneObject.getIndexes().get(0).intValue(), 0);
 		assertEquals(cloneObject.getIndexes().get(1).intValue(), 2);
 		assertEquals(cloneObject.getIndexes().get(2).intValue(), 6);
@@ -42,5 +42,10 @@ public class StudentSelectedIndexTest {
 	@Test
 	public void testGetClassIndex() {
 		assertEquals(sendStudentIndex.getClassIndex(), 0);
+	}
+
+	@Test
+	public void testGetCCAddresses() {
+		assertEquals(sendStudentIndex.getCCAddresses(), "test@test");
 	}
 }

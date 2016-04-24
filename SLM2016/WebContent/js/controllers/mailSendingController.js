@@ -140,6 +140,10 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 			if (checked == 1) {
 				data.classIndex_ = parseInt(document.getElementById("courseCheckbox").value);
 				data.indexes_ = data_buffer;
+				//-----------------------------------------
+				//prepare ccAddresses
+				data.ccAddresses_ = "";
+				//-----------------------------------------
 				$.post("/SLM2016/SendGmailServlet",
 						JSON.stringify(data)).done(function(data) {
 						window.alert(data);

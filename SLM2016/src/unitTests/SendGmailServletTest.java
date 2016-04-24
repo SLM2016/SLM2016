@@ -81,7 +81,7 @@ public class SendGmailServletTest {
 		HttpServletRequest requestMock = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse responseMock = Mockito.mock(HttpServletResponse.class);
 
-		Reader data = new StringReader("{\"classIndex_\":\"2\",indexes_: [0]}");
+		Reader data = new StringReader("{\"classIndex_\":\"2\",indexes_: [0],\"ccAddresses_\":\"\"}");
 		Mockito.when(requestMock.getReader()).thenReturn(new BufferedReader(data));
 
 		ServletContext context = Mockito.mock(ServletContext.class, Mockito.RETURNS_DEEP_STUBS);

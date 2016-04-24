@@ -65,6 +65,7 @@ public class SendGmailServlet extends HttpServlet {
 		Gson gson = new Gson();
 		StudentSelectedIndex sendStudentIndex = gson.fromJson(requestString, StudentSelectedIndex.class);
 		int index = sendStudentIndex.getClassIndex();
+		String ccAddresses = sendStudentIndex.getCCAddresses();
 		List<Integer> studentIndex = sendStudentIndex.getIndexes();
 		List<String> studentName = new ArrayList<String>();
 		List<String> addresses = new ArrayList<String>();
@@ -83,9 +84,11 @@ public class SendGmailServlet extends HttpServlet {
 		GmailSender gmailSender = new GmailSender(username, password);
 		String subject = "泰迪軟體課程通知";
 		String result = "";
-		for (int i = 0; i < studentName.size(); i++)
-			result = gmailSender.send(addresses.get(i), subject, studentName.get(i),
-					classes_.getClasses().get(index).getClassName());
+		for (int i = 0; i < studentName.size(); i++) {
+			String text = "Hi " + studentName.get(i) + "，\n您好，歡迎報名" + classes_.getClasses().get(index).getClassName()
+					+ "，以下是您的上課通知，請參考。\n若有任何問題，歡迎隨時聯絡我們。\n泰迪軟體 Erica";
+			result = gmailSender.send(addresses.get(i), ccAddresses, subject, text);
+		}
 		String json = new Gson().toJson(result);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
