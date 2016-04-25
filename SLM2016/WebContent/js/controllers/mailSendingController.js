@@ -17,6 +17,22 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 			});
 		}
 		
+		function setCCAddressCheckList(){
+			for(i = 0; i < 3; i++){
+				var ccCheckList = document.getElementById("carbonCopyName");
+				var ccCheckbox = document.createElement("input");
+				ccCheckbox.type = "checkbox";
+				ccCheckbox.name = "checkbox_name";
+				ccCheckbox.value = i;
+				ccCheckbox.checked = true;
+				ccCheckList.appendChild(ccCheckbox);
+				var label = document.createElement('label')
+				label.appendChild(document.createTextNode(ccAddresses[i]));
+				ccCheckList.appendChild(label);
+				ccCheckList.appendChild(document.createElement("br"));
+			}
+		} 
+		
 		function getStudentnameByClassIndex() {
 			var data = document.myForm.courseCheckbox.selectedIndex;
 //			$.post("/SLM2016/SendGmailServlet?isSend=false",JSON.stringify(data)).done(function(data) {
@@ -140,10 +156,21 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 			if (checked == 1) {
 				data.classIndex_ = parseInt(document.getElementById("courseCheckbox").value);
 				data.indexes_ = data_buffer;
-				//-----------------------------------------
+
 				//prepare ccAddresses
-				data.ccAddresses_ = "";
-				//-----------------------------------------
+				var ccCheckList = document.getElementsByName('carbonCopyName');
+				var checkbox_list = document.getElementsByName('checkbox_name');
+				var ccAddressesString = "";
+				for (i = 0; i < 3; i++) {
+					if (checkbox_list[i].checked) {
+						ccAddressesString += ccAddresses[i];
+						ccAddressesString += ",";
+					}
+				}
+				ccAddressesString = ccAddressesString.substr(0, ccAddressesString.length - 1);
+				console.log(ccAddressesString);
+				data.ccAddresses_ = ccAddressesString;
+				
 				$.post("/SLM2016/SendGmailServlet",
 						JSON.stringify(data)).done(function(data) {
 						window.alert(data);
@@ -158,7 +185,9 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
         	classArray = new Array();
 			studentNameArray = new Array();
 			mailArray = new Array();
+			ccAddresses = ["teddy@teddysoft.tw", "erica@teddysoft.tw", "service@teddysoft.tw"];
 			getClasses();
+			setCCAddressCheckList();
         }
         
         $scope.selectedValue1;
