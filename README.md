@@ -17,7 +17,7 @@ $ git clone https://github.com/SLM2016/SLM2016.git
 
 ## Contributors
 
-* Azureliao ([@Azureliao](https://github.com/Azureliao))  
+
 * Tim Liou ([@timliou139](https://github.com/timliou139))  
 * WindAzure ([@WindAzure](https://github.com/WindAzure))
 
