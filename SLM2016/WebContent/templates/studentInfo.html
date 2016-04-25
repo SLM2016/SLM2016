@@ -1,0 +1,50 @@
+<div class="studentinfo">
+    <div class="inner-wrapper">
+        <div class="info">
+            <div class="title">學生資料上傳</div>
+            <div class="si-control-group">
+                <div class="si-upload" ngf-select="fileChanged($file)" ngf-accept="'.xlsx,.xls'">
+                    <span class="upload-title">瀏覽檔案</span>
+                    <span class="upload-name">{{excelFile.name}}</span>
+                </div>
+                <!-- <div class="si-control">
+                	<select class="form-control" ng-change="updateItems()" ng-model="selectedSheetName" ng-options="sheetName as sheetName for (sheetName, sheetData) in sheets">
+		                <option value="">---- 選擇表單 ----</option>
+		            </select>
+                </div> -->
+	            <button class="btn btn-info btn-orange upload-btn" ng-click="uploadFile()">上傳</button>
+	            <div class="result-container" ng-class="{'show-result': isUploading || isUploadSuccess || isUploadFail}">
+	            	<spin spin-size="medium" class="spin-style" ng-show="isUploading"></spin>
+	            	<span class="label label-info" ng-show="isUploadSuccess">上傳成功</span>
+	            	<span class="label label-danger" ng-show="isUploadFail">上傳失敗</span>
+	            </div>
+            </div>
+            
+            <div class="si-div" ng-scrollbar include-padding="true" ng-class="{'show': items.length != 0}">
+                <table class="table table-bordered si-table table-hover">
+                    <thead>
+                        <th ng-repeat="terms in terms" width:50px nowrap="nowrap">{{ terms}}</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="showData in showData">
+                            <td> {{showData[0]}}</td>
+                            <td>{{showData[1]}}</td>
+                            <td>{{showData[2]}}</td>
+                            <td>{{showData[3]}}</td>
+                            <td>{{showData[4]}}</td>
+                            <td>{{showData[5]}}</td>
+                            <td>{{showData[6]}}</td>
+                            <td>{{showData[7]}}</td>
+                            <td>{{showData[8]}}</td>
+                            <td>{{showData[9]}}</td>
+                            <td>{{showData[10]}}</td>
+                            <td>{{showData[11]}}</td>
+                            <td>{{showData[12]}}</td>
+                            <td>{{showData[13]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

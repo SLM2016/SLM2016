@@ -1,7 +1,5 @@
 package unitTests;
 
-
-
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -24,11 +22,11 @@ public class GmailSenderTest {
 		String username = "news.teddysoft.tw@gmail.com";
 		String password = "SLMTaipeiTech2016";
 		GmailSender gmailSender = new GmailSender(username, password);
-		String address = "superchobits02@gmail.com";
+		String address = "t104598007@ntut.org.tw";
 		String subject = "泰迪軟體課程通知";
-		String name = "Alice";
-		String className = "Scurm敏捷發法實作班";
-		String result = gmailSender.send(address, subject, name, className);
+		String text = "測試信件";
+		String ccAddresses = "superchobits02@gmail.com";
+		String result = gmailSender.send(address, ccAddresses, subject, text);
 
 		assertEquals("寄送email結束.", result);
 	}
@@ -38,11 +36,11 @@ public class GmailSenderTest {
 		String username = "000111222333@gmail.com";
 		String password = "123456";
 		GmailSender gmailSender = new GmailSender(username, password);
-		String address = "superchobits02@gmail.com";
+		String address = "t104598007@ntut.org.tw";
 		String subject = "泰迪軟體課程通知";
-		String name = "Alice";
-		String className = "Scurm敏捷發法實作班";
-		String result = gmailSender.send(address, subject, name, className);
+		String text = "測試信件";
+		String ccAddresses = "";
+		String result = gmailSender.send(address, ccAddresses, subject, text);
 
 		assertEquals("帳號密碼不正確", result);
 	}
@@ -52,11 +50,11 @@ public class GmailSenderTest {
 		String username = "t100590334@ntut.org.tw";
 		String password = "angelbeats711529";
 		GmailSender gmailSender = new GmailSender(username, password);
-		String address = "superchobits02@gmail.com";
+		String address = "t104598007@ntut.org.tw";
 		String subject = "泰迪軟體課程通知";
-		String name = "Alice";
-		String className = "Scurm敏捷發法實作班";
-		String result = gmailSender.send(address, subject, name, className);
+		String text = "測試信件";
+		String ccAddresses = "";
+		String result = gmailSender.send(address, ccAddresses, subject, text);
 
 		assertEquals("請開啟    安全性較低的應用程式存取權限", result);
 	}
@@ -68,9 +66,9 @@ public class GmailSenderTest {
 		GmailSender gmailSender = new GmailSender(username, password);
 		String address = "0000aaaaa@gmail,com";
 		String subject = "泰迪軟體課程通知";
-		String name = "Alice";
-		String className = "Scurm敏捷發法實作班";
-		String result = gmailSender.send(address, subject, name, className);
+		String text = "測試信件";
+		String ccAddresses = "";
+		String result = gmailSender.send(address, ccAddresses, subject, text);
 
 		assertEquals("送信位址格式不正確", result);
 	}
@@ -80,11 +78,11 @@ public class GmailSenderTest {
 		String username = "news.teddysoft.tw@gmail.com";
 		String password = "SLMTaipeiTech2016";
 		GmailSender gmailSender = new GmailSender(username, password);
-		String address = "superchobits02@gmail.com";
+		String address = "t104598007@ntut.org.tw";
 		String subject = "泰迪軟體課程通知";
-		String name = "Alice";
-		String className = "Scurm敏捷發法實作班";
-		String result = gmailSender.send(address, subject, name, className);
+		String text = "測試信件";
+		String ccAddresses = "";
+		String result = gmailSender.send(address, ccAddresses, subject, text);
 
 		assertNotEquals("無法連線到SMTP host，請檢察防火牆或Proxy設定", result);
 	}
@@ -94,11 +92,11 @@ public class GmailSenderTest {
 		String username = "news.teddysoft.tw@gmail.com";
 		String password = "SLMTaipeiTech2016";
 		GmailSender gmailSender = new GmailSender(username, password);
-		String address = "superchobits02@gmail.com";
+		String address = "t104598007@ntut.org.tw";
 		String subject = "泰迪軟體課程通知";
-		String name = "Alice";
-		String className = "Scurm敏捷發法實作班";
-		String result = gmailSender.send(address, subject, name, className);
+		String text = "測試信件";
+		String ccAddresses = "";
+		String result = gmailSender.send(address, ccAddresses, subject, text);
 
 		assertNotEquals("Unknown SMTP host: smtp.gmail.com，請檢察網路連線", result);
 	}

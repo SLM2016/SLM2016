@@ -18,6 +18,10 @@ app.directive('navSidebar', ['$rootScope',
 
                     }
 
+                    var isHomeView = function() {
+                        return $state.includes(STATES.HOME);
+                    }
+
                     var isExample1View = function() {
                         return $state.includes(STATES.EXAMPLE1);
                     }
@@ -33,7 +37,13 @@ app.directive('navSidebar', ['$rootScope',
                     var isExample4View = function() {
                         return $state.includes(STATES.EXAMPLE4);
                     }
+                    var isInvoiceView = function() {
+                        return $state.includes(STATES.INVOICE);
+                    }
 
+                    var studentInfoView = function() {
+                        return $state.includes(STATES.STUDENTINFO);
+                    }
                     /*==========================
                         Events
                     ==========================*/
@@ -45,12 +55,14 @@ app.directive('navSidebar', ['$rootScope',
                     /*==========================
                         Methods
                     ==========================*/
+                    $scope.isHomeView = isHomeView;
 
                     $scope.isExample1View = isExample1View;
                     $scope.isExample2View = isExample2View;
                     $scope.isExample3View = isExample3View;
-                    $scope.isExample4View = isExample4View;
-
+                    $scope.isExample4View = isExample4View;                    
+                    $scope.isInvoiceView = isInvoiceView;
+                    $scope.studentInfoView = studentInfoView;                    
                     /*==========================
                         init
                     ==========================*/

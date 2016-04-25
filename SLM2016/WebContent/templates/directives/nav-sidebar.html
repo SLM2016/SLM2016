@@ -1,19 +1,32 @@
 <div id="nav-sidebar">
     <div class="action-list">
-        <div class="action-item" ui-sref="example1" ng-class="{'active': isExample1View()}">
+        <!-- <div class="action-item" ui-sref="example1" ng-class="{'active': isExample1View()}">
             <i class="icon-video"></i>
             <span>Example1</span>
         </div>
         <div class="action-item" ui-sref="example2" ng-class="{'active': isExample2View()}">
             <i class="icon-book-open"></i>
             <span>Example2</span>
+        </div> -->
+        <div class="action-item" ui-sref="home" ng-class="{'active': isHomeView()}">
+            <i class="icon-home-outline"></i>
+            <span>首頁</span>
+        </div>
+        <div class="action-item" ui-sref="invoice" ng-class="{'active': isInvoiceView()}">
+            <i class="icon-doc-text-inv"></i>
+            <span>發票開立</span>
+        </div>
+        
+        <div class="action-item" ui-sref="studentInfo" ng-class="{'active': studentInfoView()}">
+            <i class="icon-users-outline"></i>
+            <span>學生資料上傳</span>
         </div>
         <div class="action-item" ui-sref="example3" ng-class="{'active': isExample3View()}">
-            <i class="icon-video"></i>
+            <i class="icon-certificate-outline"></i>
             <span>產生證書</span>
         </div>
         <div class="action-item" ui-sref="example4" ng-class="{'active': isExample4View()}">
-            <i class="icon-book-open"></i>
+            <i class="icon-mail"></i>
             <span>寄送郵件</span>
         </div>
     </div>

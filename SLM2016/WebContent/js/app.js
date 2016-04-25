@@ -1,14 +1,18 @@
 var STATES = {
+    HOME: "home",
     EXAMPLE1: "example1",
     EXAMPLE2: "example2",
     EXAMPLE3: "example3",
-    EXAMPLE4: "example4"
+    EXAMPLE4: "example4",
+    INVOICE: "invoice",
+    STUDENTINFO: "studentInfo"
 }
 
 var app = angular.module('app', [
-	'ui.router',
-	'ct.ui.router.extras',
-    'ngScrollbar'
+    'ui.router',
+    'ct.ui.router.extras',
+    'ngScrollbar',
+    'ngFileUpload'
 ])
 
 .config(['$sceProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$animateProvider', '$stickyStateProvider',
@@ -19,12 +23,22 @@ var app = angular.module('app', [
         $sceProvider.enabled(false);
 
         // Start Page
-        $urlRouterProvider.otherwise("/example1");
+        $urlRouterProvider.otherwise("/");
 
         $stickyStateProvider.enableDebug(false);
 
         // ui view setting
         $stateProvider
+
+        .state(STATES.HOME, {
+            url: "/",
+            views: {
+                'home@': {
+                    templateUrl: "templates/home.html",
+                    controller: 'HomeController',
+                }
+            }
+        })
 
         .state(STATES.EXAMPLE1, {
             url: "/example1",
@@ -62,11 +76,35 @@ var app = angular.module('app', [
                 }
             }
         })
+
+	.state(STATES.INVOICE, {
+            url: "/invoice",
+            views: {
+                'invoice@': {
+                    templateUrl: "templates/invoice.html",
+                    controller: 'InvoiceController',
+                }
+            }
+        })
+        
+        .state(STATES.STUDENTINFO, {
+            url: "/studentInfo",
+            views: {
+                'studentInfo@': {
+                    templateUrl: "templates/studentInfo.html",
+                    controller: 'StudentInfoController',
+                }
+            }
+        })	
 	}
 ])
 
 .controller("RootController",['$scope', '$state', '$timeout', '$rootScope',
 	function($scope, $state, $timeout, $rootScope){
+
+        var isHomeView = function() {
+            return $state.includes(STATES.HOME);
+        }
 
         var isExample1View = function() {
             
@@ -84,6 +122,14 @@ var app = angular.module('app', [
         var isExample4View = function() {
             return $state.includes(STATES.EXAMPLE4);
         }
+        
+        var isInvoiceView = function() {
+            return $state.includes(STATES.INVOICE);
+        }
+
+        var studentInfoView = function() {
+            return $state.includes(STATES.STUDENTINFO);
+        }        
 
         var init = function() {
             
@@ -100,10 +146,14 @@ var app = angular.module('app', [
         /*==========================
              Methods
         ==========================*/
+
+        $scope.isHomeView = isHomeView;
         $scope.isExample1View = isExample1View;
         $scope.isExample2View = isExample2View;
         $scope.isExample3View = isExample3View;
         $scope.isExample4View = isExample4View;
+        $scope.isInvoiceView = isInvoiceView;
+        $scope.studentInfoView = studentInfoView;
 
         /*==========================
              init
