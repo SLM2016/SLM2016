@@ -56,6 +56,7 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 	            },
 				success : function(data) {
 					studentNameArray = [];
+					mailArray = [];
 					for(i = 0; i < data.studentInfomation_.studentsName_.length; i++){
 						studentNameArray.push(data.studentInfomation_.studentsName_[i]);
 						mailArray.push(data.studentInfomation_.mailAddresses_[i]);
