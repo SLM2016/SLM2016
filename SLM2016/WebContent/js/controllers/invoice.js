@@ -13,8 +13,18 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
             $scope.isItemNameEmpty = false;
             $scope.isItemNumberEmpty = false;
             $scope.isItemDollarEmpty = false;
-            $scope.isDoubleResultShow = $scope.isResultShow;
             $scope.invoiceType = type;
+            if(type == "THREE") {
+                $scope.isResultShow = $scope.isDoubleResultShow;
+                $scope.data.companyidArray.length = 0;
+                $scope.data.salesDollar = $scope.data.itemTotalDollar;
+                $scope.data.businessTax = Math.round($scope.data.salesDollar * $scope.data.taxRate / 100);
+                $scope.data.totalDollar = parseInt($scope.data.businessTax) + parseInt($scope.data.salesDollar);
+            }
+            else {
+                $scope.isDoubleResultShow = $scope.isResultShow;
+                $scope.data.totalDollar = $scope.data.itemTotalDollar;
+            }
         }
 
         var setTodayString = function() {
@@ -333,6 +343,20 @@ app.controller("InvoiceController",['$scope', '$state', '$timeout', '$rootScope'
             if($scope.data.itemDollar && $scope.data.itemDollar.length > 9) {
                 $scope.data.itemDollar = $scope.data.itemDollar.substring(0, 9);
                 return;
+            }
+            if(!isNumber($scope.data.itemDollar)) {
+                $timeout(function() {
+                    var errorNumString = $scope.data.itemDollar.toString();
+                    var rightNumString = errorNumString.substring(0, errorNumString.length - 1);
+                    $scope.data.itemDollar = parseInt(rightNumString);
+                }, 100);
+            }
+            if(!isNumber($scope.data.itemNumber)) {
+                $timeout(function() {
+                    var errorNumString = $scope.data.itemNumber.toString();
+                    var rightNumString = errorNumString.substring(0, errorNumString.length - 1);
+                    $scope.data.itemNumber = parseInt(rightNumString);
+                }, 100);
             }
             if($scope.data.itemNumber && $scope.data.itemDollar) {
                 $scope.data.itemTotalDollar = $scope.data.itemNumber * $scope.data.itemDollar;
