@@ -56,6 +56,7 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 	            },
 				success : function(data) {
 					studentNameArray = [];
+					mailArray = [];
 					for(i = 0; i < data.studentInfomation_.studentsName_.length; i++){
 						studentNameArray.push(data.studentInfomation_.studentsName_[i]);
 						mailArray.push(data.studentInfomation_.mailAddresses_[i]);
@@ -137,7 +138,7 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 			temp.previewBox.value = '請透過選取下方名單來預覽信件';
 		}
 		
-		var sendmail=function() {
+		function sendMail(){
 			var data = new Object();
 			var data_buffer = [];
 			var studentCheckList = document.getElementById("studentName").childNodes[1].firstChild;
@@ -168,7 +169,6 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 					}
 				}
 				ccAddressesString = ccAddressesString.substr(0, ccAddressesString.length - 1);
-				console.log(ccAddressesString);
 				data.ccAddresses_ = ccAddressesString;
 				
 				$.post("/SLM2016/SendGmailServlet",
@@ -179,6 +179,15 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 			if (checked == 0)
 				window.alert("Please choose Recipient!!");
 			generatePreviewMail();
+		}
+		
+		var clickSendMailButton=function() {
+			if (confirm("是否確認寄送!?") == true){
+				sendMail();
+			}
+			else {
+				
+			}
 		}
 
         var init = function() {
@@ -193,7 +202,7 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
         $scope.selectedValue1;
         $scope.selectedValue2;
         $scope.generatePreviewMail = generatePreviewMail;
-        $scope.sendmail = sendmail;
+        $scope.clickSendMailButton = clickSendMailButton;
         $scope.updateMailContent = updateMailContent;
         $scope.updateStudentCheckList = updateStudentCheckList;
         /*==========================

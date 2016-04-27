@@ -12,8 +12,6 @@ import com.google.gson.Gson;
 
 import certification.Certification;
 import certification.CertificationManager;
-import certification.TemplateCertification;
-import certification.TemplateCertificationMaker;
 
 @WebServlet("/CertificationServlet")
 public class CertificationServlet extends HttpServlet {
@@ -31,11 +29,9 @@ public class CertificationServlet extends HttpServlet {
 			throws ServletException, IOException {
 		Gson son=new Gson();
 		Certification certification=son.fromJson(request.getReader().readLine(), Certification.class);
-		TemplateCertificationMaker templateCertificationMaker = new TemplateCertificationMaker();
-		TemplateCertification template = templateCertificationMaker.MakeTemplateCertification("");
 
 		CertificationManager manager = new CertificationManager();
-		manager.makeCertification(template, certification, getServletContext().getRealPath("images/template.png").toString());
+		manager.makeCertification(certification, getServletContext().getRealPath("images/template.png").toString());
 		response.setContentType("image//png");
 		response.setHeader("Content-Disposition", "inline; fileName=templateA.png");
 		response.getWriter().write(manager.getCertificationJsonString());
