@@ -193,8 +193,7 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
         	classArray = new Array();
 			studentNameArray = new Array();
 			mailArray = new Array();
-			ccAddresses = ["superchobits02@gmail.com", "angelbeats711529@gmail.com", "t104598007@ntut.org.tw"];
-			//ccAddresses = ["teddy@teddysoft.tw", "erica@teddysoft.tw", "service@teddysoft.tw"];
+			ccAddresses = ["teddy@teddysoft.tw", "erica@teddysoft.tw", "service@teddysoft.tw"];
 			getClasses();
 			setCCAddressCheckList();
         }
