@@ -27,7 +27,7 @@
 								<div class="form-group date">
 								    <label for="invoicetime">時間</label>
 								    <div class="input-group">
-								     	<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="data.time" is-open="isDatePickerOpen" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-change="onDateTimeChange()">
+								     	<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="data.time" is-open="isDatePickerOpen" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-change="onDateTimeChange()" readonly>
 								    	<span class="input-group-btn">
 							            	<button type="button" class="btn btn-default" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
 							        	</span>
@@ -164,7 +164,16 @@
 							<div class="input-wrapper company">
 								<div class="form-group name" ng-class="{'has-error': isCompanyEmpty}">
 								    <label for="companyName">名稱</label>
-								    <input type="text" class="form-control" id="companyName" placeholder="請輸入名稱" ng-model="data.company">
+								    <input type="text" class="form-control" id="CompanyName" placeholder="請輸入名稱" ng-model="data.company">
+								</div>
+								<div class="form-group date">
+								    <label for="invoicetime">時間</label>
+								    <div class="input-group">
+								     	<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="data.time" is-open="isDatePickerOpen" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-change="onDateTimeChange()" readonly>
+								    	<span class="input-group-btn">
+							            	<button type="button" class="btn btn-default" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
+							        	</span>
+								    </div>
 								</div>
 							</div>
 						</div>
