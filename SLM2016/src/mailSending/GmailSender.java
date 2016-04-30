@@ -35,13 +35,13 @@ public class GmailSender {
 		});
 	}
 
-	public String send(String address, String subject, String name, String className) {
+	public String send(String address, String ccAddresses, String subject, String text) {
 		try {
 			Message message = new MimeMessage(session_);
 			message.setFrom(new InternetAddress(username_));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
+			message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccAddresses));
 			message.setSubject(subject);
-			String text = "Hi " + name + "，\n您好，歡迎報名" + className + "，以下是您的上課通知，請參考。\n若有任何問題，歡迎隨時聯絡我們。\n泰迪軟體 Erica";
 			message.setText(text);
 
 			Transport transport = session_.getTransport("smtp");
@@ -54,22 +54,18 @@ public class GmailSender {
 			String errorMessage = e.getMessage().toString();
 			if (errorMessage.contains("https://accounts.google.com/signin/continue?")) {
 				return "請開啟    安全性較低的應用程式存取權限";
-			} 
-			else if (errorMessage.contains("Username and Password not accepted")) {
+			} else if (errorMessage.contains("Username and Password not accepted")) {
 				return "帳號密碼不正確";
-			} 
-			else if (errorMessage.contains("Invalid Addresses")) {
+			} else if (errorMessage.contains("Invalid Addresses")) {
 				return "送信位址格式不正確";
-			} 
-			else if (errorMessage.contains("Could not connect to SMTP host: smtp.gmail.com")) {
+			} else if (errorMessage.contains("Could not connect to SMTP host: smtp.gmail.com")) {
 				return "無法連線到SMTP host，請檢察防火牆或Proxy設定";
-			} 
-			else if (errorMessage.contains("Unknown SMTP host: smtp.gmail.com")) {
+			} else if (errorMessage.contains("Unknown SMTP host: smtp.gmail.com")) {
 				return "Unknown SMTP host: smtp.gmail.com，請檢察網路連線";
-			} 
-			else {
+			} else {
 				return e.getMessage().toString();
-				// "Could not connect to SMTP host: smtp.gmail.com, port: 465, response: -1"
+				// "Could not connect to SMTP host: smtp.gmail.com, port: 465,
+				// response: -1"
 				// Unknown SMTP host: smtp.gmail.com
 			}
 		}

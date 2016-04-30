@@ -40,10 +40,6 @@ public class SendGmailServletTest {
 		ServletContext context = Mockito.mock(ServletContext.class, Mockito.RETURNS_DEEP_STUBS);
 		SendGmailServlet tag = new SendGmailServlet() {
 			private static final long serialVersionUID = 1L;
-
-			public ServletContext getServletContext() {
-				return context;
-			}
 		};
 
 		Mockito.when(requestMock.getServletContext()).thenReturn(context);
@@ -51,25 +47,46 @@ public class SendGmailServletTest {
 		Writer output = new StringWriter();
 		Mockito.when(responseMock.getWriter()).thenReturn(new PrintWriter(output));
 		tag.doGet(requestMock, responseMock);
-		assertEquals(output.toString(),
-				"{\"className_\":\"Scurm敏捷發法實作班\",\"students_\":[\"Alice\",\"Bob\",\"Chris\",\"David\",\"Eva\",\"FLT\",\"GTA\",\"HIA\",\"IT\",\"Jack\",\"Kevin\",\"Lee\",\"Mo\",\"Net\",\"Ox\",\"P\",\"Q\",\"R\",\"S\",\"T\",\"U\",\"V\",\"W\",\"X\",\"Y\",\"Z\",\"0.0\",\"0w0\",\"0o0\",\"0A0\"]}");
+		assertTrue(output.toString().contains("Scurm敏捷方法實作班"));
+		assertTrue(output.toString().contains("軟體重構入門實作班"));
+		assertTrue(output.toString().contains("Design Patterns這樣學就會了–入門實作班"));
+		// assertEquals(output.toString(),
+		// "{\"className_\":\"Scurm敏捷發法實作班\",\"students_\":[\"Alice\",\"Bob\",\"Chris\",\"David\",\"Eva\",\"FLT\",\"GTA\",\"HIA\",\"IT\",\"Jack\",\"Kevin\",\"Lee\",\"Mo\",\"Net\",\"Ox\",\"P\",\"Q\",\"R\",\"S\",\"T\",\"U\",\"V\",\"W\",\"X\",\"Y\",\"Z\",\"0.0\",\"0w0\",\"0o0\",\"0A0\"]}");
 	}
 
 	@Test
-	public void testDoPost() throws ServletException, IOException {
+	public void testDoPostClassIndex() throws ServletException, IOException {
 		HttpServletRequest requestMock = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse responseMock = Mockito.mock(HttpServletResponse.class);
 
-		Reader data = new StringReader("{indexes_: [0]}");
+		Mockito.when(requestMock.getHeader("isSend")).thenReturn("false");
+		Reader data = new StringReader("0");
 		Mockito.when(requestMock.getReader()).thenReturn(new BufferedReader(data));
 
 		ServletContext context = Mockito.mock(ServletContext.class, Mockito.RETURNS_DEEP_STUBS);
 		SendGmailServlet tag = new SendGmailServlet() {
 			private static final long serialVersionUID = 1L;
+		};
+		
+		Mockito.when(requestMock.getServletContext()).thenReturn(context);
 
-			public ServletContext getServletContext() {
-				return context;
-			}
+		Writer output = new StringWriter();
+		Mockito.when(responseMock.getWriter()).thenReturn(new PrintWriter(output));
+		tag.doPost(requestMock, responseMock);
+		assertTrue(output.toString().contains("Scurm敏捷方法實作班"));
+	}
+
+	@Test
+	public void testDoPostSendMail() throws ServletException, IOException {
+		HttpServletRequest requestMock = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse responseMock = Mockito.mock(HttpServletResponse.class);
+
+		Reader data = new StringReader("{\"classIndex_\":\"2\",indexes_: [0],\"ccAddresses_\":\"\"}");
+		Mockito.when(requestMock.getReader()).thenReturn(new BufferedReader(data));
+
+		ServletContext context = Mockito.mock(ServletContext.class, Mockito.RETURNS_DEEP_STUBS);
+		SendGmailServlet tag = new SendGmailServlet() {
+			private static final long serialVersionUID = 1L;
 		};
 
 		Mockito.when(requestMock.getServletContext()).thenReturn(context);

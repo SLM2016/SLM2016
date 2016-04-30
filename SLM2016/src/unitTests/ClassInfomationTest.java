@@ -13,6 +13,7 @@ public class ClassInfomationTest {
 	@Before
 	public void setUp() throws Exception {
 		classInfomation = new ClassInfomation("Scurm敏捷發法實作班");
+		classInfomation.getStudentsInfomation().generateFakeDataThree();
 	}
 
 	@After
@@ -21,18 +22,16 @@ public class ClassInfomationTest {
 
 	@Test
 	public void testClone() {
-		classInfomation.addStudent("Alice");
-		classInfomation.addStudent("Bob");
 		ClassInfomation cloneObject = classInfomation.clone();
 		assertEquals("Scurm敏捷發法實作班", cloneObject.getClassName());
-		assertEquals("Alice", cloneObject.getStudents().get(0));
-		assertEquals("Bob", cloneObject.getStudents().get(1));
+		assertEquals("Alice", cloneObject.getStudentsInfomation().getStudents().get(0));
+		assertEquals("Bob", cloneObject.getStudentsInfomation().getStudents().get(1));
 	}
 
 	@Test
-	public void testAddStudent() {
-		classInfomation.addStudent("Alice");
-		assertEquals("Alice", classInfomation.getStudents().get(0));
+	public void testGetStudentsInfomation() {
+		
+		assertEquals("Alice", classInfomation.getStudentsInfomation().getStudents().get(0));
 	}
 
 	@Test
