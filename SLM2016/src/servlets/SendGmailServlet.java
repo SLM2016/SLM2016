@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import mailSending.Classes;
+import dataClass.Classes;
+import dataClass.StudentInfomation;
 import mailSending.GmailSender;
-import mailSending.StudentInfomation;
 import mailSending.StudentSelectedIndex;
 
 @WebServlet("/SendGmailServlet")

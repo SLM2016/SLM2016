@@ -1,4 +1,4 @@
-package mailSending;
+package dataClass;
 
 import java.util.ArrayList;
 

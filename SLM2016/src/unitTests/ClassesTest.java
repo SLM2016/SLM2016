@@ -6,8 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import mailSending.ClassInfomation;
-import mailSending.Classes;
+import dataClass.ClassInfomation;
+import dataClass.Classes;
 
 public class ClassesTest {
 	private Classes classes_;
