@@ -3,10 +3,10 @@ package dataClass;
 public class Course {
 	//private int courseId_;
 	private String courseName_;
-	private String datch_;
+	private String batch_;
 	private String date_;
-	private String time_;
-	private String ticket_;
+	private String duration_;
+	private String ticketType_;
 	private int price_;
 	private String location_;
 	private String lecturer_;
@@ -20,20 +20,20 @@ public class Course {
 		courseName_ = courseName;
 	}
 
-	public void setDatch(String datch) {
-		datch_ = datch;
+	public void setBatch(String batch) {
+		batch_ = batch;
 	}
 
 	public void setDate(String date) {
 		date_ = date;
 	}
 
-	public void setTime(String time) {
-		time_ = time;
+	public void setDuration(String duration) {
+		duration_ = duration;
 	}
 
-	public void setTicket(String ticket) {
-		ticket_ = ticket;
+	public void setTicketType(String ticketType) {
+		ticketType_ = ticketType;
 	}
 
 	public void setPrice(int price) {
@@ -60,20 +60,20 @@ public class Course {
 		return courseName_;
 	}
 
-	public String getDatch() {
-		return datch_;
+	public String getBatch() {
+		return batch_;
 	}
 
 	public String getDate() {
 		return date_;
 	}
 
-	public String getTime() {
-		return time_;
+	public String getDuration() {
+		return duration_;
 	}
 
-	public String getTicket() {
-		return ticket_;
+	public String getTicketType() {
+		return ticketType_;
 	}
 
 	public int getPrice() {

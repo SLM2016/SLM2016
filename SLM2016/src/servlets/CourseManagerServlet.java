@@ -23,16 +23,14 @@ public class CourseManagerServlet extends HttpServlet {
 		super();
 	}
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String json = new Gson().toJson(courses_);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
 	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String requestString = request.getReader().readLine();
 		Gson gson = new Gson();
 		Course course = gson.fromJson(requestString, Course.class);

@@ -4,6 +4,7 @@ var STATES = {
     EXAMPLE2: "example2",
     EXAMPLE3: "example3",
     EXAMPLE4: "example4",
+    EXAMPLE5: "example5",
     INVOICE: "invoice",
     STUDENTINFO: "studentInfo"
 }
@@ -76,6 +77,15 @@ var app = angular.module('app', [
                 }
             }
         })
+        .state(STATES.EXAMPLE5, {
+            url: "/example5",
+            views: {
+                'example5@': {
+                    templateUrl: "templates/updateattachedfile.html",
+                    controller: 'UpdateAttachFileController',
+                }
+            }
+        })
 
 	.state(STATES.INVOICE, {
             url: "/invoice",
@@ -123,6 +133,10 @@ var app = angular.module('app', [
             return $state.includes(STATES.EXAMPLE4);
         }
         
+        var isExample5View = function() {
+            return $state.includes(STATES.EXAMPLE5);
+        }
+        
         var isInvoiceView = function() {
             return $state.includes(STATES.INVOICE);
         }
@@ -152,6 +166,7 @@ var app = angular.module('app', [
         $scope.isExample2View = isExample2View;
         $scope.isExample3View = isExample3View;
         $scope.isExample4View = isExample4View;
+        $scope.isExample5View = isExample5View;
         $scope.isInvoiceView = isInvoiceView;
         $scope.studentInfoView = studentInfoView;
 

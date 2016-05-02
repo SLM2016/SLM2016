@@ -28,10 +28,10 @@ public class CourseTest {
 	}
 
 	@Test
-	public void testSetDatch() {
-		String datch = "401";
-		course_.setDatch(datch);
-		assertEquals(datch, course_.getDatch());
+	public void testSetBatch() {
+		String batch = "401";
+		course_.setBatch(batch);
+		assertEquals(batch, course_.getBatch());
 	}
 
 	@Test
@@ -42,17 +42,17 @@ public class CourseTest {
 	}
 
 	@Test
-	public void testSetTime() {
-		String time = "09:30~16:30 共18小時";
-		course_.setTime(time);
-		assertEquals(time, course_.getTime());
+	public void testSetDuration() {
+		String duration = "09:30~16:30 共18小時";
+		course_.setDuration(duration);
+		assertEquals(duration, course_.getDuration());
 	}
 
 	@Test
-	public void testSetTicket() {
-		String ticket = "一般票 ";
-		course_.setTicket(ticket);
-		assertEquals(ticket, course_.getTicket());
+	public void testSetTicketType() {
+		String ticketType = "一般票 ";
+		course_.setTicketType(ticketType);
+		assertEquals(ticketType, course_.getTicketType());
 	}
 
 	@Test
