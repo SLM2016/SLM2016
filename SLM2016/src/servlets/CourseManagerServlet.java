@@ -39,5 +39,16 @@ public class CourseManagerServlet extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
+//		for (int i = 0; i < courses_.size(); i++) {
+//			System.out.println(courses_.get(i).getCourseName());
+//			System.out.println(courses_.get(i).getBatch());
+//			System.out.println(courses_.get(i).getDate());
+//			System.out.println(courses_.get(i).getDuration());
+//			System.out.println(courses_.get(i).getTicketType());
+//			System.out.println(courses_.get(i).getPrice());
+//			System.out.println(courses_.get(i).getLocation());
+//			System.out.println(courses_.get(i).getLecturer());
+//			System.out.println(courses_.get(i).getStatus());
+//		}
 	}
 }

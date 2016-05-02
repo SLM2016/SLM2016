@@ -4,50 +4,41 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
 	function getTeddyCourseData() {
 		$.get("/SLM2016/CourseManagerServlet",	function(responseText) {
 			courseList = responseText;
-
+			updateStudentInfo();
+//			console.log(courseList);
+//			console.log(courseList[0].courseName_);
 		});
 	} 
 	
 	var changeloadType = function(type) {
-         clearInvoiceResult();
+         //clearInvoiceResult();
          $scope.loadType = type;
     }
 	
-	var clearInvoiceResult = function() {
- 
-    }
+//	function clearInvoiceResult() {
+//
+//    }
 	
 	var uploadAttachment = function() {
-		var course = document.getElementById('Course').value;
-		var batch = document.getElementById('Batch').value;
-		var date = document.getElementById('Date').value;
-		var duration = document.getElementById('Duration').value;
-		var ticketType = document.getElementById('TicketType').value;
-		var price = document.getElementById('Price').value;
-		var location = document.getElementById('Location').value;
-		var lecturer = document.getElementById('Lecturer').value;
-		var status = document.getElementById('Status').value;
-
 		var data = new Object();
-		data.courseName_ = course;
-		data.batch_ = batch;
-		data.date_ = date;
-		data.duration_ = duration;
-		data.ticketType_ = ticketType;
-		data.price_ = price;
-		data.location_ = location;
-		data.lecturer_ = lecturer;
-		data.status_ = status;
+		data.courseName_ = $scope.data.courseName;
+		data.batch_ = $scope.data.batch;
+		data.date_ = $scope.data.date;
+		data.duration_ = $scope.data.duration;
+		data.ticketType_ = $scope.data.ticketType;
+		data.price_ = $scope.data.price;
+		data.location_ = $scope.data.location;
+		data.lecturer_ = $scope.data.lecturer;
+		data.status_ = $scope.data.status;
 		
 		$.post("/SLM2016/CourseManagerServlet",
 				JSON.stringify(data)).done(function(data) {
 				window.alert(data);
-				updateStudentInfo();
+				getTeddyCourseData();
 		});
 	}
 
-	var updateStudentInfo = function (){
-		getTeddyCourseData();
+	function updateStudentInfo(){
 		var temp_name = document.createElement('temp');
 		temp.manergeStudentPreviewBox.value = courseList;
 	}
@@ -64,6 +55,7 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
 	var init = function() {
 		courseList = new Array();
     }
+	
 	/*==========================
     Events
 	==========================*/
@@ -79,10 +71,10 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
 	/*==========================
      init
 	==========================*/
+	
 	$scope.uploadAttachment = uploadAttachment;
 	$scope.clickUploadDataButton = clickUploadDataButton;
 	$scope.changeloadType = changeloadType;
-	$scope.updateStudentInfo = updateStudentInfo;
 	init();
 }
 ]);
