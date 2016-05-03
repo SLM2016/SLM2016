@@ -1,23 +1,20 @@
 app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$rootScope',
 	function($scope, $state, $timeout, $rootScope, UploadAttachmentService){
-    
+	    
 	function getTeddyCourseData() {
+		console.log("get");
+		console.log("size");
+		console.log($scope.courseList.length);
 		$.get("/SLM2016/CourseManagerServlet",	function(responseText) {
-			courseList = responseText;
-			updateStudentInfo();
-//			console.log(courseList);
-//			console.log(courseList[0].courseName_);
+			$scope.courseList = responseText;
+			console.log("size");
+			console.log($scope.courseList.length);
 		});
 	} 
 	
 	var changeloadType = function(type) {
-         //clearInvoiceResult();
          $scope.loadType = type;
     }
-	
-//	function clearInvoiceResult() {
-//
-//    }
 	
 	var uploadAttachment = function() {
 		var data = new Object();
@@ -38,10 +35,6 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
 		});
 	}
 
-	function updateStudentInfo(){
-		var temp_name = document.createElement('temp');
-		temp.manergeStudentPreviewBox.value = courseList;
-	}
 	
 	var clickUploadDataButton=function() {
 		if (confirm("是否確認上傳!?") == true){
@@ -52,8 +45,31 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
 		}
 	}
 	
+	var deleteRow = function(index) {
+		$.ajax({
+			url : "/SLM2016/CourseManagerServlet",
+			type : "POST",
+			data : JSON.stringify(index),
+			async : false,
+			beforeSend: function (request)
+            {
+                request.setRequestHeader("Delete", false);
+            }
+//		,
+//			success : function(data) {
+//				window.alert(data);
+//				getTeddyCourseData();
+//			}
+		})
+//		.done(function(data){
+//			window.alert(data);
+//			getTeddyCourseData();
+//        })
+        getTeddyCourseData();
+    }
+	
 	var init = function() {
-		courseList = new Array();
+		getTeddyCourseData();
     }
 	
 	/*==========================
@@ -64,6 +80,7 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
     Members
 	==========================*/
 	$scope.loadType = "Upload";
+	$scope.courseList = [];
 	/*==========================
      Methods
 	==========================*/
@@ -71,10 +88,12 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
 	/*==========================
      init
 	==========================*/
-	
+	$scope.selectedValue;
 	$scope.uploadAttachment = uploadAttachment;
 	$scope.clickUploadDataButton = clickUploadDataButton;
 	$scope.changeloadType = changeloadType;
+	$scope.deleteRow = deleteRow;
+	
 	init();
 }
 ]);

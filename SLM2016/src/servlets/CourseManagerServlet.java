@@ -32,6 +32,33 @@ public class CourseManagerServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String requestString = request.getReader().readLine();
+		String header = request.getHeader("Delete");
+		if (header != null) {
+			System.out.println("Delete");
+			doPostDeleteCourse(request, response, requestString);
+			return;
+		}
+		System.out.println("Add");
+		doPostAddCourse(request, response, requestString);
+	}
+
+	private void doPostDeleteCourse(HttpServletRequest request, HttpServletResponse response, String requestString)
+			throws ServletException, IOException {
+		int index = Integer.valueOf(requestString);
+		String result = "";
+		if (index < courses_.size() && index >= 0) {
+			courses_.remove(index);
+			result = "success";
+		} else {
+			result = "fail";
+		}
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(result);
+	}
+
+	private void doPostAddCourse(HttpServletRequest request, HttpServletResponse response, String requestString)
+			throws ServletException, IOException {
 		Gson gson = new Gson();
 		Course course = gson.fromJson(requestString, Course.class);
 		courses_.add(course);
@@ -39,16 +66,16 @@ public class CourseManagerServlet extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
-//		for (int i = 0; i < courses_.size(); i++) {
-//			System.out.println(courses_.get(i).getCourseName());
-//			System.out.println(courses_.get(i).getBatch());
-//			System.out.println(courses_.get(i).getDate());
-//			System.out.println(courses_.get(i).getDuration());
-//			System.out.println(courses_.get(i).getTicketType());
-//			System.out.println(courses_.get(i).getPrice());
-//			System.out.println(courses_.get(i).getLocation());
-//			System.out.println(courses_.get(i).getLecturer());
-//			System.out.println(courses_.get(i).getStatus());
-//		}
+		// for (int i = 0; i < courses_.size(); i++) {
+		// System.out.println(courses_.get(i).getCourseName());
+		// System.out.println(courses_.get(i).getBatch());
+		// System.out.println(courses_.get(i).getDate());
+		// System.out.println(courses_.get(i).getDuration());
+		// System.out.println(courses_.get(i).getTicketType());
+		// System.out.println(courses_.get(i).getPrice());
+		// System.out.println(courses_.get(i).getLocation());
+		// System.out.println(courses_.get(i).getLecturer());
+		// System.out.println(courses_.get(i).getStatus());
+		// }
 	}
 }

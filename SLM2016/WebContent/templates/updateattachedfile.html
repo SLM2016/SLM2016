@@ -1,8 +1,8 @@
 <div class="example">
 	<div class="inner-wrapper">
-		    <div class="invoice-topbar">
+		    <div class="page-topbar">
             	<div class="topbar-item" ng-click="changeloadType('Upload')">上傳資料</div>
-            	<div class="topbar-item" ng-click="changeloadType('Download')" >課程資料檢視</div>
+            	<div class="topbar-item" ng-click="changeloadType('Download')" >課程檢視</div>
             	<div class="switcher" ng-class="{'right': loadType == 'Download', 'left': loadType == 'Upload'}"></div>
             </div>
 		<div class="info">
@@ -66,16 +66,41 @@
 			<input class="btn btn-info btn-orange" type="submit" value="瀏覽檔案" id="load_button" name="load_button" ngf-select="loadAttachment($file)">
 			<input class="btn btn-info btn-orange" type="submit" value="上傳" id="upload_button" name="upload_button" ng-click="clickUploadDataButton()">		
 			</div>
-			<!-- 課程資料檢視 -->
-			<div class="invoice" ng-show="loadType == 'Download'">
+			<!-- 課程檢視 -->
+			<div  ng-show="loadType == 'Download'">
 			<div class="form-group name" >
-			<label for="companyName">讀取資料</label>
+			<div class="title">課程檔案管理系統</div>
 			</div>
-			<div class="form-group">
-			<FORM ACTION="#" NAME=temp>
-			<TEXTAREA class="form-control" NAME=manergeStudentPreviewBox COLS=70 ROWS=10 DISABLED></TEXTAREA>	
-			</FORM>
-			</div>
+			<table class="table table-bordered si-table table-hover" id="courseInfo" border="1" cellpadding="9" >
+				<thead>
+				  <tr>
+					  <td></td>
+	                  <td>課名</td>
+	                  <td>梯次</td>
+	                  <td>開課日期</td>
+	                  <td>課程時間</td>
+	                  <td>票種</td>
+	                  <td>價錢</td>
+	                  <td>地點</td>
+	                  <td>講師</td>
+	                  <td>狀態</td>
+	              </tr>
+				</thead>
+                    <tbody>
+                        <tr ng-repeat="course in courseList">
+							<td><input type="submit" ng-model="selectedValue" class="btn btn-info btn-orange" value = "Delete" ng-click="deleteRow($index)"></td>
+                            <td>{{course.courseName_}}</td>
+                            <td>{{course.batch_}}</td>
+                            <td>{{course.date_}}</td>
+                            <td>{{course.duration_}}</td>
+                            <td>{{course.ticketType_}}</td>
+                            <td>{{course.price_}}</td>
+                            <td>{{course.location_}}</td>
+                            <td>{{course.lecturer_}}</td>
+                            <td>{{course.status_}}</td>
+                        </tr>
+                    </tbody>
+                </table>
 			</div>	
 		</div>
 	</div>

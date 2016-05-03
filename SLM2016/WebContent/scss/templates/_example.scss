@@ -11,6 +11,48 @@
         @include border-radius(3px);
         background-color: #FFF;
         @include box-shadow(0px 1px 3px 0px rgba(0, 0, 0, 0.1));
+        .page-topbar {
+                position: relative;
+                height: 40px;
+                width: 100%;
+                border-bottom: 2px solid #eee;
+                .topbar-item {
+                    display: inline-block;
+                    padding: 0 6px;
+                    width: 100px;
+                    height: 40px;
+                    line-height: 40px;
+                    font-size: 14px;
+                    color: #666;
+                    cursor: pointer;
+                }
+                .date-info {
+                    display: inline-block;
+                    padding: 0 6px;
+                    height: 40px;
+                    line-height: 50px;
+                    font-size: 14px;
+                    color: #ff6812;
+                    float: right;
+                }
+                .switcher {
+                    position: absolute;
+                    top: 38px;
+                    left: 0;
+                    height: 2px;
+                    width: 100px;
+                    background-color: #ef5700;
+                    @include transition(all ease-in-out 150ms);
+                    &.right {
+                        @include transition(all ease-in-out 150ms);
+                        @include transform(translateX(100%));
+                    }
+                    &.left {
+                        @include transition(all ease-in-out 150ms);
+                        @include transform(translateX(0));
+                    }
+                }
+            }
         .info {
             padding: 25px 40px;
             height: 1000px;
