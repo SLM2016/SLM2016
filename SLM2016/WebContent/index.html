@@ -26,12 +26,10 @@
         <div class="wrapper">
             <nav-sidebar></nav-sidebar>
             <div ui-view="home" ng-show="isHomeView()"></div>
-            <div ui-view="example1" ng-show="isExample1View()"></div>
-            <div ui-view="example2" ng-show="isExample2View()"></div>
             <div ui-view="invoice" ng-show="isInvoiceView()"></div>
             <div ui-view="studentInfo" ng-show="studentInfoView()"></div>
-            <div ui-view="example3" ng-show="isExample3View()"></div>
-            <div ui-view="example4" ng-show="isExample4View()"></div>        
+            <div ui-view="certification" ng-show="isCertificationView()"></div>
+            <div ui-view="sendMail" ng-show="isSendMailView()"></div>        
         </div>
     </div>
     
@@ -67,10 +65,11 @@
     <script src="js/directives/nav-sidebar.js"></script>
     <script src="js/directives/topbar.js"></script>
 
-    <script src="js/controllers/example1.js"></script>
-    <script src="js/controllers/example2.js"></script>
+    <script src="js/controllers/home.js"></script>
     <script src="js/controllers/certificationController.js"></script>
-    <script src="js/controllers/mailSendingController.js"></script>    <script src="js/controllers/invoice.js"></script>
-    <script src="js/controllers/studentInfo.js"></script>
+    <script src="js/controllers/mailSendingController.js"></script>    
+    <script src="js/controllers/invoice.js"></script>
+    <script src="js/controllers/studentImport.js"></script>
+    <script src="js/controllers/studentManage.js"></script>
 </body>
 </html>

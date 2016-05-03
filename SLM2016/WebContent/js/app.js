@@ -1,11 +1,11 @@
 var STATES = {
     HOME: "home",
-    EXAMPLE1: "example1",
-    EXAMPLE2: "example2",
-    EXAMPLE3: "example3",
-    EXAMPLE4: "example4",
+    CERTIFICATION: "certification",
+    SENDMAIL: "sendMail",
     INVOICE: "invoice",
-    STUDENTINFO: "studentInfo"
+    STUDENTINFO: "studentInfo",
+    STUDENT_INFO_IMPORT: "studentInfo.Import",
+    STUDENT_INFO_MANAGE: "studentInfo.Manage"
 }
 
 var app = angular.module('app', [
@@ -40,45 +40,26 @@ var app = angular.module('app', [
                 }
             }
         })
-
-        .state(STATES.EXAMPLE1, {
-            url: "/example1",
+        .state(STATES.CERTIFICATION, {
+            url: "/certification",
             views: {
-                'example1@': {
-                    templateUrl: "templates/example1.html",
-                    controller: 'Example1Controller',
-                }
-            }
-        })
-        .state(STATES.EXAMPLE2, {
-            url: "/example2",
-            views: {
-                'example2@': {
-                    templateUrl: "templates/example2.html",
-                    controller: 'Example2Controller',
-                }
-            }
-        })
-        .state(STATES.EXAMPLE3, {
-            url: "/example3",
-            views: {
-                'example3@': {
+                'certification@': {
                     templateUrl: "templates/certificationPage.html",
                     controller: 'CertificationController',
                 }
             }
         })
-        .state(STATES.EXAMPLE4, {
-            url: "/example4",
+        .state(STATES.SENDMAIL, {
+            url: "/sendMail",
             views: {
-                'example4@': {
+                'sendMail@': {
                     templateUrl: "templates/mailSendingPage.html",
                     controller: 'MailSendingController',
                 }
             }
         })
 
-	.state(STATES.INVOICE, {
+	    .state(STATES.INVOICE, {
             url: "/invoice",
             views: {
                 'invoice@': {
@@ -92,11 +73,30 @@ var app = angular.module('app', [
             url: "/studentInfo",
             views: {
                 'studentInfo@': {
-                    templateUrl: "templates/studentInfo.html",
-                    controller: 'StudentInfoController',
+                    templateUrl: "templates/studentInfo.html"
                 }
             }
-        })	
+        })
+
+            .state(STATES.STUDENT_INFO_IMPORT, {
+                url: "/import",
+                views: {
+                    'content@studentInfo': {
+                        templateUrl: "templates/studentImport.html",
+                        controller: 'StudentImportController',
+                    }
+                }
+            })
+
+            .state(STATES.STUDENT_INFO_MANAGE, {
+                url: "/manage",
+                views: {
+                    'content@studentInfo': {
+                        templateUrl: "templates/studentManage.html",
+                        controller: 'StudentManageController',
+                    }
+                }
+            })
 	}
 ])
 
@@ -107,23 +107,14 @@ var app = angular.module('app', [
             return $state.includes(STATES.HOME);
         }
 
-        var isExample1View = function() {
-            
-            return $state.includes(STATES.EXAMPLE1);
-        }
-
-        var isExample2View = function() {
-            return $state.includes(STATES.EXAMPLE2);
-        }
-
-        var isExample3View = function() {
-            return $state.includes(STATES.EXAMPLE3);
-        }
-
-        var isExample4View = function() {
-            return $state.includes(STATES.EXAMPLE4);
+        var isCertificationView = function() {
+            return $state.includes(STATES.CERTIFICATION);
         }
         
+        var isSendMailView = function() {
+            return $state.includes(STATES.SENDMAIL);
+        }
+
         var isInvoiceView = function() {
             return $state.includes(STATES.INVOICE);
         }
@@ -149,10 +140,8 @@ var app = angular.module('app', [
         ==========================*/
 
         $scope.isHomeView = isHomeView;
-        $scope.isExample1View = isExample1View;
-        $scope.isExample2View = isExample2View;
-        $scope.isExample3View = isExample3View;
-        $scope.isExample4View = isExample4View;
+        $scope.isCertificationView = isCertificationView;
+        $scope.isSendMailView = isSendMailView;
         $scope.isInvoiceView = isInvoiceView;
         $scope.studentInfoView = studentInfoView;
 

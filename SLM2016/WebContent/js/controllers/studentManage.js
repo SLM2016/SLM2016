@@ -1,30 +1,22 @@
-app.controller("HomeController",['$scope', '$state', '$timeout', '$rootScope',
-	function($scope, $state, $timeout, $rootScope){
+app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 
+    function ($scope, $state, $timeout, $rootScope, StudentInfoService) {  
 
+    	var init = function() {}
 
-        var init = function() {
-        }
-
-
-        /*==========================
+		/*==========================
             Events
         ==========================*/
 
         /*==========================
             Members
         ==========================*/
-
-        $scope.testBind = ""
         /*==========================
              Methods
         ==========================*/
-
-
         /*==========================
              init
         ==========================*/
 
         init();
-
-	}
-]);
+		
+}]);

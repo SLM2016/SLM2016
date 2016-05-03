@@ -1,4 +1,4 @@
-app.controller('StudentInfoController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 
+app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 
     function ($scope, $state, $timeout, $rootScope, StudentInfoService) {  
 
 	    var fileChanged = function(files) {
