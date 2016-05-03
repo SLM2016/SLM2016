@@ -2,13 +2,9 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
 	function($scope, $state, $timeout, $rootScope, UploadAttachmentService){
 	    
 	function getTeddyCourseData() {
-		console.log("get");
-		console.log("size");
 		console.log($scope.courseList.length);
 		$.get("/SLM2016/CourseManagerServlet",	function(responseText) {
 			$scope.courseList = responseText;
-			console.log("size");
-			console.log($scope.courseList.length);
 		});
 	} 
 	
@@ -55,17 +51,15 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
             {
                 request.setRequestHeader("Delete", false);
             }
-//		,
-//			success : function(data) {
-//				window.alert(data);
-//				getTeddyCourseData();
-//			}
+
 		})
-//		.done(function(data){
-//			window.alert(data);
-//			getTeddyCourseData();
-//        })
+		
         getTeddyCourseData();
+		setTimeout(function() {
+			$scope.$apply(function() {
+			    $scope.time = new Date();
+			});
+		}, 300);
     }
 	
 	var init = function() {

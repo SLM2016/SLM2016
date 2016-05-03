@@ -34,11 +34,9 @@ public class CourseManagerServlet extends HttpServlet {
 		String requestString = request.getReader().readLine();
 		String header = request.getHeader("Delete");
 		if (header != null) {
-			System.out.println("Delete");
 			doPostDeleteCourse(request, response, requestString);
 			return;
 		}
-		System.out.println("Add");
 		doPostAddCourse(request, response, requestString);
 	}
 
