@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.mysql.jdbc.ResultSetMetaData;
 
 import javafx.util.Pair;
 import util.SLMDBUtility;
@@ -28,6 +31,32 @@ public class StudentDBManager {
 	public StudentDBManager() {
 		super();
 		slmDBUtility = new SLMDBUtility();
+	}
+	
+	public String getStudentList()  throws SQLException {
+		String sql = "select * from `student_info`;";
+		ResultSet result = slmDBUtility.selectSQL(sql);
+		String columnName, columnValue = null;
+        JsonObject element = null;
+        JsonArray jsonArray = new JsonArray();
+        ResultSetMetaData rsmd = null;
+        
+        try {
+            rsmd = (ResultSetMetaData) result.getMetaData();
+            while (result.next()) {
+                element = new JsonObject();
+                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                    columnName = rsmd.getColumnName(i + 1);
+                    columnValue = result.getString(columnName);
+                    element.addProperty(columnName, columnValue);
+                }
+                jsonArray.add(element);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+		return jsonArray.toString();
 	}
 
 	public ArrayList<HashMap> getStudents() throws SQLException {
