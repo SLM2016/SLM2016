@@ -28,7 +28,7 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 	    // transfer data to server
 		var uploadFile = function () {
 			$scope.isUploading = true;
-			StudentInfoService.transferFile($scope.excelFile).then(function(result) {
+			StudentInfoService.uploadStudentFile($scope.excelFile).then(function(result) {
 				$scope.isUploading = false;
 				console.log(result.status)
 				if(result.status) {

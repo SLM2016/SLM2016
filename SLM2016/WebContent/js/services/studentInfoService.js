@@ -1,10 +1,10 @@
-app.factory("StudentInfoService", [ '$q', '$rootScope', 'Upload',
-		function($q, $rootScope, Upload) {
-			var service = function(data) {
-				angular.extend(this, data);
-			}
+app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
+	function($q, $rootScope, $http, Upload) {
+		
+		var factory = this;
 
-        service.readFile = function(file, readCells, toJSON) {
+		// 讀取Excel檔並轉成Json格式
+        var readFile = function(file, readCells, toJSON) {
             var deferred = $q.defer();
 
             XLSXReader(file, readCells, toJSON, function(data) {
@@ -15,7 +15,8 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', 'Upload',
             return deferred.promise;
         }
         
-		service.transferFile = function (file) {
+        // 上傳學員資料並存入DB
+		var uploadStudentFile = function (file) {
 		    var defer = $q.defer();
 				
 		    Upload.upload({
@@ -25,14 +26,52 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', 'Upload',
 		            op: 1
 		        },
 		        file: file
-		     }).success(function(file) {
-		        	defer.resolve(file);
-			 }).error(function(error) {
-					defer.reject(error);
-					console.error("status : " + status);
-			 });
-		     return defer.promise;
-		   };
-        return service;
+		    }).success(function(file) {
+		        defer.resolve(file);
+			}).error(function(error) {
+				defer.reject(error);
+				console.error("status : " + status);
+			});
+
+		    return defer.promise;
+		};
+
+		// 取得學員列表
+		var getStudentList = function(classId) {
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/StudentAction",
+                method: "GET",
+                params: {
+                    op: 2,
+                    classId: classId
+                }
+            }).success(function(data) {
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+
+		/*==========================
+            Members
+        ==========================*/
+
+        /*==========================
+            Methods
+        ==========================*/
+
+        factory.readFile = readFile;
+        factory.uploadStudentFile = uploadStudentFile;
+        factory.getStudentList = getStudentList;
+
+        /*==========================
+            init
+        ==========================*/
+
+        return factory;
     }
 ]);
