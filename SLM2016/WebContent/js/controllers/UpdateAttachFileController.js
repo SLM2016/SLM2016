@@ -2,7 +2,6 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
 	function($scope, $state, $timeout, $rootScope, UploadAttachmentService){
 	    
 	function getTeddyCourseData() {
-		console.log($scope.courseList.length);
 		$.get("/SLM2016/CourseManagerServlet",	function(responseText) {
 			$scope.courseList = responseText;
 		});
@@ -12,7 +11,7 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
          $scope.loadType = type;
     }
 	
-	var uploadAttachment = function() {
+	function addCourse() {
 		var data = new Object();
 		data.courseName_ = $scope.data.courseName;
 		data.batch_ = $scope.data.batch;
@@ -22,7 +21,7 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
 		data.price_ = $scope.data.price;
 		data.location_ = $scope.data.location;
 		data.lecturer_ = $scope.data.lecturer;
-		data.status_ = $scope.data.status;
+		data.status_ = "未開課";
 		
 		$.post("/SLM2016/CourseManagerServlet",
 				JSON.stringify(data)).done(function(data) {
@@ -31,10 +30,9 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
 		});
 	}
 
-	
-	var clickUploadDataButton=function() {
-		if (confirm("是否確認上傳!?") == true){
-			uploadAttachment();
+	var clickAddCourseButton=function() {
+		if (confirm("是否確認開課!?") == true){
+			addCourse();
 		}
 		else {
 			
@@ -49,9 +47,8 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
 			async : false,
 			beforeSend: function (request)
             {
-                request.setRequestHeader("Delete", false);
+                request.setRequestHeader("Delete", true);
             }
-
 		})
 		
         getTeddyCourseData();
@@ -83,8 +80,7 @@ app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$r
      init
 	==========================*/
 	$scope.selectedValue;
-	$scope.uploadAttachment = uploadAttachment;
-	$scope.clickUploadDataButton = clickUploadDataButton;
+	$scope.clickAddCourseButton = clickAddCourseButton;
 	$scope.changeloadType = changeloadType;
 	$scope.deleteRow = deleteRow;
 	

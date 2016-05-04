@@ -78,7 +78,7 @@ public class SendGmailServlet extends HttpServlet {
 		String username = "news.teddysoft.tw@gmail.com";
 		String password = "clfddzifoyfvvxqa";
 		GmailSender gmailSender = new GmailSender(username, password);
-		String subject = "泰迪軟體課程通知";
+		String subject = classes_.getClasses().get(index).getClassName() + " - 已收到您的報名資料";
 		String result = "";
 		for (int i = 0; i < studentName.size(); i++) {
 			String text = "Hi " + studentName.get(i) + "，<br><br>您好，歡迎報名<a href=\"" + hyperlinks_.get(index) + "\">"
