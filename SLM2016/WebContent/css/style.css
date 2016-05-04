@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* line 5, ../../../../../../../fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -21,45 +21,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../../../fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../../../fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../../../fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../../../fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../../../fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../../../fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../../../fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../../../fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -88,7 +88,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 14, ../scss/templates/_home.scss */
 .home .inner-wrapper .info {
   padding: 25px 40px;
-  height: 1000px;
+  height: calc(100vh - 150px);
 }
 /* line 17, ../scss/templates/_home.scss */
 .home .inner-wrapper .info .title {
@@ -103,7 +103,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 1, ../scss/templates/_example.scss */
 .example {
   background-color: #E9E9E9;
-  padding-top: 40px;
+  padding: 40px 0;
   min-height: 100%;
   height: 100%;
   width: 100%;
@@ -124,9 +124,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 14, ../scss/templates/_example.scss */
 .example .inner-wrapper .info {
   padding: 25px 40px;
-  height: 1000px;
 }
-/* line 17, ../scss/templates/_example.scss */
+/* line 16, ../scss/templates/_example.scss */
 .example .inner-wrapper .info .title {
   margin-bottom: 20px;
   height: 57px;
@@ -254,34 +253,38 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-weight: bold;
 }
 /* line 85, ../scss/templates/_invoice.scss */
-.invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-input .input-content .input-wrapper.company .form-group.id {
+.invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-input .input-content .input-wrapper.company .form-group.id, .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-input .input-content .input-wrapper.company .form-group.date {
   width: 200px;
 }
 /* line 88, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-input .input-content .input-wrapper.company .form-group.name {
-  width: calc(100% - 200px - 20px);
+  width: calc(100% - 400px - 40px);
+}
+/* line 91, ../scss/templates/_invoice.scss */
+.invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-input .input-content .input-wrapper.company .form-group.date {
+  vertical-align: top;
   margin-right: 0;
 }
-/* line 95, ../scss/templates/_invoice.scss */
+/* line 98, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-input .input-content .input-wrapper.dollar .form-group {
   width: 22%;
   vertical-align: top;
 }
-/* line 98, ../scss/templates/_invoice.scss */
+/* line 101, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-input .input-content .input-wrapper.dollar .form-group:last-child {
   width: calc(34% - 60px);
   margin-right: 0;
 }
-/* line 106, ../scss/templates/_invoice.scss */
+/* line 109, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-input .action {
   text-align: center;
 }
-/* line 108, ../scss/templates/_invoice.scss */
+/* line 111, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-input .action .btn-info {
   width: 150px;
   margin-right: 15px;
 }
-/* line 114, ../scss/templates/_invoice.scss */
+/* line 117, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result {
   height: 0;
   visibility: hidden;
@@ -293,9 +296,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
 }
-/* line 121, ../scss/templates/_invoice.scss */
+/* line 124, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result.result-show {
-  height: 510px;
+  height: 586px;
   margin-top: 20px;
   visibility: visible;
   opacity: 1;
@@ -304,139 +307,144 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
 }
-/* line 127, ../scss/templates/_invoice.scss */
+/* line 130, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result.result-show .result-wrapper {
   display: block;
 }
-/* line 131, ../scss/templates/_invoice.scss */
+/* line 134, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper {
   display: none;
-  width: 700px;
-  height: 470px;
+  width: 800px;
+  height: 550px;
   padding: 10px 30px;
   margin: 35px auto 0;
   text-align: center;
   border: 2px dashed #ccc;
 }
-/* line 139, ../scss/templates/_invoice.scss */
+/* line 142, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .invoice-title {
-  font-size: 18px;
+  font-size: 20px;
   height: 24px;
   line-height: 24px;
   margin-bottom: 8px;
-  color: #333;
+  color: #aaa;
 }
-/* line 145, ../scss/templates/_invoice.scss */
+/* line 148, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .invoice-title span {
   margin: 0 10px;
 }
-/* line 149, ../scss/templates/_invoice.scss */
+/* line 152, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .invoice-desc {
-  color: #333;
-  font-size: 14px;
+  color: #aaa;
+  font-size: 16px;
   margin-bottom: 8px;
 }
-/* line 154, ../scss/templates/_invoice.scss */
+/* line 157, ../scss/templates/_invoice.scss */
+.invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .invoice-date {
+  display: inline-block;
+  height: 28px;
+  line-height: 28px;
+  vertical-align: top;
+}
+/* line 162, ../scss/templates/_invoice.scss */
+.invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .invoice-date span {
+  color: #333;
+  font-size: 24px;
+}
+/* line 167, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content {
   text-align: left;
   font-size: 14px;
-  color: #333;
+  color: #aaa;
 }
-/* line 158, ../scss/templates/_invoice.scss */
+/* line 171, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-buyer {
   margin-bottom: 8px;
-  height: 24px;
-  line-height: 20px;
+  height: 28px;
+  line-height: 28px;
 }
-/* line 162, ../scss/templates/_invoice.scss */
+/* line 175, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-buyer span {
-  color: #FF5D01;
-  font-size: 20px;
+  color: #333;
+  font-size: 24px;
   line-height: 24px;
 }
-/* line 168, ../scss/templates/_invoice.scss */
+/* line 181, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-meta {
   margin-bottom: 15px;
 }
-/* line 170, ../scss/templates/_invoice.scss */
+/* line 183, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-meta .invoice-companyid {
   display: inline-block;
+  margin-right: 15px;
 }
-/* line 172, ../scss/templates/_invoice.scss */
+/* line 186, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-meta .invoice-companyid span {
   height: 24px;
-  line-height: 24px;
+  line-height: 28px;
 }
-/* line 176, ../scss/templates/_invoice.scss */
+/* line 190, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-meta .invoice-companyid .id-item {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   display: inline-block;
-  border: 1px solid #333;
+  border: 1px solid #ccc;
   border-right: none;
   text-align: center;
-  line-height: 24px;
+  line-height: 28px;
   vertical-align: top;
-  font-size: 20px;
-  color: #FF5D01;
+  font-size: 24px;
+  color: #333;
 }
-/* line 187, ../scss/templates/_invoice.scss */
+/* line 201, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-meta .invoice-companyid .id-item:last-child {
-  border-right: 1px solid #333;
+  border-right: 1px solid #ccc;
 }
-/* line 192, ../scss/templates/_invoice.scss */
-.invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-meta .invoice-date {
-  display: inline-block;
-  margin-left: 10px;
-  height: 24px;
-  line-height: 24px;
-  vertical-align: top;
-}
-/* line 198, ../scss/templates/_invoice.scss */
-.invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-meta .invoice-date span {
-  color: #FF5D01;
-  font-size: 20px;
-}
-/* line 204, ../scss/templates/_invoice.scss */
+/* line 207, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table {
   height: 200px;
 }
-/* line 208, ../scss/templates/_invoice.scss */
+/* line 211, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table thead tr th {
   border: 1px solid #C38293;
-  font-size: 12px;
+  font-size: 16px;
   padding: 4px 8px;
 }
-/* line 217, ../scss/templates/_invoice.scss */
+/* line 220, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td {
-  height: 30px;
-  line-height: 30px;
+  height: 40px;
+  line-height: 40px;
   border: 1px solid #C38293;
   padding: 0 8px;
-}
-/* line 222, ../scss/templates/_invoice.scss */
-.invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td.td-answer {
-  color: #FF5D01;
-  font-size: 20px;
+  font-size: 16px;
 }
 /* line 226, ../scss/templates/_invoice.scss */
+.invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td.td-answer {
+  color: #333;
+  font-size: 24px;
+}
+/* line 230, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td.td-word {
   text-align: right;
-  font-size: 12px;
-}
-/* line 229, ../scss/templates/_invoice.scss */
-.invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td.td-word .word-item {
-  display: inline-block;
-  width: 50px;
-  margin-left: 5px;
+  font-size: 24px;
 }
 /* line 233, ../scss/templates/_invoice.scss */
+.invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td.td-word .word-item {
+  display: inline-block;
+  width: 60px;
+  margin-left: 5px;
+}
+/* line 237, ../scss/templates/_invoice.scss */
 .invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td.td-word .word-item .word {
   display: inline-block;
   margin-right: 5px;
   text-align: center;
-  color: #FF5D01;
-  font-size: 20px;
+  color: #333;
+}
+/* line 243, ../scss/templates/_invoice.scss */
+.invoice-page .inner-wrapper .invoice-content .invoice-info .invoice .invoice-result .result-wrapper .result-content .invoice-table tbody tr td.td-word .word-item .unit {
+  line-height: 20px;
+  font-size: 16px;
 }
 
 /* line 1, ../scss/templates/_studentInfo.scss */
@@ -452,18 +460,18 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   position: relative;
   width: calc(100% - 40px - 240px);
   margin-left: 280px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  background-color: #FFF;
-  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
 }
-/* line 14, ../scss/templates/_studentInfo.scss */
+/* line 11, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info {
   padding: 25px 40px;
   height: calc(100vh - 150px);
+  background-color: #FFF;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
 }
 /* line 17, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .title {
@@ -507,7 +515,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 45, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .si-upload .upload-name {
   display: inline-block;
-  width: 280px;
+  width: calc(100% - 100px);
   height: 34px;
   line-height: 34px;
   overflow: hidden;
@@ -569,6 +577,110 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
   border: 2px solid #ccc;
   border-top: none;
+}
+/* line 109, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-topbar {
+  height: 50px;
+  line-height: 50px;
+  background-color: #FFF;
+  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+/* line 115, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown {
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  position: relative;
+  margin-left: 20px;
+}
+/* line 119, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown #class-label {
+  margin: auto;
+}
+/* line 122, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown .dropdown-menu {
+  top: calc(100% - 10px);
+}
+/* line 124, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown .dropdown-menu li {
+  cursor: pointer;
+}
+/* line 129, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-topbar .student-search {
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  height: 50px;
+  width: 300px;
+  vertical-align: top;
+  float: right;
+}
+/* line 135, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-topbar .student-search .input-group {
+  margin: auto;
+  margin-right: 20px;
+}
+/* line 141, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .loader {
+  margin-top: 20px;
+}
+/* line 144, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content {
+  margin-top: 20px;
+  background-color: #FFF;
+  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+/* line 149, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .manage-title {
+  height: 60px;
+  line-height: 60px;
+  padding: 0 24px;
+  font-size: 16px;
+  color: #FFF;
+  background-color: #FF8400;
+  -moz-border-radius: 3px 3px 0 0;
+  -webkit-border-radius: 3px;
+  border-radius: 3px 3px 0 0;
+}
+/* line 158, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .table-content {
+  padding-top: 10px;
+}
+/* line 163, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .table-content table thead tr th {
+  height: 40px;
+  line-height: 40px;
+  padding: 0;
+  text-align: left;
+}
+/* line 168, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .table-content table thead tr th:nth-of-type(0n+1) {
+  padding-left: 20px;
+}
+/* line 176, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .table-content table tbody tr td {
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  padding: 0;
+  font-size: 14px;
+  text-align: left;
+}
+/* line 183, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .table-content table tbody tr td:nth-of-type(0n+1) {
+  padding-left: 20px;
+}
+/* line 187, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .table-content table tbody tr.selected {
+  background-color: #D1E1FD;
 }
 
 /* line 6, ../scss/directives/_loading.scss */
@@ -841,25 +953,65 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 /* line 13, ../scss/directives/_nav-sidebar.scss */
 #nav-sidebar .action-list .action-item {
+  position: relative;
   width: 100%;
-  height: 40px;
+  cursor: pointer;
+}
+/* line 17, ../scss/directives/_nav-sidebar.scss */
+#nav-sidebar .action-list .action-item .item-title {
+  padding: 0 14px;
   font-size: 16px;
   line-height: 40px;
-  padding: 0 14px;
   color: #565151;
-  cursor: pointer;
+  height: 40px;
   display: -webkit-flex;
   display: flex;
 }
-/* line 22, ../scss/directives/_nav-sidebar.scss */
-#nav-sidebar .action-list .action-item i {
+/* line 24, ../scss/directives/_nav-sidebar.scss */
+#nav-sidebar .action-list .action-item .item-title i {
   margin-right: 10px;
   height: 40px;
   line-height: 42px;
 }
-/* line 28, ../scss/directives/_nav-sidebar.scss */
-#nav-sidebar .action-list .action-item.active {
+/* line 29, ../scss/directives/_nav-sidebar.scss */
+#nav-sidebar .action-list .action-item .item-title span.icon {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  line-height: 40px;
+  font-size: 12px;
+}
+/* line 38, ../scss/directives/_nav-sidebar.scss */
+#nav-sidebar .action-list .action-item .item-menu .menu-list {
+  height: 0;
+  margin: 0;
+  padding: 0 30px;
+  border-left: 1px dashed #aaa;
+  overflow: hidden;
+}
+/* line 44, ../scss/directives/_nav-sidebar.scss */
+#nav-sidebar .action-list .action-item .item-menu .menu-list .menu-item {
+  padding: 10px 0;
+}
+/* line 46, ../scss/directives/_nav-sidebar.scss */
+#nav-sidebar .action-list .action-item .item-menu .menu-list .menu-item.active {
+  color: #FF5D01;
+}
+/* line 53, ../scss/directives/_nav-sidebar.scss */
+#nav-sidebar .action-list .action-item.active .item-title {
   background-color: rgba(255, 93, 1, 0.2);
+}
+/* line 59, ../scss/directives/_nav-sidebar.scss */
+#nav-sidebar .action-list .action-item.show-menu .item-title span.icon {
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+/* line 64, ../scss/directives/_nav-sidebar.scss */
+#nav-sidebar .action-list .action-item.show-menu .item-menu .menu-list {
+  height: auto;
+  margin: 10px 0 10px 26px;
 }
 
 /* line 32, ../scss/style.scss */

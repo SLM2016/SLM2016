@@ -82,11 +82,14 @@
                                 }
                                 &.company {
                                     .form-group {
-                                        &.id {
+                                        &.id, &.date {
                                             width: 200px;
                                         }
                                         &.name{
-                                            width: calc(100% - 200px - 20px);
+                                            width: calc(100% - 400px - 40px);
+                                        }
+                                        &.date {
+                                            vertical-align: top;
                                             margin-right: 0;
                                         }
                                     }
@@ -119,7 +122,7 @@
                         text-align: center;
                         @include transition(all ease-in-out 150ms);
                         &.result-show {
-                            height: 510px;
+                            height: 586px;
                             margin-top: 20px;
                             visibility: visible;
                             opacity: 1;
@@ -130,38 +133,48 @@
                         }
                         .result-wrapper {
                             display: none;
-                            width: 700px;
-                            height: 470px;
+                            width: 800px;
+                            height: 550px;
                             padding: 10px 30px;
                             margin: 35px auto 0;
                             text-align: center;
                             border: 2px dashed #ccc;
                             .invoice-title {
-                                font-size: 18px;
+                                font-size: 20px;
                                 height: 24px;
                                 line-height: 24px;
                                 margin-bottom: 8px;
-                                color: #333;
+                                color: #aaa;
                                 span {
                                     margin: 0 10px;
                                 }
                             }
                             .invoice-desc {
-                                color: #333;
-                                font-size: 14px;
+                                color: #aaa;
+                                font-size: 16px;
                                 margin-bottom: 8px;
+                            }
+                            .invoice-date {
+                                display: inline-block;
+                                height: 28px;
+                                line-height: 28px;
+                                vertical-align: top;
+                                span {
+                                    color: #333;
+                                    font-size: 24px;
+                                }
                             }
                             .result-content {
                                 text-align: left;
                                 font-size: 14px;
-                                color: #333;
+                                color: #aaa;
                                 .invoice-buyer {
                                     margin-bottom: 8px;
-                                    height: 24px;
-                                    line-height: 20px;
+                                    height: 28px;
+                                    line-height: 28px;
                                     span {
-                                        color: #FF5D01;
-                                        font-size: 20px;
+                                        color: #333;
+                                        font-size: 24px;
                                         line-height: 24px;
                                     }
                                 }
@@ -169,35 +182,25 @@
                                     margin-bottom: 15px;
                                     .invoice-companyid {
                                         display: inline-block;
+                                        margin-right: 15px;
                                         span {
                                             height: 24px;
-                                            line-height: 24px;
+                                            line-height: 28px;
                                         }
                                         .id-item {
-                                            width: 24px;
-                                            height: 24px;
+                                            width: 28px;
+                                            height: 28px;
                                             display: inline-block;
-                                            border: 1px solid #333;
+                                            border: 1px solid #ccc;
                                             border-right: none;
                                             text-align: center;
-                                            line-height: 24px;
+                                            line-height: 28px;
                                             vertical-align: top;
-                                            font-size: 20px;
-                                            color: #FF5D01;
+                                            font-size: 24px;
+                                            color: #333;
                                             &:last-child {
-                                                border-right: 1px solid #333;
+                                                border-right: 1px solid #ccc;
                                             }
-                                        }
-                                    }
-                                    .invoice-date {
-                                        display: inline-block;
-                                        margin-left: 10px;
-                                        height: 24px;
-                                        line-height: 24px;
-                                        vertical-align: top;
-                                        span {
-                                            color: #FF5D01;
-                                            font-size: 20px;
                                         }
                                     }
                                 }
@@ -207,7 +210,7 @@
                                         tr {
                                             th {
                                                 border: 1px solid #C38293;
-                                                font-size: 12px;
+                                                font-size: 16px;
                                                 padding: 4px 8px;
                                             }
                                         }
@@ -215,27 +218,31 @@
                                     tbody {
                                         tr {
                                             td {
-                                                height: 30px;
-                                                line-height: 30px;
+                                                height: 40px;
+                                                line-height: 40px;
                                                 border: 1px solid #C38293;
                                                 padding: 0 8px;
+                                                font-size: 16px;
                                                 &.td-answer {
-                                                    color: #FF5D01;
-                                                    font-size: 20px;
+                                                    color: #333;
+                                                    font-size: 24px;
                                                 }
                                                 &.td-word {
                                                     text-align: right;
-                                                    font-size: 12px;
+                                                    font-size: 24px;
                                                     .word-item {
                                                         display: inline-block;
-                                                        width: 50px;
+                                                        width: 60px;
                                                         margin-left: 5px;
                                                         .word {
                                                             display: inline-block;
                                                             margin-right: 5px;
                                                             text-align: center;
-                                                            color: #FF5D01;
-                                                            font-size: 20px;
+                                                            color: #333;
+                                                        }
+                                                        .unit {
+                                                            line-height: 20px;
+                                                            font-size: 16px;
                                                         }
                                                     }
                                                 }

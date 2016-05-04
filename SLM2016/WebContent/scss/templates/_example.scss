@@ -1,6 +1,6 @@
 .example {
     background-color: #E9E9E9;
-    padding-top: 40px;
+    padding: 40px 0;
     min-height: 100%;
     height: 100%;
     width: 100%;
@@ -13,7 +13,6 @@
         @include box-shadow(0px 1px 3px 0px rgba(0, 0, 0, 0.1));
         .info {
             padding: 25px 40px;
-            height: 1000px;
             .title {
                 margin-bottom: 20px;
                 height: 57px;

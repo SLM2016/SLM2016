@@ -1,4 +1,4 @@
-app.controller('StudentInfoController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 
+app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 
     function ($scope, $state, $timeout, $rootScope, StudentInfoService) {  
 
 	    var fileChanged = function(files) {
@@ -28,7 +28,7 @@ app.controller('StudentInfoController', ['$scope', '$state', '$timeout', '$rootS
 	    // transfer data to server
 		var uploadFile = function () {
 			$scope.isUploading = true;
-			StudentInfoService.transferFile($scope.excelFile).then(function(result) {
+			StudentInfoService.uploadStudentFile($scope.excelFile).then(function(result) {
 				$scope.isUploading = false;
 				console.log(result.status)
 				if(result.status) {
