@@ -1,0 +1,52 @@
+<div id="nav-sidebar">
+    <div class="action-list">
+        <div class="action-item" ui-sref="home" ng-class="{'active': isHomeView()}">
+            <div class="item-title">
+                <i class="icon-home-outline"></i>
+                <span>首頁</span>
+            </div>
+        </div>
+
+        <div class="action-item" ui-sref="invoice" ng-class="{'active': isInvoiceView()}">
+            <div class="item-title">
+                <i class="icon-doc-text-inv"></i>
+                <span>發票開立</span>
+            </div>
+        </div>
+        
+        <div class="action-item" ng-class="{'active': isStudentInfoView(), 'show-menu': isShowStudentMenu}">
+            <div class="item-title" ng-click="toggleStudentMenu()">
+                <i class="icon-users-outline"></i>
+                <span>學員管理</span>
+                <span class="glyphicon glyphicon-menu-right icon"></span>
+            </div>
+            <div class="item-menu">
+                <ul class="menu-list">
+                    <li class="menu-item" ui-sref="studentInfo.Manage" ng-class="{'active': isStudentInfoManageView()}">課程學員</li>
+                    <li class="menu-item" ui-sref="studentInfo.Import" ng-class="{'active': isStudentInfoImportView()}">學員資料上傳</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="action-item" ui-sref="certification" ng-class="{'active': isCertificationView()}">
+            <div class="item-title">
+                <i class="icon-certificate-outline"></i>
+                <span>產生證書</span>
+            </div>
+        </div>
+
+        <div class="action-item" ui-sref="sendMail" ng-class="{'active': isSendMailView()}">
+            <div class="item-title">
+                <i class="icon-mail"></i>
+                <span>寄送郵件</span>
+            </div>
+        </div>
+
+        <div class="action-item" ui-sref="createCourse" ng-class="{'active': isCreateCourseView()}">
+            <div class="item-title">
+                <i class="icon-users-outline"></i>
+                <span>開新課程</span>
+            </div>
+        </div>
+    </div>
+</div>
