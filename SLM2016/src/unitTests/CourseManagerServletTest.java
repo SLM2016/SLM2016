@@ -36,7 +36,7 @@ public class CourseManagerServletTest {
 		HttpServletResponse getResponseMock = Mockito.mock(HttpServletResponse.class);
 
 		Reader data = new StringReader(
-				"{\"courseName_\":\"Scurm敏捷方法實作班\",\"batch_\":\"401\",\"date_\":\"2016/6/24、25、26 (五、六、日)\",\"duration_\":\"09:30~16:30 共18小時\",\"ticketType_\":\"一般票\",\"price_\":33000,\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"未開課\"}");
+				"{\"courseName_\":\"Scurm敏捷方法實作班\",\"batch_\":\"401\",\"date_\":\"2016/6/24、25、26 (五、六、日)\",\"duration_\":\"09:30~16:30 共18小時\",\"ticketTypes_\":\"一般票\",\"prices_\":33000,\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"未開課\"}");
 		Mockito.when(getRequestMock.getReader()).thenReturn(new BufferedReader(data));
 
 		CourseManagerServlet tag = new CourseManagerServlet() {
@@ -53,7 +53,7 @@ public class CourseManagerServletTest {
 		output = new StringWriter();
 		Mockito.when(responseMock.getWriter()).thenReturn(new PrintWriter(output));
 		tag.doGet(requestMock, responseMock);
-		assertEquals("[{\"courseName_\":\"Scurm敏捷方法實作班\",\"batch_\":\"401\",\"date_\":\"2016/6/24、25、26 (五、六、日)\",\"duration_\":\"09:30~16:30 共18小時\",\"ticketType_\":\"一般票\",\"price_\":33000,\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"未開課\"}]", output.toString());
+		assertEquals("[{\"courseName_\":\"Scurm敏捷方法實作班\",\"batch_\":\"401\",\"date_\":\"2016/6/24、25、26 (五、六、日)\",\"duration_\":\"09:30~16:30 共18小時\",\"ticketTypes_\":\"一般票\",\"prices_\":33000,\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"未開課\"}]", output.toString());
 	}
 
 	@Test
