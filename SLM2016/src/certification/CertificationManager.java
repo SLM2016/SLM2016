@@ -7,13 +7,18 @@ import java.awt.Image;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
-
 import javax.imageio.ImageIO;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class CertificationManager {
 	private String base64EncodedCertification_ = "";
+	private String base64EncodedCertificationToPDF_ = "";
 
 	private String getFileExtendsion(String filePath) {
 		String extendsion = "";
@@ -100,5 +105,34 @@ public class CertificationManager {
 		} catch (IOException e1) {
 			// throw IOException becuase of Image went wrong during reading File
 		}
+	}
+	
+	public void makeCertificationPDF() {
+		Document document = new Document();		
+		Base64.Decoder base64Decoder = Base64.getDecoder();
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+				
+	    try {     
+	      com.itextpdf.text.Image Image = com.itextpdf.text.Image.getInstance(base64Decoder.decode(base64EncodedCertification_));
+	      PdfWriter writer = PdfWriter.getInstance(document, byteArrayOutputStream);
+	      Rectangle imageSize = new Rectangle(Image.getWidth(),Image.getHeight());
+	      document.setPageSize(imageSize);
+	      writer.open();
+	      document.open();
+	      document.add(Image);
+	      document.close();
+	      writer.close();
+	      
+	      Base64.Encoder base64Encoder = Base64.getEncoder();
+	      base64EncodedCertificationToPDF_ = base64Encoder.encodeToString(byteArrayOutputStream.toByteArray());
+	      byteArrayOutputStream.close();
+	    }
+	    catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	}
+	
+	public String getCertificationPDFJsonString() {
+		return base64EncodedCertificationToPDF_;
 	}
 }

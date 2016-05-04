@@ -3,10 +3,7 @@ app.factory('ExampleService', ['$q', '$http', '$timeout', '$rootScope',
 		
 		var factory = this;
 
-		// --------------------------------
-        // 取得筆記文章列表
-        // --------------------------------
-        var getTest = function(type, starttime, endtime, start, len) {
+        var getTest = function() {
             var defer = $q.defer();
 
             $http({
@@ -14,8 +11,7 @@ app.factory('ExampleService', ['$q', '$http', '$timeout', '$rootScope',
                 method: "GET",
                 params: {
                     op: 1,
-                    test: "test",
-                    len: len
+                    test: "test"
                 }
             }).success(function(data) {
                 if (data.error) {

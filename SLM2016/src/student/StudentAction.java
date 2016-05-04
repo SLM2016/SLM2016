@@ -23,6 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,6 +48,9 @@ import com.jspsmart.upload.SmartUpload;
 @MultipartConfig()
 public class StudentAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private static final String OP_INSERT_INTO_STUDENT = "1";
+	private static final String OP_GET_STUDENT_LIST = "2";
 
 	public StudentAction() {
 		super();
@@ -54,7 +58,16 @@ public class StudentAction extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		String op = request.getParameter("op");
+		switch (op) {
+		case OP_GET_STUDENT_LIST:
+			getStudentList(request, response);
+			break;
+		default:
+			break;
+		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -63,7 +76,7 @@ public class StudentAction extends HttpServlet {
 		HashMap result = new HashMap();
 		PrintWriter out = response.getWriter();
 		switch (op) {
-		case "1":
+		case OP_INSERT_INTO_STUDENT:
 			result = insertIntoStudent(request, response);
 			break;
 		default:
@@ -72,7 +85,25 @@ public class StudentAction extends HttpServlet {
 
 		Gson gson = new Gson();
 		out.println(gson.toJson(result));
-
+	}
+	
+	private void getStudentList(HttpServletRequest request, HttpServletResponse response) {
+		StudentDBManager studentDbManager = new StudentDBManager();
+		String json = null;
+		
+		try {
+			json = studentDbManager.getStudentList();
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private HashMap insertIntoStudent(HttpServletRequest request, HttpServletResponse response)

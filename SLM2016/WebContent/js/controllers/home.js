@@ -19,7 +19,6 @@ app.controller("HomeController",['$scope', '$state', '$timeout', '$rootScope',
              Methods
         ==========================*/
 
-        $scope.test = test;
 
         /*==========================
              init

@@ -1,20 +1,24 @@
 package dataClass;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Course {
-	//private int courseId_;
+	// private int courseId_;
 	private String courseName_;
+	private String type_;
 	private String batch_;
 	private String date_;
 	private String duration_;
-	private String ticketType_;
-	private int price_;
+	private String ticketTypes_;
+	private int prices_;
 	private String location_;
 	private String lecturer_;
 	private String status_;
 
-//	public Course(int id) {
-//		courseId_ = id;
-//	};
+	// public Course(int id) {
+	// courseId_ = id;
+	// };
 
 	public void setCourseName(String courseName) {
 		courseName_ = courseName;
@@ -33,11 +37,11 @@ public class Course {
 	}
 
 	public void setTicketType(String ticketType) {
-		ticketType_ = ticketType;
+		ticketTypes_ = ticketType;
 	}
 
 	public void setPrice(int price) {
-		price_ = price;
+		prices_ = price;
 	}
 
 	public void setLocation(String location) {
@@ -52,9 +56,9 @@ public class Course {
 		status_ = status;
 	}
 
-//	public int getCourseId() {
-//		return courseId_;
-//	}
+	// public int getCourseId() {
+	// return courseId_;
+	// }
 
 	public String getCourseName() {
 		return courseName_;
@@ -73,11 +77,11 @@ public class Course {
 	}
 
 	public String getTicketType() {
-		return ticketType_;
+		return ticketTypes_;
 	}
 
 	public int getPrice() {
-		return price_;
+		return prices_;
 	}
 
 	public String getLocation() {

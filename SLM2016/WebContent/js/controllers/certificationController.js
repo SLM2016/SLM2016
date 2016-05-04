@@ -35,13 +35,33 @@ app.controller("CertificationController",['$scope', '$state', '$timeout', '$root
 			   link.click();
 			   document.body.removeChild(link);   
 		   }
-		}        
+		}     
+		
+		var ClickDownloadPDFButton=function() {
+			var imgData = "";
+			var data = new Object();
+			data.imagePath_ = imgData;
+
+			if(imgData != null){
+				$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
+				.done(function(data)
+				{
+					var link = document.createElement('a');
+					link.href = 'data:application/pdf;base64,'+data;
+					link.download = "Download.pdf";
+					document.body.appendChild(link);
+					link.click();
+					document.body.removeChild(link);  
+				});  
+			}
+		}     
 
         var init = function() {
         }
 
         $scope.ClickGenerateButton = ClickGenerateButton;
         $scope.ClickDownloadButton = ClickDownloadButton;
+        $scope.ClickDownloadPDFButton = ClickDownloadPDFButton;
         /*==========================
             Events
         ==========================*/

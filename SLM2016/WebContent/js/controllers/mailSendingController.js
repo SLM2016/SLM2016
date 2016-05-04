@@ -18,11 +18,11 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 		}
 		
 		function setCCAddressCheckList(){
-			for(i = 0; i < 3; i++){
+			for(i = 0; i < ccAddresses.length; i++){
 				var ccCheckList = document.getElementById("carbonCopyName");
 				var ccCheckbox = document.createElement("input");
 				ccCheckbox.type = "checkbox";
-				ccCheckbox.name = "checkbox_name";
+				ccCheckbox.name = "ccCheckboxName";
 				ccCheckbox.value = i;
 				ccCheckbox.checked = true;
 				ccCheckList.appendChild(ccCheckbox);
@@ -35,9 +35,17 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 		
 		function getStudentnameByClassIndex() {
 			var data = document.myForm.courseCheckbox.selectedIndex;
+//			$.post("/SLM2016/SendGmailServlet?isSend=false",JSON.stringify(data)).done(function(data) {
+//					studentArray = [];
+//					for(i = 0; i < data.studentInfomation_.studentsName_.length; i++){
+//						studentArray.push(data.studentInfomation_[i]);
+//					}
+//					//console.log(studentArray.length);
+//			});
 			
 			$.ajax({
 				url : "/SLM2016/SendGmailServlet",
+				//url : "/SLM2016/SendGmailServlet?isSend=false",
 				type : "POST",
 				data : JSON.stringify(data),
 				async : false,
@@ -152,9 +160,9 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 
 				//prepare ccAddresses
 				var ccCheckList = document.getElementsByName('carbonCopyName');
-				var checkbox_list = document.getElementsByName('checkbox_name');
+				var checkbox_list = document.getElementsByName('ccCheckboxName');
 				var ccAddressesString = "";
-				for (i = 0; i < 3; i++) {
+				for (i = 0; i < ccAddresses.length; i++) {
 					if (checkbox_list[i].checked) {
 						ccAddressesString += ccAddresses[i];
 						ccAddressesString += ",";
@@ -162,7 +170,6 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 				}
 				ccAddressesString = ccAddressesString.substr(0, ccAddressesString.length - 1);
 				data.ccAddresses_ = ccAddressesString;
-				
 				$.post("/SLM2016/SendGmailServlet",
 						JSON.stringify(data)).done(function(data) {
 						window.alert(data);

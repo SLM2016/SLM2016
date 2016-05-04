@@ -1,4 +1,4 @@
-app.controller("UpdateAttachFileController",['$scope', '$state', '$timeout', '$rootScope',
+app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$rootScope',
 	function($scope, $state, $timeout, $rootScope, UploadAttachmentService){
 	    
 	function getTeddyCourseData() {

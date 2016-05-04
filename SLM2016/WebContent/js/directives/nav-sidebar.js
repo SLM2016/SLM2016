@@ -14,61 +14,73 @@ app.directive('navSidebar', ['$rootScope',
             controller: ['$scope', '$state', '$timeout',
                 function($scope, $state, $timeout) {
 
-                    var init = function() {
-
-                    }
+                    var init = function() {}
 
                     var isHomeView = function() {
                         return $state.includes(STATES.HOME);
                     }
 
-                    var isExample1View = function() {
-                        return $state.includes(STATES.EXAMPLE1);
-                    }
-
-                    var isExample2View = function() {
-                        return $state.includes(STATES.EXAMPLE2);
-                    }
-
-                    var isExample3View = function() {
-                        return $state.includes(STATES.EXAMPLE3);
+                    var isCertificationView = function() {
+                        return $state.includes(STATES.CERTIFICATION);
                     }
                     
-                    var isExample4View = function() {
-                        return $state.includes(STATES.EXAMPLE4);
-                    }
-                    
-                    var isExample5View = function() {
-                        return $state.includes(STATES.EXAMPLE5);
+                    var isSendMailView = function() {
+                        return $state.includes(STATES.SENDMAIL);
                     }
                     
                     var isInvoiceView = function() {
                         return $state.includes(STATES.INVOICE);
                     }
 
-                    var studentInfoView = function() {
+                    var isStudentInfoView = function() {
                         return $state.includes(STATES.STUDENTINFO);
+                    }
+
+                    var isStudentInfoManageView = function() {
+                        return $state.includes(STATES.STUDENT_INFO_MANAGE);
+                    }
+
+                    var isStudentInfoImportView = function() {
+                        return $state.includes(STATES.STUDENT_INFO_IMPORT);
+                    }
+                    
+                    var isCreateCourseView = function() {
+                        return $state.includes(STATES.CREATE_COURSE);
+                    }
+
+                    var toggleStudentMenu = function() {
+                        $scope.isShowStudentMenu = !$scope.isShowStudentMenu;
                     }
                     /*==========================
                         Events
                     ==========================*/
 
+                    $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
+                        if($state.includes(STATES.STUDENTINFO)) {
+                            $scope.isShowStudentMenu = true;
+                        }
+                    });
+
                     /*==========================
                         Members
                     ==========================*/
+
+                    $scope.isShowStudentMenu = false;
 
                     /*==========================
                         Methods
                     ==========================*/
                     $scope.isHomeView = isHomeView;
 
-                    $scope.isExample1View = isExample1View;
-                    $scope.isExample2View = isExample2View;
-                    $scope.isExample3View = isExample3View;
-                    $scope.isExample4View = isExample4View;       
-                    $scope.isExample5View = isExample5View;  
+                    $scope.isCertificationView = isCertificationView;
+                    $scope.isSendMailView = isSendMailView;                    
                     $scope.isInvoiceView = isInvoiceView;
-                    $scope.studentInfoView = studentInfoView;                    
+                    $scope.isStudentInfoView = isStudentInfoView;    
+
+                    $scope.isStudentInfoManageView = isStudentInfoManageView;   
+                    $scope.isStudentInfoImportView = isStudentInfoImportView;
+                    $scope.isCreateCourseView = isCreateCourseView;
+                    $scope.toggleStudentMenu = toggleStudentMenu;             
                     /*==========================
                         init
                     ==========================*/
