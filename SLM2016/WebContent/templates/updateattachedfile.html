@@ -9,7 +9,7 @@
             <!-- 上傳資料 -->
             <div class="invoice" ng-show="loadType == 'Upload'">
 			<div class="title">課程檔案管理系統</div>
-			<div class="form-group name" >
+			<div class="form-group name">
 			<label for="companyName">課名</label>
 			</div>
 			<div class="form-group">
@@ -70,7 +70,8 @@
 			<div class="form-group name" >
 			<div class="title">課程檔案管理系統</div>
 			</div>
-			<table class="table table-bordered si-table table-hover" id="courseInfo" border="1" cellpadding="9" >
+			<div style="width:900px;height:700px;overflow-x:auto;overflow-y:auto;">
+			<table class="table table-bordered si-table table-hover" id="courseInfo" border="1" cellpadding="9"  >
 				<thead>
 				  <tr>
 					  <td></td>
@@ -87,7 +88,7 @@
 				</thead>
                     <tbody>
                         <tr ng-repeat="course in courseList">
-							<td><input type="submit" ng-model="selectedValue" class="btn btn-info btn-orange" value = "Delete" ng-click="deleteRow($index)"></td>
+							<td><input type="submit" class="btn btn-info btn-orange"  value = "Delete" ng-click="deleteRow($index)"></td>
                             <td>{{course.courseName_}}</td>
                             <td>{{course.batch_}}</td>
                             <td>{{course.date_}}</td>
@@ -100,6 +101,7 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
 			</div>	
 		</div>
 	</div>
