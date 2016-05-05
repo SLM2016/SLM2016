@@ -38,7 +38,7 @@ app.controller("CertificationController",['$scope', '$state', '$timeout', '$root
 		}     
 		
 		var ClickDownloadPDFButton=function() {
-			var imgData = "";
+			var imgData = document.getElementById("someImg").getAttribute('src');
 			var data = new Object();
 			data.imagePath_ = imgData;
 
