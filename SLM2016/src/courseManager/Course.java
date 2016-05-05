@@ -6,7 +6,7 @@ import java.util.List;
 public class Course {
 	// private int courseId_;
 	private String courseName_;
-	private String type_;
+	//private String type_;
 	private String batch_;
 	private String date_;
 	private String duration_;
