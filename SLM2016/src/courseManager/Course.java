@@ -9,9 +9,9 @@ public class Course {
 	private String type_;
 	private String batch_;
 	private String date_;
-	private String duration_;
-	private String ticketTypes_;
-	private int prices_;
+	private int duration_;
+	private List<String> ticketTypes_ = new ArrayList<String>();
+	private List<Integer> prices_ = new ArrayList<Integer>();
 	private String location_;
 	private String lecturer_;
 	private String status_;
@@ -20,8 +20,27 @@ public class Course {
 	// courseId_ = id;
 	// };
 
+	public Course clone() {
+		Course cloneObject = new Course();
+		cloneObject.courseName_ = courseName_;
+		cloneObject.type_ = type_;
+		cloneObject.batch_ = batch_;
+		cloneObject.date_ = date_;
+		cloneObject.duration_ = duration_;
+		cloneObject.ticketTypes_.addAll(ticketTypes_);
+		cloneObject.prices_.addAll(prices_);
+		cloneObject.location_ = location_;
+		cloneObject.lecturer_ = lecturer_;
+		cloneObject.status_ = status_;
+		return cloneObject;
+	}
+
 	public void setCourseName(String courseName) {
 		courseName_ = courseName;
+	}
+
+	public void setType(String type) {
+		type_ = type;
 	}
 
 	public void setBatch(String batch) {
@@ -32,16 +51,24 @@ public class Course {
 		date_ = date;
 	}
 
-	public void setDuration(String duration) {
+	public void setDuration(int duration) {
 		duration_ = duration;
 	}
 
-	public void setTicketType(String ticketType) {
-		ticketTypes_ = ticketType;
+	public void addTicketType(String ticketType) {
+		ticketTypes_.add(ticketType);
 	}
 
-	public void setPrice(int price) {
-		prices_ = price;
+	public void deleteTicketType(int index) {
+		ticketTypes_.remove(index);
+	}
+
+	public void addPrice(int price) {
+		prices_.add(price);
+	}
+
+	public void deletePrice(int index) {
+		prices_.remove(index);
 	}
 
 	public void setLocation(String location) {
@@ -64,6 +91,10 @@ public class Course {
 		return courseName_;
 	}
 
+	public String getType() {
+		return type_;
+	}
+
 	public String getBatch() {
 		return batch_;
 	}
@@ -72,15 +103,15 @@ public class Course {
 		return date_;
 	}
 
-	public String getDuration() {
+	public int getDuration() {
 		return duration_;
 	}
 
-	public String getTicketType() {
+	public List<String> getTicketTypes() {
 		return ticketTypes_;
 	}
 
-	public int getPrice() {
+	public List<Integer> getPrices() {
 		return prices_;
 	}
 

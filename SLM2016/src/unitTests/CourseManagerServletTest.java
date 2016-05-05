@@ -32,20 +32,20 @@ public class CourseManagerServletTest {
 
 	@Test
 	public void testDoGet() throws ServletException, IOException {
-		HttpServletRequest getRequestMock = Mockito.mock(HttpServletRequest.class);
-		HttpServletResponse getResponseMock = Mockito.mock(HttpServletResponse.class);
+		HttpServletRequest postRequestMock = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse postResponseMock = Mockito.mock(HttpServletResponse.class);
 
 		Reader data = new StringReader(
-				"{\"courseName_\":\"Scurm敏捷方法實作班\",\"batch_\":\"401\",\"date_\":\"2016/6/24、25、26 (五、六、日)\",\"duration_\":\"09:30~16:30 共18小時\",\"ticketType_\":\"一般票\",\"price_\":33000,\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"未開課\"}");
-		Mockito.when(getRequestMock.getReader()).thenReturn(new BufferedReader(data));
+				"{\"courseName_\":\"Scurm敏捷方法實作班\",\"batch_\":\"401\",\"date_\":\"2016/6/24、25、26 (五、六、日)\",\"duration_\":18,\"ticketTypes_\":[\"一般票\"],\"prices_\":[33000],\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"準備中\"}");
+		Mockito.when(postRequestMock.getReader()).thenReturn(new BufferedReader(data));
 
 		CourseManagerServlet tag = new CourseManagerServlet() {
 			private static final long serialVersionUID = 1L;
 		};
 
 		Writer output = new StringWriter();
-		Mockito.when(getResponseMock.getWriter()).thenReturn(new PrintWriter(output));
-		tag.doPost(getRequestMock, getResponseMock);
+		Mockito.when(postResponseMock.getWriter()).thenReturn(new PrintWriter(output));
+		tag.doPost(postRequestMock, postResponseMock);
 		
 		HttpServletRequest requestMock = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse responseMock = Mockito.mock(HttpServletResponse.class);
@@ -53,16 +53,46 @@ public class CourseManagerServletTest {
 		output = new StringWriter();
 		Mockito.when(responseMock.getWriter()).thenReturn(new PrintWriter(output));
 		tag.doGet(requestMock, responseMock);
-		assertEquals("[{\"courseName_\":\"Scurm敏捷方法實作班\",\"batch_\":\"401\",\"date_\":\"2016/6/24、25、26 (五、六、日)\",\"duration_\":\"09:30~16:30 共18小時\",\"ticketType_\":\"一般票\",\"price_\":33000,\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"未開課\"}]", output.toString());
+		assertEquals("[{\"courseName_\":\"Scurm敏捷方法實作班\",\"batch_\":\"401\",\"date_\":\"2016/6/24、25、26 (五、六、日)\",\"duration_\":18,\"ticketTypes_\":[\"一般票\"],\"prices_\":[33000],\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"準備中\"}]", output.toString());
+	}
+	
+	@Test
+	public void testDoPostDeleteCourse() throws ServletException, IOException {
+		HttpServletRequest postRequestMock = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse postResponseMock = Mockito.mock(HttpServletResponse.class);
+
+		Reader postData = new StringReader(
+				"{\"courseName_\":\"Scurm敏捷方法實作班\",\"batch_\":\"401\",\"date_\":\"2016/6/24、25、26 (五、六、日)\",\"duration_\":18,\"ticketTypes_\":[\"一般票\"],\"prices_\":[33000],\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"準備中\"}");
+		Mockito.when(postRequestMock.getReader()).thenReturn(new BufferedReader(postData));
+
+		CourseManagerServlet tag = new CourseManagerServlet() {
+			private static final long serialVersionUID = 1L;
+		};
+
+		Writer postOutput = new StringWriter();
+		Mockito.when(postResponseMock.getWriter()).thenReturn(new PrintWriter(postOutput));
+		tag.doPost(postRequestMock, postResponseMock);
+		
+		HttpServletRequest requestMock = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse responseMock = Mockito.mock(HttpServletResponse.class);
+
+		Mockito.when(requestMock.getHeader("Delete")).thenReturn("false");
+		Reader data = new StringReader("0");
+		Mockito.when(requestMock.getReader()).thenReturn(new BufferedReader(data));
+
+		Writer output = new StringWriter();
+		Mockito.when(responseMock.getWriter()).thenReturn(new PrintWriter(output));
+		tag.doPost(requestMock, responseMock);
+		assertEquals("success", output.toString());
 	}
 
 	@Test
-	public void testDoPost() throws ServletException, IOException {
+	public void testDoPostAddCourse() throws ServletException, IOException {
 		HttpServletRequest requestMock = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse responseMock = Mockito.mock(HttpServletResponse.class);
 
 		Reader data = new StringReader(
-				"{\"courseName_\":\"Scurm敏捷方法實作班\",\"datch_\":\"401\",\"date_\":\"2016/6/24、25、26 (五、六、日)\",\"time_\":\"09:30~16:30 共18小時\",\"ticket_\":\"一般票\",\"price_\":33000,\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"未開課\"}");
+				"{\"courseName_\":\"Scurm敏捷方法實作班\",\"batch_\":\"401\",\"date_\":\"2016/6/24、25、26 (五、六、日)\",\"duration_\":18,\"ticketTypes_\":[\"一般票\"],\"prices_\":[33000],\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"準備中\"}");
 		Mockito.when(requestMock.getReader()).thenReturn(new BufferedReader(data));
 
 		CourseManagerServlet tag = new CourseManagerServlet() {

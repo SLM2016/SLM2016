@@ -32,6 +32,7 @@ public class CourseManagerServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String requestString = request.getReader().readLine();
+		//System.out.println(requestString);
 		String header = request.getHeader("Delete");
 		if (header != null) {
 			doPostDeleteCourse(request, response, requestString);
@@ -64,16 +65,30 @@ public class CourseManagerServlet extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
-		// for (int i = 0; i < courses_.size(); i++) {
-		// System.out.println(courses_.get(i).getCourseName());
-		// System.out.println(courses_.get(i).getBatch());
-		// System.out.println(courses_.get(i).getDate());
-		// System.out.println(courses_.get(i).getDuration());
-		// System.out.println(courses_.get(i).getTicketType());
-		// System.out.println(courses_.get(i).getPrice());
-		// System.out.println(courses_.get(i).getLocation());
-		// System.out.println(courses_.get(i).getLecturer());
-		// System.out.println(courses_.get(i).getStatus());
-		// }
+//		System.out.println("course");
+//		 for (int i = 0; i < courses_.size(); i++) {
+//		 System.out.println(course.getCourseName());
+//		 System.out.println(course.getBatch());
+//		 System.out.println(course.getDate());
+//		 System.out.println(course.getDuration());
+//		 System.out.println(course.getTicketTypes());
+//		 System.out.println(course.getPrices());
+//		 System.out.println(course.getLocation());
+//		 System.out.println(course.getLecturer());
+//		 System.out.println(course.getStatus());
+//		 }
+//		 
+//		System.out.println("DATA");
+//		 for (int i = 0; i < courses_.size(); i++) {
+//		 System.out.println(courses_.get(i).getCourseName());
+//		 System.out.println(courses_.get(i).getBatch());
+//		 System.out.println(courses_.get(i).getDate());
+//		 System.out.println(courses_.get(i).getDuration());
+//		 System.out.println(courses_.get(i).getTicketTypes());
+//		 System.out.println(courses_.get(i).getPrices());
+//		 System.out.println(courses_.get(i).getLocation());
+//		 System.out.println(courses_.get(i).getLecturer());
+//		 System.out.println(courses_.get(i).getStatus());
+//		 }
 	}
 }

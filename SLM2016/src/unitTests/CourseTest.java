@@ -21,10 +21,54 @@ public class CourseTest {
 	}
 
 	@Test
+	public void testClone() {
+		String courseName = "Scurm敏捷方法實作班";
+		course_.setCourseName(courseName);
+		String type = "公開班";
+		course_.setType(type);
+		String batch = "401";
+		course_.setBatch(batch);
+		String date = "2016/6/24、25、26 (五、六、日)";
+		course_.setDate(date);
+		int duration = 120;
+		course_.setDuration(duration);
+		String ticketType = "一般票 ";
+		course_.addTicketType(ticketType);
+		int price = 33000;
+		course_.addPrice(price);
+		String location = "台北市中正區延平南路12號4樓";
+		course_.setLocation(location);
+		String lecturer = "Teddy";
+		course_.setLecturer(lecturer);
+		String status = "準備中";
+		course_.setStatus(status);
+		Course cloneObject = course_.clone();
+		assertEquals(courseName, cloneObject.getCourseName());
+		assertEquals(type, cloneObject.getType());
+		assertEquals(batch, cloneObject.getBatch());
+		assertEquals(date, cloneObject.getDate());
+		assertEquals(duration, cloneObject.getDuration());
+		assertEquals(1, cloneObject.getTicketTypes().size());
+		assertEquals(ticketType, cloneObject.getTicketTypes().get(0));
+		assertEquals(1, cloneObject.getPrices().size());
+		assertEquals(price, cloneObject.getPrices().get(0).intValue());
+		assertEquals(location, cloneObject.getLocation());
+		assertEquals(lecturer, cloneObject.getLecturer());
+		assertEquals(status, cloneObject.getStatus());
+	}
+
+	@Test
 	public void testSetCourseName() {
 		String courseName = "Scurm敏捷方法實作班";
 		course_.setCourseName(courseName);
 		assertEquals(courseName, course_.getCourseName());
+	}
+
+	@Test
+	public void testSetType() {
+		String type = "公開班";
+		course_.setType(type);
+		assertEquals(type, course_.getType());
 	}
 
 	@Test
@@ -43,23 +87,43 @@ public class CourseTest {
 
 	@Test
 	public void testSetDuration() {
-		String duration = "09:30~16:30 共18小時";
+		int duration = 120;
 		course_.setDuration(duration);
 		assertEquals(duration, course_.getDuration());
 	}
 
 	@Test
-	public void testSetTicketType() {
+	public void testAddTicketType() {
 		String ticketType = "一般票 ";
-		course_.setTicketType(ticketType);
-		assertEquals(ticketType, course_.getTicketType());
+		course_.addTicketType(ticketType);
+		assertEquals(1, course_.getTicketTypes().size());
+		assertEquals(ticketType, course_.getTicketTypes().get(0));
 	}
 
 	@Test
-	public void testSetPrice() {
+	public void testDeleteTicketType() {
+		course_.addTicketType("一般票");
+		course_.addTicketType("早鳥票");
+		assertEquals(2, course_.getTicketTypes().size());
+		course_.deleteTicketType(0);
+		assertEquals(1, course_.getTicketTypes().size());
+	}
+
+	@Test
+	public void testAddPrice() {
 		int price = 33000;
-		course_.setPrice(price);
-		assertEquals(price, course_.getPrice());
+		course_.addPrice(price);
+		assertEquals(1, course_.getPrices().size());
+		assertEquals(price, course_.getPrices().get(0).intValue());
+	}
+
+	@Test
+	public void testDeletePrice() {
+		course_.addPrice(10000);
+		course_.addPrice(20000);
+		assertEquals(2, course_.getPrices().size());
+		course_.deletePrice(0);
+		assertEquals(1, course_.getPrices().size());
 	}
 
 	@Test
@@ -78,7 +142,7 @@ public class CourseTest {
 
 	@Test
 	public void testSetStatus() {
-		String status = "未開課";
+		String status = "準備中";
 		course_.setStatus(status);
 		assertEquals(status, course_.getStatus());
 	}
