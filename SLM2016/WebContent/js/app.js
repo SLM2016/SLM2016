@@ -130,13 +130,17 @@ var app = angular.module('app', [
             return $state.includes(STATES.INVOICE);
         }
 
-        var studentInfoView = function() {
-            return $state.includes(STATES.STUDENTINFO);
+        var isInvoiceView = function() {
+            return $state.includes(STATES.INVOICE);
         }
         
         var isCreateCourseView = function() {
             return $state.includes(STATES.CREATE_COURSE);
         }     
+
+        var studentInfoView = function() {
+            return $state.includes(STATES.STUDENTINFO);
+        }        
 
         var init = function() {
             
