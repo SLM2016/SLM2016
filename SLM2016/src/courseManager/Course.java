@@ -1,4 +1,4 @@
-package dataClass;
+package courseManager;
 
 import java.util.ArrayList;
 import java.util.List;

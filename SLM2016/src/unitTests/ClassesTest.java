@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import dataClass.ClassInfomation;
+import mailSending.ClassInfomation;
 import mailSending.Classes;
 
 public class ClassesTest {

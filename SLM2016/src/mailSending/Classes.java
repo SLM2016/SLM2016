@@ -2,8 +2,6 @@ package mailSending;
 
 import java.util.ArrayList;
 
-import dataClass.ClassInfomation;
-
 public class Classes {
 	private ArrayList<ClassInfomation> classes_ = new ArrayList<ClassInfomation>();
 

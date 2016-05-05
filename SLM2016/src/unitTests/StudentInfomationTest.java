@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import dataClass.StudentInfomation;
+import mailSending.StudentInfomation;
 
 public class StudentInfomationTest {
 	private StudentInfomation studentInfomation;

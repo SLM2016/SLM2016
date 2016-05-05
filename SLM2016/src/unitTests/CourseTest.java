@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import dataClass.Course;
+import courseManager.Course;
 
 public class CourseTest {
 	private Course course_;

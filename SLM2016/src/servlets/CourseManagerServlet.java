@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import dataClass.Course;
+import courseManager.Course;
 
 @WebServlet("/CourseManagerServlet")
 public class CourseManagerServlet extends HttpServlet {

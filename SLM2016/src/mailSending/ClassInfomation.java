@@ -1,4 +1,4 @@
-package dataClass;
+package mailSending;
 
 public class ClassInfomation {
 	private String className_;
