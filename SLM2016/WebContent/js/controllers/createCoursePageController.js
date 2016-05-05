@@ -17,8 +17,8 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		data.batch_ = $scope.data.batch;
 		data.date_ = $scope.data.date;
 		data.duration_ = $scope.data.duration;
-		data.ticketTypes_ = $scope.data.ticketType;
-		data.prices_ = $scope.data.price;
+		data.ticketType_ = $scope.data.ticketType;
+		data.price_ = $scope.data.price;
 		data.location_ = $scope.data.location;
 		data.lecturer_ = $scope.data.lecturer;
 		data.status_ = "未開課";
