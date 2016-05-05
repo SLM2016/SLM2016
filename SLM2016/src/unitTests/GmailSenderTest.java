@@ -20,11 +20,25 @@ public class GmailSenderTest {
 	@Test
 	public void testSendSuccess() {
 		String username = "news.teddysoft.tw@gmail.com";
-		String password = "SLMTaipeiTech2016";
+		String password = "clfddzifoyfvvxqa";
 		GmailSender gmailSender = new GmailSender(username, password);
 		String address = "t104598007@ntut.org.tw";
 		String subject = "泰迪軟體課程通知";
-		String text = "測試信件";
+		String text = "測試信件\ntestSendSuccess";
+		String ccAddresses = "superchobits02@gmail.com";
+		String result = gmailSender.send(address, ccAddresses, subject, text);
+
+		assertEquals("寄送email結束.", result);
+	}
+	
+	@Test
+	public void testSendSuccessWithHyperlink() {
+		String username = "news.teddysoft.tw@gmail.com";
+		String password = "clfddzifoyfvvxqa";
+		GmailSender gmailSender = new GmailSender(username, password);
+		String address = "t104598007@ntut.org.tw";
+		String subject = "泰迪軟體課程通知";
+		String text = "<a href=\"http://www.ntut.edu.tw/bin/home.php\">測試信件</a>";
 		String ccAddresses = "superchobits02@gmail.com";
 		String result = gmailSender.send(address, ccAddresses, subject, text);
 
@@ -38,7 +52,7 @@ public class GmailSenderTest {
 		GmailSender gmailSender = new GmailSender(username, password);
 		String address = "t104598007@ntut.org.tw";
 		String subject = "泰迪軟體課程通知";
-		String text = "測試信件";
+		String text = "測試信件\ntestAccountLoginFail";
 		String ccAddresses = "";
 		String result = gmailSender.send(address, ccAddresses, subject, text);
 
@@ -52,21 +66,21 @@ public class GmailSenderTest {
 		GmailSender gmailSender = new GmailSender(username, password);
 		String address = "t104598007@ntut.org.tw";
 		String subject = "泰迪軟體課程通知";
-		String text = "測試信件";
+		String text = "測試信件\ntestAccountLessSecureApps";
 		String ccAddresses = "";
 		String result = gmailSender.send(address, ccAddresses, subject, text);
 
-		assertEquals("請開啟    安全性較低的應用程式存取權限", result);
+		assertEquals("請開啟    安全性較低的應用程式存取權限  或使用設定google兩段式登入", result);
 	}
 
 	@Test
 	public void testRecipientAddressFormatError() {
 		String username = "news.teddysoft.tw@gmail.com";
-		String password = "SLMTaipeiTech2016";
+		String password = "clfddzifoyfvvxqa";
 		GmailSender gmailSender = new GmailSender(username, password);
 		String address = "0000aaaaa@gmail,com";
 		String subject = "泰迪軟體課程通知";
-		String text = "測試信件";
+		String text = "測試信件\ntestRecipientAddressFormatError";
 		String ccAddresses = "";
 		String result = gmailSender.send(address, ccAddresses, subject, text);
 
@@ -76,11 +90,11 @@ public class GmailSenderTest {
 	@Test
 	public void testSendFirewallFail() {
 		String username = "news.teddysoft.tw@gmail.com";
-		String password = "SLMTaipeiTech2016";
+		String password = "clfddzifoyfvvxqa";
 		GmailSender gmailSender = new GmailSender(username, password);
 		String address = "t104598007@ntut.org.tw";
 		String subject = "泰迪軟體課程通知";
-		String text = "測試信件";
+		String text = "測試信件\ntestSendFirewallFail";
 		String ccAddresses = "";
 		String result = gmailSender.send(address, ccAddresses, subject, text);
 
@@ -90,11 +104,11 @@ public class GmailSenderTest {
 	@Test
 	public void testSendNetwordFail() {
 		String username = "news.teddysoft.tw@gmail.com";
-		String password = "SLMTaipeiTech2016";
+		String password = "clfddzifoyfvvxqa";
 		GmailSender gmailSender = new GmailSender(username, password);
 		String address = "t104598007@ntut.org.tw";
 		String subject = "泰迪軟體課程通知";
-		String text = "測試信件";
+		String text = "測試信件\ntestSendNetwordFail";
 		String ccAddresses = "";
 		String result = gmailSender.send(address, ccAddresses, subject, text);
 

@@ -1,0 +1,108 @@
+<div class="example">
+	<div class="inner-wrapper">
+		    <div class="page-topbar">
+            	<div class="topbar-item" ng-click="changeloadType('Upload')">上傳資料</div>
+            	<div class="topbar-item" ng-click="changeloadType('Download')" >課程檢視</div>
+            	<div class="switcher" ng-class="{'right': loadType == 'Download', 'left': loadType == 'Upload'}"></div>
+            </div>
+		<div class="info">
+            <!-- 上傳資料 -->
+            <div class="invoice" ng-show="loadType == 'Upload'">
+			<div class="title">課程檔案管理系統</div>
+			<div class="form-group name">
+			<label for="companyName">課名</label>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" id="Course" placeholder="請輸入課名" ng-model="data.courseName">
+			</div>
+			<div class="form-group name" >
+			<label for="companyName">梯次</label>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" id="Batch" placeholder="請輸入梯次" ng-model="data.batch">
+			</div>
+			<div class="form-group name" >
+			<label for="companyName">開課日期</label>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" id="Date" placeholder="請輸入開課日期" ng-model="data.date">
+			</div>
+			<div class="form-group name" >
+			<label for="companyName">課程時間</label>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" id="Duration" placeholder="請輸入課程時間" ng-model="data.duration">
+			</div>
+			<div class="form-group name" >
+			<label for="companyName">票種</label>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" id="TicketType" placeholder="請輸入票種" ng-model="data.ticketType">
+			</div>
+			<div class="form-group name" >
+			<label for="companyName">價錢</label>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" id="Price" placeholder="請輸入價錢" ng-model="data.price">
+			</div>
+				<div class="form-group name" >
+			<label for="companyName">地點</label>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" id="Location" placeholder="請輸入地點" ng-model="data.location">
+			</div>
+			<div class="form-group name" >
+			<label for="companyName">講師</label>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" id="Lecturer" placeholder="請輸入講師" ng-model="data.lecturer">
+			</div>
+			<div class="form-group name" >
+			<label for="companyName">狀態</label>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" id="Status" placeholder="未開課" DISABLED>
+			</div>
+			<input class="btn btn-info btn-orange" type="submit" value="開課" id="upload_button" name="upload_button" ng-click="clickAddCourseButton()">		
+			</div>
+			<!-- 課程檢視 -->
+			<div  ng-show="loadType == 'Download'">
+			<div class="form-group name" >
+			<div class="title">課程檔案管理系統</div>
+			</div>
+			<div style="width:900px;height:700px;overflow-x:auto;overflow-y:auto;">
+			<table class="table table-bordered si-table table-hover" id="courseInfo" border="1" cellpadding="9"  >
+				<thead>
+				  <tr>
+					  <td></td>
+	                  <td>課名</td>
+	                  <td>梯次</td>
+	                  <td>開課日期</td>
+	                  <td>課程時間</td>
+	                  <td>票種</td>
+	                  <td>價錢</td>
+	                  <td>地點</td>
+	                  <td>講師</td>
+	                  <td>狀態</td>
+	              </tr>
+				</thead>
+                    <tbody>
+                        <tr ng-repeat="course in courseList">
+							<td><input type="submit" class="btn btn-info btn-orange"  value = "Delete" ng-click="deleteRow($index)"></td>
+                            <td>{{course.courseName_}}</td>
+                            <td>{{course.batch_}}</td>
+                            <td>{{course.date_}}</td>
+                            <td>{{course.duration_}}</td>
+                            <td>{{course.ticketType_}}</td>
+                            <td>{{course.price_}}</td>
+                            <td>{{course.location_}}</td>
+                            <td>{{course.lecturer_}}</td>
+                            <td>{{course.status_}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+			</div>	
+		</div>
+	</div>
+</div>

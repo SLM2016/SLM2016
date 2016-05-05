@@ -2,7 +2,6 @@ package mailSending;
 
 import java.util.Properties;
 
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -13,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 public class GmailSender {
 	private final String host_ = "smtp.gmail.com";
-	private final int port_ = 587;
+	private final int port_ = 465;
 	private String username_;
 	private String password_;
 	private Properties props_ = new Properties();
@@ -24,13 +23,15 @@ public class GmailSender {
 		password_ = password;
 		System.setProperty("mail.mime.charset", "big5");
 		props_.put("mail.smtp.host", host_);
+		props_.put("mail.smtp.socketFactory.port", port_);
+		props_.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		props_.put("mail.smtp.auth", "true");
-		props_.put("mail.smtp.starttls.enable", "true");
 		props_.put("mail.smtp.port", port_);
 		props_.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-		session_ = Session.getInstance(props_, new Authenticator() {
+
+		session_ = Session.getInstance(props_, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(username, password);
+				return new PasswordAuthentication(username_, password_);
 			}
 		});
 	}
@@ -42,7 +43,7 @@ public class GmailSender {
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
 			message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccAddresses));
 			message.setSubject(subject);
-			message.setText(text);
+			message.setContent(text, "text/html; charset=utf-8");
 
 			Transport transport = session_.getTransport("smtp");
 			transport.connect(host_, port_, username_, password_);
@@ -53,7 +54,7 @@ public class GmailSender {
 		} catch (MessagingException e) {
 			String errorMessage = e.getMessage().toString();
 			if (errorMessage.contains("https://accounts.google.com/signin/continue?")) {
-				return "請開啟    安全性較低的應用程式存取權限";
+				return "請開啟    安全性較低的應用程式存取權限  或使用設定google兩段式登入";
 			} else if (errorMessage.contains("Username and Password not accepted")) {
 				return "帳號密碼不正確";
 			} else if (errorMessage.contains("Invalid Addresses")) {
@@ -64,9 +65,6 @@ public class GmailSender {
 				return "Unknown SMTP host: smtp.gmail.com，請檢察網路連線";
 			} else {
 				return e.getMessage().toString();
-				// "Could not connect to SMTP host: smtp.gmail.com, port: 465,
-				// response: -1"
-				// Unknown SMTP host: smtp.gmail.com
 			}
 		}
 	}
