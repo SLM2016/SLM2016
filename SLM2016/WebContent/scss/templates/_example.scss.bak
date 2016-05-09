@@ -78,7 +78,7 @@
                                 &.company {
                                     .form-group {
                                         &.id {
-                                            width: 450px;
+                                            width: 4500px;
                                         }
                                         &.name{
                                             width: calc(100% - 350px - 20px);

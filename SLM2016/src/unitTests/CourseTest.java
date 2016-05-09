@@ -28,8 +28,8 @@ public class CourseTest {
 		course_.setType(type);
 		String batch = "401";
 		course_.setBatch(batch);
-		String date = "2016/6/24、25、26 (五、六、日)";
-		course_.setDate(date);
+		String date = "2016/6/24";
+		course_.addDate(date);
 		int duration = 120;
 		course_.setDuration(duration);
 		String ticketType = "一般票 ";
@@ -46,7 +46,8 @@ public class CourseTest {
 		assertEquals(courseName, cloneObject.getCourseName());
 		assertEquals(type, cloneObject.getType());
 		assertEquals(batch, cloneObject.getBatch());
-		assertEquals(date, cloneObject.getDate());
+		assertEquals(1, cloneObject.getDates().size());
+		assertEquals(date, cloneObject.getDates().get(0));
 		assertEquals(duration, cloneObject.getDuration());
 		assertEquals(1, cloneObject.getTicketTypes().size());
 		assertEquals(ticketType, cloneObject.getTicketTypes().get(0));
@@ -79,10 +80,20 @@ public class CourseTest {
 	}
 
 	@Test
-	public void testSetDate() {
-		String date = "2016/6/24、25、26 (五、六、日)";
-		course_.setDate(date);
-		assertEquals(date, course_.getDate());
+	public void testAddDate() {
+		String date = "2016/6/24";
+		course_.addDate(date);
+		assertEquals(date, course_.getDates().get(0));
+	}
+	
+	@Test
+	public void testDeleteDate() {
+		course_.addDate("2016/6/24");
+		course_.addDate("2016/6/25");
+		assertEquals(2, course_.getDates().size());
+		course_.deleteDate(0);
+		assertEquals(1, course_.getDates().size());
+		assertEquals("2016/6/25", course_.getDates().get(0));
 	}
 
 	@Test
@@ -107,6 +118,8 @@ public class CourseTest {
 		assertEquals(2, course_.getTicketTypes().size());
 		course_.deleteTicketType(0);
 		assertEquals(1, course_.getTicketTypes().size());
+		assertEquals("早鳥票", course_.getTicketTypes().get(0));
+		
 	}
 
 	@Test
@@ -124,6 +137,7 @@ public class CourseTest {
 		assertEquals(2, course_.getPrices().size());
 		course_.deletePrice(0);
 		assertEquals(1, course_.getPrices().size());
+		assertEquals(20000, course_.getPrices().get(0).intValue());
 	}
 
 	@Test
@@ -145,5 +159,29 @@ public class CourseTest {
 		String status = "準備中";
 		course_.setStatus(status);
 		assertEquals(status, course_.getStatus());
+	}
+	
+	@Test
+	public void testAddCcAddress() {
+		String ccAddress = "test@test";
+		course_.addCcAddresses(ccAddress);
+		assertEquals(ccAddress, course_.getCcAddresses().get(0));
+	}
+	
+	@Test
+	public void testDeleteCcAddress() {
+		course_.addCcAddresses("test@test");
+		course_.addCcAddresses("test2@test2.test");
+		assertEquals(2, course_.getCcAddresses().size());
+		course_.deleteCcAddresses(0);
+		assertEquals(1, course_.getCcAddresses().size());
+		assertEquals("test2@test2.test", course_.getCcAddresses().get(0));
+	}
+	
+	@Test
+	public void testSetHyperlink() {
+		String hyperlink = "準備中";
+		course_.setHyperlink(hyperlink);
+		assertEquals(hyperlink, course_.getHyperlink());
 	}
 }

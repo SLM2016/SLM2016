@@ -13,14 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import courseManager.Course;
+import javafx.util.Pair;
 
 @WebServlet("/CourseManagerServlet")
 public class CourseManagerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private List<Course> courses_ = new ArrayList<Course>();
+	private int dbDataIdMax_;
+	private List<Pair<String,String>> courseStatus_= new ArrayList<Pair<String,String>>();
 
 	public CourseManagerServlet() {
 		super();
+		dbDataIdMax_ = 0;
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,7 +36,7 @@ public class CourseManagerServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String requestString = request.getReader().readLine();
-		//System.out.println(requestString);
+		System.out.println(requestString);
 		String header = request.getHeader("Delete");
 		if (header != null) {
 			doPostDeleteCourse(request, response, requestString);
@@ -61,6 +65,9 @@ public class CourseManagerServlet extends HttpServlet {
 		Gson gson = new Gson();
 		Course course = gson.fromJson(requestString, Course.class);
 		courses_.add(course);
+		
+		
+		
 		String json = new Gson().toJson("success");
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
@@ -91,4 +98,44 @@ public class CourseManagerServlet extends HttpServlet {
 //		 System.out.println(courses_.get(i).getStatus());
 //		 }
 	}
+//	
+//	private String GetCourseStatusTable() throws SQLException{
+//		String result = "";
+//		SqlHelper helper = new SqlHelper();
+//		String sqlString = "SELECT * FROM `slm2016`.`course_status`";
+//		CachedRowSet data = new CachedRowSetImpl();
+//		result = helper.excuteSql(sqlString, data);
+//		while(data.next()){
+//			courseStatus_.add(new Pair(data.getString("id"),data.getString("name")));
+//		}
+//		return result;
+//	}
+//	
+//	private String AddCourseIntoDatabase(Course course) throws SQLException{
+//		String result = "";
+//		SqlHelper helper = new SqlHelper();
+//		String sqlString = "INSERT INTO `slm2016`.`course_info` (`id`, `name`, `type`, `batch`, `duration`, `location`, `lecturer`, `fk_status_id`) VALUES (";
+//		sqlString+="'teddysoftware-course-01-"+dbDataIdMax_+"', '";
+//		sqlString+=course.getCourseName()+"', '";
+//		sqlString+=course.getType()+"', '";
+//		sqlString+=course.getBatch()+"',"; 
+//		sqlString+=course.getDuration()+", '";
+//		sqlString+=course.getLocation()+"', '";
+//		sqlString+=course.getLecturer()+"', '";
+//		for(int i=0;i<courseStatus_.size();i++){
+//			if(courseStatus_.get(i).getValue()==course.getStatus()){
+//				sqlString+=courseStatus_.get(i).getKey()+"');";
+//			}
+//		}
+//		CachedRowSet data = new CachedRowSetImpl();
+//		result = helper.excuteSql(sqlString, data);
+//		if(result!="success")
+//			return result;
+//		data.close();
+//		for()
+//		sqlString = "INSERT INTO `slm2016`.`course_has_date` (`fk_course_id`, `date`) VALUES (";
+//		sqlString+="'teddysoftware-course-01-"+dbDataIdMax_+"', '";
+//		sqlString+=course.getDate()+"');";
+//		
+//	}
 }

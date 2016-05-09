@@ -8,13 +8,15 @@ public class Course {
 	private String courseName_;
 	private String type_;
 	private String batch_;
-	private String date_;
+	private List<String> dates_ = new ArrayList<String>();
 	private int duration_;
 	private List<String> ticketTypes_ = new ArrayList<String>();
 	private List<Integer> prices_ = new ArrayList<Integer>();
 	private String location_;
 	private String lecturer_;
 	private String status_;
+	private List<String> ccAddresses_ = new ArrayList<String>();
+	private String hyperlink_;
 
 	// public Course(int id) {
 	// courseId_ = id;
@@ -25,13 +27,15 @@ public class Course {
 		cloneObject.courseName_ = courseName_;
 		cloneObject.type_ = type_;
 		cloneObject.batch_ = batch_;
-		cloneObject.date_ = date_;
+		cloneObject.dates_.addAll(dates_);
 		cloneObject.duration_ = duration_;
 		cloneObject.ticketTypes_.addAll(ticketTypes_);
 		cloneObject.prices_.addAll(prices_);
 		cloneObject.location_ = location_;
 		cloneObject.lecturer_ = lecturer_;
 		cloneObject.status_ = status_;
+		cloneObject.ccAddresses_.addAll(ccAddresses_);
+		cloneObject.hyperlink_ = hyperlink_;
 		return cloneObject;
 	}
 
@@ -47,8 +51,12 @@ public class Course {
 		batch_ = batch;
 	}
 
-	public void setDate(String date) {
-		date_ = date;
+	public void addDate(String date) {
+		dates_.add(date);
+	}
+
+	public void deleteDate(int index) {
+		dates_.remove(index);
 	}
 
 	public void setDuration(int duration) {
@@ -83,6 +91,18 @@ public class Course {
 		status_ = status;
 	}
 
+	public void addCcAddresses(String ccAddress) {
+		ccAddresses_.add(ccAddress);
+	}
+
+	public void deleteCcAddresses(int index) {
+		ccAddresses_.remove(index);
+	}
+
+	public void setHyperlink(String hyperlink) {
+		hyperlink_ = hyperlink;
+	}
+
 	// public int getCourseId() {
 	// return courseId_;
 	// }
@@ -99,8 +119,8 @@ public class Course {
 		return batch_;
 	}
 
-	public String getDate() {
-		return date_;
+	public List<String> getDates() {
+		return dates_;
 	}
 
 	public int getDuration() {
@@ -125,5 +145,13 @@ public class Course {
 
 	public String getStatus() {
 		return status_;
+	}
+
+	public List<String> getCcAddresses() {
+		return ccAddresses_;
+	}
+
+	public String getHyperlink() {
+		return hyperlink_;
 	}
 }
