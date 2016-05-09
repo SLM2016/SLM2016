@@ -43,6 +43,10 @@ app.directive('navSidebar', ['$rootScope',
                     var isStudentInfoImportView = function() {
                         return $state.includes(STATES.STUDENT_INFO_IMPORT);
                     }
+                    
+                    var isCreateCourseView = function() {
+                        return $state.includes(STATES.CREATE_COURSE);
+                    }
 
                     var toggleStudentMenu = function() {
                         $scope.isShowStudentMenu = !$scope.isShowStudentMenu;
@@ -75,7 +79,7 @@ app.directive('navSidebar', ['$rootScope',
 
                     $scope.isStudentInfoManageView = isStudentInfoManageView;   
                     $scope.isStudentInfoImportView = isStudentInfoImportView;
-
+                    $scope.isCreateCourseView = isCreateCourseView;
                     $scope.toggleStudentMenu = toggleStudentMenu;             
                     /*==========================
                         init
