@@ -5,7 +5,8 @@ var STATES = {
     INVOICE: "invoice",
     STUDENTINFO: "studentInfo",
     STUDENT_INFO_IMPORT: "studentInfo.Import",
-    STUDENT_INFO_MANAGE: "studentInfo.Manage"
+    STUDENT_INFO_MANAGE: "studentInfo.Manage",
+    CREATE_COURSE: "createCourse"
 }
 
 var app = angular.module('app', [
@@ -97,6 +98,16 @@ var app = angular.module('app', [
                     }
                 }
             })
+            
+            .state(STATES.CREATE_COURSE, {
+                url: "/createCourse",
+                views: {
+                    'createCourse@': {
+                        templateUrl: "templates/createCoursePage.html",
+                        controller: 'CreateCoursePageController',
+                    }
+                }
+            })
 	}
 ])
 
@@ -118,6 +129,14 @@ var app = angular.module('app', [
         var isInvoiceView = function() {
             return $state.includes(STATES.INVOICE);
         }
+
+        var isInvoiceView = function() {
+            return $state.includes(STATES.INVOICE);
+        }
+        
+        var isCreateCourseView = function() {
+            return $state.includes(STATES.CREATE_COURSE);
+        }     
 
         var studentInfoView = function() {
             return $state.includes(STATES.STUDENTINFO);
@@ -144,6 +163,7 @@ var app = angular.module('app', [
         $scope.isSendMailView = isSendMailView;
         $scope.isInvoiceView = isInvoiceView;
         $scope.studentInfoView = studentInfoView;
+        $scope.isCreateCourseView = isCreateCourseView;
 
         /*==========================
              init
