@@ -30,7 +30,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		data.hyperlink_ = $scope.data.hyperlink;
 		data.ccAddresses_ = $scope.ShowCcList;
 		data.type_ = $scope.data.type;
-		data.status_ = "未開課";
+		data.status_ = "準備中";
 		console.log($scope.data.type);
 		
 		//var loadfilelocation = ;

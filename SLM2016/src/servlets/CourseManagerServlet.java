@@ -46,7 +46,7 @@ public class CourseManagerServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String requestString = request.getReader().readLine();
-		// System.out.println(requestString);
+		System.out.println(requestString);
 		String header = request.getHeader("Delete");
 		if (header != null) {
 			doPostDeleteCourse(request, response, requestString);

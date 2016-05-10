@@ -12,17 +12,21 @@ import javafx.util.Pair;
 import util.SqlHelper;
 
 public class CourseManagerWithDatabase {
-	private int dbDataIdMax_;
+	private int databaseDataIdMax_;
 	private List<Pair<String, String>> courseStatus_ = new ArrayList<Pair<String, String>>();
 
 	public CourseManagerWithDatabase() {
-		dbDataIdMax_ = 1;
+		databaseDataIdMax_ = 1;
 		try {
 			getCourseStatusTable();
 			getAllCourseId();
 		} catch (SQLException e) {
 
 		}
+	}
+
+	public int getDatabaseDataIdMax() {
+		return databaseDataIdMax_;
 	}
 
 	private String getCourseStatusTable() throws SQLException {
@@ -47,8 +51,8 @@ public class CourseManagerWithDatabase {
 			String id = data.getString("id");
 			int index = id.lastIndexOf("-");
 			id = id.substring(index + 1);
-			dbDataIdMax_ = Integer.parseInt(id);
-			dbDataIdMax_++;
+			databaseDataIdMax_ = Integer.parseInt(id);
+			databaseDataIdMax_++;
 			// System.out.println(dbDataIdMax_);
 		}
 		return result;
@@ -135,26 +139,36 @@ public class CourseManagerWithDatabase {
 	public String addCourseIntoDatabase(Course course) throws SQLException {
 		String result = "";
 		result = addCourseIntoInfo(course);
+		System.out.println("addCourseIntoInfo");
+		System.out.println(result);
 		if (result != "Success")
 			return result;
 		result = addCourseIntoDate(course);
+		System.out.println("addCourseIntoDate");
+		System.out.println(result);
 		if (result != "Success")
 			return result;
 		result = addCourseIntoTicket(course);
+		System.out.println("addCourseIntoTicket");
+		System.out.println(result);
 		if (result != "Success")
 			return result;
 		result = addCourseIntoCcAddress(course);
+		System.out.println("addCourseIntoCcAddress");
+		System.out.println(result);
 		if (result != "Success")
 			return result;
-		dbDataIdMax_++;
+		databaseDataIdMax_++;
 		return "Success";
 	}
 
 	private String addCourseIntoInfo(Course course) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
+		System.out.print("teddysoftware-course-01-");
+		System.out.println(databaseDataIdMax_);
 		String sqlString = "INSERT INTO `slm2016`.`course_info` (`id`, `name`, `type`, `batch`, `duration`, `location`, `lecturer`, `fk_status_id`, `page_link`) VALUES (";
-		sqlString += "'teddysoftware-course-01-" + dbDataIdMax_ + "', '";
+		sqlString += "'teddysoftware-course-01-" + databaseDataIdMax_ + "', '";
 		sqlString += course.getCourseName() + "', '";
 		sqlString += course.getType() + "', '";
 		sqlString += course.getBatch() + "', ";
@@ -162,13 +176,16 @@ public class CourseManagerWithDatabase {
 		sqlString += course.getLocation() + "', '";
 		sqlString += course.getLecturer() + "', '";
 		for (int i = 0; i < courseStatus_.size(); i++) {
+			System.out.println(courseStatus_.get(i).getValue());
+			System.out.println(course.getStatus());
 			if (courseStatus_.get(i).getValue().equals(course.getStatus())) {
 				sqlString += courseStatus_.get(i).getKey() + "', '";
+				System.out.println("TESSSSSSS");				
 				break;
 			}
 		}
 		sqlString += course.getHyperlink() + "');";
-		// System.out.println(sqlString);
+		System.out.println(sqlString);
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		data.close();
@@ -183,7 +200,7 @@ public class CourseManagerWithDatabase {
 		String sqlString = "INSERT INTO `slm2016`.`course_has_date` (`fk_course_id`, `date`) VALUES (";
 		List<String> dates = course.getDates();
 		for (int i = 0; i < dates.size(); i++) {
-			sqlString += "'teddysoftware-course-01-" + dbDataIdMax_ + "', '";
+			sqlString += "'teddysoftware-course-01-" + databaseDataIdMax_ + "', '";
 			sqlString += dates.get(i) + "');";
 		}
 		// System.out.println(sqlString);
@@ -202,7 +219,7 @@ public class CourseManagerWithDatabase {
 		List<String> types = course.getTicketTypes();
 		List<Integer> prices = course.getPrices();
 		for (int i = 0; i < types.size(); i++) {
-			sqlString += "'teddysoftware-course-01-" + dbDataIdMax_ + "', '";
+			sqlString += "'teddysoftware-course-01-" + databaseDataIdMax_ + "', '";
 			sqlString += types.get(i) + "', '";
 			sqlString += prices.get(i) + "');";
 		}
@@ -221,7 +238,7 @@ public class CourseManagerWithDatabase {
 		String sqlString = "INSERT INTO `slm2016`.`course_has_cc_address` (`fk_course_id`, `cc_email`) VALUES (";
 		List<String> ccAddresses = course.getCcAddresses();
 		for (int i = 0; i < ccAddresses.size(); i++) {
-			sqlString += "'teddysoftware-course-01-" + dbDataIdMax_ + "', '";
+			sqlString += "'teddysoftware-course-01-" + databaseDataIdMax_ + "', '";
 			sqlString += ccAddresses.get(i) + "');";
 		}
 		// System.out.println(sqlString);
