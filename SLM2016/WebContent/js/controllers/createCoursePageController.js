@@ -32,9 +32,6 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		data.type_ = $scope.data.type;
 		data.status_ = "準備中";
 		console.log($scope.data.type);
-		
-		//var loadfilelocation = ;
-		
 		$.post("/SLM2016/CourseManagerServlet",
 				JSON.stringify(data)).done(function(data) {
 				window.alert(data);
@@ -151,6 +148,11 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		$scope.ShowCcList.splice(index,'1');
     }
 	
+	var fileChanged = function(files) {
+		$scope.fileName = files;
+    };
+
+	
 	var init = function() {
 		getTeddyCourseData();
     }
@@ -179,6 +181,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	==========================*/
 
 	$scope.selectedValue;
+	$scope.fileChanged = fileChanged;
 	$scope.clickAddCourseButton = clickAddCourseButton;
 	$scope.clickAddTicketButton = clickAddTicketButton;
 	$scope.clickAddDateButton = clickAddDateButton;
