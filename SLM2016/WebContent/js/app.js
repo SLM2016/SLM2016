@@ -6,6 +6,7 @@ var STATES = {
     STUDENTINFO: "studentInfo",
     STUDENT_INFO_IMPORT: "studentInfo.Import",
     STUDENT_INFO_MANAGE: "studentInfo.Manage",
+    STUDENT_INFO_SENDMAIL: "studentInfo.Sendmail",
     CREATE_COURSE: "createCourse"
 }
 
@@ -79,35 +80,45 @@ var app = angular.module('app', [
             }
         })
 
-            .state(STATES.STUDENT_INFO_IMPORT, {
-                url: "/import",
-                views: {
-                    'content@studentInfo': {
-                        templateUrl: "templates/studentImport.html",
-                        controller: 'StudentImportController',
-                    }
+        .state(STATES.STUDENT_INFO_IMPORT, {
+            url: "/import",
+            views: {
+                'content@studentInfo': {
+                    templateUrl: "templates/studentImport.html",
+                    controller: 'StudentImportController',
                 }
-            })
+            }
+        })
 
-            .state(STATES.STUDENT_INFO_MANAGE, {
-                url: "/manage",
-                views: {
-                    'content@studentInfo': {
-                        templateUrl: "templates/studentManage.html",
-                        controller: 'StudentManageController',
-                    }
+        .state(STATES.STUDENT_INFO_MANAGE, {
+            url: "/manage",
+            views: {
+                'content@studentInfo': {
+                    templateUrl: "templates/studentManage.html",
+                    controller: 'StudentManageController',
                 }
-            })
-            
-            .state(STATES.CREATE_COURSE, {
-                url: "/createCourse",
-                views: {
-                    'createCourse@': {
-                        templateUrl: "templates/createCoursePage.html",
-                        controller: 'CreateCoursePageController',
-                    }
+            }
+        })
+        
+        .state(STATES.STUDENT_INFO_SENDMAIL, {
+            url: "/sendmail",
+            views: {
+                'content@studentInfo': {
+                    templateUrl: "templates/studentSendmail.html",
+                    controller: 'StudentSendmailController',
                 }
-            })
+            }
+        })
+        
+        .state(STATES.CREATE_COURSE, {
+            url: "/createCourse",
+            views: {
+                'createCourse@': {
+                    templateUrl: "templates/createCoursePage.html",
+                    controller: 'CreateCoursePageController',
+                }
+            }
+        })
 	}
 ])
 
