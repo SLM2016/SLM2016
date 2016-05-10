@@ -13,7 +13,7 @@ public class CourseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		course_ = new Course();
+		course_ = new Course("teddysoft-course01-1");
 	}
 
 	@After
@@ -43,6 +43,7 @@ public class CourseTest {
 		String status = "準備中";
 		course_.setStatus(status);
 		Course cloneObject = course_.clone();
+		assertEquals("teddysoft-course01-1", cloneObject.getCourseId());
 		assertEquals(courseName, cloneObject.getCourseName());
 		assertEquals(type, cloneObject.getType());
 		assertEquals(batch, cloneObject.getBatch());

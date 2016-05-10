@@ -20,13 +20,27 @@
 			</div>
 			<div class="form-group">
 			<input type="text" class="form-control" id="Batch" placeholder="請輸入梯次" ng-model="data.batch">
+			</div>		
+			<div class="ticketinput-wrapper company">
+				<div class="form-group id" >
+				<label for="companyName">開課日期</label>
+				<input type="text" class="form-control" id="Date" placeholder="請輸入開課日期" ng-model="data.dateAddresses">
+				</div>
+				<div class="form-group" >
+				<input class="btn btn-info btn-orange upload-btn" type="submit" value="新增" id="adddate_button" name="adddate_button" ng-click="clickAddDateButton()">	
+				</div>
 			</div>
-			<div class="form-group name" >
-			<label for="companyName">開課日期</label>
-			</div>
-			<div class="form-group">
-			<input type="text" class="form-control" id="Date" placeholder="請輸入開課日期" ng-model="data.date">
-			</div>
+			<table id="dateInfo" border="1" cellpadding="2"  >
+			   	<tbody>
+			   		<tr ng-repeat="x in ShowDateList">
+					<td><input type="submit"   value = "X" ng-click="deleteDate($index)"></td>
+					<td>&nbsp;</td>
+            		<td>{{x}}</td>
+     			</tr>
+			</table>
+			<br>
+			
+			
 			<div class="form-group name" >
 			<label for="companyName">課程時間</label>
 			</div>
@@ -58,7 +72,7 @@
 			<div class="ticketinput-wrapper company">
 				<div class="form-group id" >
 				<label for="companyName">副本收件者</label>
-				<input type="text" class="form-control" id="CcType" placeholder="請輸入副本收件者" ng-model="data.cc">
+				<input type="text" class="form-control" id="CcType" placeholder="請輸入副本收件者" ng-model="data.ccAddresses">
 				</div>
 				<div class="form-group" >
 				<input class="btn btn-info btn-orange upload-btn" type="submit" value="新增" id="addcctype_button" name="addcclist_button" ng-click="clickAddCcButton()">	
@@ -86,6 +100,12 @@
 			<input type="text" class="form-control" id="Lecturer" placeholder="請輸入講師" ng-model="data.lecturer">
 			</div>
 			<div class="form-group name" >
+			<label for="companyName">超連結</label>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" id="Duration" placeholder="請輸入超連結網址" ng-model="data.hyperlink">
+			</div>
+			<div class="form-group name" >
 			<label for="companyName">狀態</label>
 			</div>
 			<div class="form-group">
@@ -111,20 +131,22 @@
 	                  <td>價錢</td>
 	                  <td>地點</td>
 	                  <td>講師</td>
+	                  <td>副本收件人</td>
 	                  <td>狀態</td>
 	              </tr>
 				</thead>
                     <tbody>
                         <tr ng-repeat="course in courseList">
-							<td><input type="submit" class="btn btn-info btn-orange"  value = "Delete" ng-click="deleteRow($index)"></td>
+							<td><input type="submit" class="btn btn-info btn-orange"  value = "刪除" ng-click="deleteRow($index)"></td>
                             <td>{{course.courseName_}}</td>
                             <td>{{course.batch_}}</td>
-                            <td>{{course.date_}}</td>
+                            <td>{{course.dates_}}</td>
                             <td>{{course.duration_}}</td>
                             <td>{{course.ticketTypes_}}</td>
                             <td>{{course.prices_}}</td>
                             <td>{{course.location_}}</td>
                             <td>{{course.lecturer_}}</td>
+                            <td>{{course.ccAddresses_}}</td>
                             <td>{{course.status_}}</td>
                         </tr>
                     </tbody>

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
-	// private int courseId_;
+	private String courseId_;
 	private String courseName_;
 	private String type_;
 	private String batch_;
@@ -18,12 +18,12 @@ public class Course {
 	private List<String> ccAddresses_ = new ArrayList<String>();
 	private String hyperlink_;
 
-	// public Course(int id) {
-	// courseId_ = id;
-	// };
+	public Course(String id) {
+		courseId_ = id;
+	};
 
 	public Course clone() {
-		Course cloneObject = new Course();
+		Course cloneObject = new Course(courseId_);
 		cloneObject.courseName_ = courseName_;
 		cloneObject.type_ = type_;
 		cloneObject.batch_ = batch_;
@@ -103,9 +103,9 @@ public class Course {
 		hyperlink_ = hyperlink;
 	}
 
-	// public int getCourseId() {
-	// return courseId_;
-	// }
+	public String getCourseId() {
+		return courseId_;
+	}
 
 	public String getCourseName() {
 		return courseName_;

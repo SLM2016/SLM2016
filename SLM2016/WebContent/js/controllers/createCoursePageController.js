@@ -5,7 +5,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	var ticketPriceList = [];   
 	var ShowticketList = [];
 	var updateticketsList = [];
-	
+	var ShowDateList=[];
 	
 	function getTeddyCourseData() {
 		$.get("/SLM2016/CourseManagerServlet",	function(responseText) {
@@ -21,15 +21,14 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		var data = new Object();
 		data.courseName_ = $scope.data.courseName;
 		data.batch_ = $scope.data.batch;
-		var array=[];
-		array.push($scope.data.date);
-		data.dates_ = array;
+		data.dates_ = $scope.ShowDateList;
 		data.duration_ = $scope.data.duration;
 		data.ticketTypes_ = $scope.ticketTypeList;
 		data.prices_ = $scope.ticketPriceList;
 		data.location_ = $scope.data.location;
 		data.lecturer_ = $scope.data.lecturer;
-		data.cc_ = $scope.data.cc;
+		data.hyperlink_ = $scope.data.hyperlink;
+		data.ccAddresses_ = $scope.ShowCcList;
 		data.status_ = "未開課";
 		
 		$.post("/SLM2016/CourseManagerServlet",
@@ -59,18 +58,34 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	}
 	
 	var clickAddCcButton=function() {
-	    var lastAtPos = ($scope.data.cc).lastIndexOf('@');
-	    var lastDotPos = ($scope.data.cc).lastIndexOf('.');
-		if((($scope.data.cc) == null)||(($scope.data.cc) == 0)){
+	    var lastAtPos = ($scope.data.ccAddresses).lastIndexOf('@');
+	    var lastDotPos = ($scope.data.ccAddresses).lastIndexOf('.');
+		if((($scope.data.ccAddresses) == null)||(($scope.data.ccAddresses) == 0)){
 			window.alert("請輸入副本收件者地址");
 		}
 		else{
-			if(lastAtPos < lastDotPos && lastAtPos > 0 && ($scope.data.cc).indexOf('@@') == -1 && lastDotPos > 2 && (($scope.data.cc).length - lastDotPos) > 2){
-				$scope.ShowCcList.push($scope.data.cc);
-				$scope.data.cc = null;
+			if(lastAtPos < lastDotPos && lastAtPos > 0 && ($scope.data.ccAddresses).indexOf('@@') == -1 && lastDotPos > 2 && (($scope.data.ccAddresses).length - lastDotPos) > 2){
+				$scope.ShowCcList.push($scope.data.ccAddresses);
+				$scope.data.ccAddresses = null;
 			}
 			else{
 				window.alert("副本收件者地址請修正");
+			}
+		}
+	}
+	
+	var clickAddDateButton=function() {
+		if((($scope.data.dateAddresses) == null)){
+			window.alert("請輸入日期");
+		}
+		else{
+			if((($scope.data.dateAddresses.length) != 0)){
+				$scope.ShowDateList.push($scope.data.dateAddresses);
+				console.log($scope.ShowDateList);
+				$scope.data.dateAddresses = null;
+			}
+			else{
+				window.alert("請輸入日期");
 			}
 		}
 	}
@@ -89,11 +104,11 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 			window.alert("課程金額請修正");
 			return false;
 		}
-		if((($scope.data.courseName)== null)||(($scope.data.batch)== null)||(($scope.data.duration)== null)||(($scope.data.ticketPriceList)== null)||(($scope.data.location)== null)||(($scope.data.lecturer)== null)||(($scope.data.status)== null)){
+		if((($scope.data.courseName)== null)||(($scope.data.batch)== null)||(($scope.data.duration)== null)||(($scope.data.ticketPriceList)== null)||(($scope.data.location)== null)||(($scope.data.lecturer)== null)||(($scope.data.status)== null)||(($scope.data.hyperlink)== null)){
 			window.alert("欄位不可為空白");
 			return false;
 		}
-		if((($scope.data.courseName.length)== 0)||(($scope.data.batch.length)== 0)||(($scope.data.duration.length)== 0)||(($scope.data.ticketPriceList.length)== 0)||(($scope.data.location.length)== 0)||(($scope.data.lecturer.length)== 0)||(($scope.data.status.length)== 0)){
+		if((($scope.data.courseName.length)== 0)||(($scope.data.batch.length)== 0)||(($scope.data.duration.length)== 0)||(($scope.data.ticketPriceList.length)== 0)||(($scope.data.location.length)== 0)||(($scope.data.lecturer.length)== 0)||(($scope.data.status.length)== 0)||(($scope.data.hyperlink.length)== 0)){
 			window.alert("欄位不可為空白");
 			return false;
 		}
@@ -125,6 +140,10 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		
     }
 	
+	var deleteDate = function(index) {
+		$scope.ShowDateList.splice(index,'1');
+    }
+	
 	var deleteCc = function(index) {
 		$scope.ShowCcList.splice(index,'1');
     }
@@ -146,6 +165,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	$scope.ticketPriceList = [];
 	$scope.ShowticketList = [];
 	$scope.ShowCcList = [];
+	$scope.ShowDateList = [];
 	$scope.updateticketsList = [];
 	/*==========================
      Methods
@@ -158,10 +178,12 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	$scope.selectedValue;
 	$scope.clickAddCourseButton = clickAddCourseButton;
 	$scope.clickAddTicketButton = clickAddTicketButton;
+	$scope.clickAddDateButton = clickAddDateButton;
 	$scope.clickAddCcButton = clickAddCcButton;
 	$scope.changeloadType = changeloadType;
 	$scope.deleteRow = deleteRow;
 	$scope.deleteTicket = deleteTicket;
+	$scope.deleteDate = deleteDate;
 	$scope.deleteCc = deleteCc;
 	init();
 }
