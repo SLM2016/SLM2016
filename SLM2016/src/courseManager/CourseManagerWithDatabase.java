@@ -184,7 +184,7 @@ public class CourseManagerWithDatabase {
 			}
 		}
 		sqlString += course.getHyperlink() + "');";
-		//System.out.println(sqlString);
+		// System.out.println(sqlString);
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		data.close();
@@ -196,32 +196,34 @@ public class CourseManagerWithDatabase {
 	private String addCourseIntoDate(Course course) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
-		String sqlString = "INSERT INTO `slm2016`.`course_has_date` (`fk_course_id`, `date`) VALUES (";
+		String sqlString = "";
 		List<String> dates = course.getDates();
 		for (int i = 0; i < dates.size(); i++) {
+			sqlString = "INSERT INTO `slm2016`.`course_has_date` (`fk_course_id`, `date`) VALUES (";
 			if (course.getCourseId() != null) {
 				sqlString += "'" + course.getCourseId() + "', '";
 			} else {
 				sqlString += "'teddysoftware-course-01-" + databaseDataIdMax_ + "', '";
 			}
 			sqlString += dates.get(i) + "');";
+			// System.out.println(sqlString);
+			CachedRowSet data = new CachedRowSetImpl();
+			result = helper.excuteSql(sqlString, data);
+			data.close();
+			if (result != "Success")
+				return result;
 		}
-		//System.out.println(sqlString);
-		CachedRowSet data = new CachedRowSetImpl();
-		result = helper.excuteSql(sqlString, data);
-		data.close();
-		if (result != "Success")
-			return result;
 		return "Success";
 	}
 
 	private String addCourseIntoTicket(Course course) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
-		String sqlString = "INSERT INTO `slm2016`.`course_has_ticket` (`fk_course_id`, `type`, `price`) VALUES (";
+		String sqlString = "";
 		List<String> types = course.getTicketTypes();
 		List<Integer> prices = course.getPrices();
 		for (int i = 0; i < types.size(); i++) {
+			sqlString = "INSERT INTO `slm2016`.`course_has_ticket` (`fk_course_id`, `type`, `price`) VALUES (";
 			if (course.getCourseId() != null) {
 				sqlString += "'" + course.getCourseId() + "', '";
 			} else {
@@ -229,39 +231,41 @@ public class CourseManagerWithDatabase {
 			}
 			sqlString += types.get(i) + "', '";
 			sqlString += prices.get(i) + "');";
+			// System.out.println(sqlString);
+			CachedRowSet data = new CachedRowSetImpl();
+			result = helper.excuteSql(sqlString, data);
+			data.close();
+			if (result != "Success")
+				return result;
 		}
-		// System.out.println(sqlString);
-		CachedRowSet data = new CachedRowSetImpl();
-		result = helper.excuteSql(sqlString, data);
-		data.close();
-		if (result != "Success")
-			return result;
 		return "Success";
 	}
 
 	private String addCourseIntoCcAddress(Course course) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
-		String sqlString = "INSERT INTO `slm2016`.`course_has_cc_address` (`fk_course_id`, `cc_email`) VALUES (";
+		String sqlString = "";
 		List<String> ccAddresses = course.getCcAddresses();
 		for (int i = 0; i < ccAddresses.size(); i++) {
+			sqlString = "INSERT INTO `slm2016`.`course_has_cc_address` (`fk_course_id`, `cc_email`) VALUES (";
 			if (course.getCourseId() != null) {
 				sqlString += "'" + course.getCourseId() + "', '";
 			} else {
 				sqlString += "'teddysoftware-course-01-" + databaseDataIdMax_ + "', '";
 			}
 			sqlString += ccAddresses.get(i) + "');";
+			// System.out.println(sqlString);
+			CachedRowSet data = new CachedRowSetImpl();
+			result = helper.excuteSql(sqlString, data);
+			data.close();
+			if (result != "Success")
+				return result;
 		}
-		// System.out.println(sqlString);
-		CachedRowSet data = new CachedRowSetImpl();
-		result = helper.excuteSql(sqlString, data);
-		data.close();
-		if (result != "Success")
-			return result;
 		return "Success";
 	}
 
 	public String deleteCourseFromDatabase(String id) throws SQLException {
+		System.out.println(System.currentTimeMillis());
 		String result = "";
 		result = deleteCourseFromDatabaseCcAddress(id);
 		System.out.println("deleteCourseFromDatabaseCcAddress");
@@ -283,6 +287,7 @@ public class CourseManagerWithDatabase {
 		System.out.println(result);
 		if (result != "Success")
 			return result;
+		System.out.println(System.currentTimeMillis());
 		return "Success";
 	}
 
@@ -290,7 +295,7 @@ public class CourseManagerWithDatabase {
 		SqlHelper helper = new SqlHelper();
 		String result = "";
 		String sqlString = "DELETE FROM `course_has_cc_address` WHERE `fk_course_id`=";
-		sqlString += "'" + id + "'";
+		sqlString += id;
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		data.close();
@@ -301,7 +306,7 @@ public class CourseManagerWithDatabase {
 		SqlHelper helper = new SqlHelper();
 		String result = "";
 		String sqlString = "DELETE FROM `course_has_date` WHERE `fk_course_id`=";
-		sqlString += "'" + id + "'";
+		sqlString += id;
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		data.close();
@@ -312,7 +317,7 @@ public class CourseManagerWithDatabase {
 		SqlHelper helper = new SqlHelper();
 		String result = "";
 		String sqlString = "DELETE FROM `course_has_ticket` WHERE `fk_course_id`=";
-		sqlString += "'" + id + "'";
+		sqlString += id;
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		data.close();
@@ -323,7 +328,7 @@ public class CourseManagerWithDatabase {
 		SqlHelper helper = new SqlHelper();
 		String result = "";
 		String sqlString = "DELETE FROM `course_info` WHERE `id`=";
-		sqlString += "'" + id + "'";
+		sqlString += id;
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		data.close();

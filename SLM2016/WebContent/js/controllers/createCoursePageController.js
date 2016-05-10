@@ -31,7 +31,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		data.ccAddresses_ = $scope.ShowCcList;
 		data.type_ = $scope.data.type;
 		data.status_ = "準備中";
-		console.log($scope.data.type);
+
 		$.post("/SLM2016/CourseManagerServlet",
 				JSON.stringify(data)).done(function(data) {
 				window.alert(data);
@@ -115,22 +115,23 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		return true;
 	}
 	
-	var deleteRow = function(index) {
+	var deleteRow = function(id) {
 		$.ajax({
 			url : "/SLM2016/CourseManagerServlet",
 			type : "POST",
-			data : JSON.stringify(index),
-			beforeSend: function (request)
+			data : JSON.stringify(id),
+			beforeSend : function (request)
             {
                 request.setRequestHeader("Delete", true);
             }
         })
-        getTeddyCourseData();
+        
+		getTeddyCourseData();
 		setTimeout(function() {
 			$scope.$apply(function() {
 			    $scope.time = new Date();
 			});
-		}, 300);
+		}, 500);
     }
 
 	var deleteTicket = function(index) {
@@ -157,13 +158,13 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		getTeddyCourseData();
     }
 	
-	/*==========================
-    Events
-	==========================*/
+	/*
+	 * ========================== Events ==========================
+	 */
 
-	/*==========================
-    Members
-	==========================*/
+	/*
+	 * ========================== Members ==========================
+	 */
 	$scope.loadType = "Upload";
 	$scope.courseList = [];
 	$scope.ticketTypeList = [];
@@ -172,13 +173,13 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	$scope.ShowCcList = [];
 	$scope.ShowDateList = [];
 	$scope.updateticketsList = [];
-	/*==========================
-     Methods
-	==========================*/
+	/*
+	 * ========================== Methods ==========================
+	 */
 
-	/*==========================
-     init
-	==========================*/
+	/*
+	 * ========================== init ==========================
+	 */
 
 	$scope.selectedValue;
 	$scope.fileChanged = fileChanged;
