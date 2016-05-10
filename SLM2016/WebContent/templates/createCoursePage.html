@@ -117,12 +117,13 @@
 			<div class="form-group">
 			<input type="text" class="form-control" id="Status" placeholder="準備中" DISABLED>
 			</div>
-			<input class="btn btn-info btn-orange" type="submit" value="開課" id="upload_button" name="upload_button" ng-click="clickAddCourseButton()">		
+			<div class="si-upload" >	
+        	<input class="btn btn-info btn-orange" type="submit" value="瀏覽檔案" id="addattachment_button" name="addattachment_button" ngf-select="fileChanged($file)">
+            <span class="upload-name">{{fileName.name}}</span>
 			</div>
 			<br>
-			<form>
-   	 		<input type="file" id="file_name" />
-			</form>
+			<input class="btn btn-info btn-orange" type="submit" value="開課" id="upload_button" name="upload_button" ng-click="clickAddCourseButton()">	
+			</div>
 			<!-- 課程檢視 -->
 			<div  ng-show="loadType == 'Download'">
 			<div class="form-group name" >
@@ -148,7 +149,7 @@
 				</thead>
                     <tbody>
                         <tr ng-repeat="course in courseList">
-							<td><input type="submit" class="btn btn-info btn-orange"  value = "刪除" ng-click="deleteRow(" + {{course.courseId_}} + ")"></td>
+							<td><input type="submit" class="btn btn-info btn-orange"  value = "刪除" ng-click="deleteRow(course.courseId)"></td>
                             <td>{{course.courseName_}}</td>
                             <td>{{course.batch_}}</td>
                             <td>{{course.dates_}}</td>
