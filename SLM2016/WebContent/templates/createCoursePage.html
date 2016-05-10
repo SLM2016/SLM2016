@@ -106,13 +106,23 @@
 			<input type="text" class="form-control" id="Duration" placeholder="請輸入超連結網址" ng-model="data.hyperlink">
 			</div>
 			<div class="form-group name" >
+			<label for="companyName">課程類型</label>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" id="Type" placeholder="請輸入課程類型" ng-model="data.type">
+			</div>
+			<div class="form-group name" >
 			<label for="companyName">狀態</label>
 			</div>
 			<div class="form-group">
-			<input type="text" class="form-control" id="Status" placeholder="未開課" DISABLED>
+			<input type="text" class="form-control" id="Status" placeholder="準備中" DISABLED>
 			</div>
 			<input class="btn btn-info btn-orange" type="submit" value="開課" id="upload_button" name="upload_button" ng-click="clickAddCourseButton()">		
 			</div>
+			<br>
+			<form>
+   	 		<input type="file" id="file_name" />
+			</form>
 			<!-- 課程檢視 -->
 			<div  ng-show="loadType == 'Download'">
 			<div class="form-group name" >
@@ -132,12 +142,13 @@
 	                  <td>地點</td>
 	                  <td>講師</td>
 	                  <td>副本收件人</td>
+	                  <td>類型</td>
 	                  <td>狀態</td>
 	              </tr>
 				</thead>
                     <tbody>
                         <tr ng-repeat="course in courseList">
-							<td><input type="submit" class="btn btn-info btn-orange"  value = "刪除" ng-click="deleteRow($index)"></td>
+							<td><input type="submit" class="btn btn-info btn-orange"  value = "刪除" ng-click="deleteRow(" + {{course.courseId_}} + ")"></td>
                             <td>{{course.courseName_}}</td>
                             <td>{{course.batch_}}</td>
                             <td>{{course.dates_}}</td>
@@ -147,6 +158,7 @@
                             <td>{{course.location_}}</td>
                             <td>{{course.lecturer_}}</td>
                             <td>{{course.ccAddresses_}}</td>
+                            <td>{{course.type_}}</td>
                             <td>{{course.status_}}</td>
                         </tr>
                     </tbody>

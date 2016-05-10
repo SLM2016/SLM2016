@@ -181,7 +181,7 @@ public class CourseTest {
 	
 	@Test
 	public void testSetHyperlink() {
-		String hyperlink = "準備中";
+		String hyperlink = "www.test.com";
 		course_.setHyperlink(hyperlink);
 		assertEquals(hyperlink, course_.getHyperlink());
 	}

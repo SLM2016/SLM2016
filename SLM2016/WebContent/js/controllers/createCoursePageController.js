@@ -29,7 +29,11 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		data.lecturer_ = $scope.data.lecturer;
 		data.hyperlink_ = $scope.data.hyperlink;
 		data.ccAddresses_ = $scope.ShowCcList;
+		data.type_ = $scope.data.type;
 		data.status_ = "未開課";
+		console.log($scope.data.type);
+		
+		//var loadfilelocation = ;
 		
 		$.post("/SLM2016/CourseManagerServlet",
 				JSON.stringify(data)).done(function(data) {
@@ -81,7 +85,6 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		else{
 			if((($scope.data.dateAddresses.length) != 0)){
 				$scope.ShowDateList.push($scope.data.dateAddresses);
-				console.log($scope.ShowDateList);
 				$scope.data.dateAddresses = null;
 			}
 			else{
