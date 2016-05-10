@@ -1,7 +1,49 @@
 <div class="example">
-    <div class="inner-wrapper">
-        <div class="info">
-            <div class="title">Send Mail</div>
-        </div>
-    </div>
+	<div class="inner-wrapper">
+		<div class="info">
+			<div class="title">Send Mail</div>
+
+				<div class="row">
+					<div class="col-md-6">
+					<label for="class"> 課程: </label>
+					<input class="form-control" type="text" id="classId" value="SCRUM1603-33"><br>
+					</div>
+					
+					<div class="col-md-6">
+					<label for="student"> 學員: </label>
+					<input class="form-control" type="text" id="studentName" value="Teddy"><br>
+					</div><br>
+					
+					<div class="col-md-6">
+					<label for="date"> 日期: </label>
+					<input class="form-control" type="text" id="date" value="2016/5/10"><br>
+					</div>
+					
+					<div class="col-md-6">
+					<label for="number"> 編號: </label>
+					<input class="form-control" type="text" id="number" value="1234567890"><br>
+					</div><br>
+					
+					<div class="col-md-6">
+					<label for="time"> 時長: </label>
+					<input class="form-control" type="text" id="time" value="12Hr"><br>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-6">
+						<img style="display: block; margin: auto" src="./images/template.png" width="100%"></img>	
+					</div>
+					
+					<div class="col-md-6">title:</div><br><br>
+					<div class="col-md-6">DP 入門課程</div><br><br>
+					<div class="col-md-6">_______________________</div><br><br>
+					<div class="col-md-6">Hi Erica This is Sample</div><br>
+					
+				</div><br><br>
+				
+				<input class="btn btn-info btn-orange" type="button" value="Send" ng-click="ClickSendButton()">		
+	
+		</div>
+	</div>
 </div>
