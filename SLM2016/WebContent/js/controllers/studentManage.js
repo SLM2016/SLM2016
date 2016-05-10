@@ -22,12 +22,36 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             })
         }
 
-        var toggleSelectStudent = function($event, student) {
-            student.isSelected = !student.isSelected
+        var toggleSelectStudent = function(student) {
+            student.isSelected = !student.isSelected;
         }
 
-        var reverseSelect = function(student) {
-            student.isSelected = !student.isSelected
+        var toggleStatusDropdown = function(student) {
+            student.isSelected = !student.isSelected;
+        }
+
+        var toggleActionDropdown = function(student) {
+            student.isSelected = !student.isSelected;
+        }
+
+        var changeStudentStatus = function(student) {
+            student.isSelected = !student.isSelected;
+        }
+
+        var openInvoiceModel = function(student) {
+            student.isSelected = !student.isSelected;
+
+            var index = 0;
+            for (var i = 0; i < $scope.studentList.length; i++) {
+                if($scope.studentList[i].id == student.id) {
+                    index = i;
+                    break;
+                }
+            }
+            $rootScope.$broadcast("OPEN_INVOICE_MODEL", {
+                list: $scope.studentList,
+                index: index
+            });
         }
 
     	var init = function() {
@@ -52,7 +76,10 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         ==========================*/
 
         $scope.toggleSelectStudent = toggleSelectStudent;
-        $scope.reverseSelect = reverseSelect;
+        $scope.toggleStatusDropdown = toggleStatusDropdown;
+        $scope.toggleActionDropdown = toggleActionDropdown;
+        $scope.changeStudentStatus = changeStudentStatus;
+        $scope.openInvoiceModel = openInvoiceModel;
         /*==========================
              init
         ==========================*/

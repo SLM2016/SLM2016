@@ -33,32 +33,29 @@
                     <th>功能</th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="s in studentList" ng-class="{'selected': s.isSelected}" ng-click="toggleSelectStudent($event, s)">
+                    <tr ng-repeat="s in studentList" ng-class="{'selected': s.isSelected}" ng-click="toggleSelectStudent(s)">
                         <td>{{s.name}}</td>
                         <td>{{s.company}}</td>
                         <td>{{s.phone}}</td>
                         <td>{{s.email}}</td>
                         <td>
-                            <button id="status-label" type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="reverseSelect(s)">
+                            <button id="status-label" type="button" class="btn btn-default status-toggle" data-toggle="dropdown" ng-click="toggleStatusDropdown(s)">
                                 <span>已繳費</span>
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="status-label">
-                                <li><a>免繳費</a></li>
-                                <li><a>未繳費</a></li>
-                                <li><a>課後再繳費</a></li>
-                                <li><a>已繳費</a></li>
+                                <li ng-click="changeStudentStatus(s, 0)"><a>免繳費</a></li>
+                                <li ng-click="changeStudentStatus(s, 1)"><a>未繳費</a></li>
+                                <li ng-click="changeStudentStatus(s, 2)"><a>課後再繳費</a></li>
+                                <li ng-click="changeStudentStatus(s, 3)"><a>已繳費</a></li>
                             </ul>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-default">
-                                <span class="glyphicon glyphicon-floppy-saved"></span>
-                            </button>
-                            <button type="button" id="student-setting-label" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="reverseSelect(s)">
+                            <button type="button" id="student-setting-label" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="toggleActionDropdown(s)">
                                 <span class="glyphicon glyphicon-menu-hamburger"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="student-setting-label">
-                                <li><a>產生發票</a></li>
+                                <li data-toggle="modal" data-target="#invoice-model" ng-click="openInvoiceModel(s)"><a>產生發票</a></li>
                                 <li><a>寄送證書</a></li>
                             </ul>
                         </td>
@@ -66,5 +63,13 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+
+
+<!-- Invoice Modal -->
+<div class="modal fade" id="invoice-model" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <invoice-model></invoice-model>
     </div>
 </div>
