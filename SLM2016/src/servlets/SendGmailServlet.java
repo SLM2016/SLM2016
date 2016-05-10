@@ -20,18 +20,18 @@ import mailSending.StudentSelectedIndex;
 @WebServlet("/SendGmailServlet")
 public class SendGmailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	// private StudentInfomation studentInfomation = new StudentInfomation();
-	// private ClassInfomation classInfomation = new
-	// ClassInfomation("Scurm敏捷方法實作班");
 	private Classes classes_ = new Classes();
+	private List<String> hyperlinks_ = new ArrayList<String>();
 
 	public SendGmailServlet() {
 		super();
+		hyperlinks_.add("http://teddysoft.tw/courses/scrum/");
+		hyperlinks_.add("http://teddysoft.tw/courses/refactoring/");
+		hyperlinks_.add("http://teddysoft.tw/courses/design-patterns-1/");
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String json = new Gson().toJson(classes_);
-		// System.out.println(json);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
@@ -44,10 +44,6 @@ public class SendGmailServlet extends HttpServlet {
 			doPostClassIndex(request, response, requestString);
 			return;
 		}
-		// if (request.getParameterMap().containsKey("isSend")) {
-		// doPostClassIndex(request, response, requestString);
-		// return;
-		// }
 		doPostSendMail(request, response, requestString);
 	}
 
@@ -80,13 +76,14 @@ public class SendGmailServlet extends HttpServlet {
 		}
 
 		String username = "news.teddysoft.tw@gmail.com";
-		String password = "SLMTaipeiTech2016";
+		String password = "clfddzifoyfvvxqa";
 		GmailSender gmailSender = new GmailSender(username, password);
-		String subject = "泰迪軟體課程通知";
+		String subject = classes_.getClasses().get(index).getClassName() + " - 已收到您的報名資料";
 		String result = "";
 		for (int i = 0; i < studentName.size(); i++) {
-			String text = "Hi " + studentName.get(i) + "，\n您好，歡迎報名" + classes_.getClasses().get(index).getClassName()
-					+ "，以下是您的上課通知，請參考。\n若有任何問題，歡迎隨時聯絡我們。\n泰迪軟體 Erica";
+			String text = "Hi " + studentName.get(i) + "，<br><br>您好，歡迎報名<a href=\"" + hyperlinks_.get(index) + "\">"
+					+ classes_.getClasses().get(index).getClassName()
+					+ "</a>，我們已收到您填寫的相關資料。<br><br>本梯次課程目前招生中，若達開課人數，我們會再通知您後續繳費的相關事宜，最遲於開課前十天通知。如果有任何問題，歡迎和我們聯絡 : ) <br><br><br>泰迪軟體 Erica<br><br>-- <br>泰迪軟體科技有限公司 <br>Teddysoft Technology<br>02-2311-6230<br> <a href=\"http://teddysoft.tw\">http://teddysoft.tw </a>";
 			result = gmailSender.send(addresses.get(i), ccAddresses, subject, text);
 		}
 		String json = new Gson().toJson(result);

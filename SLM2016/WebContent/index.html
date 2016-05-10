@@ -29,7 +29,8 @@
             <div ui-view="invoice" ng-show="isInvoiceView()"></div>
             <div ui-view="studentInfo" ng-show="studentInfoView()"></div>
             <div ui-view="certification" ng-show="isCertificationView()"></div>
-            <div ui-view="sendMail" ng-show="isSendMailView()"></div>        
+            <div ui-view="sendMail" ng-show="isSendMailView()"></div>      
+            <div ui-view="createCourse" ng-show="isCreateCourseView()"></div>          
         </div>
     </div>
     
@@ -73,5 +74,6 @@
     <script src="js/controllers/invoice.js"></script>
     <script src="js/controllers/studentImport.js"></script>
     <script src="js/controllers/studentManage.js"></script>
+    <script src="js/controllers/createCoursePageController.js"></script>
 </body>
 </html>
