@@ -119,7 +119,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		$.ajax({
 			url : "/SLM2016/CourseManagerServlet",
 			type : "POST",
-			data : JSON.stringify(id),
+			data : id,
 			dataType : "text",
 			headers :
 			{

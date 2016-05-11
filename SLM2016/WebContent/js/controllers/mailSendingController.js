@@ -42,7 +42,6 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 				data : JSON.stringify(data),
 				async : false,
 				cache : false,
-				dataType : "text", 
 				headers :
 	            {
 	                "isSend" : false

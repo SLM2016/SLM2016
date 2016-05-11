@@ -50,10 +50,11 @@ public class CourseManagerWithDatabase {
 		while (data.next()) {
 			String id = data.getString("id");
 			int index = id.lastIndexOf("-");
-			id = id.substring(index + 1);
-			databaseDataIdMax_ = Integer.parseInt(id);
-			databaseDataIdMax_++;
-			// System.out.println(dbDataIdMax_);
+			if (index != -1) {
+				id = id.substring(index + 1);
+				databaseDataIdMax_ = Integer.parseInt(id);
+				databaseDataIdMax_++;
+			}
 		}
 		return result;
 	}
@@ -292,10 +293,12 @@ public class CourseManagerWithDatabase {
 	}
 
 	private String deleteCourseFromDatabaseCcAddress(String id) throws SQLException {
+		System.out.println(id);
 		SqlHelper helper = new SqlHelper();
 		String result = "";
 		String sqlString = "DELETE FROM `course_has_cc_address` WHERE `fk_course_id`=";
-		sqlString += id;
+		sqlString += "'" + id + "'";
+		System.out.println(sqlString);
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		data.close();
@@ -306,7 +309,7 @@ public class CourseManagerWithDatabase {
 		SqlHelper helper = new SqlHelper();
 		String result = "";
 		String sqlString = "DELETE FROM `course_has_date` WHERE `fk_course_id`=";
-		sqlString += id;
+		sqlString += "'" + id + "'";
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		data.close();
@@ -317,7 +320,7 @@ public class CourseManagerWithDatabase {
 		SqlHelper helper = new SqlHelper();
 		String result = "";
 		String sqlString = "DELETE FROM `course_has_ticket` WHERE `fk_course_id`=";
-		sqlString += id;
+		sqlString += "'" + id + "'";
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		data.close();
@@ -328,7 +331,7 @@ public class CourseManagerWithDatabase {
 		SqlHelper helper = new SqlHelper();
 		String result = "";
 		String sqlString = "DELETE FROM `course_info` WHERE `id`=";
-		sqlString += id;
+		sqlString += "'" + id + "'";
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		data.close();
