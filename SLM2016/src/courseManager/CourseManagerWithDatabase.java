@@ -34,7 +34,7 @@ public class CourseManagerWithDatabase {
 		return result;
 	}
 
-	private String getCourseId(String courseName) throws SQLException {
+	public String getCourseId(String courseName) throws SQLException {
 		SqlHelper helper = new SqlHelper();
 		String sqlString = "SELECT id FROM `course_info` WHERE `name`='" + courseName + "'";
 		CachedRowSet data = new CachedRowSetImpl();

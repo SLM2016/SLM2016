@@ -17,7 +17,7 @@ import courseManager.CourseManagerWithDatabase;
 @WebServlet("/CourseManagerServlet")
 public class CourseManagerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private CourseManagerWithDatabase courseManagerWithDb_ = new CourseManagerWithDatabase();
+	public CourseManagerWithDatabase courseManagerWithDb_ = new CourseManagerWithDatabase();
 
 	public CourseManagerServlet() {
 		super();
