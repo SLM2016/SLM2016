@@ -45,18 +45,18 @@ public class CourseManagerWithDatabaseTest {
 		List<Course> courses = new ArrayList<Course>();
 		String result = courseManagerWithDb_.getCourseFromDatabase(courses);
 		assertEquals("Success", result);
-		assertEquals("Scurm敏捷方法實作班", courses.get(0).getCourseName());
-		assertEquals("公開班", courses.get(0).getType());
-		assertEquals("401", courses.get(0).getBatch());
-		assertEquals("2016-05-10", courses.get(0).getDates().get(0));
-		assertEquals(120, courses.get(0).getDuration());
-		assertEquals("VIP", courses.get(0).getTicketTypes().get(0));
-		assertEquals(100, courses.get(0).getPrices().get(0).intValue());
-		assertEquals("Lab1421", courses.get(0).getLocation());
-		assertEquals("Teddy", courses.get(0).getLecturer());
-		assertEquals("準備中", courses.get(0).getStatus());
-		assertEquals("test@test.com", courses.get(0).getCcAddresses().get(0));
-		assertEquals("http://teddysoft.tw", courses.get(0).getHyperlink());
+		assertEquals("Scurm敏捷方法實作班", courses.get(courses.size() - 1).getCourseName());
+		assertEquals("公開班", courses.get(courses.size() - 1).getType());
+		assertEquals("401", courses.get(courses.size() - 1).getBatch());
+		assertEquals("2016-05-10", courses.get(courses.size() - 1).getDates().get(0));
+		assertEquals(120, courses.get(courses.size() - 1).getDuration());
+		assertEquals("VIP", courses.get(courses.size() - 1).getTicketTypes().get(0));
+		assertEquals(100, courses.get(courses.size() - 1).getPrices().get(0).intValue());
+		assertEquals("Lab1421", courses.get(courses.size() - 1).getLocation());
+		assertEquals("Teddy", courses.get(courses.size() - 1).getLecturer());
+		assertEquals("準備中", courses.get(courses.size() - 1).getStatus());
+		assertEquals("test@test.com", courses.get(courses.size() - 1).getCcAddresses().get(0));
+		assertEquals("http://teddysoft.tw", courses.get(courses.size() - 1).getHyperlink());
 	}
 
 	@Test
