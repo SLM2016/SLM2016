@@ -23,7 +23,40 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         }
 
         var toggleSelectStudent = function($event, student) {
-            student.isSelected = !student.isSelected
+            student.isSelected = !student.isSelected 
+            
+            var i = 0;
+            var preview_submit_disable = document.getElementById("preview_submit");
+            
+            for(var j = 0; j < $scope.studentList.length; j++){
+            	if($scope.studentList[j].isSelected){
+            		i++;
+            	}
+            }
+            
+            if(i > 0){           	
+        		preview_submit_disable.disabled = "";
+            }
+            else{
+            	preview_submit_disable.disabled = "disabled";
+            }
+        }
+        
+        var sentPreviewData = function(){
+        	var previewData = [];
+        	var i = 0;
+        	for(var j = 0; j < $scope.studentList.length; j++){
+        		if($scope.studentList[j].isSelected){
+        			previewData[i] = new Object();
+        			previewData[i].name = $scope.studentList[j].name;
+        			previewData[i].company =  $scope.studentList[j].company;
+        			previewData[i].phone =  $scope.studentList[j].phone;
+        			previewData[i].email =  $scope.studentList[j].email;
+        			i++;
+        		} 
+        	}        	
+            temp.previewBox.value = JSON.stringify(previewData);
+            
         }
 
         var reverseSelect = function(student) {
@@ -46,7 +79,8 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.isStudentLoadError = false;
         $scope.isStudentLoading = false;
         $scope.studentList = [];
-
+        $scope.sentPreviewData = sentPreviewData;
+               
         /*==========================
              Methods
         ==========================*/
