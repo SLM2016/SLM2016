@@ -50,9 +50,10 @@ public class CourseManagerServlet extends HttpServlet {
 		String header = request.getHeader("Delete");
 		if (header != null) {
 			doPostDeleteCourse(request, response, requestString);
-			return;
+			// return;
+		} else {
+			doPostAddCourse(request, response, requestString);
 		}
-		doPostAddCourse(request, response, requestString);
 	}
 
 	private void doPostDeleteCourse(HttpServletRequest request, HttpServletResponse response, String requestString)

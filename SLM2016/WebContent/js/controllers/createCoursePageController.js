@@ -120,18 +120,20 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 			url : "/SLM2016/CourseManagerServlet",
 			type : "POST",
 			data : JSON.stringify(id),
-			beforeSend : function (request)
-            {
-                request.setRequestHeader("Delete", true);
-            }
+			dataType : "text",
+			headers :
+			{
+				Delete : true
+			},
+			success : function(){
+				getTeddyCourseData();
+			}
         })
-        
-		getTeddyCourseData();
 		setTimeout(function() {
 			$scope.$apply(function() {
 			    $scope.time = new Date();
 			});
-		}, 500);
+		}, 300);
     }
 
 	var deleteTicket = function(index) {
