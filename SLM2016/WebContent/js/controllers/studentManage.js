@@ -55,7 +55,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         }
 
     	var init = function() {
-            getStudentList();
+            // getStudentList();
         }
 
 		/*==========================

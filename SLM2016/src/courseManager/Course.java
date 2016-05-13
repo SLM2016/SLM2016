@@ -4,44 +4,79 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
-	// private int courseId_;
+	private String courseId_;
 	private String courseName_;
 	private String type_;
 	private String batch_;
-	private String date_;
-	private String duration_;
-	private String ticketTypes_;
-	private int prices_;
+	private List<String> dates_ = new ArrayList<String>();
+	private int duration_;
+	private List<String> ticketTypes_ = new ArrayList<String>();
+	private List<Integer> prices_ = new ArrayList<Integer>();
 	private String location_;
 	private String lecturer_;
 	private String status_;
+	private List<String> ccAddresses_ = new ArrayList<String>();
+	private String hyperlink_;
 
-	// public Course(int id) {
-	// courseId_ = id;
-	// };
+	public Course(String id) {
+		courseId_ = id;
+	};
+
+	public Course clone() {
+		Course cloneObject = new Course(courseId_);
+		cloneObject.courseName_ = courseName_;
+		cloneObject.type_ = type_;
+		cloneObject.batch_ = batch_;
+		cloneObject.dates_.addAll(dates_);
+		cloneObject.duration_ = duration_;
+		cloneObject.ticketTypes_.addAll(ticketTypes_);
+		cloneObject.prices_.addAll(prices_);
+		cloneObject.location_ = location_;
+		cloneObject.lecturer_ = lecturer_;
+		cloneObject.status_ = status_;
+		cloneObject.ccAddresses_.addAll(ccAddresses_);
+		cloneObject.hyperlink_ = hyperlink_;
+		return cloneObject;
+	}
 
 	public void setCourseName(String courseName) {
 		courseName_ = courseName;
+	}
+
+	public void setType(String type) {
+		type_ = type;
 	}
 
 	public void setBatch(String batch) {
 		batch_ = batch;
 	}
 
-	public void setDate(String date) {
-		date_ = date;
+	public void addDate(String date) {
+		dates_.add(date);
 	}
 
-	public void setDuration(String duration) {
+	public void deleteDate(int index) {
+		dates_.remove(index);
+	}
+
+	public void setDuration(int duration) {
 		duration_ = duration;
 	}
 
-	public void setTicketType(String ticketType) {
-		ticketTypes_ = ticketType;
+	public void addTicketType(String ticketType) {
+		ticketTypes_.add(ticketType);
 	}
 
-	public void setPrice(int price) {
-		prices_ = price;
+	public void deleteTicketType(int index) {
+		ticketTypes_.remove(index);
+	}
+
+	public void addPrice(int price) {
+		prices_.add(price);
+	}
+
+	public void deletePrice(int index) {
+		prices_.remove(index);
 	}
 
 	public void setLocation(String location) {
@@ -56,31 +91,47 @@ public class Course {
 		status_ = status;
 	}
 
-	// public int getCourseId() {
-	// return courseId_;
-	// }
+	public void addCcAddresses(String ccAddress) {
+		ccAddresses_.add(ccAddress);
+	}
+
+	public void deleteCcAddresses(int index) {
+		ccAddresses_.remove(index);
+	}
+
+	public void setHyperlink(String hyperlink) {
+		hyperlink_ = hyperlink;
+	}
+
+	public String getCourseId() {
+		return courseId_;
+	}
 
 	public String getCourseName() {
 		return courseName_;
+	}
+
+	public String getType() {
+		return type_;
 	}
 
 	public String getBatch() {
 		return batch_;
 	}
 
-	public String getDate() {
-		return date_;
+	public List<String> getDates() {
+		return dates_;
 	}
 
-	public String getDuration() {
+	public int getDuration() {
 		return duration_;
 	}
 
-	public String getTicketType() {
+	public List<String> getTicketTypes() {
 		return ticketTypes_;
 	}
 
-	public int getPrice() {
+	public List<Integer> getPrices() {
 		return prices_;
 	}
 
@@ -94,5 +145,13 @@ public class Course {
 
 	public String getStatus() {
 		return status_;
+	}
+
+	public List<String> getCcAddresses() {
+		return ccAddresses_;
+	}
+
+	public String getHyperlink() {
+		return hyperlink_;
 	}
 }

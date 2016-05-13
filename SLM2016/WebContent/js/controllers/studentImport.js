@@ -28,6 +28,14 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 	    // transfer data to server
 		var uploadFile = function () {
 			$scope.isUploading = true;
+			if(!$scope.excelFile) {
+				$scope.isFileEmpty = true;
+				return;
+			}
+			else {
+				$scope.isFileEmpty = false;
+			}
+
 			StudentInfoService.uploadStudentFile($scope.excelFile).then(function(result) {
 				$scope.isUploading = false;
 				console.log(result.status)
@@ -66,6 +74,7 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
         $scope.isUploadFail = false;
         $scope.showPreview = false; 
 	    $scope.showJSONPreview = true; 
+	    $scope.isFileEmpty = false;
 	    $scope.items = [];
 	    $scope.sheets = [];
 
