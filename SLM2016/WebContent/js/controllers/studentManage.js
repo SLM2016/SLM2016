@@ -26,7 +26,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             student.isSelected = !student.isSelected 
             
             var i = 0;
-            var preview_submit_disable = document.getElementById("preview_submit");
+            var sendButton = document.getElementById("send");
             
             for(var j = 0; j < $scope.studentList.length; j++){
             	if($scope.studentList[j].isSelected){
@@ -35,14 +35,14 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             }
             
             if(i > 0){           	
-        		preview_submit_disable.disabled = "";
+            	sendButton.disabled = "";
             }
             else{
-            	preview_submit_disable.disabled = "disabled";
+            	sendButton.disabled = "disabled";
             }
         }
         
-        var sentPreviewData = function(){
+        var sendData = function(){
         	var previewData = [];
         	var i = 0;
         	for(var j = 0; j < $scope.studentList.length; j++){
@@ -55,7 +55,15 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         			i++;
         		} 
         	}        	
-            temp.previewBox.value = JSON.stringify(previewData);
+            
+        	// Test Data
+        	previewData[0] = new Object();
+			previewData[0].name = '陳';
+			previewData[1] = new Object();
+			previewData[1].name = '泰';
+			previewData[2] = new Object();
+			previewData[2].name = '迪';
+            $state.go('studentInfo.Sendmail', {'showData' : JSON.stringify(previewData)});
             
         }
 
@@ -79,7 +87,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.isStudentLoadError = false;
         $scope.isStudentLoading = false;
         $scope.studentList = [];
-        $scope.sentPreviewData = sentPreviewData;
+        $scope.sendData = sendData;
                
         /*==========================
              Methods

@@ -101,7 +101,7 @@ var app = angular.module('app', [
         })
         
         .state(STATES.STUDENT_INFO_SENDMAIL, {
-            url: "/sendmail",
+            url: "/sendmail/:showData",
             views: {
                 'content@studentInfo': {
                     templateUrl: "templates/studentSendmail.html",
