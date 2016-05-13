@@ -6,6 +6,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	var ShowticketList = [];
 	var updateticketsList = [];
 	var ShowDateList=[];
+	var data = new Object();
 	
 	function getTeddyCourseData() {
 		$.get("/SLM2016/CourseManagerServlet",	function(responseText) {
@@ -18,7 +19,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     }
 	
 	function addCourse() {
-		var data = new Object();
+		if(checkInput){
 		data.courseName_ = $scope.data.courseName;
 		data.batch_ = $scope.data.batch;
 		data.dates_ = $scope.ShowDateList;
@@ -31,12 +32,12 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		data.ccAddresses_ = $scope.ShowCcList;
 		data.type_ = $scope.data.type;
 		data.status_ = "準備中";
-
 		$.post("/SLM2016/CourseManagerServlet",
 				JSON.stringify(data)).done(function(data) {
 				window.alert(data);
 				getTeddyCourseData();
 		});
+		}
 	}
 
 	var clickAddTicketButton=function() {
@@ -49,11 +50,16 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 				window.alert("票價需要為數字");
 			}
 			else{
+				if ((($scope.data.price)>2147483647)||(($scope.data.price)<0)){
+				window.alert("課程金額過大");
+				}
+				else{
 				$scope.ticketTypeList.push($scope.data.ticketType);
 				$scope.ticketPriceList.push($scope.data.price);
 				$scope.ShowticketList.push("         票種:  " +$scope.data.ticketType + "價格:  " + $scope.data.price);
 				$scope.data.ticketType = null;
 				$scope.data.price = null;
+				}
 			}
 		}
 	}
@@ -100,10 +106,6 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	}
 	
 	var checkInput = function()	{
-		if((($scope.data.price)>2147483647)||(($scope.data.price)<0)){
-			window.alert("課程金額請修正");
-			return false;
-		}
 		if((($scope.data.courseName)== null)){
 			window.alert("課程名稱欄位不可為空白");
 			return false;
@@ -157,6 +159,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 
 	
 	var init = function() {
+		data = null;
 		getTeddyCourseData();
     }
 	

@@ -10,7 +10,7 @@
             <div class="invoice" ng-show="loadType == 'Upload'">
 			<div class="title">課程檔案管理系統</div>
 			<div class="form-group name">
-			<label for="companyName">課名</label>
+			<label for="companyName">課名*(必填)</label>
 			</div>
 			<div class="form-group">
 			<input type="text" class="form-control" id="Course" placeholder="請輸入課名" ng-model="data.courseName">
@@ -152,13 +152,21 @@
 							<td><input type="submit" class="btn btn-info btn-orange"  value = "刪除" ng-click="deleteRow(course.courseId_)"></td>
                             <td>{{course.courseName_}}</td>
                             <td>{{course.batch_}}</td>
-                            <td>{{course.dates_}}</td>
+                            <td>
+                            	<p ng-repeat="dates in course.dates_">{{dates}}</p>
+                            </td>
                             <td>{{course.duration_}}</td>
-                            <td>{{course.ticketTypes_}}</td>
-                            <td>{{course.prices_}}</td>
+                            <td>
+                            	<p ng-repeat="ticketType in course.ticketTypes_">{{ticketType}}</p>
+                            </td>
+                            <td>
+                            	<p ng-repeat="prices in course.prices_">{{prices}}</p>
+                            </td>
                             <td>{{course.location_}}</td>
                             <td>{{course.lecturer_}}</td>
-                            <td>{{course.ccAddresses_}}</td>
+                            <td>
+								<p ng-repeat="ccAddresses in course.ccAddresses_">{{ccAddresses}}</p>
+                            </td>
                             <td>{{course.type_}}</td>
                             <td>{{course.status_}}</td>
                         </tr>
