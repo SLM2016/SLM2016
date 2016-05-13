@@ -104,11 +104,11 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 			window.alert("課程金額請修正");
 			return false;
 		}
-		if((($scope.data.courseName)== null)||(($scope.data.batch)== null)||(($scope.data.duration)== null)||(($scope.data.ticketPriceList)== null)||(($scope.data.location)== null)||(($scope.data.lecturer)== null)||(($scope.data.status)== null)||(($scope.data.hyperlink)== null)){
-			window.alert("欄位不可為空白");
+		if((($scope.data.courseName)== null)){
+			window.alert("課程名稱欄位不可為空白");
 			return false;
 		}
-		if((($scope.data.courseName.length)== 0)||(($scope.data.batch.length)== 0)||(($scope.data.duration.length)== 0)||(($scope.data.ticketPriceList.length)== 0)||(($scope.data.location.length)== 0)||(($scope.data.lecturer.length)== 0)||(($scope.data.status.length)== 0)||(($scope.data.hyperlink.length)== 0)){
+		if((($scope.data.courseName.length)== 0)){
 			window.alert("欄位不可為空白");
 			return false;
 		}
