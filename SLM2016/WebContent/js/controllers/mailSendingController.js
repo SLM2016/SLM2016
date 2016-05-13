@@ -35,24 +35,16 @@ app.controller("MailSendingController",['$scope', '$state', '$timeout', '$rootSc
 		
 		function getStudentnameByClassIndex() {
 			var data = document.myForm.courseCheckbox.selectedIndex;
-//			$.post("/SLM2016/SendGmailServlet?isSend=false",JSON.stringify(data)).done(function(data) {
-//					studentArray = [];
-//					for(i = 0; i < data.studentInfomation_.studentsName_.length; i++){
-//						studentArray.push(data.studentInfomation_[i]);
-//					}
-//					//console.log(studentArray.length);
-//			});
 			
 			$.ajax({
 				url : "/SLM2016/SendGmailServlet",
-				//url : "/SLM2016/SendGmailServlet?isSend=false",
 				type : "POST",
 				data : JSON.stringify(data),
 				async : false,
 				cache : false,
-				beforeSend: function (request)
+				headers :
 	            {
-	                request.setRequestHeader("isSend", false);
+	                "isSend" : false
 	            },
 				success : function(data) {
 					studentNameArray = [];
