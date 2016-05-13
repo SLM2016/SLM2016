@@ -1,28 +1,14 @@
 package student;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mysql.jdbc.ResultSetMetaData;
 
-import javafx.util.Pair;
 import util.SLMDBUtility;
 
 public class StudentDBManager {
@@ -32,30 +18,30 @@ public class StudentDBManager {
 		super();
 		slmDBUtility = new SLMDBUtility();
 	}
-	
-	public String getStudentList()  throws SQLException {
+
+	public String getStudentList() throws SQLException {
 		String sql = "select * from `student_info`;";
 		ResultSet result = slmDBUtility.selectSQL(sql);
 		String columnName, columnValue = null;
-        JsonObject element = null;
-        JsonArray jsonArray = new JsonArray();
-        ResultSetMetaData rsmd = null;
-        
-        try {
-            rsmd = (ResultSetMetaData) result.getMetaData();
-            while (result.next()) {
-                element = new JsonObject();
-                for (int i = 0; i < rsmd.getColumnCount(); i++) {
-                    columnName = rsmd.getColumnName(i + 1);
-                    columnValue = result.getString(columnName);
-                    element.addProperty(columnName, columnValue);
-                }
-                jsonArray.add(element);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
+		JsonObject element = null;
+		JsonArray jsonArray = new JsonArray();
+		ResultSetMetaData rsmd = null;
+
+		try {
+			rsmd = (ResultSetMetaData) result.getMetaData();
+			while (result.next()) {
+				element = new JsonObject();
+				for (int i = 0; i < rsmd.getColumnCount(); i++) {
+					columnName = rsmd.getColumnName(i + 1);
+					columnValue = result.getString(columnName);
+					element.addProperty(columnName, columnValue);
+				}
+				jsonArray.add(element);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return jsonArray.toString();
 	}
 
@@ -95,20 +81,30 @@ public class StudentDBManager {
 		return arrayList;
 	}
 
-	public boolean insertStudent(String name, String email, String nickname, String phone, String company,
-			String apartment, String title, String ticketType, String vegeMeat, String receiptType,
-			String companyNameAndEIN, String classInfo, String hasScrum, String flowOk, String teamMembers,
-			String comment, String timestamp) throws SQLException {
-		String sql = String.format(
-				"INSERT INTO `student_info`(`name`, `email`, `nickname`, `phone`, `company`, `apartment`, `title`, `ticket_type`, `vege_meat`, `receipt_type`, `company_name_and_EIN`, `class_info`, `has_scrum`, `flow_ok`, `team_members`, `comment`, `timestamp`) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s') ",
-				name, email, nickname, phone, company, apartment, title, ticketType, vegeMeat, receiptType,
-				companyNameAndEIN, classInfo, hasScrum, flowOk, teamMembers, comment, timestamp);
-		String duplicate = String.format(
-				"ON DUPLICATE KEY UPDATE `name` = '%s', `email` = '%s', `nickname` = '%s', `phone` = '%s', `company` = '%s', `apartment` = '%s', `title` = '%s', `ticket_type` = '%s', `vege_meat` = '%s', `receipt_type` = '%s', `company_name_and_EIN` = '%s', `class_info` = '%s', `has_scrum` = '%s', `flow_ok` = '%s', `team_members` = '%s', `comment` = '%s', `timestamp` = '%s';",
-				name, email, nickname, phone, company, apartment, title, ticketType, vegeMeat, receiptType,
-				companyNameAndEIN, classInfo, hasScrum, flowOk, teamMembers, comment, timestamp);
+	public boolean insertStudent(StudentModel studenrModel) throws SQLException {
 
-		if (slmDBUtility.insertSQL((sql + duplicate))) {
+		String sql = String.format(
+				"INSERT INTO `student_info`(`name`, `email`, `nickname`, `phone`, `company`, `apartment`, `title`, `ticket_type`, `ticket_price`, `receipt_type`, `receipt_company_name`, `receipt_company_EIN`, `student_status`, `payment_status`, `receipt_status`, `vege_meat`, `team_members`, `comment`, `timestamp`, `fk_course_info_id`) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",
+				studenrModel.getName(), studenrModel.getEmail(), studenrModel.getNickname(), studenrModel.getPhone(),
+				studenrModel.getCompany(), studenrModel.getApartment(), studenrModel.getTitle(),
+				studenrModel.getTicketType(), studenrModel.getTicketPrice(), studenrModel.getReceiptType(),
+				studenrModel.getReceiptCompanyName(), studenrModel.getReceiptCompanyEIN(), "已報名", "未繳費", "未開立",
+				studenrModel.getVegeMeat(), studenrModel.getTeamMembers(), studenrModel.getComment(),
+				studenrModel.getTimestamp(), studenrModel.getFkCourseInfoId());
+		// System.out.println(sql);
+		// String duplicate = String.format(
+		// "ON DUPLICATE KEY UPDATE `name` = '%s', `email` = '%s', `nickname` =
+		// '%s', `phone` = '%s', `company` = '%s', `apartment` = '%s', `title` =
+		// '%s', `ticket_type` = '%s', `vege_meat` = '%s', `receipt_type` =
+		// '%s', `company_name_and_EIN` = '%s', `class_info` = '%s', `has_scrum`
+		// = '%s', `flow_ok` = '%s', `team_members` = '%s', `comment` = '%s',
+		// `timestamp` = '%s';",
+		// name, email, nickname, phone, company, apartment, title, ticketType,
+		// vegeMeat, receiptType,
+		// companyNameAndEIN, classInfo, hasScrum, flowOk, teamMembers, comment,
+		// timestamp);
+
+		if (slmDBUtility.insertSQL((sql))) {
 			return true;
 		} else {
 			return false;
