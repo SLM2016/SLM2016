@@ -31,6 +31,9 @@
                     border: 1px solid #ccc;
                     cursor: pointer;
                     @include border-radius(3px);
+                    &.is-empty {
+                        border: 1px solid #F14342;
+                    }
                     .upload-title {
                         width: 80px;
                         height: 34px;

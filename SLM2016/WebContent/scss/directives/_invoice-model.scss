@@ -200,4 +200,29 @@
             float: right;
         }
     }
+    .right-button, .left-button {
+    	position: absolute;
+    	top: 50%;
+    	width: 50px;
+    	height: 200px;
+    	background-color: rgba(#333, 0.2);
+    	@include display-flex(flex);
+    	@include transform(translateY(-50%));
+    	span {
+    		color: #FFF;
+    		font-size: 28px;
+    		margin: auto;
+    	}
+    	&:hover {
+    		background-color: rgba(#333, 0.5);
+    	}
+    }
+    .right-button {
+    	right: 20px;
+    	@include border-radius(8px 0 0 8px);
+    }
+    .left-button {
+		left: 20px;
+		@include border-radius(0 8px 8px 0);
+    }
 }
