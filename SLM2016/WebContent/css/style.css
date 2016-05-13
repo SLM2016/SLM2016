@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* line 5, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../../../fire.app.windows.1.14/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -21,45 +21,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../../../fire.app.windows.1.14/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../../../fire.app.windows.1.14/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../../../fire.app.windows.1.14/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../../../fire.app.windows.1.14/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../../../fire.app.windows.1.14/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../../../fire.app.windows.1.14/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../../../fire.app.windows.1.14/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, D:/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../../../fire.app.windows.1.14/fire.app/lib/ruby/compass_1.0/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -133,6 +133,103 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   color: #333;
   border-bottom: 1px solid #ccc;
   text-align: center;
+}
+/* line 25, ../scss/templates/_example.scss */
+.example .inner-wrapper .page-topbar {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  border-bottom: 2px solid #eee;
+}
+/* line 30, ../scss/templates/_example.scss */
+.example .inner-wrapper .page-topbar .topbar-item {
+  display: inline-block;
+  padding: 0 6px;
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+}
+/* line 40, ../scss/templates/_example.scss */
+.example .inner-wrapper .page-topbar .date-info {
+  display: inline-block;
+  padding: 0 6px;
+  height: 40px;
+  line-height: 50px;
+  font-size: 14px;
+  color: #ff6812;
+  float: right;
+}
+/* line 49, ../scss/templates/_example.scss */
+.example .inner-wrapper .page-topbar .switcher {
+  position: absolute;
+  top: 38px;
+  left: 0;
+  height: 2px;
+  width: 100px;
+  background-color: #ef5700;
+  -moz-transition: all 150ms ease-in-out;
+  -o-transition: all 150ms ease-in-out;
+  -webkit-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out;
+}
+/* line 57, ../scss/templates/_example.scss */
+.example .inner-wrapper .page-topbar .switcher.right {
+  -moz-transition: all 150ms ease-in-out;
+  -o-transition: all 150ms ease-in-out;
+  -webkit-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out;
+  -moz-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+}
+/* line 61, ../scss/templates/_example.scss */
+.example .inner-wrapper .page-topbar .switcher.left {
+  -moz-transition: all 150ms ease-in-out;
+  -o-transition: all 150ms ease-in-out;
+  -webkit-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out;
+  -moz-transform: translateX(0);
+  -ms-transform: translateX(0);
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+/* line 69, ../scss/templates/_example.scss */
+.example .inner-wrapper .ticketinput-wrapper .form-group {
+  display: inline-block;
+  margin-right: 15px;
+}
+/* line 72, ../scss/templates/_example.scss */
+.example .inner-wrapper .ticketinput-wrapper .form-group label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+/* line 80, ../scss/templates/_example.scss */
+.example .inner-wrapper .ticketinput-wrapper.company .form-group.id {
+  width: 450px;
+}
+/* line 83, ../scss/templates/_example.scss */
+.example .inner-wrapper .ticketinput-wrapper.company .form-group.name {
+  width: calc(100% - 350px - 20px);
+}
+/* line 87, ../scss/templates/_example.scss */
+.example .inner-wrapper .ticketinput-wrapper.company .form-group.button {
+  width: calc(100% - 700px - 20px);
+  margin-right: 0;
+}
+/* line 94, ../scss/templates/_example.scss */
+.example .inner-wrapper .ticketinput-wrapper.dollar .form-group {
+  width: 22%;
+  vertical-align: top;
+}
+/* line 97, ../scss/templates/_example.scss */
+.example .inner-wrapper .ticketinput-wrapper.dollar .form-group:last-child {
+  width: calc(34% - 60px);
+  margin-right: 0;
 }
 
 /* line 1, ../scss/templates/_invoice.scss */

@@ -10,7 +10,7 @@
             <div class="invoice" ng-show="loadType == 'Upload'">
 			<div class="title">課程檔案管理系統</div>
 			<div class="form-group name">
-			<label for="companyName">課名</label>
+			<label for="companyName">課名*(必填)</label>
 			</div>
 			<div class="form-group">
 			<input type="text" class="form-control" id="Course" placeholder="請輸入課名" ng-model="data.courseName">
@@ -20,32 +20,74 @@
 			</div>
 			<div class="form-group">
 			<input type="text" class="form-control" id="Batch" placeholder="請輸入梯次" ng-model="data.batch">
+			</div>		
+			<div class="ticketinput-wrapper company">
+				<div class="form-group id" >
+				<label for="companyName">開課日期(格式:YYYY/MM/DD)</label>
+				<input type="text" class="form-control" id="Date" placeholder="請輸入開課日期" ng-model="data.dateAddresses">
+				</div>
+				<div class="form-group" >
+				<input class="btn btn-info btn-orange upload-btn" type="submit" value="新增" id="adddate_button" name="adddate_button" ng-click="clickAddDateButton()">	
+				</div>
 			</div>
+			<table id="dateInfo" border="1" cellpadding="2"  >
+			   	<tbody>
+			   		<tr ng-repeat="x in ShowDateList">
+					<td><input type="submit"   value = "X" ng-click="deleteDate($index)"></td>
+					<td>&nbsp;</td>
+            		<td>{{x}}</td>
+     			</tr>
+			</table>
+			<br>
+			
+			
 			<div class="form-group name" >
-			<label for="companyName">開課日期</label>
-			</div>
-			<div class="form-group">
-			<input type="text" class="form-control" id="Date" placeholder="請輸入開課日期" ng-model="data.date">
-			</div>
-			<div class="form-group name" >
-			<label for="companyName">課程時間</label>
+			<label for="companyName">課程時間(Hour)</label>
 			</div>
 			<div class="form-group">
 			<input type="text" class="form-control" id="Duration" placeholder="請輸入課程時間" ng-model="data.duration">
 			</div>
+			<div class="ticketinput-wrapper company">
+				<div class="form-group" >
+				<label for="companyName">票種</label>
+				<input type="text" class="form-control" id="TicketType" placeholder="請輸入票種" ng-model="data.ticketType">
+				</div>
+				<div class="form-group" >
+				<label for="companyName">價錢(NTD)</label>
+				<input type="text" class="form-control" id="Price" placeholder="請輸入價錢" ng-model="data.price">
+				</div>
+				<div class="form-group" >
+				<input class="btn btn-info btn-orange upload-btn" type="submit" value="新增" id="addtickettype_button" name="addtickettype_button" ng-click="clickAddTicketButton()">	
+				</div>
+			</div>
+			<table id="courseInfo" border="1" cellpadding="2"  >
+			   	<tbody>
+			   		<tr ng-repeat="x in ShowticketList">
+					<td><input type="submit"   value = "X" ng-click="deleteTicket($index)"></td>
+					<td>&nbsp;</td>
+            		<td>{{x}}</td>
+     			</tr>
+			</table>
+			<br>
+			<div class="ticketinput-wrapper company">
+				<div class="form-group id" >
+				<label for="companyName">副本收件者</label>
+				<input type="text" class="form-control" id="CcType" placeholder="請輸入副本收件者" ng-model="data.ccAddresses">
+				</div>
+				<div class="form-group" >
+				<input class="btn btn-info btn-orange upload-btn" type="submit" value="新增" id="addcctype_button" name="addcclist_button" ng-click="clickAddCcButton()">	
+				</div>
+			</div>
+			<table id="ccInfo" border="1" cellpadding="2"  >
+			   	<tbody>
+			   		<tr ng-repeat="x in ShowCcList">
+					<td><input type="submit"   value = "X" ng-click="deleteCc($index)"></td>
+					<td>&nbsp;</td>
+            		<td>{{x}}</td>
+     			</tr>
+			</table>
+			<br>
 			<div class="form-group name" >
-			<label for="companyName">票種</label>
-			</div>
-			<div class="form-group">
-			<input type="text" class="form-control" id="TicketType" placeholder="請輸入票種" ng-model="data.ticketType">
-			</div>
-			<div class="form-group name" >
-			<label for="companyName">價錢</label>
-			</div>
-			<div class="form-group">
-			<input type="text" class="form-control" id="Price" placeholder="請輸入價錢" ng-model="data.price">
-			</div>
-				<div class="form-group name" >
 			<label for="companyName">地點</label>
 			</div>
 			<div class="form-group">
@@ -58,12 +100,29 @@
 			<input type="text" class="form-control" id="Lecturer" placeholder="請輸入講師" ng-model="data.lecturer">
 			</div>
 			<div class="form-group name" >
+			<label for="companyName">超連結</label>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" id="Duration" placeholder="請輸入超連結網址" ng-model="data.hyperlink">
+			</div>
+			<div class="form-group name" >
+			<label for="companyName">課程類型</label>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" id="Type" placeholder="請輸入課程類型" ng-model="data.type">
+			</div>
+			<div class="form-group name" >
 			<label for="companyName">狀態</label>
 			</div>
 			<div class="form-group">
-			<input type="text" class="form-control" id="Status" placeholder="未開課" DISABLED>
+			<input type="text" class="form-control" id="Status" placeholder="準備中" DISABLED>
 			</div>
-			<input class="btn btn-info btn-orange" type="submit" value="開課" id="upload_button" name="upload_button" ng-click="clickAddCourseButton()">		
+			<div class="si-upload" >	
+        	<input class="btn btn-info btn-orange" type="submit" value="瀏覽檔案" id="addattachment_button" name="addattachment_button" ngf-select="fileChanged($file)">
+            <span class="upload-name">{{fileName.name}}</span>
+			</div>
+			<br>
+			<input class="btn btn-info btn-orange" type="submit" value="開課" id="upload_button" name="upload_button" ng-click="clickAddCourseButton()">	
 			</div>
 			<!-- 課程檢視 -->
 			<div  ng-show="loadType == 'Download'">
@@ -83,26 +142,39 @@
 	                  <td>價錢</td>
 	                  <td>地點</td>
 	                  <td>講師</td>
+	                  <td>副本收件人</td>
+	                  <td>類型</td>
 	                  <td>狀態</td>
 	              </tr>
 				</thead>
                     <tbody>
                         <tr ng-repeat="course in courseList">
-							<td><input type="submit" class="btn btn-info btn-orange"  value = "Delete" ng-click="deleteRow($index)"></td>
+							<td><input type="submit" class="btn btn-info btn-orange"  value = "刪除" ng-click="deleteRow(course.courseId_)"></td>
                             <td>{{course.courseName_}}</td>
                             <td>{{course.batch_}}</td>
-                            <td>{{course.date_}}</td>
+                            <td>
+                            	<p ng-repeat="dates in course.dates_">{{dates}}</p>
+                            </td>
                             <td>{{course.duration_}}</td>
-                            <td>{{course.ticketType_}}</td>
-                            <td>{{course.price_}}</td>
+                            <td>
+                            	<p ng-repeat="ticketType in course.ticketTypes_">{{ticketType}}</p>
+                            </td>
+                            <td>
+                            	<p ng-repeat="prices in course.prices_">{{prices}}</p>
+                            </td>
                             <td>{{course.location_}}</td>
                             <td>{{course.lecturer_}}</td>
+                            <td>
+								<p ng-repeat="ccAddresses in course.ccAddresses_">{{ccAddresses}}</p>
+                            </td>
+                            <td>{{course.type_}}</td>
                             <td>{{course.status_}}</td>
                         </tr>
                     </tbody>
                 </table>
                 </div>
 			</div>	
+			</div>
 		</div>
 	</div>
 </div>
