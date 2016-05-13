@@ -12,21 +12,14 @@ import javafx.util.Pair;
 import util.SqlHelper;
 
 public class CourseManagerWithDatabase {
-	private int databaseDataIdMax_;
 	private List<Pair<String, String>> courseStatus_ = new ArrayList<Pair<String, String>>();
 
 	public CourseManagerWithDatabase() {
-		databaseDataIdMax_ = 1;
 		try {
 			getCourseStatusTable();
-			getAllCourseId();
 		} catch (SQLException e) {
 
 		}
-	}
-
-	public int getDatabaseDataIdMax() {
-		return databaseDataIdMax_;
 	}
 
 	private String getCourseStatusTable() throws SQLException {
@@ -41,21 +34,57 @@ public class CourseManagerWithDatabase {
 		return result;
 	}
 
-	private String getAllCourseId() throws SQLException {
-		String result = "";
+	public String getCourseId(String courseName) throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		String sqlString = "SELECT id FROM `course_info` WHERE `name`='" + courseName + "'";
+		CachedRowSet data = new CachedRowSetImpl();
+		helper.excuteSql(sqlString, data);
+		String tempId = "";
+		int index = -1;
+		int max = -1;
+		while (data.next()) {
+			tempId = data.getString("id");
+			index = tempId.lastIndexOf("-");
+			int number = Integer.parseInt(tempId.substring(index + 1));
+			if (max < number) {
+				max = number;
+			}
+		}
+		if (max == -1) {
+			return getNewCourseId();
+		} else {
+			max++;
+			tempId = tempId.substring(0, index + 1);
+			return tempId + max;
+		}
+	}
+
+	private String getNewCourseId() throws SQLException {
 		SqlHelper helper = new SqlHelper();
 		String sqlString = "SELECT id FROM `course_info`";
 		CachedRowSet data = new CachedRowSetImpl();
-		result = helper.excuteSql(sqlString, data);
+		helper.excuteSql(sqlString, data);
+		String tempId = "";
+		int max = -1;
 		while (data.next()) {
-			String id = data.getString("id");
-			int index = id.lastIndexOf("-");
-			id = id.substring(index + 1);
-			databaseDataIdMax_ = Integer.parseInt(id);
-			databaseDataIdMax_++;
-			// System.out.println(dbDataIdMax_);
+			tempId = data.getString("id");
+			int index = tempId.indexOf("-");
+			tempId = tempId.substring(index + 1);
+			index = tempId.indexOf("-");
+			tempId = tempId.substring(index + 1);
+			index = tempId.indexOf("-");
+			tempId = tempId.substring(0, index);
+			int number = Integer.parseInt(tempId);
+			if (max < number) {
+				max = number;
+			}
 		}
-		return result;
+		if (max == -1) {
+			return "teddysoftware-course-01-1";
+		} else {
+			max++;
+			return "teddysoftware-course-" + String.format("%02d", max) + "-1";
+		}
 	}
 
 	public String getCourseFromDatabase(List<Course> courses) throws SQLException {
@@ -138,37 +167,32 @@ public class CourseManagerWithDatabase {
 
 	public String addCourseIntoDatabase(Course course) throws SQLException {
 		String result = "";
-		result = addCourseIntoInfo(course);
-		System.out.println("addCourseIntoInfo");
-		System.out.println(result);
+		String id = "";
+		if (course.getCourseId() == null) {
+			id = getCourseId(course.getCourseName());
+		} else {
+			id = course.getCourseId();
+		}
+		result = addCourseIntoInfo(course, id);
 		if (result != "Success")
 			return result;
-		result = addCourseIntoDate(course);
-		System.out.println("addCourseIntoDate");
-		System.out.println(result);
+		result = addCourseIntoDate(course, id);
 		if (result != "Success")
 			return result;
-		result = addCourseIntoTicket(course);
-		System.out.println("addCourseIntoTicket");
-		System.out.println(result);
+		result = addCourseIntoTicket(course, id);
 		if (result != "Success")
 			return result;
-		result = addCourseIntoCcAddress(course);
-		System.out.println("addCourseIntoCcAddress");
-		System.out.println(result);
+		result = addCourseIntoCcAddress(course, id);
 		if (result != "Success")
 			return result;
-		databaseDataIdMax_++;
 		return "Success";
 	}
 
-	private String addCourseIntoInfo(Course course) throws SQLException {
+	private String addCourseIntoInfo(Course course, String id) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
-		System.out.print("teddysoftware-course-01-");
-		System.out.println(databaseDataIdMax_);
 		String sqlString = "INSERT INTO `slm2016`.`course_info` (`id`, `name`, `type`, `batch`, `duration`, `location`, `lecturer`, `fk_status_id`, `page_link`) VALUES (";
-		sqlString += "'teddysoftware-course-01-" + databaseDataIdMax_ + "', '";
+		sqlString += "'" + id + "', '";
 		sqlString += course.getCourseName() + "', '";
 		sqlString += course.getType() + "', '";
 		sqlString += course.getBatch() + "', ";
@@ -176,16 +200,12 @@ public class CourseManagerWithDatabase {
 		sqlString += course.getLocation() + "', '";
 		sqlString += course.getLecturer() + "', '";
 		for (int i = 0; i < courseStatus_.size(); i++) {
-			System.out.println(courseStatus_.get(i).getValue());
-			System.out.println(course.getStatus());
 			if (courseStatus_.get(i).getValue().equals(course.getStatus())) {
 				sqlString += courseStatus_.get(i).getKey() + "', '";
-				System.out.println("TESSSSSSS");				
 				break;
 			}
 		}
 		sqlString += course.getHyperlink() + "');";
-		System.out.println(sqlString);
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		data.close();
@@ -194,59 +214,59 @@ public class CourseManagerWithDatabase {
 		return "Success";
 	}
 
-	private String addCourseIntoDate(Course course) throws SQLException {
+	private String addCourseIntoDate(Course course, String id) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
-		String sqlString = "INSERT INTO `slm2016`.`course_has_date` (`fk_course_id`, `date`) VALUES (";
+		String sqlString = "";
 		List<String> dates = course.getDates();
 		for (int i = 0; i < dates.size(); i++) {
-			sqlString += "'teddysoftware-course-01-" + databaseDataIdMax_ + "', '";
+			sqlString = "INSERT INTO `slm2016`.`course_has_date` (`fk_course_id`, `date`) VALUES (";
+			sqlString += "'" + id + "', '";
 			sqlString += dates.get(i) + "');";
+			CachedRowSet data = new CachedRowSetImpl();
+			result = helper.excuteSql(sqlString, data);
+			data.close();
+			if (result != "Success")
+				return result;
 		}
-		// System.out.println(sqlString);
-		CachedRowSet data = new CachedRowSetImpl();
-		result = helper.excuteSql(sqlString, data);
-		data.close();
-		if (result != "Success")
-			return result;
 		return "Success";
 	}
 
-	private String addCourseIntoTicket(Course course) throws SQLException {
+	private String addCourseIntoTicket(Course course, String id) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
-		String sqlString = "INSERT INTO `slm2016`.`course_has_ticket` (`fk_course_id`, `type`, `price`) VALUES (";
+		String sqlString = "";
 		List<String> types = course.getTicketTypes();
 		List<Integer> prices = course.getPrices();
 		for (int i = 0; i < types.size(); i++) {
-			sqlString += "'teddysoftware-course-01-" + databaseDataIdMax_ + "', '";
+			sqlString = "INSERT INTO `slm2016`.`course_has_ticket` (`fk_course_id`, `type`, `price`) VALUES (";
+			sqlString += "'" + id + "', '";
 			sqlString += types.get(i) + "', '";
 			sqlString += prices.get(i) + "');";
+			CachedRowSet data = new CachedRowSetImpl();
+			result = helper.excuteSql(sqlString, data);
+			data.close();
+			if (result != "Success")
+				return result;
 		}
-		// System.out.println(sqlString);
-		CachedRowSet data = new CachedRowSetImpl();
-		result = helper.excuteSql(sqlString, data);
-		data.close();
-		if (result != "Success")
-			return result;
 		return "Success";
 	}
 
-	private String addCourseIntoCcAddress(Course course) throws SQLException {
+	private String addCourseIntoCcAddress(Course course, String id) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
-		String sqlString = "INSERT INTO `slm2016`.`course_has_cc_address` (`fk_course_id`, `cc_email`) VALUES (";
+		String sqlString = "";
 		List<String> ccAddresses = course.getCcAddresses();
 		for (int i = 0; i < ccAddresses.size(); i++) {
-			sqlString += "'teddysoftware-course-01-" + databaseDataIdMax_ + "', '";
+			sqlString = "INSERT INTO `slm2016`.`course_has_cc_address` (`fk_course_id`, `cc_email`) VALUES (";
+			sqlString += "'" + id + "', '";
 			sqlString += ccAddresses.get(i) + "');";
+			CachedRowSet data = new CachedRowSetImpl();
+			result = helper.excuteSql(sqlString, data);
+			data.close();
+			if (result != "Success")
+				return result;
 		}
-		// System.out.println(sqlString);
-		CachedRowSet data = new CachedRowSetImpl();
-		result = helper.excuteSql(sqlString, data);
-		data.close();
-		if (result != "Success")
-			return result;
 		return "Success";
 	}
 
@@ -303,7 +323,7 @@ public class CourseManagerWithDatabase {
 	private String deleteCourseFromDatabaseInfo(String id) throws SQLException {
 		SqlHelper helper = new SqlHelper();
 		String result = "";
-		String sqlString = "DELETE FROM `course_info` WHERE `fk_course_id`=";
+		String sqlString = "DELETE FROM `course_info` WHERE `id`=";
 		sqlString += "'" + id + "'";
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
