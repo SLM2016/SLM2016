@@ -87,6 +87,36 @@ public class CourseManagerWithDatabase {
 		}
 	}
 
+	public String getCourseSimpleDataFromDatabase(List<Course> courses) throws SQLException {
+		String result = "";
+		SqlHelper helper = new SqlHelper();
+		String sqlString = "SELECT * FROM `slm2016`.`course_info`";
+		CachedRowSet data = new CachedRowSetImpl();
+		result = helper.excuteSql(sqlString, data);
+		if (result != "Success")
+			return result;
+		while (data.next()) {
+			String id = data.getString("id");
+			String fk = data.getString("fk_status_id");
+			Course course = new Course(id);
+			course.setCourseName(data.getString("name"));
+			course.setType(data.getString("type"));
+			course.setBatch(data.getString("batch"));
+			course.setDuration(Integer.parseInt(data.getString("duration")));
+			course.setLocation(data.getString("location"));
+			course.setLecturer(data.getString("lecturer"));
+			course.setHyperlink(data.getString("page_link"));
+			for (int i = 0; i < courseStatus_.size(); i++) {
+				if (courseStatus_.get(i).getKey().equals(fk)) {
+					course.setStatus(courseStatus_.get(i).getValue());
+					break;
+				}
+			}
+			courses.add(course);
+		}
+		return result;
+	}
+
 	public String getCourseFromDatabase(List<Course> courses) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();

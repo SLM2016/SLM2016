@@ -99,9 +99,10 @@ public class SLMDBUtility {
 	public boolean updateSQL(String sql) {
 		Statement stmt = null;
 		boolean result = false;
-		if (connection == null) {
-			this.createConnection();
-		}
+		// if (connection == null) {
+		// this.createConnection();
+		// }
+		checkConnection();
 		try {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
@@ -118,9 +119,10 @@ public class SLMDBUtility {
 	public boolean deleteSQL(String sql) {
 		Statement stmt = null;
 		boolean result = false;
-		if (connection == null) {
-			this.createConnection();
-		}
+		// if (connection == null) {
+		// this.createConnection();
+		// }
+		checkConnection();
 		try {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);

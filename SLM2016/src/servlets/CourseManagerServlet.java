@@ -17,6 +17,7 @@ import courseManager.CourseManagerWithDatabase;
 @WebServlet("/CourseManagerServlet")
 public class CourseManagerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String OP_INSERT_INTO_STUDENT = "1";
 	public CourseManagerWithDatabase courseManagerWithDb_ = new CourseManagerWithDatabase();
 
 	public CourseManagerServlet() {
@@ -24,22 +25,30 @@ public class CourseManagerServlet extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Course> courses_ = new ArrayList<Course>();
-		String result = "";
-		try {
-			result = courseManagerWithDb_.getCourseFromDatabase(courses_);
-		} catch (SQLException e) {
+		String op = request.getParameter("op");
+		switch (op) {
+		case OP_INSERT_INTO_STUDENT:
+			getCourseSimpleData(request, response);
+			break;
+		default:
+			List<Course> courses_ = new ArrayList<Course>();
+			String result = "";
+			try {
+				result = courseManagerWithDb_.getCourseFromDatabase(courses_);
+			} catch (SQLException e) {
 
+			}
+			String json;
+			if (result != "Success") {
+				json = new Gson().toJson(result);
+			} else {
+				json = new Gson().toJson(courses_);
+			}
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
+			break;
 		}
-		String json;
-		if (result != "Success") {
-			json = new Gson().toJson(result);
-		} else {
-			json = new Gson().toJson(courses_);
-		}
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(json);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -77,6 +86,26 @@ public class CourseManagerServlet extends HttpServlet {
 
 		}
 		String json = new Gson().toJson(result);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(json);
+	}
+
+	private void getCourseSimpleData(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		List<Course> courses_ = new ArrayList<Course>();
+		String result = "";
+		try {
+			result = courseManagerWithDb_.getCourseSimpleDataFromDatabase(courses_);
+		} catch (SQLException e) {
+
+		}
+		String json;
+		if (result != "Success") {
+			json = new Gson().toJson(result);
+		} else {
+			json = new Gson().toJson(courses_);
+		}
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
