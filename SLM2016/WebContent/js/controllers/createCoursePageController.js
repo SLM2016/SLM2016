@@ -10,7 +10,6 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	
 	function getTeddyCourseData() {
 		$.get("/SLM2016/CourseManagerServlet",	function(responseText) {
-			console.log(responseText)
 			$scope.courseList = responseText;			
 		});
 	} 
