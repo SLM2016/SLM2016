@@ -8,15 +8,15 @@
         	<div class="left">
         		<div class="form-group">
 				    <label>課程：</label>
-				    <span>Scrum 敏捷方法實作</span>
+				    <span>{{course.courseName_}}</span>
 				</div>
 				<div class="form-group">
 				    <label>日期：</label>
-				    <span>2016 年 4 月 16 日 17：23</span>
+				    <span>{{currentStudent.timestamp}}</span>
 				</div>
 				<div class="form-group">
 				    <label>學員：</label>
-				    <span>Erica Lin</span>
+				    <span>{{currentStudent.name}}</span>
 				</div>
         	</div>
         	<div class="right">
@@ -31,7 +31,7 @@
 				</div>
 				<div class="form-group">
 				    <label>金額：</label>
-				    <span>26700 元</span>
+				    <span>{{currentStudent.ticket_price}} 元</span>
 				</div>
 				<div class="form-group">
 				    <label>格式：</label>
@@ -111,7 +111,7 @@
     </div>
     <div class="modal-footer">
     	<form class="form-inline">
-    		<span>發票狀態</span>
+    		<span>發票狀態 : </span>
     		<label class="radio-inline">
 			    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 未開立
 			</label>
@@ -119,10 +119,12 @@
 			    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 已開立
 			</label>
 		    <div class="form-group">
-		    	<label for="invoiceNumber">發票號碼</label>
+		    	<label for="invoiceNumber">發票號碼 : </label>
 		    	<input type="text" class="form-control" id="invoiceNumber" placeholder="請輸入發票號碼">
 		    </div>
 		</form>
 		<button type="button" class="btn btn-primary">儲存</button>
     </div>
 </div>
+<div class="right-button" ng-click="nextStudent()" ng-show="hasNextStudent()"><span class="glyphicon glyphicon-menu-right"></span></div>
+<div class="left-button" ng-click="prevStudent()" ng-show="hasPrevStudent()"><span class="glyphicon glyphicon-menu-left"></span></div>

@@ -90,7 +90,7 @@ public class CourseManagerWithDatabase {
 	public String getCourseSimpleDataFromDatabase(List<Course> courses) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
-		String sqlString = "SELECT * FROM `slm2016`.`course_info`";
+		String sqlString = "SELECT * FROM `course_info`";
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		if (result != "Success")

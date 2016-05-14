@@ -73,6 +73,44 @@ app.directive('invoiceModel', ['$rootScope',
                     $scope.isDatePickerOpen = true;
                 }
 
+                var nextStudent = function() {
+                    $scope.currentIndex++;
+                    if($scope.currentIndex < $scope.studentList.length) {
+                        $scope.currentStudent = $scope.studentList[$scope.currentIndex];
+                    }
+                    else {
+                        $scope.currentIndex--;
+                    }
+                }
+
+                var hasNextStudent = function() {
+                    if ($scope.currentIndex == $scope.studentList.length - 1) {
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+
+                var prevStudent = function() {
+                    $scope.currentIndex--;
+                    if($scope.currentIndex >= 0) {
+                        $scope.currentStudent = $scope.studentList[$scope.currentIndex];
+                    }
+                    else {
+                        $scope.currentIndex++;
+                    }
+                }
+
+                var hasPrevStudent = function() {
+                    if ($scope.currentIndex == 0) {
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+
                 var init = function() {
                     setTodayString();
                 }
@@ -84,7 +122,9 @@ app.directive('invoiceModel', ['$rootScope',
                 $scope.$on("OPEN_INVOICE_MODEL", function(event, data) {
                     console.log(data)
                     $scope.studentList = data.list;
-                    $scope.currentIndex = index;
+                    $scope.currentIndex = data.index;
+                    $scope.course = data.course;
+                    $scope.currentStudent = $scope.studentList[$scope.currentIndex];
                 })
 
                 /*==========================
@@ -92,6 +132,8 @@ app.directive('invoiceModel', ['$rootScope',
                 ==========================*/
                 $scope.studentList = [];
                 $scope.currentIndex;
+                $scope.currentStudent;
+                $scope.course;
                 $scope.invoiceType = "THREE";
 
                 $scope.today;
@@ -156,6 +198,10 @@ app.directive('invoiceModel', ['$rootScope',
 
                 $scope.openDatePicker = openDatePicker;
                 $scope.onDateTimeChange = onDateTimeChange;
+                $scope.nextStudent = nextStudent;
+                $scope.hasNextStudent = hasNextStudent;
+                $scope.prevStudent = prevStudent;
+                $scope.hasPrevStudent = hasPrevStudent;
                 
                 /*==========================
                     init

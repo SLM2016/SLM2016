@@ -3,6 +3,10 @@
         <div class="class-dropdown">
             <button id="class-label" type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span>{{currentCourse.courseName_}}</span>
+                <span ng-show="isCourseLoading">
+                    讀取中...
+                    <spin spin-size="small" class="spin-style"></spin>
+                </span>
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="class-label">
@@ -71,6 +75,4 @@
     <div class="modal-dialog modal-lg" role="document">
         <invoice-model></invoice-model>
     </div>
-    <div class="right-button"><span class="glyphicon glyphicon-menu-right"></span></div>
-    <div class="left-button"><span class="glyphicon glyphicon-menu-left"></span></div>
 </div>

@@ -2,15 +2,17 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
     function ($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService) {  
 
         var getCourseList = function() {
+            $scope.isCourseLoading = true;
             $scope.isStudentLoading = true;
-            CourseService.getCourseList().then(function(result) {
+            CourseService.getCourseSimpleList().then(function(result) {
+                $scope.isCourseLoading = false;
                 for (var i = 0; i < result.length; i++) {
                     $scope.courseList.push(result[i]);
                 }
                 $scope.currentCourse = $scope.courseList[0];
                 getStudentList()
             }, function(error) {
-                $scope.isStudentLoading = false;
+                $scope.isCourseLoading = false;
                 $scope.isStudentLoadError = true;
             })
         }
@@ -63,7 +65,8 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             }
             $rootScope.$broadcast("OPEN_INVOICE_MODEL", {
                 list: $scope.studentList,
-                index: index
+                index: index,
+                course: $scope.currentCourse
             });
         }
 

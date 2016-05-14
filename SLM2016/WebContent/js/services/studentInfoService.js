@@ -16,14 +16,15 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         }
         
         // 上傳學員資料並存入DB
-		var uploadStudentFile = function (file) {
+		var uploadStudentFile = function (file, courseId) {
 		    var defer = $q.defer();
 				
 		    Upload.upload({
 		        url: '/SLM2016/StudentAction',
 		        withCredential: true,
 		        data: {
-		            op: 1
+		            op: 1,
+                    courseId: courseId
 		        },
 		        file: file
 		    }).success(function(file) {

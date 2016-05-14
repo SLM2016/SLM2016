@@ -3,7 +3,7 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 
     	var getCourseList = function() {
             $scope.isCourseLoading = true;
-            CourseService.getCourseList().then(function(result) {
+            CourseService.getCourseSimpleList().then(function(result) {
             	$scope.isCourseLoading = false;
                 for (var i = 0; i < result.length; i++) {
                     $scope.courseList.push(result[i]);
@@ -54,7 +54,7 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 				$scope.isFileEmpty = false;
 			}
 
-			StudentInfoService.uploadStudentFile($scope.excelFile).then(function(result) {
+			StudentInfoService.uploadStudentFile($scope.excelFile, $scope.currentCourse.courseId_).then(function(result) {
 				$scope.isUploading = false;
 				console.log(result.status)
 				if(result.status) {
@@ -102,6 +102,7 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 	    $scope.sheets = [];
 	    $scope.courseList = [];
 	    $scope.currentCourse;
+	    $scope.isCourseLoading = false;
 
         /*==========================
              Methods
