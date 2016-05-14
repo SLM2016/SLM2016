@@ -48,6 +48,13 @@ public class StudentDBManager {
 		return g.toJson(result);
 	}
 
+	public String getStudentListByCourseId(String courseId) throws SQLException {
+		String sql = String.format("SELECT * FROM `student_info` WHERE `fk_course_info_id` = '%s';;", courseId);
+		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
+		Gson g = new Gson();
+		return g.toJson(result);
+	}
+
 	// public ArrayList<HashMap> getStudents() throws SQLException {
 	// ArrayList<HashMap> arrayList = new ArrayList<HashMap>();
 	// String sql = "select * from `student_info`;";

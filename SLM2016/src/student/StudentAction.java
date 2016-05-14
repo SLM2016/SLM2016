@@ -35,6 +35,7 @@ public class StudentAction extends HttpServlet {
 	private static final String OP_GET_STUDENT_LIST = "2";
 	private static final String OP_INSERT_FROM_GOOGLE_FORM = "3";
 	private static final String OP_SAVE_STUDENT_EXCEL_FILE = "4";
+	private static final String OP_GET_STUDENT_LIST_BY_COURSE_ID = "5";
 
 	public StudentAction() {
 		super();
@@ -48,6 +49,8 @@ public class StudentAction extends HttpServlet {
 		case OP_GET_STUDENT_LIST:
 			getStudentList(request, response);
 			break;
+		case OP_GET_STUDENT_LIST_BY_COURSE_ID:
+			getStudentListByCourseId(request, response);
 		default:
 			break;
 		}
@@ -60,14 +63,11 @@ public class StudentAction extends HttpServlet {
 		// PrintWriter out = response.getWriter();
 		switch (op) {
 		case OP_INSERT_INTO_STUDENT:
-//			insertIntoStudent(request, response);
-			
-			
-//			SELECT * FROM `student_info` 
-			
-//			StudentDBManager s = new StudentDBManager();
-			SLMDBUtility s = new SLMDBUtility();
-			s.selectSQL("SELECT * FROM `student_info` ");
+			insertIntoStudent(request, response);
+			// SELECT * FROM `student_info`
+			// StudentDBManager s = new StudentDBManager();
+			// SLMDBUtility s = new SLMDBUtility();
+			// s.selectSQL("SELECT * FROM `student_info` ");
 			break;
 		case OP_SAVE_STUDENT_EXCEL_FILE:
 			saveFile(request, response);
@@ -117,7 +117,6 @@ public class StudentAction extends HttpServlet {
 		// Workbook workbook = new XSSFWorkbook(filePart1.getInputStream());
 
 		try {
-
 			StudentModelFactory factory = new StudentModelFactory(filePart1.getInputStream(), courseId);
 
 			ArrayList<StudentModel> arr = factory.buildStudentModelArray();
@@ -157,6 +156,7 @@ public class StudentAction extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
+		HashMap<String, String> result = new HashMap<String, String>();
 
 		Date date = new java.util.Date();
 		String nowTime = Long.toString(date.getTime());
@@ -182,6 +182,25 @@ public class StudentAction extends HttpServlet {
 			// report
 		}
 
+	}
+
+	private void getStudentListByCourseId(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		String courseId = request.getParameter("courseId");
+
+		StudentDBManager studentDbManager = new StudentDBManager();
+		String json = null;
+
+		try {
+			json = studentDbManager.getStudentListByCourseId(courseId);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
