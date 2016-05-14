@@ -49,7 +49,14 @@ public class StudentDBManager {
 	}
 
 	public String getStudentListByCourseId(String courseId) throws SQLException {
-		String sql = String.format("SELECT * FROM `student_info` WHERE `fk_course_info_id` = '%s';;", courseId);
+		String sql = String.format("SELECT * FROM `student_info` WHERE `fk_course_info_id` = '%s';", courseId);
+		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
+		Gson g = new Gson();
+		return g.toJson(result);
+	}
+
+	public String getCourse() throws SQLException {
+		String sql = String.format("SELECT * FROM `course_info`;");
 		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
 		Gson g = new Gson();
 		return g.toJson(result);

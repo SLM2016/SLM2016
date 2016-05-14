@@ -79,9 +79,10 @@ public class SLMDBUtility {
 	public boolean insertSQL(String sql) {
 		Statement stmt = null;
 		boolean result = false;
-		if (connection == null) {
-			this.createConnection();
-		}
+		// if (connection == null) {
+		// this.createConnection();
+		// }
+		checkConnection();
 		try {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
@@ -131,5 +132,17 @@ public class SLMDBUtility {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	public void checkConnection() {
+
+		try {
+			if (connection == null || connection.isClosed()) {
+				this.createConnection();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

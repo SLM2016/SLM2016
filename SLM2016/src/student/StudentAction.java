@@ -36,6 +36,7 @@ public class StudentAction extends HttpServlet {
 	private static final String OP_INSERT_FROM_GOOGLE_FORM = "3";
 	private static final String OP_SAVE_STUDENT_EXCEL_FILE = "4";
 	private static final String OP_GET_STUDENT_LIST_BY_COURSE_ID = "5";
+	private static final String OP_GET_COURSE = "6";
 
 	public StudentAction() {
 		super();
@@ -51,6 +52,10 @@ public class StudentAction extends HttpServlet {
 			break;
 		case OP_GET_STUDENT_LIST_BY_COURSE_ID:
 			getStudentListByCourseId(request, response);
+			break;
+		case OP_GET_COURSE:
+			getCourse(response);
+			break;
 		default:
 			break;
 		}
@@ -122,7 +127,7 @@ public class StudentAction extends HttpServlet {
 			ArrayList<StudentModel> arr = factory.buildStudentModelArray();
 			StudentDBManager studentDbManager = new StudentDBManager();
 			for (StudentModel s : arr) {
-				System.out.println(s.getComment());
+				// System.out.println(s.getComment());
 				studentDbManager.insertStudent(s);
 			}
 
@@ -193,6 +198,23 @@ public class StudentAction extends HttpServlet {
 
 		try {
 			json = studentDbManager.getStudentListByCourseId(courseId);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void getCourse(HttpServletResponse response) throws IOException, ServletException {
+
+		StudentDBManager studentDbManager = new StudentDBManager();
+		String json = null;
+
+		try {
+			json = studentDbManager.getCourse();
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
