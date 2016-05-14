@@ -25,7 +25,7 @@ public class CourseManagerWithDatabase {
 	private String getCourseStatusTable() throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
-		String sqlString = "SELECT * FROM `slm2016`.`course_status`";
+		String sqlString = "SELECT * FROM `course_status`";
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		while (data.next()) {
@@ -90,7 +90,7 @@ public class CourseManagerWithDatabase {
 	public String getCourseFromDatabase(List<Course> courses) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
-		String sqlString = "SELECT * FROM `slm2016`.`course_info`";
+		String sqlString = "SELECT * FROM `course_info`";
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		if (result != "Success")
@@ -191,7 +191,7 @@ public class CourseManagerWithDatabase {
 	private String addCourseIntoInfo(Course course, String id) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
-		String sqlString = "INSERT INTO `slm2016`.`course_info` (`id`, `name`, `type`, `batch`, `duration`, `location`, `lecturer`, `fk_status_id`, `page_link`) VALUES (";
+		String sqlString = "INSERT INTO `course_info` (`id`, `name`, `type`, `batch`, `duration`, `location`, `lecturer`, `fk_status_id`, `page_link`) VALUES (";
 		sqlString += "'" + id + "', '";
 		sqlString += course.getCourseName() + "', '";
 		sqlString += course.getType() + "', '";
@@ -220,7 +220,7 @@ public class CourseManagerWithDatabase {
 		String sqlString = "";
 		List<String> dates = course.getDates();
 		for (int i = 0; i < dates.size(); i++) {
-			sqlString = "INSERT INTO `slm2016`.`course_has_date` (`fk_course_id`, `date`) VALUES (";
+			sqlString = "INSERT INTO `course_has_date` (`fk_course_id`, `date`) VALUES (";
 			sqlString += "'" + id + "', '";
 			sqlString += dates.get(i) + "');";
 			CachedRowSet data = new CachedRowSetImpl();
@@ -239,7 +239,7 @@ public class CourseManagerWithDatabase {
 		List<String> types = course.getTicketTypes();
 		List<Integer> prices = course.getPrices();
 		for (int i = 0; i < types.size(); i++) {
-			sqlString = "INSERT INTO `slm2016`.`course_has_ticket` (`fk_course_id`, `type`, `price`) VALUES (";
+			sqlString = "INSERT INTO `course_has_ticket` (`fk_course_id`, `type`, `price`) VALUES (";
 			sqlString += "'" + id + "', '";
 			sqlString += types.get(i) + "', '";
 			sqlString += prices.get(i) + "');";
@@ -258,7 +258,7 @@ public class CourseManagerWithDatabase {
 		String sqlString = "";
 		List<String> ccAddresses = course.getCcAddresses();
 		for (int i = 0; i < ccAddresses.size(); i++) {
-			sqlString = "INSERT INTO `slm2016`.`course_has_cc_address` (`fk_course_id`, `cc_email`) VALUES (";
+			sqlString = "INSERT INTO `course_has_cc_address` (`fk_course_id`, `cc_email`) VALUES (";
 			sqlString += "'" + id + "', '";
 			sqlString += ccAddresses.get(i) + "');";
 			CachedRowSet data = new CachedRowSetImpl();
