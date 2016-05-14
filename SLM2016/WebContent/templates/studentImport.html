@@ -11,13 +11,11 @@
         </div> -->
         <div class="class-dropdown">
             <button id="class-label" type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span>Scrum 敏捷方法實作</span>
+                <span>{{currentCourse.courseName_}}</span>
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="class-label">
-                <li><a>Design Pattern</a></li>
-                <li><a>Scrum 敏捷方法實作</a></li>
-                <li><a>單元測試與整合實作班</a></li>
+                <li ng-repeat="course in courseList" ng-click="changeCurrentCourse(course)"><a>{{course.courseName_}}</a></li>
             </ul>
         </div>
         <button class="btn btn-info btn-orange upload-btn" ng-click="uploadFile()">上傳</button>

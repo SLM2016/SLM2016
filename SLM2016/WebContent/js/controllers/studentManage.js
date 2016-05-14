@@ -1,21 +1,34 @@
-app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 
-    function ($scope, $state, $timeout, $rootScope, StudentInfoService) {  
+app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService',
+    function ($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService) {  
 
-        var getClassList = function() {
-            // TODO : 取得課程列表
-            $scope.studentList = [];
+        var getCourseList = function() {
+            $scope.isStudentLoading = true;
+            CourseService.getCourseList().then(function(result) {
+                for (var i = 0; i < result.length; i++) {
+                    $scope.courseList.push(result[i]);
+                }
+                $scope.currentCourse = $scope.courseList[0];
+                getStudentList()
+            }, function(error) {
+                $scope.isStudentLoading = false;
+                $scope.isStudentLoadError = true;
+            })
+        }
+
+        var changeStudentList = function(course) {
+            $scope.currentCourse = course;
+            getStudentList();
         }
 
         var getStudentList = function() {
             $scope.isStudentLoading = true;
-            StudentInfoService.getStudentList($scope.currentClassId).then(function(result) {
+            StudentInfoService.getStudentListByCourseId($scope.currentCourse.courseId_).then(function(result) {
                 $scope.isStudentLoading = false;
                 for (var i = 0; i < result.length; i++) {
                     result[i].isSelected = false;
                     $scope.studentList.push(result[i]);
                 }
                 $scope.studentList = result;
-                console.log($scope.studentList)
             }, function(error) {
                 $scope.isStudentLoading = false;
                 $scope.isStudentLoadError = true;
@@ -55,7 +68,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         }
 
     	var init = function() {
-            // getStudentList();
+            getCourseList();
         }
 
 		/*==========================
@@ -66,10 +79,11 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             Members
         ==========================*/
 
-        $scope.currentClassId = "123";
         $scope.isStudentLoadError = false;
         $scope.isStudentLoading = false;
         $scope.studentList = [];
+        $scope.courseList = [];
+        $scope.currentCourse;
 
         /*==========================
              Methods
@@ -80,6 +94,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.toggleActionDropdown = toggleActionDropdown;
         $scope.changeStudentStatus = changeStudentStatus;
         $scope.openInvoiceModel = openInvoiceModel;
+        $scope.changeStudentList = changeStudentList;
         /*==========================
              init
         ==========================*/

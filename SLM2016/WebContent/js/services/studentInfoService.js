@@ -37,15 +37,33 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 		};
 
 		// 取得學員列表
-		var getStudentList = function(classId) {
+		var getStudentList = function() {
             var defer = $q.defer();
 
             $http({
                 url: "/SLM2016/StudentAction",
                 method: "GET",
                 params: {
-                    op: 2,
-                    classId: classId
+                    op: 2
+                }
+            }).success(function(data) {
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+
+        var getStudentListByCourseId = function(courseId) {
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/StudentAction",
+                method: "GET",
+                params: {
+                    op: 5,
+                    courseId: courseId
                 }
             }).success(function(data) {
                 defer.resolve(data);
@@ -67,6 +85,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.readFile = readFile;
         factory.uploadStudentFile = uploadStudentFile;
         factory.getStudentList = getStudentList;
+        factory.getStudentListByCourseId = getStudentListByCourseId;
 
         /*==========================
             init

@@ -2,16 +2,14 @@
     <div class="manage-topbar">
         <div class="class-dropdown">
             <button id="class-label" type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span>Scrum 敏捷方法實作</span>
+                <span>{{currentCourse.courseName_}}</span>
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="class-label">
-                <li><a>Design Pattern</a></li>
-                <li><a>Scrum 敏捷方法實作</a></li>
-                <li><a>單元測試與整合實作班</a></li>
+                <li ng-repeat="course in courseList" ng-click="changeStudentList(course)"><a>{{course.courseName_}}</a></li>
             </ul>
         </div>
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#invoice-model">發票</button>
+        <!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#invoice-model">發票</button> -->
         <div class="student-search">
             <div class="input-group">
                   <input type="text" class="form-control" placeholder="學員搜尋">
@@ -41,7 +39,7 @@
                         <td>{{s.email}}</td>
                         <td>
                             <button id="status-label" type="button" class="btn btn-default status-toggle" data-toggle="dropdown" ng-click="toggleStatusDropdown(s)">
-                                <span>已繳費</span>
+                                <span>{{s.payment_status}}</span>
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="status-label">
