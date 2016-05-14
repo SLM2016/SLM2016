@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mysql.jdbc.ResultSetMetaData;
@@ -21,65 +22,69 @@ public class StudentDBManager {
 
 	public String getStudentList() throws SQLException {
 		String sql = "select * from `student_info`;";
-		ResultSet result = slmDBUtility.selectSQL(sql);
-		String columnName, columnValue = null;
-		JsonObject element = null;
-		JsonArray jsonArray = new JsonArray();
-		ResultSetMetaData rsmd = null;
+		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
+		Gson g = new Gson();
+		// String columnName, columnValue = null;
+		// JsonObject element = null;
+		// JsonArray jsonArray = new JsonArray();
+		// ResultSetMetaData rsmd = null;
+		//
+		// try {
+		// rsmd = (ResultSetMetaData) result.getMetaData();
+		// while (result.next()) {
+		// element = new JsonObject();
+		// for (int i = 0; i < rsmd.getColumnCount(); i++) {
+		// columnName = rsmd.getColumnName(i + 1);
+		// columnValue = result.getString(columnName);
+		// element.addProperty(columnName, columnValue);
+		// }
+		// jsonArray.add(element);
+		// }
+		// } catch (SQLException e) {
+		// e.printStackTrace();
+		// }
 
-		try {
-			rsmd = (ResultSetMetaData) result.getMetaData();
-			while (result.next()) {
-				element = new JsonObject();
-				for (int i = 0; i < rsmd.getColumnCount(); i++) {
-					columnName = rsmd.getColumnName(i + 1);
-					columnValue = result.getString(columnName);
-					element.addProperty(columnName, columnValue);
-				}
-				jsonArray.add(element);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return jsonArray.toString();
+		// return jsonArray.toString();
+		return g.toJson(result);
 	}
 
-	public ArrayList<HashMap> getStudents() throws SQLException {
-		ArrayList<HashMap> arrayList = new ArrayList<HashMap>();
-		String sql = "select * from `student_info`;";
-		ResultSet result = slmDBUtility.selectSQL(sql);
-		while (result.next()) {
-			// Retrieve by column name
-			HashMap map = new HashMap();
-			int id = result.getInt("id");
-			String name = result.getString("name");
-			String phoneNumber = result.getString("phone");
-			map.put("id", id);
-			map.put("name", name);
-			map.put("phone", phoneNumber);
-			arrayList.add(map);
-		}
-		return arrayList;
-	}
-
-	public ArrayList<HashMap> getStudentByPhone(String phone) throws SQLException {
-		ArrayList<HashMap> arrayList = new ArrayList<HashMap>();
-		String sql = String.format("select * from `student_info` where `phone` = '%s';", phone);
-		ResultSet result = slmDBUtility.selectSQL(sql);
-		while (result.next()) {
-			// Retrieve by column name
-			HashMap map = new HashMap();
-			int id = result.getInt("id");
-			String name = result.getString("name");
-			String phoneNumber = result.getString("phone");
-			map.put("id", id);
-			map.put("name", name);
-			map.put("phone", phoneNumber);
-			arrayList.add(map);
-		}
-		return arrayList;
-	}
+	// public ArrayList<HashMap> getStudents() throws SQLException {
+	// ArrayList<HashMap> arrayList = new ArrayList<HashMap>();
+	// String sql = "select * from `student_info`;";
+	// ResultSet result = slmDBUtility.selectSQL(sql);
+	// while (result.next()) {
+	// // Retrieve by column name
+	// HashMap map = new HashMap();
+	// int id = result.getInt("id");
+	// String name = result.getString("name");
+	// String phoneNumber = result.getString("phone");
+	// map.put("id", id);
+	// map.put("name", name);
+	// map.put("phone", phoneNumber);
+	// arrayList.add(map);
+	// }
+	// return arrayList;
+	// }
+	//
+	// public ArrayList<HashMap> getStudentByPhone(String phone) throws
+	// SQLException {
+	// ArrayList<HashMap> arrayList = new ArrayList<HashMap>();
+	// String sql = String.format("select * from `student_info` where `phone` =
+	// '%s';", phone);
+	// ResultSet result = slmDBUtility.selectSQL(sql);
+	// while (result.next()) {
+	// // Retrieve by column name
+	// HashMap map = new HashMap();
+	// int id = result.getInt("id");
+	// String name = result.getString("name");
+	// String phoneNumber = result.getString("phone");
+	// map.put("id", id);
+	// map.put("name", name);
+	// map.put("phone", phoneNumber);
+	// arrayList.add(map);
+	// }
+	// return arrayList;
+	// }
 
 	public boolean insertStudent(StudentModel studenrModel) throws SQLException {
 

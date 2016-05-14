@@ -7,8 +7,11 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import org.apache.poi.util.IOUtils;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STUnsignedDecimalNumber;
 
 import com.google.gson.Gson;
+
+import util.SLMDBUtility;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -57,8 +60,14 @@ public class StudentAction extends HttpServlet {
 		// PrintWriter out = response.getWriter();
 		switch (op) {
 		case OP_INSERT_INTO_STUDENT:
-			insertIntoStudent(request, response);
-			// saveFile(request, response);
+//			insertIntoStudent(request, response);
+			
+			
+//			SELECT * FROM `student_info` 
+			
+//			StudentDBManager s = new StudentDBManager();
+			SLMDBUtility s = new SLMDBUtility();
+			s.selectSQL("SELECT * FROM `student_info` ");
 			break;
 		case OP_SAVE_STUDENT_EXCEL_FILE:
 			saveFile(request, response);
