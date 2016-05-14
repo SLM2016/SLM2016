@@ -6,7 +6,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	var ShowticketList = [];
 	var updateticketsList = [];
 	var ShowDateList=[];
-	var data = new Object();
+	
 	
 	function getTeddyCourseData() {
 		$.get("/SLM2016/CourseManagerServlet",	function(responseText) {
@@ -20,23 +20,24 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	
 	function addCourse() {
 		if(checkInput){
-		data.courseName_ = $scope.data.courseName;
-		data.batch_ = $scope.data.batch;
-		data.dates_ = $scope.ShowDateList;
-		data.duration_ = $scope.data.duration;
-		data.ticketTypes_ = $scope.ticketTypeList;
-		data.prices_ = $scope.ticketPriceList;
-		data.location_ = $scope.data.location;
-		data.lecturer_ = $scope.data.lecturer;
-		data.hyperlink_ = $scope.data.hyperlink;
-		data.ccAddresses_ = $scope.ShowCcList;
-		data.type_ = $scope.data.type;
-		data.status_ = "準備中";
-		$.post("/SLM2016/CourseManagerServlet",
+			var data = new Object();
+			data.courseName_ = $scope.data.courseName;
+			data.batch_ = $scope.data.batch;
+			data.dates_ = $scope.ShowDateList;
+			data.duration_ = $scope.data.duration;
+			data.ticketTypes_ = $scope.ticketTypeList;
+			data.prices_ = $scope.ticketPriceList;
+			data.location_ = $scope.data.location;
+			data.lecturer_ = $scope.data.lecturer;
+			data.hyperlink_ = $scope.data.hyperlink;
+			data.ccAddresses_ = $scope.ShowCcList;
+			data.type_ = $scope.data.type;
+			data.status_ = "準備中";
+			$.post("/SLM2016/CourseManagerServlet",
 				JSON.stringify(data)).done(function(data) {
-				window.alert(data);
-				getTeddyCourseData();
-		});
+					window.alert(data);
+					getTeddyCourseData();
+				});
 		}
 	}
 
