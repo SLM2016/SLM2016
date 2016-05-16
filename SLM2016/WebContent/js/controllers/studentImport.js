@@ -67,12 +67,12 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 			else {
 				$scope.isFileEmpty = false;
 			}
-
+			$scope.isUploadFail = false;
+			$scope.isUploadSuccess = false;
 			$scope.isUploading = true;
 			StudentInfoService.uploadStudentFile($scope.excelFile, $scope.currentCourse.courseId_).then(function(result) {
-				$scope.isUploading = false;
 				StudentInfoService.saveStudentFile($scope.excelFile, $scope.currentCourse.courseId_).then(function(result) {
-					console.log(result.status)
+					$scope.isUploading = false;
 					if(result.status) {
 						$scope.isUploadSuccess = true;
 					}
