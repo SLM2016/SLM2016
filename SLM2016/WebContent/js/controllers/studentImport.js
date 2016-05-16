@@ -60,7 +60,6 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 	   	    
 	    // transfer data to server
 		var uploadFile = function () {
-			$scope.isUploading = true;
 			if(!$scope.excelFile) {
 				$scope.isFileEmpty = true;
 				return;
@@ -69,15 +68,18 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 				$scope.isFileEmpty = false;
 			}
 
+			$scope.isUploading = true;
 			StudentInfoService.uploadStudentFile($scope.excelFile, $scope.currentCourse.courseId_).then(function(result) {
 				$scope.isUploading = false;
-				console.log(result.status)
-				if(result.status) {
-					$scope.isUploadSuccess = true;
-				}
-				else {
-					$scope.isUploadFail = true;
-				}
+				StudentInfoService.saveStudentFile($scope.excelFile, $scope.currentCourse.courseId_).then(function(result) {
+					console.log(result.status)
+					if(result.status) {
+						$scope.isUploadSuccess = true;
+					}
+					else {
+						$scope.isUploadFail = true;
+					}
+				});
 			},function(error) {
 				$scope.isUploading = false;
 				$scope.isUploadFail = true;

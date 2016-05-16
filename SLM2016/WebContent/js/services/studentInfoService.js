@@ -75,6 +75,27 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
             return defer.promise;
         }
 
+        var saveStudentFile = function(file, courseId) {
+            var defer = $q.defer();
+                
+            Upload.upload({
+                url: '/SLM2016/StudentAction',
+                withCredential: true,
+                data: {
+                    op: 4,
+                    courseId: courseId
+                },
+                file: file
+            }).success(function(file) {
+                defer.resolve(file);
+            }).error(function(error) {
+                defer.reject(error);
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+
 		/*==========================
             Members
         ==========================*/
@@ -87,7 +108,8 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.uploadStudentFile = uploadStudentFile;
         factory.getStudentList = getStudentList;
         factory.getStudentListByCourseId = getStudentListByCourseId;
-        
+        factory.saveStudentFile = saveStudentFile;
+
         /*==========================
             init
         ==========================*/
