@@ -5,7 +5,7 @@ app.directive('invoiceModel', ['$rootScope',
             scope: true,
             templateUrl: "templates/directives/invoice-model.html",
             link: function(scope, element, attrs) {},
-            controller: ['$scope', '$state', '$timeout', function($scope, $state, $timeout) {
+            controller: ['$scope', '$state', '$timeout', 'Mousetrap', function($scope, $state, $timeout, Mousetrap) {
 
                 var setTodayString = function() {
                     var today = new Date();
@@ -74,40 +74,40 @@ app.directive('invoiceModel', ['$rootScope',
                 }
 
                 var nextStudent = function() {
-                    $scope.currentIndex++;
-                    if($scope.currentIndex < $scope.studentList.length) {
+                    if($scope.currentIndex < $scope.studentList.length - 1) {
+                        $scope.currentIndex++;
                         $scope.currentStudent = $scope.studentList[$scope.currentIndex];
                     }
                     else {
-                        $scope.currentIndex--;
+                        return;
                     }
                 }
 
-                var hasNextStudent = function() {
+                var notHasNext = function() {
                     if ($scope.currentIndex == $scope.studentList.length - 1) {
-                        return false;
+                        return true;
                     }
                     else {
-                        return true;
+                        return false;
                     }
                 }
 
                 var prevStudent = function() {
-                    $scope.currentIndex--;
-                    if($scope.currentIndex >= 0) {
+                    if($scope.currentIndex >= 1) {
+                        $scope.currentIndex--;
                         $scope.currentStudent = $scope.studentList[$scope.currentIndex];
                     }
                     else {
-                        $scope.currentIndex++;
+                        return;
                     }
                 }
 
-                var hasPrevStudent = function() {
+                var notHasPrev = function() {
                     if ($scope.currentIndex == 0) {
-                        return false;
+                        return true;
                     }
                     else {
-                        return true;
+                        return false;
                     }
                 }
 
@@ -125,6 +125,23 @@ app.directive('invoiceModel', ['$rootScope',
                     $scope.currentIndex = data.index;
                     $scope.course = data.course;
                     $scope.currentStudent = $scope.studentList[$scope.currentIndex];
+                    Mousetrap.reset();
+                    Mousetrap.bind('left', function() { 
+                        $scope.$apply(function() {
+                            console.log("left")
+                            prevStudent(); 
+                        })
+                    });
+                    Mousetrap.bind('right', function() { 
+                        $scope.$apply(function() {
+                            console.log("right")
+                            nextStudent(); 
+                        })
+                    });
+                })
+
+                $('#invoice-model').on('hidden.bs.modal', function (e) {
+                    console.log("close")
                 })
 
                 /*==========================
@@ -141,7 +158,8 @@ app.directive('invoiceModel', ['$rootScope',
                 $scope.todayMM = "";
                 $scope.todayYY = ""
                 $scope.invoiceMonth = "";
-                $scope.invoiceYear = ""
+                $scope.invoiceYear = "";
+                $scope.isStudentPaid = false;
                 $scope.isResultShow = false;
                 $scope.data = {
                     company: "",
@@ -199,9 +217,9 @@ app.directive('invoiceModel', ['$rootScope',
                 $scope.openDatePicker = openDatePicker;
                 $scope.onDateTimeChange = onDateTimeChange;
                 $scope.nextStudent = nextStudent;
-                $scope.hasNextStudent = hasNextStudent;
+                $scope.notHasNext = notHasNext;
                 $scope.prevStudent = prevStudent;
-                $scope.hasPrevStudent = hasPrevStudent;
+                $scope.notHasPrev = notHasPrev;
                 
                 /*==========================
                     init

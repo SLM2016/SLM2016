@@ -596,7 +596,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 /* line 35, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .si-upload {
-  width: calc(100% - 400px);
+  width: calc(100% - 436px);
   margin-right: 20px;
   border: 1px solid #ccc;
   cursor: pointer;
@@ -651,24 +651,25 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .studentinfo .inner-wrapper .info .si-control-group .result-container {
   display: none;
   width: 100px;
+  margin-left: 20px;
 }
-/* line 80, ../scss/templates/_studentInfo.scss */
+/* line 81, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .result-container .label {
   height: 24px;
   line-height: 24px;
   padding: 0 10px;
-  margin: auto;
+  margin: auto 10px;
 }
-/* line 86, ../scss/templates/_studentInfo.scss */
+/* line 87, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .result-container .spin-style {
   margin: auto;
 }
-/* line 90, ../scss/templates/_studentInfo.scss */
+/* line 91, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .result-container.show-result {
   display: -webkit-flex;
   display: flex;
 }
-/* line 95, ../scss/templates/_studentInfo.scss */
+/* line 96, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-div {
   display: none;
   position: relative;
@@ -677,18 +678,18 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   width: 100%;
   overflow: hidden;
 }
-/* line 104, ../scss/templates/_studentInfo.scss */
+/* line 105, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-div table tr th {
   background-color: rgba(255, 93, 1, 0.8);
   color: #FFF;
 }
-/* line 111, ../scss/templates/_studentInfo.scss */
+/* line 112, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-div.show {
   display: block;
   border: 2px solid #ccc;
   border-top: none;
 }
-/* line 119, ../scss/templates/_studentInfo.scss */
+/* line 120, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar {
   height: 50px;
   line-height: 50px;
@@ -700,31 +701,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-/* line 125, ../scss/templates/_studentInfo.scss */
+/* line 126, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown {
   display: -webkit-inline-flex;
   display: inline-flex;
   position: relative;
   margin-left: 20px;
 }
-/* line 129, ../scss/templates/_studentInfo.scss */
+/* line 130, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown #class-label {
   margin: auto;
 }
-/* line 131, ../scss/templates/_studentInfo.scss */
+/* line 132, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown #class-label .spin-style {
   display: inline-block;
   margin-right: 10px;
 }
-/* line 136, ../scss/templates/_studentInfo.scss */
+/* line 137, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown .dropdown-menu {
   top: calc(100% - 10px);
 }
-/* line 138, ../scss/templates/_studentInfo.scss */
+/* line 139, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown .dropdown-menu li {
   cursor: pointer;
 }
-/* line 143, ../scss/templates/_studentInfo.scss */
+/* line 144, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .student-search {
   display: -webkit-inline-flex;
   display: inline-flex;
@@ -733,16 +734,16 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   vertical-align: top;
   float: right;
 }
-/* line 149, ../scss/templates/_studentInfo.scss */
+/* line 150, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .student-search .input-group {
   margin: auto;
   margin-right: 20px;
 }
-/* line 155, ../scss/templates/_studentInfo.scss */
+/* line 156, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .loader {
   margin-top: 20px;
 }
-/* line 158, ../scss/templates/_studentInfo.scss */
+/* line 159, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content {
   margin-top: 20px;
   background-color: #FFF;
@@ -753,7 +754,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-/* line 163, ../scss/templates/_studentInfo.scss */
+/* line 164, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .manage-title {
   height: 60px;
   line-height: 60px;
@@ -765,22 +766,22 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 3px;
   border-radius: 3px 3px 0 0;
 }
-/* line 172, ../scss/templates/_studentInfo.scss */
+/* line 173, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .table-content {
   padding-top: 10px;
 }
-/* line 177, ../scss/templates/_studentInfo.scss */
+/* line 178, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .table-content table thead tr th {
   height: 40px;
   line-height: 40px;
   padding: 0;
   text-align: left;
 }
-/* line 182, ../scss/templates/_studentInfo.scss */
+/* line 183, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .table-content table thead tr th:nth-of-type(0n+1) {
   padding-left: 20px;
 }
-/* line 190, ../scss/templates/_studentInfo.scss */
+/* line 191, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .table-content table tbody tr td {
   position: relative;
   height: 50px;
@@ -789,11 +790,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-size: 14px;
   text-align: left;
 }
-/* line 197, ../scss/templates/_studentInfo.scss */
+/* line 198, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .table-content table tbody tr td:nth-of-type(0n+1) {
   padding-left: 20px;
 }
 /* line 201, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .table-content table tbody tr td.empty {
+  text-align: center;
+}
+/* line 205, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .table-content table tbody tr.selected {
   background-color: #D1E1FD;
 }
@@ -1148,7 +1153,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 /* line 16, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body {
-  padding: 20px;
+  padding: 20px 30px;
 }
 /* line 18, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-info-content {
@@ -1185,20 +1190,29 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: inline-block;
 }
 /* line 38, ../scss/directives/_invoice-model.scss */
+#invoice-model .modal-body .invoice-info-content .left .form-group .input-group .input-group-addon,
+#invoice-model .modal-body .invoice-info-content .right .form-group .input-group .input-group-addon {
+  height: 34px;
+}
+/* line 41, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-info-content .left .form-group .input-group input,
 #invoice-model .modal-body .invoice-info-content .right .form-group .input-group input {
   width: calc(100% - 40px);
 }
-/* line 46, ../scss/directives/_invoice-model.scss */
+/* line 45, ../scss/directives/_invoice-model.scss */
+#invoice-model .modal-body .invoice-info-content .left .form-group .warning,
+#invoice-model .modal-body .invoice-info-content .right .form-group .warning {
+  color: #F14342;
+}
+/* line 52, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper {
-  width: 800px;
   height: 550px;
   padding: 10px 30px;
   margin: 15px auto 0;
   text-align: center;
   border: 2px dashed #ccc;
 }
-/* line 53, ../scss/directives/_invoice-model.scss */
+/* line 58, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .invoice-title {
   font-size: 20px;
   height: 24px;
@@ -1206,61 +1220,61 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   margin-bottom: 8px;
   color: #aaa;
 }
-/* line 59, ../scss/directives/_invoice-model.scss */
+/* line 64, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .invoice-title span {
   margin: 0 10px;
 }
-/* line 63, ../scss/directives/_invoice-model.scss */
+/* line 68, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .invoice-desc {
   color: #aaa;
   font-size: 16px;
   margin-bottom: 8px;
 }
-/* line 68, ../scss/directives/_invoice-model.scss */
+/* line 73, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .invoice-date {
   display: inline-block;
   height: 28px;
   line-height: 28px;
   vertical-align: top;
 }
-/* line 73, ../scss/directives/_invoice-model.scss */
+/* line 78, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .invoice-date span {
   color: #333;
   font-size: 24px;
 }
-/* line 78, ../scss/directives/_invoice-model.scss */
+/* line 83, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content {
   text-align: left;
   font-size: 14px;
   color: #aaa;
 }
-/* line 82, ../scss/directives/_invoice-model.scss */
+/* line 87, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-buyer {
   margin-bottom: 8px;
   height: 28px;
   line-height: 28px;
 }
-/* line 86, ../scss/directives/_invoice-model.scss */
+/* line 91, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-buyer span {
   color: #333;
   font-size: 24px;
   line-height: 24px;
 }
-/* line 92, ../scss/directives/_invoice-model.scss */
+/* line 97, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-meta {
   margin-bottom: 15px;
 }
-/* line 94, ../scss/directives/_invoice-model.scss */
+/* line 99, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-meta .invoice-companyid {
   display: inline-block;
   margin-right: 15px;
 }
-/* line 97, ../scss/directives/_invoice-model.scss */
+/* line 102, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-meta .invoice-companyid span {
   height: 24px;
   line-height: 28px;
 }
-/* line 101, ../scss/directives/_invoice-model.scss */
+/* line 106, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-meta .invoice-companyid .id-item {
   width: 28px;
   height: 28px;
@@ -1273,21 +1287,21 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-size: 24px;
   color: #333;
 }
-/* line 112, ../scss/directives/_invoice-model.scss */
+/* line 117, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-meta .invoice-companyid .id-item:last-child {
   border-right: 1px solid #ccc;
 }
-/* line 118, ../scss/directives/_invoice-model.scss */
+/* line 123, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table {
   height: 200px;
 }
-/* line 122, ../scss/directives/_invoice-model.scss */
+/* line 127, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table thead tr th {
   border: 1px solid #C38293;
   font-size: 16px;
   padding: 4px 8px;
 }
-/* line 131, ../scss/directives/_invoice-model.scss */
+/* line 136, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table tbody tr td {
   height: 40px;
   line-height: 40px;
@@ -1295,56 +1309,56 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   padding: 0 8px;
   font-size: 16px;
 }
-/* line 137, ../scss/directives/_invoice-model.scss */
+/* line 142, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table tbody tr td.td-answer {
   color: #333;
   font-size: 24px;
 }
-/* line 141, ../scss/directives/_invoice-model.scss */
+/* line 146, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table tbody tr td.td-word {
   text-align: right;
   font-size: 24px;
 }
-/* line 144, ../scss/directives/_invoice-model.scss */
+/* line 149, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table tbody tr td.td-word .word-item {
   display: inline-block;
   width: 60px;
   margin-left: 5px;
 }
-/* line 148, ../scss/directives/_invoice-model.scss */
+/* line 153, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table tbody tr td.td-word .word-item .word {
   display: inline-block;
   margin-right: 5px;
   text-align: center;
   color: #333;
 }
-/* line 154, ../scss/directives/_invoice-model.scss */
+/* line 159, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table tbody tr td.td-word .word-item .unit {
   line-height: 20px;
   font-size: 16px;
 }
-/* line 169, ../scss/directives/_invoice-model.scss */
+/* line 174, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-footer {
   text-align: left;
-  padding: 30px;
+  padding: 20px 30px;
 }
-/* line 172, ../scss/directives/_invoice-model.scss */
+/* line 177, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-footer .form-inline {
   display: inline-block;
 }
-/* line 174, ../scss/directives/_invoice-model.scss */
+/* line 179, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-footer .form-inline span {
   display: inline-block;
   height: 34px;
   line-height: 34px;
   margin-right: 10px;
 }
-/* line 180, ../scss/directives/_invoice-model.scss */
+/* line 185, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-footer .form-inline .radio-inline {
   height: 34px;
   line-height: 34px;
 }
-/* line 183, ../scss/directives/_invoice-model.scss */
+/* line 188, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-footer .form-inline .radio-inline input {
   margin: 0;
   top: 48%;
@@ -1354,27 +1368,28 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-/* line 190, ../scss/directives/_invoice-model.scss */
+/* line 195, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-footer .form-inline .form-group {
   margin-left: 40px;
 }
-/* line 192, ../scss/directives/_invoice-model.scss */
+/* line 197, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-footer .form-inline .form-group label {
   height: 35px;
   line-height: 35px;
   margin-right: 10px;
 }
-/* line 199, ../scss/directives/_invoice-model.scss */
+/* line 204, ../scss/directives/_invoice-model.scss */
 #invoice-model .modal-footer .btn {
   float: right;
 }
-/* line 203, ../scss/directives/_invoice-model.scss */
+/* line 208, ../scss/directives/_invoice-model.scss */
 #invoice-model .right-button, #invoice-model .left-button {
   position: absolute;
   top: 50%;
   width: 50px;
   height: 200px;
   background-color: rgba(51, 51, 51, 0.2);
+  cursor: pointer;
   display: -webkit-flex;
   display: flex;
   -moz-transform: translateY(-50%);
@@ -1382,24 +1397,32 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-/* line 211, ../scss/directives/_invoice-model.scss */
+/* line 217, ../scss/directives/_invoice-model.scss */
 #invoice-model .right-button span, #invoice-model .left-button span {
   color: #FFF;
   font-size: 28px;
   margin: auto;
 }
-/* line 216, ../scss/directives/_invoice-model.scss */
+/* line 222, ../scss/directives/_invoice-model.scss */
 #invoice-model .right-button:hover, #invoice-model .left-button:hover {
   background-color: rgba(51, 51, 51, 0.5);
 }
-/* line 220, ../scss/directives/_invoice-model.scss */
+/* line 225, ../scss/directives/_invoice-model.scss */
+#invoice-model .right-button.stop, #invoice-model .left-button.stop {
+  cursor: not-allowed;
+}
+/* line 227, ../scss/directives/_invoice-model.scss */
+#invoice-model .right-button.stop:hover, #invoice-model .left-button.stop:hover {
+  background-color: rgba(51, 51, 51, 0.2);
+}
+/* line 232, ../scss/directives/_invoice-model.scss */
 #invoice-model .right-button {
   right: -80px;
   -moz-border-radius: 8px 0 0 8px;
   -webkit-border-radius: 8px;
   border-radius: 8px 0 0 8px;
 }
-/* line 224, ../scss/directives/_invoice-model.scss */
+/* line 236, ../scss/directives/_invoice-model.scss */
 #invoice-model .left-button {
   left: -80px;
   -moz-border-radius: 0 8px 8px 0;

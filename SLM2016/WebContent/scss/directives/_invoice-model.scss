@@ -14,7 +14,7 @@
         }
     }
     .modal-body {
-        padding: 20px;
+        padding: 20px 30px;
         .invoice-info-content {
             @include display-flex(flex);
             .left,
@@ -35,16 +35,21 @@
                     .input-group {
                         width: calc(100% - 120px);
                         display: inline-block;
+                        .input-group-addon {
+                            height: 34px;
+                        }
                         input {
                             width: calc(100% - 40px);
                         }
+                    }
+                    .warning {
+                        color: #F14342;
                     }
                 }
             }
         }
         .invoice-content {
             .invoice-wrapper {
-                width: 800px;
                 height: 550px;
                 padding: 10px 30px;
                 margin: 15px auto 0;
@@ -168,7 +173,7 @@
     }
     .modal-footer {
         text-align: left;
-        padding: 30px;
+        padding:  20px 30px;
         .form-inline {
             display: inline-block;
             span {
@@ -206,6 +211,7 @@
     	width: 50px;
     	height: 200px;
     	background-color: rgba(#333, 0.2);
+        cursor: pointer;
     	@include display-flex(flex);
     	@include transform(translateY(-50%));
     	span {
@@ -216,6 +222,12 @@
     	&:hover {
     		background-color: rgba(#333, 0.5);
     	}
+        &.stop {
+            cursor: not-allowed;
+            &:hover {
+                background-color: rgba(#333, 0.2);
+            }
+        }
     }
     .right-button {
     	right: -80px;

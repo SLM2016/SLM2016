@@ -8,7 +8,7 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
                 for (var i = 0; i < result.length; i++) {
                     $scope.courseList.push(result[i]);
                 }
-                $scope.currentCourse = $scope.courseList[0];
+                getStudentList($scope.courseList[0]);
             }, function(error) {
                 $scope.isCourseLoading = false;
                 $scope.isCourseLoadError = true;
@@ -16,7 +16,22 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
         }
 
         var changeCurrentCourse = function(course) {
-        	$scope.currentCourse = course
+        	$scope.studentList.length = 0;
+        	$scope.currentCourse = undefined;
+        	getStudentList(course);
+        }
+
+        var getStudentList = function(course) {
+            $scope.isCourseLoading = true;
+            StudentInfoService.getStudentListByCourseId(course.courseId_).then(function(result) {
+                $scope.isCourseLoading = false;
+                $scope.currentCourse = course;
+                for (var i = 0; i < result.length; i++) {
+                    $scope.studentList.push(result[i]);
+                }
+            }, function(error) {
+                $scope.isCourseLoading = false;
+            })
         }
 
 	    var fileChanged = function(files) {
@@ -94,6 +109,7 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
         $scope.isUploading = false;
         $scope.isUploadSuccess = false;
         $scope.isUploadFail = false;
+        $scope.isAlreadyUpload = false;
         $scope.showPreview = false; 
 	    $scope.showJSONPreview = true; 
 	    $scope.isFileEmpty = false;
@@ -101,6 +117,7 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 	    $scope.items = [];
 	    $scope.sheets = [];
 	    $scope.courseList = [];
+	    $scope.studentList = [];
 	    $scope.currentCourse;
 	    $scope.isCourseLoading = false;
 

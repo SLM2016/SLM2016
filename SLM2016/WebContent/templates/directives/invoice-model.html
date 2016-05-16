@@ -18,6 +18,13 @@
 				    <label>學員：</label>
 				    <span>{{currentStudent.name}}</span>
 				</div>
+				<div class="form-group">
+				    <label for="model-tax-rate">稅率：</label>
+				    <div class="input-group">
+				     	<input type="text" class="form-control" id="model-tax-rate" placeholder="請輸入稅率" ng-model="data.taxRate" ng-change="onTaxRateChange()">
+				    	<div class="input-group-addon">%</div>
+				    </div>
+				</div>
         	</div>
         	<div class="right">
         		<div class="form-group date">
@@ -36,6 +43,11 @@
 				<div class="form-group">
 				    <label>格式：</label>
 				    <span>三聯</span>
+				</div>
+				<div class="form-group">
+				    <label>狀態：</label>
+				    <span ng-show="!isStudentPaid" class="warning">此學員尚未繳費</span>
+				    <span ng-show="isStudentPaid">此學員已繳費</span>
 				</div>
         	</div>
 		</div>
@@ -126,5 +138,5 @@
 		<button type="button" class="btn btn-primary">儲存</button>
     </div>
 </div>
-<div class="right-button" ng-click="nextStudent()" ng-show="hasNextStudent()"><span class="glyphicon glyphicon-menu-right"></span></div>
-<div class="left-button" ng-click="prevStudent()" ng-show="hasPrevStudent()"><span class="glyphicon glyphicon-menu-left"></span></div>
+<div class="right-button" ng-click="nextStudent()" ng-class="{'stop': notHasNext()}"><span class="glyphicon glyphicon-menu-right"></span></div>
+<div class="left-button" ng-click="prevStudent()" ng-class="{'stop': notHasPrev()}"><span class="glyphicon glyphicon-menu-left"></span></div>

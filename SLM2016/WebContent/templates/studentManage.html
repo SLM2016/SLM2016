@@ -36,7 +36,7 @@
                     <th>功能</th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="s in studentList" ng-class="{'selected': s.isSelected}" ng-click="toggleSelectStudent(s)">
+                    <tr ng-repeat="s in studentList" ng-class="{'selected': s.isSelected}" ng-click="toggleSelectStudent(s)" ng-show="studentList.length > 0">
                         <td>{{s.name}}</td>
                         <td>{{s.company}}</td>
                         <td>{{s.phone}}</td>
@@ -62,6 +62,9 @@
                                 <li><a>寄送證書</a></li>
                             </ul>
                         </td>
+                    </tr>
+                    <tr>
+                        <td colspan="7" ng-show="studentList.length == 0" class="empty">此課程尚未有學員資料</td>
                     </tr>
                 </tbody>
             </table>

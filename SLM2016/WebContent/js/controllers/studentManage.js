@@ -30,7 +30,6 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
                     result[i].isSelected = false;
                     $scope.studentList.push(result[i]);
                 }
-                $scope.studentList = result;
             }, function(error) {
                 $scope.isStudentLoading = false;
                 $scope.isStudentLoadError = true;
