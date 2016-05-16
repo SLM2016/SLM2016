@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import com.mysql.jdbc.ResultSetMetaData;
 
 import javafx.util.Pair;
@@ -56,6 +57,37 @@ public class StudentDBManager {
             e.printStackTrace();
         }
         
+		return jsonArray.toString();
+	}
+	
+	
+	public String getSendMailInfo(StudentSendMailData[] studentSendMailData) throws SQLException {	
+		JsonArray jsonArray = new JsonArray();
+		
+		for(int i = 0; i < studentSendMailData.length; i++){
+			String sql = "select name, duration from `course_info` where id = "+"\""+studentSendMailData[i].courseId+"\"";;
+			ResultSet result = slmDBUtility.selectSQL(sql);
+			
+			String columnName, columnValue = null;
+	        JsonObject element = null;
+	        ResultSetMetaData rsmd = null;
+	                
+	        try {
+	            rsmd = (ResultSetMetaData) result.getMetaData();
+	            while (result.next()) {
+	                element = new JsonObject();
+	                for (int j = 1; j <= rsmd.getColumnCount(); j++) {	                	
+	                	columnName = rsmd.getColumnName(j);
+	                    columnValue = result.getString(columnName);
+	                    element.addProperty(columnName, columnValue);                                 
+	                }
+	                jsonArray.add(element);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }	     
+		}		      
+		
 		return jsonArray.toString();
 	}
 

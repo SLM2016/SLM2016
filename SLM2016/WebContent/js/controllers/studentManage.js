@@ -26,7 +26,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             student.isSelected = !student.isSelected 
             
             var i = 0;
-            var sendButton = document.getElementById("send");
+            var sendMailDataButton = document.getElementById("sendMailData");
             
             for(var j = 0; j < $scope.studentList.length; j++){
             	if($scope.studentList[j].isSelected){
@@ -35,36 +35,38 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             }
             
             if(i > 0){           	
-            	sendButton.disabled = "";
+            	sendMailDataButton.disabled = "";
             }
             else{
-            	sendButton.disabled = "disabled";
+            	sendMailDataButton.disabled = "disabled";
             }
         }
         
-        var sendData = function(){
-        	var previewData = [];
+        var sendMailData = function(){
+        	var mailData = [];
         	var i = 0;
+        	
         	for(var j = 0; j < $scope.studentList.length; j++){
         		if($scope.studentList[j].isSelected){
-        			previewData[i] = new Object();
-        			previewData[i].name = $scope.studentList[j].name;
-        			previewData[i].company =  $scope.studentList[j].company;
-        			previewData[i].phone =  $scope.studentList[j].phone;
-        			previewData[i].email =  $scope.studentList[j].email;
+        			mailData[i] = new Object();
+        			mailData[i].studentId = $scope.studentList[j].id;
+        			mailData[i].studentName = $scope.studentList[j].name;
+        			mailData[i].courseId = $scope.studentList[j].fk_course_info_id;
+        			mailData[i].date = $scope.studentList[j].timestamp;
         			i++;
         		} 
         	}        	
-            
-        	// Test Data
-        	previewData[0] = new Object();
-			previewData[0].name = '陳';
-			previewData[1] = new Object();
-			previewData[1].name = '泰';
-			previewData[2] = new Object();
-			previewData[2].name = '迪';
-            $state.go('studentInfo.Sendmail', {'showData' : JSON.stringify(previewData)});
-            
+        	
+        	StudentInfoService.getSendMailInfo(JSON.stringify(mailData)).then(function(courseData) {
+                var parse = JSON.parse(JSON.stringify(courseData));
+                for(var i =0; i < parse.length; i++){
+                	mailData[i].courseName = parse[i].name;
+                	mailData[i].couresDuration = parse[i].duration;
+                }
+                $state.go('studentInfo.Sendmail', {'showData' : JSON.stringify(mailData)});
+            }, function(error) {
+            	console.log('Get DB Has Error');
+            })                     
         }
 
         var reverseSelect = function(student) {
@@ -87,7 +89,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.isStudentLoadError = false;
         $scope.isStudentLoading = false;
         $scope.studentList = [];
-        $scope.sendData = sendData;
+        $scope.sendMailData = sendMailData;
                
         /*==========================
              Methods

@@ -22,9 +22,11 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -42,6 +44,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 import com.jspsmart.upload.SmartUpload;
 
 @WebServlet("/StudentAction")
@@ -51,6 +55,7 @@ public class StudentAction extends HttpServlet {
 	
 	private static final String OP_INSERT_INTO_STUDENT = "1";
 	private static final String OP_GET_STUDENT_LIST = "2";
+	private static final String OP_GET_SENDMAILINFO = "3";
 
 	public StudentAction() {
 		super();
@@ -63,6 +68,9 @@ public class StudentAction extends HttpServlet {
 		switch (op) {
 		case OP_GET_STUDENT_LIST:
 			getStudentList(request, response);
+			break;
+		case OP_GET_SENDMAILINFO:
+			getSendMailInfo(request, response);
 			break;
 		default:
 			break;
@@ -102,6 +110,24 @@ public class StudentAction extends HttpServlet {
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void getSendMailInfo(HttpServletRequest request, HttpServletResponse response) {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        StudentSendMailData[] studentSendMailData = gson.fromJson(request.getParameter("mailData"), StudentSendMailData[].class);
+        
+		StudentDBManager studentDbManager = new StudentDBManager();
+		String result = null;
+					
+		try {
+			result = studentDbManager.getSendMailInfo(studentSendMailData);			
+			response.getWriter().write(result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
