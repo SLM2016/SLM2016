@@ -29,18 +29,24 @@
 			</div>
 				
 			<div class="row">
-				<div class="col-md-9">
+				<div class="col-md-6">
 					<img style="display: block; margin: auto" src="./images/template.png" width="100%"></img>	
 				</div>
 					
-				<div class="col-md-2">title:</div><br><br>
-				<div class="col-md-2">DP 入門課程</div><br><br>
-				<div class="col-md-2">_______________________</div><br><br>
-				<div class="col-md-2">Hi Erica This is Sample</div><br>
+				<div class="col-md-6" >  
+				  <textarea id="con" style="overflow:auto" rows="10" cols="20">
+				  title<br><br>
+				  DP 入門課程<br><br>
+				  _______________________<br><br>
+				  <a href="http://teddysoft.tw/courses/design-patterns-1/">Design Patterns這樣學就會了–入門實作班</a><br><br>
+				  Hi Erica This is Sample<br><br>
+				  
+				  </textarea>
+				</div><br><br>
 					
 			</div><br><br>
 				
-			<input class="btn btn-info btn-orange" type="button" value="Send" ng-click="ClickSendButton()">	
+			<input class="btn btn-info btn-orange" type="button" value="Send"     id="send" ng-click="Sendcontext()">	
 			<input class="btn btn-info btn-orange" type="button" value="Next" id="next" ng-click="ClickNextButton()" disabled="disabled">		
 			<input class="btn btn-info btn-orange" type="button" value="Previous" id="previous" ng-click="ClickPreviousButton()" disabled="disabled">				
 	</div>
