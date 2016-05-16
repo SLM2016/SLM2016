@@ -205,30 +205,35 @@ public class StudentModelFactory {
 			String ticketTypeContent = StudentExcelUtility.parseCell(cell);
 
 			if (ticketTypeContent != "") {
-				// String priceReg = "\\d+[,]*\\d+";
-				String priceReg = "(\\d+,*)+";
-				String ticketTypeReg = ".*[票|券]";
-
-				String ticketType = "";
-				String ticketPrice = "";
-
-				Pattern pricePattern = Pattern.compile(priceReg);
-				Pattern ticketPattern = Pattern.compile(ticketTypeReg);
-
-				Matcher matcher = ticketPattern.matcher(ticketTypeContent);
-
-				if (matcher.find()) {
-					ticketType = ticketTypeContent.substring(matcher.start(), matcher.end());
-					studentModel.setTicketType(ticketType);
-				}
-
-				Matcher priceMatcher = pricePattern.matcher(ticketTypeContent);
-
-				if (priceMatcher.find()) {
-					ticketPrice = ticketTypeContent.substring(priceMatcher.start(), priceMatcher.end());
-					// System.out.println(ticketPrice);
-					studentModel.setTicketPrice(ticketPrice);
-				}
+				// // String priceReg = "\\d+[,]*\\d+";
+				// String priceReg = "(\\d+,*)+";
+				// String ticketTypeReg = ".*[票|券]";
+				//
+				// String ticketType = "";
+				// String ticketPrice = "";
+				//
+				// Pattern pricePattern = Pattern.compile(priceReg);
+				// Pattern ticketPattern = Pattern.compile(ticketTypeReg);
+				//
+				// Matcher matcher = ticketPattern.matcher(ticketTypeContent);
+				//
+				// if (matcher.find()) {
+				// ticketType = ticketTypeContent.substring(matcher.start(),
+				// matcher.end());
+				// studentModel.setTicketType(ticketType);
+				// }
+				//
+				// Matcher priceMatcher =
+				// pricePattern.matcher(ticketTypeContent);
+				//
+				// if (priceMatcher.find()) {
+				// ticketPrice =
+				// ticketTypeContent.substring(priceMatcher.start(),
+				// priceMatcher.end());
+				// // System.out.println(ticketPrice);
+				// studentModel.setTicketPrice(ticketPrice);
+				// }
+				studentModel.setTicketTypeAndPrice(ticketTypeContent);
 			}
 
 		}

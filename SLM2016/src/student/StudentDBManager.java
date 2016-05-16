@@ -109,6 +109,63 @@ public class StudentDBManager {
 		}
 	}
 
+	public boolean updateStudent(StudentModel studentModel) {
+		String sql = String.format(
+				"UPDATE `student_info` SET `name`='%s',`email`='%s',`nickname`='%s',`phone`='%s',`company`='%s',`apartment`='%s',`title`='%s',`ticket_type`='%s',`ticket_price`='%s',`receipt_type`='%s',`receipt_company_name`='%s',`receipt_company_EIN`='%s',`receipt_EIN`='%s',`student_status`='%s',`payment_status`='%s',`receipt_status`='%s',`vege_meat`='%s',`team_members`='%s',`comment`='%s',`timestamp`='%s',`fk_course_info_id`='%s' WHERE `id` = `%s`",
+				studentModel.getName(), studentModel.getEmail(), studentModel.getNickname(), studentModel.getPhone(),
+				studentModel.getCompany(), studentModel.getApartment(), studentModel.getTitle(),
+				studentModel.getTicketType(), studentModel.getTicketPrice(), studentModel.getReceiptType(),
+				studentModel.getReceiptCompanyName(), studentModel.getReceiptCompanyEIN(), studentModel.getReceiptEIN(),
+				studentModel.getStudentStatus(), studentModel.getPaymentStatus(), studentModel.getReceiptStatus(),
+				studentModel.getVegeMeat(), studentModel.getTeamMembers(), studentModel.getComment(),
+				studentModel.getTimestamp(), studentModel.getFkCourseInfoId(), studentModel.getId());
+		if (slmDBUtility.updateSQL((sql))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public StudentModel getStudentById(String id) throws SQLException {
+
+		String sql = String.format("select * from `student_info` where `id` = %s", id);
+		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
+
+		if (result.size() > 0) {
+			HashMap<String, String> map = result.get(0);
+			StudentModel studentModel = new StudentModel();
+
+			studentModel.setId(map.get("id"));
+			studentModel.setName(map.get("name"));
+			studentModel.setNickname(map.get("nickname"));
+			studentModel.setEmail(map.get("email"));
+			studentModel.setPhone(map.get("phone"));
+			studentModel.setCompany(map.get("company"));
+			studentModel.setApartment(map.get("apartment"));
+			studentModel.setTitle(map.get("title"));
+			studentModel.setTicketType(map.get("ticket_type"));
+			studentModel.setTicketPrice(map.get("ticket_price"));
+			studentModel.setReceiptType(map.get("receipt_type"));
+			studentModel.setReceiptCompanyName(map.get("receipt_company_name"));
+			studentModel.setFkCourseInfoId(map.get("fk_course_info_id"));
+			studentModel.setReceiptCompanyEIN(map.get("receipt_company_EIN"));
+			studentModel.setReceiptEIN(map.get("receipt_EIN"));
+			studentModel.setTeamMembers(map.get("team_members"));
+			studentModel.setComment(map.get("comment"));
+			studentModel.setVegeMeat(map.get("vege_meat"));
+			studentModel.setTimestamp(map.get("timestamp"));
+			studentModel.setStudentStatus(map.get("student_status"));
+			studentModel.setPaymentStatus(map.get("payment_status"));
+			studentModel.setReceiptStatus(map.get("receipt_status"));
+
+			return studentModel;
+
+		} else {
+			return null;
+		}
+		// "ON DUPLICATE KEY UPDATE `name` = '%s'
+	}
+
 	public boolean deleteStudent(String phone) throws SQLException {
 		String sql = String.format("DELETE FROM `student_info` WHERE `student_info`.`phone` = '%s'", phone);
 		if (slmDBUtility.deleteSQL(sql)) {

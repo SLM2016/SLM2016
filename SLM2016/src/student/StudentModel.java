@@ -1,7 +1,11 @@
 package student;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class StudentModel {
 
+	private String id = "";
 	private String name = "";
 	private String nickname = "";
 	private String email = "";
@@ -23,6 +27,14 @@ public class StudentModel {
 	private String studentStatus = "";
 	private String paymentStatus = "";
 	private String receiptStatus = "";
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getReceiptEIN() {
 		return receiptEIN;
@@ -194,6 +206,33 @@ public class StudentModel {
 
 	public void setTicketPrice(String ticketPrice) {
 		this.ticketPrice = ticketPrice;
+	}
+
+	public void setTicketTypeAndPrice(String ticketTypeAndPrice) {
+		// String priceReg = "\\d+[,]*\\d+";
+		String priceReg = "(\\d+,*)+";
+		String ticketTypeReg = ".*[票|券]";
+
+		String ticketType = "";
+		String ticketPrice = "";
+
+		Pattern pricePattern = Pattern.compile(priceReg);
+		Pattern ticketPattern = Pattern.compile(ticketTypeReg);
+
+		Matcher matcher = ticketPattern.matcher(ticketTypeAndPrice);
+
+		if (matcher.find()) {
+			ticketType = ticketTypeAndPrice.substring(matcher.start(), matcher.end());
+			this.setTicketType(ticketType);
+		}
+
+		Matcher priceMatcher = pricePattern.matcher(ticketTypeAndPrice);
+
+		if (priceMatcher.find()) {
+			ticketPrice = ticketTypeAndPrice.substring(priceMatcher.start(), priceMatcher.end());
+			// System.out.println(ticketPrice);
+			this.setTicketPrice(ticketPrice);
+		}
 	}
 
 }

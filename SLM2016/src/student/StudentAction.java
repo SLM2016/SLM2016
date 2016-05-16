@@ -29,10 +29,12 @@ public class StudentAction extends HttpServlet {
 
 	private static final String OP_INSERT_INTO_STUDENT = "1";
 	private static final String OP_GET_STUDENT_LIST = "2";
-	private static final String OP_INSERT_FROM_GOOGLE_FORM = "3";
+	private static final String OP_INSERT_STUDENT_FROM_GOOGLE_FORM = "3";
 	private static final String OP_SAVE_STUDENT_EXCEL_FILE = "4";
 	private static final String OP_GET_STUDENT_LIST_BY_COURSE_ID = "5";
 	private static final String OP_UPDATE_STUDENT_RECEIPT_STATUS = "6";
+
+	private static Gson gson = new Gson();
 
 	public StudentAction() {
 		super();
@@ -70,7 +72,10 @@ public class StudentAction extends HttpServlet {
 		case OP_SAVE_STUDENT_EXCEL_FILE:
 			saveFile(request, response);
 			break;
-		case OP_INSERT_FROM_GOOGLE_FORM:
+		case OP_INSERT_STUDENT_FROM_GOOGLE_FORM:
+			break;
+		case OP_UPDATE_STUDENT_RECEIPT_STATUS:
+			updateStudentReceiptStatus(request, response);
 			break;
 		default:
 			break;
@@ -99,9 +104,6 @@ public class StudentAction extends HttpServlet {
 
 	private void insertIntoStudent(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// request.setCharacterEncoding("UTF-8");
-		// response.setCharacterEncoding("UTF-8");
-		// response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		// final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
 		HashMap<String, String> result = new HashMap<String, String>();
@@ -121,36 +123,53 @@ public class StudentAction extends HttpServlet {
 				studentDbManager.insertStudent(s);
 			}
 
-			// StudentModel s = factory.buildStudentModel(2);
-
-			// StudentDBManager studentDbManager = new StudentDBManager();
-			// boolean dbResult = studentDbManager.insertStudent(name,
-			// email, nickname, phone, company, apartment,
-			// title, ticketType, vegeMeat, receiptType, companyNameAndEIN,
-			// classInfo, hasScrum, flowOk,
-			// teamMembers, comment, timestamp);
-			// if (dbResult) {
-			// result.put("status", true);
-			// } else {
-			// result.put("status", false);
-			// }
-			// }
 			result.put("status", "true");
 		} catch (Exception e) {
 			// e.printStackTrace();
 			result.put("status", "false");
 		}
 
-		Gson gson = new Gson();
 		out.println(gson.toJson(result));
 		// return result;
+	}
+
+	private void updateStudentReceiptStatus(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		PrintWriter out = response.getWriter();
+		HashMap<String, String> result = new HashMap<String, String>();
+
+		try {
+
+			StudentModel studentModel;
+			StudentDBManager studentDBManager = new StudentDBManager();
+			String studentID = request.getParameter("studentId");
+			String receiptEIN = request.getParameter("receiptEIN");
+			String receiptStatus = request.getParameter("receiptStatus");
+			String paymentStatus = request.getParameter("paymentStatus");
+
+			studentModel = studentDBManager.getStudentById(studentID);
+			studentModel.setReceiptEIN(receiptEIN);
+			studentModel.setReceiptStatus(receiptStatus);
+			studentModel.setPaymentStatus(paymentStatus);
+
+			if (studentDBManager.updateStudent(studentModel)) {
+				result.put("status", "true");
+			} else {
+				result.put("status", "false");
+			}
+
+		} catch (Exception e) {
+			result.put("status", "false");
+			e.printStackTrace();
+		}
+
+		out.println(gson.toJson(result));
 	}
 
 	private void saveFile(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
 		HashMap<String, String> result = new HashMap<String, String>();
-		Gson gson = new Gson();
 		PrintWriter out = response.getWriter();
 
 		Date date = new java.util.Date();
