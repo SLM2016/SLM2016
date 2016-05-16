@@ -1,9 +1,9 @@
-app.directive('invoiceModel', ['$rootScope',
+app.directive('invoiceModal', ['$rootScope',
     function($rootScope) {
         return {
             restrict: "E",
             scope: true,
-            templateUrl: "templates/directives/invoice-model.html",
+            templateUrl: "templates/directives/invoice-modal.html",
             link: function(scope, element, attrs) {},
             controller: ['$scope', '$state', '$timeout', 'Mousetrap', function($scope, $state, $timeout, Mousetrap) {
 
@@ -119,7 +119,7 @@ app.directive('invoiceModel', ['$rootScope',
                     Events
                 ==========================*/
 
-                $scope.$on("OPEN_INVOICE_MODEL", function(event, data) {
+                $scope.$on("OPEN_INVOICE_MODAL", function(event, data) {
                     console.log(data)
                     $scope.studentList = data.list;
                     $scope.currentIndex = data.index;
@@ -138,10 +138,6 @@ app.directive('invoiceModel', ['$rootScope',
                             nextStudent(); 
                         })
                     });
-                })
-
-                $('#invoice-model').on('hidden.bs.modal', function (e) {
-                    console.log("close")
                 })
 
                 /*==========================
