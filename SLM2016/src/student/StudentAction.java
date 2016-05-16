@@ -49,7 +49,6 @@ public class StudentAction extends HttpServlet {
 		case OP_GET_STUDENT_LIST_BY_COURSE_ID:
 			getStudentListByCourseId(request, response);
 			break;
-		// 變更學生的發票狀態 ( 學生ID 發票號碼 發票公司
 		default:
 			break;
 		}
@@ -192,6 +191,8 @@ public class StudentAction extends HttpServlet {
 		try {
 			json = studentDbManager.getStudentListByCourseId(courseId);
 
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -199,4 +200,5 @@ public class StudentAction extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+
 }

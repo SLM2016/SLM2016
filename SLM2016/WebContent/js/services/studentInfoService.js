@@ -87,7 +87,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.uploadStudentFile = uploadStudentFile;
         factory.getStudentList = getStudentList;
         factory.getStudentListByCourseId = getStudentListByCourseId;
-
+        
         /*==========================
             init
         ==========================*/

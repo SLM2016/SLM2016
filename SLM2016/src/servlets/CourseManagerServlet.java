@@ -25,7 +25,10 @@ public class CourseManagerServlet extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String op = request.getParameter("op");
+		String op = "";
+		if(request.getParameter("op") != null) {
+			op = request.getParameter("op");
+		}
 		switch (op) {
 		case OP_INSERT_INTO_STUDENT:
 			getCourseSimpleData(request, response);

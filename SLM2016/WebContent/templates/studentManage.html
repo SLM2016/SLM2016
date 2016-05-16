@@ -1,78 +1,84 @@
-<div class="manage">
-    <div class="manage-topbar">
-        <div class="class-dropdown">
-            <button id="class-label" type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span>{{currentCourse.courseName_}}</span>
-                <span ng-show="isCourseLoading">
-                    讀取中...
-                    <spin spin-size="small" class="spin-style"></spin>
-                </span>
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="class-label">
-                <li ng-repeat="course in courseList" ng-click="changeStudentList(course)"><a>{{course.courseName_}}</a></li>
-            </ul>
-        </div>
-        <!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#invoice-model">發票</button> -->
-        <div class="student-search">
-            <div class="input-group">
-                  <input type="text" class="form-control" placeholder="學員搜尋">
-                  <div class="input-group-addon">
-                      <span class="glyphicon glyphicon-search"></span>
-                  </div>
+<div class="studentinfo">
+    <div class="inner-wrapper">
+        <div class="manage">
+            <div class="manage-topbar">
+                <div class="class-dropdown">
+                    <button id="class-label" type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span>{{currentCourse.courseName_}}</span>
+                        <span ng-show="isCourseLoading">
+                            讀取中...
+                            <spin spin-size="small" class="spin-style"></spin>
+                        </span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="class-label">
+                        <li ng-repeat="course in courseList" ng-click="changeStudentList(course)"><a>{{course.courseName_}}</a></li>
+                    </ul>
+                </div>
+                <!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#invoice-model">發票</button> -->
+                <div class="student-search">
+                    <div class="input-group">
+                          <input type="text" class="form-control" placeholder="學員搜尋">
+                          <div class="input-group-addon">
+                              <span class="glyphicon glyphicon-search"></span>
+                          </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <loading ng-show="isStudentLoading"></loading>
-    <div class="manage-content" ng-show="!isStudentLoading">
-        <div class="table-content">
-            <table class="table table-hover">
-                <thead>
-                    <th>學員名稱</th>
-                    <th>公司</th>
-                    <th>電話</th>
-                    <th>電子郵件</th>
-                    <th>繳費狀態</th>
-                    <th>功能</th>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="s in studentList" ng-class="{'selected': s.isSelected}" ng-click="toggleSelectStudent(s)">
-                        <td>{{s.name}}</td>
-                        <td>{{s.company}}</td>
-                        <td>{{s.phone}}</td>
-                        <td>{{s.email}}</td>
-                        <td>
-                            <button id="status-label" type="button" class="btn btn-default status-toggle" data-toggle="dropdown" ng-click="toggleStatusDropdown(s)">
-                                <span>{{s.payment_status}}</span>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="status-label">
-                                <li ng-click="changeStudentStatus(s, 0)"><a>免繳費</a></li>
-                                <li ng-click="changeStudentStatus(s, 1)"><a>未繳費</a></li>
-                                <li ng-click="changeStudentStatus(s, 2)"><a>課後再繳費</a></li>
-                                <li ng-click="changeStudentStatus(s, 3)"><a>已繳費</a></li>
-                            </ul>
-                        </td>
-                        <td>
-                            <button type="button" id="student-setting-label" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="toggleActionDropdown(s)">
-                                <span class="glyphicon glyphicon-menu-hamburger"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="student-setting-label">
-                                <li data-toggle="modal" data-target="#invoice-model" ng-click="openInvoiceModel(s)"><a>產生發票</a></li>
-                                <li><a>寄送證書</a></li>
-                            </ul>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <loading ng-show="isStudentLoading"></loading>
+            <div class="manage-content" ng-show="!isStudentLoading">
+                <div class="table-content">
+                    <table class="table table-hover">
+                        <thead>
+                            <th>學員名稱</th>
+                            <th>公司</th>
+                            <th>電話</th>
+                            <th>電子郵件</th>
+                            <th>繳費狀態</th>
+                            <th>功能</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="s in studentList" ng-class="{'selected': s.isSelected}" ng-click="toggleSelectStudent(s)" ng-show="studentList.length > 0">
+                                <td>{{s.name}}</td>
+                                <td>{{s.company}}</td>
+                                <td>{{s.phone}}</td>
+                                <td>{{s.email}}</td>
+                                <td>
+                                    <button id="status-label" type="button" class="btn btn-default status-toggle" data-toggle="dropdown" ng-click="toggleStatusDropdown(s)">
+                                        <span>{{s.payment_status}}</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="status-label">
+                                        <li ng-click="changeStudentStatus(s, 0)"><a>免繳費</a></li>
+                                        <li ng-click="changeStudentStatus(s, 1)"><a>未繳費</a></li>
+                                        <li ng-click="changeStudentStatus(s, 2)"><a>課後再繳費</a></li>
+                                        <li ng-click="changeStudentStatus(s, 3)"><a>已繳費</a></li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <button type="button" id="student-setting-label" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="toggleActionDropdown(s)">
+                                        <span class="glyphicon glyphicon-menu-hamburger"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="student-setting-label">
+                                        <li data-toggle="modal" data-target="#invoice-modal" ng-click="openInvoiceModal(s)"><a>產生發票</a></li>
+                                        <li><a>寄送證書</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" ng-show="studentList.length == 0" class="empty">此課程尚未有學員資料</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-
 <!-- Invoice Modal -->
-<div class="modal fade" id="invoice-model" tabindex="-1" role="dialog">
+<div class="modal fade" id="invoice-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
-        <invoice-model></invoice-model>
+        <invoice-modal></invoice-modal>
     </div>
 </div>

@@ -14,7 +14,8 @@ var app = angular.module('app', [
     'ct.ui.router.extras',
     'ngScrollbar',
     'ngFileUpload',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'angular-mousetrap'
 ])
 
 .config(['$sceProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$animateProvider', '$stickyStateProvider',
@@ -74,7 +75,7 @@ var app = angular.module('app', [
             url: "/studentInfo",
             views: {
                 'studentInfo@': {
-                    templateUrl: "templates/studentInfo.html"
+                    template: "<div ui-view=\"content\"></div>"
                 }
             }
         })
@@ -99,15 +100,15 @@ var app = angular.module('app', [
                 }
             })
             
-            .state(STATES.CREATE_COURSE, {
-                url: "/createCourse",
-                views: {
-                    'createCourse@': {
-                        templateUrl: "templates/createCoursePage.html",
-                        controller: 'CreateCoursePageController',
-                    }
+        .state(STATES.CREATE_COURSE, {
+            url: "/createCourse",
+            views: {
+                'createCourse@': {
+                    templateUrl: "templates/createCoursePage.html",
+                    controller: 'CreateCoursePageController',
                 }
-            })
+            }
+        })
 	}
 ])
 

@@ -30,7 +30,6 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
                     result[i].isSelected = false;
                     $scope.studentList.push(result[i]);
                 }
-                $scope.studentList = result;
             }, function(error) {
                 $scope.isStudentLoading = false;
                 $scope.isStudentLoadError = true;
@@ -53,7 +52,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             student.isSelected = !student.isSelected;
         }
 
-        var openInvoiceModel = function(student) {
+        var openInvoiceModal = function(student) {
             student.isSelected = !student.isSelected;
 
             var index = 0;
@@ -63,7 +62,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
                     break;
                 }
             }
-            $rootScope.$broadcast("OPEN_INVOICE_MODEL", {
+            $rootScope.$broadcast("OPEN_INVOICE_MODAL", {
                 list: $scope.studentList,
                 index: index,
                 course: $scope.currentCourse
@@ -96,7 +95,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.toggleStatusDropdown = toggleStatusDropdown;
         $scope.toggleActionDropdown = toggleActionDropdown;
         $scope.changeStudentStatus = changeStudentStatus;
-        $scope.openInvoiceModel = openInvoiceModel;
+        $scope.openInvoiceModal = openInvoiceModal;
         $scope.changeStudentList = changeStudentList;
         /*==========================
              init
