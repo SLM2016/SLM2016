@@ -14,7 +14,8 @@ var app = angular.module('app', [
     'ct.ui.router.extras',
     'ngScrollbar',
     'ngFileUpload',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'inputDropdown'
 ])
 
 .config(['$sceProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$animateProvider', '$stickyStateProvider',
@@ -104,7 +105,7 @@ var app = angular.module('app', [
                 views: {
                     'createCourse@': {
                         templateUrl: "templates/createCoursePage.html",
-                        controller: 'CreateCoursePageController',
+                        controller: 'CreateCoursePageController as ctrl',
                     }
                 }
             })
