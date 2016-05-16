@@ -166,12 +166,15 @@ public class StudentAction extends HttpServlet {
 			if (!f.exists()) {
 				f.mkdirs();
 			}
+			// System.out.println(f.getAbsolutePath());
 			OutputStream fileOut = new FileOutputStream(dirPath + fileName);
 			IOUtils.copy(filePart.getInputStream(), fileOut);
-			out.close();
+			fileOut.close();
 			result.put("status", "true");
 
-		} catch (IOException ex) {
+		} catch (
+
+		IOException ex) {
 			result.put("status", "false");
 		}
 
