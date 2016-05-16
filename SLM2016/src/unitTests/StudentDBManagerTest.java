@@ -27,7 +27,7 @@ public class StudentDBManagerTest {
 
 	@Test
 	public void testStudentDBManager() {
-		ArrayList<HashMap> array = new ArrayList<HashMap>();
+		ArrayList<HashMap<String, String>> array = new ArrayList<HashMap<String, String>>();
 		boolean boolResult = false;
 		StudentDBManager studentDBManager = new StudentDBManager();
 		StudentModel s = new StudentModel();
@@ -40,7 +40,7 @@ public class StudentDBManagerTest {
 		s.setNickname(nickname);
 		String email = "testHelloEmail@gmail.com";
 		s.setEmail(email);
-		String phone = "0912-399888";
+		String phone = "0912-987654";
 		s.setPhone(phone);
 		String company = "測試公司";
 		s.setCompany(company);

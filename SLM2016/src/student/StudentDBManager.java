@@ -51,43 +51,13 @@ public class StudentDBManager {
 		return g.toJson(result);
 	}
 
-	// public ArrayList<HashMap> getStudents() throws SQLException {
-	// ArrayList<HashMap> arrayList = new ArrayList<HashMap>();
-	// String sql = "select * from `student_info`;";
-	// ResultSet result = slmDBUtility.selectSQL(sql);
-	// while (result.next()) {
-	// // Retrieve by column name
-	// HashMap map = new HashMap();
-	// int id = result.getInt("id");
-	// String name = result.getString("name");
-	// String phoneNumber = result.getString("phone");
-	// map.put("id", id);
-	// map.put("name", name);
-	// map.put("phone", phoneNumber);
-	// arrayList.add(map);
-	// }
-	// return arrayList;
-	// }
-	//
-	// public ArrayList<HashMap> getStudentByPhone(String phone) throws
-	// SQLException {
-	// ArrayList<HashMap> arrayList = new ArrayList<HashMap>();
-	// String sql = String.format("select * from `student_info` where `phone` =
-	// '%s';", phone);
-	// ResultSet result = slmDBUtility.selectSQL(sql);
-	// while (result.next()) {
-	// // Retrieve by column name
-	// HashMap map = new HashMap();
-	// int id = result.getInt("id");
-	// String name = result.getString("name");
-	// String phoneNumber = result.getString("phone");
-	// map.put("id", id);
-	// map.put("name", name);
-	// map.put("phone", phoneNumber);
-	// arrayList.add(map);
-	// }
-	// return arrayList;
-	// }
+	public ArrayList<HashMap<String, String>> getStudentByPhone(String phone) throws SQLException {
+
+		String sql = String.format("SELECT * FROM `student_info` WHERE `phone` = '%s';", phone);
+		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
+
+		return result;
+	}
 
 	public boolean insertStudent(StudentModel studentModel) throws SQLException {
 
