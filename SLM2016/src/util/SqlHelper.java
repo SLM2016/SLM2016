@@ -10,7 +10,7 @@ import javax.sql.rowset.CachedRowSet;
 public class SqlHelper {
 	public static String SuccessString="Success";
 	public static String FailString="Fail";
-	private final String DB_URL = "jdbc:mysql://45.32.62.194:3306/SLM2016?useUnicode=true&characterEncoding=utf-8";
+	private final String DB_URL = "jdbc:mysql://localhost:3306/SLM2016?useUnicode=true&characterEncoding=utf-8";
 	private final String ACCOUNT = "SLM2016";
 	private final String PASSWORD = "Teddysoft";
 

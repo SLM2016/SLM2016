@@ -16,15 +16,20 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	this.dropdownTypeItems = ['公開班', '企業內訓', '演講', '其他'];
 	
 	this.filterTypeList = function(userInput) {
+		if(userInput != '其他' && typeTextBoxFlag){
+			var otherType = document.getElementById("otherTypeDiv");
+			otherType.innerHTML = "";
+			typeTextBoxFlag = false;
+		}
         var filter = $q.defer();
         var normalisedInput = userInput.toLowerCase();
         var filteredArray = this.dropdownTypeItems.filter(function(country) {
-        	return country.toLowerCase().indexOf(normalisedInput) === 0;
+        	return country.toLowerCase().indexOf(normalisedInput) == 0;
         });
         filter.resolve(filteredArray);
         return filter.promise;
     };
-      
+    
     this.itemTypeSelected = function(item) {
     	typeSelected = item;
     	if((item == '其他') && !typeTextBoxFlag){
@@ -32,6 +37,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     		var textbox = document.createElement("input");
     		textbox.type = "text";
     		textbox.name = "otherType";
+    		textbox.value = "";
     		otherType.appendChild(textbox);
     		typeTextBoxFlag = true;
     	}
@@ -48,10 +54,15 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     this.dropdownTicketTypeItems = ['原價', '早鳥', '泰迪之友', '四人團報', '其他'];
 	
     this.filterTicketTypeList = function(userInput) {
+    	if(userInput != '其他' && ticketTextBoxFlag){
+			var otherTicket = document.getElementById("otherTicket");
+			otherTicket.innerHTML = "";
+			ticketTextBoxFlag = false;
+		}
         var filter = $q.defer();
         var normalisedInput = userInput.toLowerCase();
         var filteredArray = this.dropdownTicketTypeItems.filter(function(country) {
-        	return country.toLowerCase().indexOf(normalisedInput) === 0;
+        	return country.toLowerCase().indexOf(normalisedInput) == 0;
         });
         filter.resolve(filteredArray);
         return filter.promise;
@@ -64,6 +75,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     		var textbox = document.createElement("input");
     		textbox.type = "text";
     		textbox.name = "otherTicket";
+    		textbox.value = "";
     		otherTicket.appendChild(textbox);
     		ticketTextBoxFlag = true;
     	}
@@ -77,8 +89,10 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     };
 	
 	function getTeddyCourseData() {
+		$scope.isCourseLoading = true;
 		$.get("/SLM2016/CourseManagerServlet",	function(responseText) {
-			$scope.courseList = responseText;			
+			$scope.courseList = responseText;	
+			$scope.isCourseLoading = false;
 		});
 	} 
 	
@@ -87,7 +101,6 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     }
 	
 	function addCourse() {
-		if(checkInput){
 			var data = new Object();
 			data.courseName_ = $scope.data.courseName;
 			data.batch_ = $scope.data.batch;
@@ -112,7 +125,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 					window.alert(data);
 					getTeddyCourseData();
 				});
-		}
+		
 	}
 
 	var clickAddTicketButton=function() {
@@ -178,23 +191,23 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	
 	function clickAddCourseButton() {
 		if (confirm("是否確認開課!?") == true){
-			addCourse();
+			checkInput();
 		}
 		else {
 			
 		}
 	}
 	
-	var checkInput = function()	{
+	function checkInput(){
 		if((($scope.data.courseName)== null)){
 			window.alert("課程名稱欄位不可為空白");
-			return false;
+			return;
 		}
 		if((($scope.data.courseName.length)== 0)){
 			window.alert("欄位不可為空白");
-			return false;
+			return;
 		}
-		return true;
+		addCourse();
 	}
 	
 	var deleteRow = function(id) {
@@ -242,7 +255,17 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     }
 	
 	var init = function() {
-		data = null;
+		$scope.data = {
+			courseName : "",
+			batch : "",
+			duration : 0,
+			location : "",
+			lecturer : "",
+			status : "",
+			hyperlink : ""
+		};
+		typeSelected = "";
+		
 		getTeddyCourseData();
     }
 	
