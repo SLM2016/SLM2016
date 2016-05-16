@@ -155,4 +155,48 @@ public class StudentDBManager {
 			return false;
 		}
 	}
+	
+	public ArrayList<HashMap> getCourseById(String id) throws SQLException {
+		ArrayList<HashMap> arrayList = new ArrayList<HashMap>();
+		String sql = String.format("select * from `course_info` where `id` = '%s';", id);
+		ResultSet result = slmDBUtility.selectSQL(sql);
+		while (result.next()) {
+			// Retrieve by column name
+			HashMap map = new HashMap();
+			String cource_id = result.getString("id");
+			String name = result.getString("name");
+			String duration = result.getString("duration");
+			String fk_status_id = result.getString("fk_status_id");
+			map.put("id", cource_id);
+			map.put("name", name);
+			map.put("duration", duration);
+			map.put("fk_status_id", fk_status_id);
+			arrayList.add(map);
+		}
+		return arrayList;
+	}
+	
+	//only get course data
+	public boolean insertGetMailInfo(String id, String name, String duration, String fk_status_id) throws SQLException {
+		String sql = String.format(
+				"INSERT INTO `course_info`(`id`,`name`,`duration`,`fk_status_id`) VALUES ('%s','%s','%s','%s')", 
+				id,name,duration,fk_status_id);
+		String duplicate = String.format(
+				"ON DUPLICATE KEY UPDATE `id` = '%s',`name` = '%s',`duration` = '%s',`fk_status_id` = '%s'",
+				id,name,duration,fk_status_id);
+		if (slmDBUtility.insertSQL((sql + duplicate))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean deleteGetMailInfo(String id) throws SQLException {
+		String sql = String.format("DELETE FROM `course_info` WHERE `course_info`.`id` = '%s'", id);
+		if (slmDBUtility.deleteSQL(sql)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
