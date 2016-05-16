@@ -1,16 +1,98 @@
-app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$rootScope',
-	function($scope, $state, $timeout, $rootScope, UploadAttachmentService){
-	var ShowCcList = []; 
+app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$rootScope', '$q',
+	function($scope, $state, $timeout, $rootScope, $q, UploadAttachmentService){
+	var vm = this;
+	var showCcList = []; 
 	var ticketTypeList = [];   
 	var ticketPriceList = [];   
-	var ShowticketList = [];
+	var showticketList = [];
 	var updateticketsList = [];
-	var ShowDateList=[];
+	var showDateList = [];
+	var typeSelected = null;
+	var ticketTypeSelected = null;
+	var typeTextBoxFlag = false ;
+	var ticketTextBoxFlag = false ;
 	
+	this.selectedDropdownTypeItem = null;
+	this.dropdownTypeItems = ['公開班', '企業內訓', '演講', '其他'];
+	
+	this.filterTypeList = function(userInput) {
+		if(userInput != '其他' && typeTextBoxFlag){
+			var otherType = document.getElementById("otherTypeDiv");
+			otherType.innerHTML = "";
+			typeTextBoxFlag = false;
+		}
+        var filter = $q.defer();
+        var normalisedInput = userInput.toLowerCase();
+        var filteredArray = this.dropdownTypeItems.filter(function(country) {
+        	return country.toLowerCase().indexOf(normalisedInput) == 0;
+        });
+        filter.resolve(filteredArray);
+        return filter.promise;
+    };
+    
+    this.itemTypeSelected = function(item) {
+    	typeSelected = item;
+    	if((item == '其他') && !typeTextBoxFlag){
+    		var otherType = document.getElementById("otherTypeDiv");
+    		var textbox = document.createElement("input");
+    		textbox.type = "text";
+    		textbox.name = "otherType";
+    		textbox.value = "";
+    		otherType.appendChild(textbox);
+    		typeTextBoxFlag = true;
+    	}
+    	else{
+    		if(item != '其他' && typeTextBoxFlag){
+    			var otherType = document.getElementById("otherTypeDiv");
+    			otherType.innerHTML = "";
+    			typeTextBoxFlag = false;
+    		}
+    	}
+    };
+    
+    this.selectedDropdownTicketTypeItem = null;
+    this.dropdownTicketTypeItems = ['原價', '早鳥', '泰迪之友', '四人團報', '其他'];
+	
+    this.filterTicketTypeList = function(userInput) {
+    	if(userInput != '其他' && ticketTextBoxFlag){
+			var otherTicket = document.getElementById("otherTicket");
+			otherTicket.innerHTML = "";
+			ticketTextBoxFlag = false;
+		}
+        var filter = $q.defer();
+        var normalisedInput = userInput.toLowerCase();
+        var filteredArray = this.dropdownTicketTypeItems.filter(function(country) {
+        	return country.toLowerCase().indexOf(normalisedInput) == 0;
+        });
+        filter.resolve(filteredArray);
+        return filter.promise;
+    };
+      
+    this.itemTicketTypeSelected = function(item) {
+    	ticketTicketTypeSelected = item;
+    	if((item == '其他') && !ticketTextBoxFlag){
+    		var otherTicket = document.getElementById("otherTicket");
+    		var textbox = document.createElement("input");
+    		textbox.type = "text";
+    		textbox.name = "otherTicket";
+    		textbox.value = "";
+    		otherTicket.appendChild(textbox);
+    		ticketTextBoxFlag = true;
+    	}
+    	else{
+    		if(item != '其他' && ticketTextBoxFlag){
+    			var otherTicket = document.getElementById("otherTicket");
+    			otherTicket.innerHTML = "";
+    			ticketTextBoxFlag = false;
+    		}
+    	}
+    };
 	
 	function getTeddyCourseData() {
+		$scope.isCourseLoading = true;
 		$.get("/SLM2016/CourseManagerServlet",	function(responseText) {
-			$scope.courseList = responseText;			
+			$scope.courseList = responseText;	
+			$scope.isCourseLoading = false;
 		});
 	} 
 	
@@ -19,31 +101,40 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     }
 	
 	function addCourse() {
-		if(checkInput){
 			var data = new Object();
 			data.courseName_ = $scope.data.courseName;
 			data.batch_ = $scope.data.batch;
-			data.dates_ = $scope.ShowDateList;
+			data.dates_ = $scope.showDateList;
 			data.duration_ = $scope.data.duration;
 			data.ticketTypes_ = $scope.ticketTypeList;
 			data.prices_ = $scope.ticketPriceList;
 			data.location_ = $scope.data.location;
 			data.lecturer_ = $scope.data.lecturer;
 			data.hyperlink_ = $scope.data.hyperlink;
-			data.ccAddresses_ = $scope.ShowCcList;
-			data.type_ = $scope.data.type;
+			data.ccAddresses_ = $scope.showCcList;
+			if(typeSelected=='其他'){
+				var otherType = document.getElementsByName('otherType')[0].value;
+				data.type_ = otherType;
+			}
+			else{
+				data.type_ = typeSelected;
+			}
 			data.status_ = "準備中";
 			$.post("/SLM2016/CourseManagerServlet",
 				JSON.stringify(data)).done(function(data) {
 					window.alert(data);
 					getTeddyCourseData();
 				});
-		}
+		
 	}
 
 	var clickAddTicketButton=function() {
 		var regex=/^[a-zA-Z]+$/;
-		if((($scope.data.ticketType) == null) ||(($scope.data.price) == null)||(($scope.data.price.length) == 0)|(($scope.data.ticketType.length) == 0)){
+		if(ticketTicketTypeSelected=='其他'){
+			var otherTicket = document.getElementsByName('otherTicket')[0].value;
+			ticketTicketTypeSelected = otherTicket;
+		}
+		if(((ticketTicketTypeSelected) == null) ||(($scope.data.price) == null)||(($scope.data.price.length) == 0)|((ticketTicketTypeSelected.length) == 0)){
 			window.alert("課程票價或票種請修正");
 		}
 		else{
@@ -52,14 +143,14 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 			}
 			else{
 				if ((($scope.data.price)>2147483647)||(($scope.data.price)<0)){
-				window.alert("課程金額過大");
+					window.alert("課程金額過大");
 				}
 				else{
-				$scope.ticketTypeList.push($scope.data.ticketType);
-				$scope.ticketPriceList.push($scope.data.price);
-				$scope.ShowticketList.push("         票種:  " +$scope.data.ticketType + "價格:  " + $scope.data.price);
-				$scope.data.ticketType = null;
-				$scope.data.price = null;
+					$scope.ticketTypeList.push(ticketTicketTypeSelected);
+					$scope.ticketPriceList.push($scope.data.price);
+					$scope.showticketList.push(ticketTicketTypeSelected + "  $" + $scope.data.price);
+					ticketTicketTypeSelected = null;
+					$scope.data.price = null;
 				}
 			}
 		}
@@ -88,7 +179,8 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		}
 		else{
 			if((($scope.data.dateAddresses.length) != 0)){
-				$scope.ShowDateList.push($scope.data.dateAddresses);
+				$scope.data.dateAddresses.setMinutes($scope.data.dateAddresses.getMinutes() - $scope.data.dateAddresses.getTimezoneOffset());
+				$scope.showDateList.push($scope.data.dateAddresses.toISOString().substring(0, 10));
 				$scope.data.dateAddresses = null;
 			}
 			else{
@@ -97,25 +189,25 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		}
 	}
 	
-	var clickAddCourseButton=function() {
+	function clickAddCourseButton() {
 		if (confirm("是否確認開課!?") == true){
-			addCourse();
+			checkInput();
 		}
 		else {
 			
 		}
 	}
 	
-	var checkInput = function()	{
+	function checkInput(){
 		if((($scope.data.courseName)== null)){
 			window.alert("課程名稱欄位不可為空白");
-			return false;
+			return;
 		}
 		if((($scope.data.courseName.length)== 0)){
 			window.alert("欄位不可為空白");
-			return false;
+			return;
 		}
-		return true;
+		addCourse();
 	}
 	
 	var deleteRow = function(id) {
@@ -140,27 +232,40 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     }
 
 	var deleteTicket = function(index) {
-		$scope.ShowticketList.splice(index,'1');
+		$scope.showticketList.splice(index,'1');
 		$scope.ticketTypeList.splice(index,'1');
 		$scope.ticketPriceList.splice(index,'1');
 		
     }
 	
 	var deleteDate = function(index) {
-		$scope.ShowDateList.splice(index,'1');
+		$scope.showDateList.splice(index,'1');
     }
 	
 	var deleteCc = function(index) {
-		$scope.ShowCcList.splice(index,'1');
+		$scope.showCcList.splice(index,'1');
     }
 	
 	var fileChanged = function(files) {
 		$scope.fileName = files;
     };
-
+    
+    var openDatePicker = function() {
+        $scope.isDatePickerOpen = true;
+    }
 	
 	var init = function() {
-		data = null;
+		$scope.data = {
+			courseName : "",
+			batch : "",
+			duration : 0,
+			location : "",
+			lecturer : "",
+			status : "",
+			hyperlink : ""
+		};
+		typeSelected = "";
+		
 		getTeddyCourseData();
     }
 	
@@ -175,10 +280,15 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	$scope.courseList = [];
 	$scope.ticketTypeList = [];
 	$scope.ticketPriceList = [];
-	$scope.ShowticketList = [];
-	$scope.ShowCcList = [];
-	$scope.ShowDateList = [];
+	$scope.showticketList = [];
+	$scope.showCcList = [];
+	$scope.showDateList = [];
 	$scope.updateticketsList = [];
+	$scope.isDatePickerOpen = false;
+	$scope.format = 'yyyy 年 MM 月 dd 日';
+    $scope.dateOptions = {
+        locale: 'ru'
+    };
 	/*
 	 * ========================== Methods ==========================
 	 */
@@ -198,6 +308,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	$scope.deleteTicket = deleteTicket;
 	$scope.deleteDate = deleteDate;
 	$scope.deleteCc = deleteCc;
+	$scope.openDatePicker = openDatePicker;
 	init();
 }
 ]);

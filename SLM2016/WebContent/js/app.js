@@ -16,6 +16,7 @@ var app = angular.module('app', [
     'ngFileUpload',
     'ui.bootstrap',
     'angular-mousetrap'
+    'inputDropdown'
 ])
 
 .config(['$sceProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$animateProvider', '$stickyStateProvider',
@@ -100,12 +101,22 @@ var app = angular.module('app', [
                 }
             })
             
+<<<<<<< HEAD
         .state(STATES.CREATE_COURSE, {
             url: "/createCourse",
             views: {
                 'createCourse@': {
                     templateUrl: "templates/createCoursePage.html",
                     controller: 'CreateCoursePageController',
+=======
+            .state(STATES.CREATE_COURSE, {
+                url: "/createCourse",
+                views: {
+                    'createCourse@': {
+                        templateUrl: "templates/createCoursePage.html",
+                        controller: 'CreateCoursePageController as ctrl',
+                    }
+>>>>>>> master
                 }
             }
         })

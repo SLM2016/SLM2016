@@ -10,29 +10,52 @@
             <div class="invoice" ng-show="loadType == 'Upload'">
 			<div class="title">課程檔案管理系統</div>
 			<div class="form-group name">
-			<label for="companyName">課名*(必填)</label>
+				<label for="companyName">課名*(必填)</label>
 			</div>
 			<div class="form-group">
-			<input type="text" class="form-control" id="Course" placeholder="請輸入課名" ng-model="data.courseName">
+				<input type="text" class="form-control" id="Course" placeholder="請輸入課名" ng-model="data.courseName">
 			</div>
+			<div class="ticketinput-wrapper company">
+			<div class="form-group id" >
+				<label for="companyName">課程類型</label>
+				<div>
+					<input-dropdown
+						input-placeholder="輸入課程類型"
+						input-name="type"
+						input-required="true"
+    					selected-item="ctrl.selectedDropdownTypeItem"
+    					default-dropdown-items="ctrl.dropdownTypeItems"
+    					filter-list-method="ctrl.filterTypeList(userInput)"
+          				item-selected-method="ctrl.itemTypeSelected(item)">
+  					</input-dropdown>
+	  			</div>	
+	  			<div id="otherTypeDiv"></div>	
+			</div>
+				</div>
 			<div class="form-group name" >
-			<label for="companyName">梯次</label>
+				<label for="companyName">梯次</label>
 			</div>
 			<div class="form-group">
-			<input type="text" class="form-control" id="Batch" placeholder="請輸入梯次" ng-model="data.batch">
+				<input type="text" class="form-control" id="Batch" placeholder="請輸入梯次" ng-model="data.batch">
 			</div>		
 			<div class="ticketinput-wrapper company">
 				<div class="form-group id" >
-				<label for="companyName">開課日期(格式:YYYY/MM/DD)</label>
-				<input type="text" class="form-control" id="Date" placeholder="請輸入開課日期" ng-model="data.dateAddresses">
-				</div>
-				<div class="form-group" >
-				<input class="btn btn-info btn-orange upload-btn" type="submit" value="新增" id="adddate_button" name="adddate_button" ng-click="clickAddDateButton()">	
+					<label for="companyName">開課日期(格式:YYYY/MM/DD)</label>
+					<div class="input-group">
+						<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="data.dateAddresses" is-open="isDatePickerOpen" datepicker-options="dateOptions" ng-required="true" close-text="Close" readonly>
+						<span class="input-group-btn">
+						   	<button type="button" class="btn btn-default" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
+							<label for="companyName">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+							<div class="form-group" >
+								<input class="btn btn-info btn-orange upload-btn" type="submit" value="新增" id="adddate_button" name="adddate_button" ng-click="clickAddDateButton()">	
+							</div>
+						</span>
+					</div>
 				</div>
 			</div>
 			<table id="dateInfo" border="1" cellpadding="2"  >
 			   	<tbody>
-			   		<tr ng-repeat="x in ShowDateList">
+			   		<tr ng-repeat="x in showDateList track by $index">
 					<td><input type="submit"   value = "X" ng-click="deleteDate($index)"></td>
 					<td>&nbsp;</td>
             		<td>{{x}}</td>
@@ -40,29 +63,43 @@
 			</table>
 			<br>
 			
-			
-			<div class="form-group name" >
-			<label for="companyName">課程時間(Hour)</label>
+			<div class="ticketinput-wrapper company">
+			<div class="form-group id" >
+				<label for="companyName">課程時間(Hour)</label>
+				<input type="text" class="form-control" id="Duration" placeholder="請輸入課程時間" ng-model="data.duration">
 			</div>
 			<div class="form-group">
-			<input type="text" class="form-control" id="Duration" placeholder="請輸入課程時間" ng-model="data.duration">
+				<label for="companyName">(hr)</label>
+			</div>
 			</div>
 			<div class="ticketinput-wrapper company">
 				<div class="form-group" >
-				<label for="companyName">票種</label>
-				<input type="text" class="form-control" id="TicketType" placeholder="請輸入票種" ng-model="data.ticketType">
+					<label for="companyName">票種</label>
+					<div>
+					<input-dropdown
+						input-placeholder="輸入票種"
+						input-name="ticketType"
+						input-required="true"
+    					selected-item="ctrl.selectedDropdownTicketTypeItem"
+    					default-dropdown-items="ctrl.dropdownTicketTypeItems"
+    					filter-list-method="ctrl.filterTicketTypeList(userInput)"
+          				item-selected-method="ctrl.itemTicketTypeSelected(item)">
+  					</input-dropdown>
+  					</div>
+  					<div id="otherTicket" ></div>
+					<!-- <input type="text" class="form-control" id="TicketType" placeholder="請輸入票種" ng-model="data.ticketType">-->
 				</div>
 				<div class="form-group" >
-				<label for="companyName">價錢(NTD)</label>
-				<input type="text" class="form-control" id="Price" placeholder="請輸入價錢" ng-model="data.price">
+					<label for="companyName">價錢(NTD)</label>
+					<input type="text" class="form-control" id="Price" placeholder="請輸入價錢" ng-model="data.price">
 				</div>
 				<div class="form-group" >
-				<input class="btn btn-info btn-orange upload-btn" type="submit" value="新增" id="addtickettype_button" name="addtickettype_button" ng-click="clickAddTicketButton()">	
+					<input class="btn btn-info btn-orange upload-btn" type="submit" value="新增" id="addtickettype_button" name="addtickettype_button" ng-click="clickAddTicketButton()">	
 				</div>
 			</div>
 			<table id="courseInfo" border="1" cellpadding="2"  >
 			   	<tbody>
-			   		<tr ng-repeat="x in ShowticketList">
+			   		<tr ng-repeat="x in showticketList track by $index">
 					<td><input type="submit"   value = "X" ng-click="deleteTicket($index)"></td>
 					<td>&nbsp;</td>
             		<td>{{x}}</td>
@@ -71,16 +108,16 @@
 			<br>
 			<div class="ticketinput-wrapper company">
 				<div class="form-group id" >
-				<label for="companyName">副本收件者</label>
-				<input type="text" class="form-control" id="CcType" placeholder="請輸入副本收件者" ng-model="data.ccAddresses">
+					<label for="companyName">副本收件者</label>
+					<input type="text" class="form-control" id="CcType" placeholder="請輸入副本收件者" ng-model="data.ccAddresses">
 				</div>
 				<div class="form-group" >
-				<input class="btn btn-info btn-orange upload-btn" type="submit" value="新增" id="addcctype_button" name="addcclist_button" ng-click="clickAddCcButton()">	
+					<input class="btn btn-info btn-orange upload-btn" type="submit" value="新增" id="addcctype_button" name="addcclist_button" ng-click="clickAddCcButton()">	
 				</div>
 			</div>
 			<table id="ccInfo" border="1" cellpadding="2"  >
 			   	<tbody>
-			   		<tr ng-repeat="x in ShowCcList">
+			   		<tr ng-repeat="x in showCcList track by $index">
 					<td><input type="submit"   value = "X" ng-click="deleteCc($index)"></td>
 					<td>&nbsp;</td>
             		<td>{{x}}</td>
@@ -88,49 +125,43 @@
 			</table>
 			<br>
 			<div class="form-group name" >
-			<label for="companyName">地點</label>
+				<label for="companyName">地點</label>
 			</div>
 			<div class="form-group">
-			<input type="text" class="form-control" id="Location" placeholder="請輸入地點" ng-model="data.location">
+				<input type="text" class="form-control" id="Location" placeholder="請輸入地點" ng-model="data.location">
 			</div>
 			<div class="form-group name" >
-			<label for="companyName">講師</label>
+				<label for="companyName">講師</label>
 			</div>
 			<div class="form-group">
-			<input type="text" class="form-control" id="Lecturer" placeholder="請輸入講師" ng-model="data.lecturer">
+				<input type="text" class="form-control" id="Lecturer" placeholder="請輸入講師" ng-model="data.lecturer">
 			</div>
 			<div class="form-group name" >
-			<label for="companyName">超連結</label>
+				<label for="companyName">超連結</label>
 			</div>
 			<div class="form-group">
-			<input type="text" class="form-control" id="Duration" placeholder="請輸入超連結網址" ng-model="data.hyperlink">
+				<input type="text" class="form-control" id="Duration" placeholder="請輸入超連結網址" ng-model="data.hyperlink">
 			</div>
 			<div class="form-group name" >
-			<label for="companyName">課程類型</label>
+				<label for="companyName">狀態</label>
 			</div>
 			<div class="form-group">
-			<input type="text" class="form-control" id="Type" placeholder="請輸入課程類型" ng-model="data.type">
-			</div>
-			<div class="form-group name" >
-			<label for="companyName">狀態</label>
-			</div>
-			<div class="form-group">
-			<input type="text" class="form-control" id="Status" placeholder="準備中" DISABLED>
+				<input type="text" class="form-control" id="Status" placeholder="準備中" DISABLED>
 			</div>
 			<div class="si-upload" >	
-        	<input class="btn btn-info btn-orange" type="submit" value="瀏覽檔案" id="addattachment_button" name="addattachment_button" ngf-select="fileChanged($file)">
-            <span class="upload-name">{{fileName.name}}</span>
+        		<input class="btn btn-info btn-orange" type="submit" value="瀏覽檔案" id="addattachment_button" name="addattachment_button" ngf-select="fileChanged($file)">
+            	<span class="upload-name">{{fileName.name}}</span>
 			</div>
 			<br>
-			<input class="btn btn-info btn-orange" type="submit" value="開課" id="upload_button" name="upload_button" ng-click="clickAddCourseButton()">	
+				<input class="btn btn-info btn-orange" type="submit" value="開課" id="upload_button" name="upload_button" ng-click="clickAddCourseButton()">	
 			</div>
 			<!-- 課程檢視 -->
-			<div  ng-show="loadType == 'Download'">
-			<div class="form-group name" >
-			<div class="title">課程檔案管理系統</div>
+				<div  ng-show="loadType == 'Download'">
+				<div class="form-group name" >
+				<div class="title">課程檔案管理系統</div>
 			</div>
-			<div style="width:900px;height:700px;overflow-x:auto;overflow-y:auto;">
-			<table class="table table-bordered si-table table-hover" id="courseInfo" border="1" cellpadding="9"  >
+			<div style="width:900px;overflow-x:auto;overflow-y:auto;">
+			<table class="table table-bordered si-table table-hover" style="width:1500px;"id="courseInfo" border="1" cellpadding="9"  >
 				<thead>
 				  <tr>
 					  <td></td>
@@ -172,6 +203,7 @@
                         </tr>
                     </tbody>
                 </table>
+                  <loading ng-show="isCourseLoading"></loading>
                 </div>
 			</div>	
 			</div>
