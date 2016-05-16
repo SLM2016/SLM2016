@@ -5,6 +5,7 @@
                 <div class="class-dropdown">
                     <button id="class-label" type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span>{{currentCourse.courseName_}}</span>
+                        <span ng-show="currentCourse.batch_ != '' && !isCourseLoading"> - 第{{currentCourse.batch_}}梯次</span>
                         <span ng-show="isCourseLoading">
                             讀取中...
                             <spin spin-size="small" class="spin-style"></spin>
@@ -12,7 +13,12 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="class-label">
-                        <li ng-repeat="course in courseList" ng-click="changeStudentList(course)"><a>{{course.courseName_}}</a></li>
+                        <li ng-repeat="course in courseList" ng-click="changeStudentList(course)">
+                            <a>
+                                <span>{{course.courseName_}}</span>
+                                <span ng-show="course.batch_ != ''"> - 第{{course.batch_}}梯次</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#invoice-model">發票</button> -->
