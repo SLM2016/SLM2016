@@ -15,6 +15,7 @@ public class StudentModel {
 	private String receiptCompanyName = "";
 	private String fkCourseInfoId = "";
 	private String receiptCompanyEIN = "";
+	private String receiptEIN = "";
 	private String teamMembers = "";
 	private String comment = "";
 	private String vegeMeat = "";
@@ -22,6 +23,14 @@ public class StudentModel {
 	private String studentStatus = "";
 	private String paymentStatus = "";
 	private String receiptStatus = "";
+
+	public String getReceiptEIN() {
+		return receiptEIN;
+	}
+
+	public void setReceiptEIN(String receiptEIN) {
+		this.receiptEIN = receiptEIN;
+	}
 
 	public String getFkCourseInfoId() {
 		return fkCourseInfoId;

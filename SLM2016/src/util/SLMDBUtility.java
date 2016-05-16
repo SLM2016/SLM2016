@@ -2,7 +2,6 @@ package util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,15 +9,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.sql.ResultSetMetaData;
 
-import com.google.gson.Gson;
-
 public class SLMDBUtility {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://45.32.62.194:3306/SLM2016?useUnicode=true&characterEncoding=utf-8";
 	static final String USER = "SLM2016";
 	static final String PASS = "Teddysoft";
 	Connection connection = null;
-	Gson gson = new Gson();
 
 	public SLMDBUtility() {
 		super();
@@ -38,16 +34,14 @@ public class SLMDBUtility {
 	public ArrayList<HashMap<String, String>> selectSQL(String sql) {
 		Statement stmt = null;
 		ResultSet rs = null;
-		ArrayList<HashMap<String, String>> array = new ArrayList<HashMap<String, String>>();
-		if (connection == null) {
-			this.createConnection();
-		}
+		ArrayList<HashMap<String, String>> result = new ArrayList<HashMap<String, String>>();
+		// if (connection == null) {
+		// this.createConnection();
+		// }
+		checkConnection();
 		try {
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery(sql);
-			// rs.close();
-			// stmt.close();
-			// connection.close();
 			ResultSetMetaData rsmd = rs.getMetaData();
 
 			rsmd = rs.getMetaData();
@@ -61,7 +55,7 @@ public class SLMDBUtility {
 					columnValue = rs.getString(columnName);
 					map.put(columnName, columnValue);
 				}
-				array.add(map);
+				result.add(map);
 			}
 			// System.out.println(gson.toJson(array));
 
@@ -73,7 +67,7 @@ public class SLMDBUtility {
 			e.printStackTrace();
 		}
 		// System.out.println(gson.toJson(array));
-		return array;
+		return result;
 	}
 
 	public boolean insertSQL(String sql) {
@@ -87,7 +81,6 @@ public class SLMDBUtility {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 			result = true;
-			// rs.close();
 			stmt.close();
 			connection.close();
 		} catch (Exception e) {
@@ -107,7 +100,6 @@ public class SLMDBUtility {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 			result = true;
-			// rs.close();
 			stmt.close();
 			connection.close();
 		} catch (Exception e) {
@@ -127,7 +119,6 @@ public class SLMDBUtility {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 			result = true;
-			// rs.close();
 			stmt.close();
 			connection.close();
 		} catch (Exception e) {
@@ -137,12 +128,10 @@ public class SLMDBUtility {
 	}
 
 	public void checkConnection() {
-
 		try {
 			if (connection == null || connection.isClosed()) {
 				this.createConnection();
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

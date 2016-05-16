@@ -7,11 +7,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import org.apache.poi.util.IOUtils;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STUnsignedDecimalNumber;
-
 import com.google.gson.Gson;
-
-import util.SLMDBUtility;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,7 +32,7 @@ public class StudentAction extends HttpServlet {
 	private static final String OP_INSERT_FROM_GOOGLE_FORM = "3";
 	private static final String OP_SAVE_STUDENT_EXCEL_FILE = "4";
 	private static final String OP_GET_STUDENT_LIST_BY_COURSE_ID = "5";
-	private static final String OP_GET_COURSE = "6";
+	private static final String OP_UPDATE_STUDENT_RECEIPT_STATUS = "6";
 
 	public StudentAction() {
 		super();
@@ -53,9 +49,7 @@ public class StudentAction extends HttpServlet {
 		case OP_GET_STUDENT_LIST_BY_COURSE_ID:
 			getStudentListByCourseId(request, response);
 			break;
-		case OP_GET_COURSE:
-			getCourse(response);
-			break;
+		// 變更學生的發票狀態 ( 學生ID 發票號碼 發票公司
 		default:
 			break;
 		}
@@ -64,15 +58,15 @@ public class StudentAction extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
 		String op = request.getParameter("op");
 		// PrintWriter out = response.getWriter();
 		switch (op) {
 		case OP_INSERT_INTO_STUDENT:
 			insertIntoStudent(request, response);
-			// SELECT * FROM `student_info`
-			// StudentDBManager s = new StudentDBManager();
-			// SLMDBUtility s = new SLMDBUtility();
-			// s.selectSQL("SELECT * FROM `student_info` ");
 			break;
 		case OP_SAVE_STUDENT_EXCEL_FILE:
 			saveFile(request, response);
@@ -106,9 +100,9 @@ public class StudentAction extends HttpServlet {
 
 	private void insertIntoStudent(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
+		// request.setCharacterEncoding("UTF-8");
+		// response.setCharacterEncoding("UTF-8");
+		// response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		// final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
 		HashMap<String, String> result = new HashMap<String, String>();
@@ -116,13 +110,10 @@ public class StudentAction extends HttpServlet {
 		// SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
 
 		String courseId = request.getParameter("courseId");
-		Part filePart1 = request.getPart("file");
-
-		// courseId = "ZZZZZTEST";
-		// Workbook workbook = new XSSFWorkbook(filePart1.getInputStream());
+		Part filePart = request.getPart("file");
 
 		try {
-			StudentModelFactory factory = new StudentModelFactory(filePart1.getInputStream(), courseId);
+			StudentModelFactory factory = new StudentModelFactory(filePart.getInputStream(), courseId);
 
 			ArrayList<StudentModel> arr = factory.buildStudentModelArray();
 			StudentDBManager studentDbManager = new StudentDBManager();
@@ -158,39 +149,41 @@ public class StudentAction extends HttpServlet {
 
 	private void saveFile(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
+
 		HashMap<String, String> result = new HashMap<String, String>();
+		Gson gson = new Gson();
+		PrintWriter out = response.getWriter();
 
 		Date date = new java.util.Date();
 		String nowTime = Long.toString(date.getTime());
 		String fileName = String.format("%s.xlsx", nowTime);
 
-		String courseName = request.getParameter("courseName");
+		String courseId = request.getParameter("courseId");
 		// courseName = "TEST";
-		String dirPath = String.format("./course_excel_file/%s/", courseName);
-		Part filePart1 = request.getPart("file");
-
-		File f = new File(dirPath);
-		if (!f.exists()) {
-			f.mkdirs();
-		}
-
-		// System.out.println(System.getProperty("user.dir"));
+		String dirPath = String.format("./course_excel_file/%s/", courseId);
+		Part filePart = request.getPart("file");
 		try {
-			OutputStream out = new FileOutputStream(dirPath + fileName);
-			IOUtils.copy(filePart1.getInputStream(), out);
+			File f = new File(dirPath);
+			if (!f.exists()) {
+				f.mkdirs();
+			}
+			OutputStream fileOut = new FileOutputStream(dirPath + fileName);
+			IOUtils.copy(filePart.getInputStream(), fileOut);
 			out.close();
+			result.put("status", "true");
 
 		} catch (IOException ex) {
-			// report
+			result.put("status", "false");
 		}
+
+		out.println(gson.toJson(result));
 
 	}
 
 	private void getStudentListByCourseId(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+		// response.setContentType("application/json");
+		// response.setCharacterEncoding("UTF-8");
 		String courseId = request.getParameter("courseId");
 
 		StudentDBManager studentDbManager = new StudentDBManager();
@@ -198,8 +191,7 @@ public class StudentAction extends HttpServlet {
 
 		try {
 			json = studentDbManager.getStudentListByCourseId(courseId);
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
+
 			response.getWriter().write(json);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -207,22 +199,4 @@ public class StudentAction extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
-	private void getCourse(HttpServletResponse response) throws IOException, ServletException {
-
-		StudentDBManager studentDbManager = new StudentDBManager();
-		String json = null;
-
-		try {
-			json = studentDbManager.getCourse();
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(json);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 }
