@@ -15,7 +15,7 @@ var app = angular.module('app', [
     'ngScrollbar',
     'ngFileUpload',
     'ui.bootstrap',
-    'angular-mousetrap'
+    'angular-mousetrap',
     'inputDropdown'
 ])
 
