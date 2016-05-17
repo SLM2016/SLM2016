@@ -65,7 +65,7 @@ public class StudentDBManager {
 		JsonArray jsonArray = new JsonArray();
 		
 		for(int i = 0; i < studentSendMailData.length; i++){
-			String sql = "select name, duration from `course_info` where id = "+"\""+studentSendMailData[i].courseId+"\"";;
+			String sql = "select id, name, duration from `course_info` where id = "+"\""+studentSendMailData[i].courseId+"\"";;
 			ResultSet result = slmDBUtility.selectSQL(sql);
 			
 			String columnName, columnValue = null;
