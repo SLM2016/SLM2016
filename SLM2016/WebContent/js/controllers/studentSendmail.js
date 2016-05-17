@@ -10,25 +10,36 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
 			        dataType: "json"
 			    });
 			}
-
-
 			function setcontent(d){
-			 	CKEDITOR.instances.editor1.setData(d);
+				var kk=getcontent();
+				CKEDITOR.instances.editor1.setData(kk+d+'<br>');
 			
 			}
 			function getcontent() {
 			  	  return CKEDITOR.instances.editor1.getData();
 			}
-			function example(){
-				setcontent('<a href="http://www.w3schools.com/html/">Visit our HTML tutorial</a>');
-				console.debug(getcontent());
+			function removeemailcontent() {
+				
+			}
+			function setemailcontent(){
+				var con='title<br>'+
+				"Hi Erica "+
+				courseName.value+'<br>'+
+				studentName.value
+				+"";
+				CK=CKEDITOR.instances['editor1'];
+				if (CK) {
+					   CKEDITOR.remove(CKEDITOR.instances['editor1']); //Does the same as line below
+					   CKEDITOR.add(CK);
+				 }
+				CKEDITOR.instances.editor1.setData(con);
+
 			}
 
 
 		
 		var Sendcontext =function(){
-			example();
-	  	    
+			
 	  	    
 	  	}
 	  
@@ -41,7 +52,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
 		}
 		
 		var ClickNextButton = function(){	
-			console.debug(tinyMCE.activeEditor.getContent());
+			
 			if(++index <= parse.length-1){	
 				previousButton.disabled = "";
 				courseName.value = parse[index].courseName;
@@ -53,9 +64,12 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
 			if(index == parse.length-1){
 				nextButton.disabled = "disabled";
 			}
+		
+			setemailcontent();
 		}
 		
-		var ClickPreviousButton = function(){			
+		var ClickPreviousButton = function(){	
+			
 			if(--index >= 0){
 				nextButton.disabled = "";
 				courseName.value = parse[index].courseName;
@@ -67,6 +81,8 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
 			if(index == 0){
 				previousButton.disabled = "disabled";
 			} 		
+			
+			setemailcontent();
 		}
 
     	var init = function() { 		
@@ -75,8 +91,8 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
     		if(parse.length-1 > 0){
     			nextButton.disabled = "";
     		}
-    		 CKEDITOR.replace( 'editor1' );
-    		
+    	
+    		 setemailcontent();
         }
 
 		/*==========================
@@ -108,7 +124,9 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
     	
     	var sendButton = document.getElementById("send");
     	
+    	 CKEDITOR.replace( 'editor1' );
     	
+    	  
     	$scope.Sendcontext = Sendcontext;
     	$scope.ClickNextButton = ClickNextButton;
     	$scope.ClickPreviousButton = ClickPreviousButton;
