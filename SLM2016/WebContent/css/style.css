@@ -588,15 +588,16 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 28, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .class-dropdown {
   position: relative;
+  margin-right: 20px;
 }
-/* line 30, ../scss/templates/_studentInfo.scss */
+/* line 31, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .class-dropdown .spin-style {
   display: inline-block;
   margin-right: 10px;
 }
-/* line 35, ../scss/templates/_studentInfo.scss */
+/* line 36, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .si-upload {
-  width: calc(100% - 436px);
+  width: calc(100% - 556px);
   margin-right: 20px;
   border: 1px solid #ccc;
   cursor: pointer;
@@ -604,11 +605,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-/* line 41, ../scss/templates/_studentInfo.scss */
+/* line 42, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .si-upload.is-empty {
   border: 1px solid #F14342;
 }
-/* line 44, ../scss/templates/_studentInfo.scss */
+/* line 45, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .si-upload .upload-title {
   width: 80px;
   height: 34px;
@@ -622,7 +623,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-size: 14px;
   color: #FFF;
 }
-/* line 55, ../scss/templates/_studentInfo.scss */
+/* line 56, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .si-upload .upload-name {
   display: inline-block;
   width: calc(100% - 100px);
@@ -635,41 +636,37 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   text-overflow: ellipsis;
   font-size: 14px;
 }
-/* line 68, ../scss/templates/_studentInfo.scss */
+/* line 69, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .si-control {
   width: 300px;
 }
-/* line 70, ../scss/templates/_studentInfo.scss */
+/* line 71, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .si-control .form-control {
   height: 36px;
 }
-/* line 74, ../scss/templates/_studentInfo.scss */
-.studentinfo .inner-wrapper .info .si-control-group .upload-btn {
-  margin-left: 20px;
-}
-/* line 77, ../scss/templates/_studentInfo.scss */
+/* line 75, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .result-container {
   display: none;
   width: 100px;
   margin-left: 20px;
 }
-/* line 81, ../scss/templates/_studentInfo.scss */
+/* line 79, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .result-container .label {
   height: 24px;
   line-height: 24px;
   padding: 0 10px;
   margin: auto 10px;
 }
-/* line 87, ../scss/templates/_studentInfo.scss */
+/* line 85, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .result-container .spin-style {
   margin: auto;
 }
-/* line 91, ../scss/templates/_studentInfo.scss */
+/* line 89, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-control-group .result-container.show-result {
   display: -webkit-flex;
   display: flex;
 }
-/* line 96, ../scss/templates/_studentInfo.scss */
+/* line 94, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-div {
   display: none;
   position: relative;
@@ -678,18 +675,18 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   width: 100%;
   overflow: hidden;
 }
-/* line 105, ../scss/templates/_studentInfo.scss */
+/* line 103, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-div table tr th {
   background-color: rgba(255, 93, 1, 0.8);
   color: #FFF;
 }
-/* line 112, ../scss/templates/_studentInfo.scss */
+/* line 110, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .info .si-div.show {
   display: block;
   border: 2px solid #ccc;
   border-top: none;
 }
-/* line 120, ../scss/templates/_studentInfo.scss */
+/* line 118, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar {
   height: 50px;
   line-height: 50px;
@@ -701,31 +698,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-/* line 126, ../scss/templates/_studentInfo.scss */
+/* line 124, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown {
   display: -webkit-inline-flex;
   display: inline-flex;
   position: relative;
   margin-left: 20px;
 }
-/* line 130, ../scss/templates/_studentInfo.scss */
+/* line 128, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown #class-label {
   margin: auto;
 }
-/* line 132, ../scss/templates/_studentInfo.scss */
+/* line 130, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown #class-label .spin-style {
   display: inline-block;
   margin-right: 10px;
 }
-/* line 137, ../scss/templates/_studentInfo.scss */
+/* line 135, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown .dropdown-menu {
   top: calc(100% - 10px);
 }
-/* line 139, ../scss/templates/_studentInfo.scss */
+/* line 137, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .class-dropdown .dropdown-menu li {
   cursor: pointer;
 }
-/* line 144, ../scss/templates/_studentInfo.scss */
+/* line 142, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .student-search {
   display: -webkit-inline-flex;
   display: inline-flex;
@@ -734,16 +731,16 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   vertical-align: top;
   float: right;
 }
-/* line 150, ../scss/templates/_studentInfo.scss */
+/* line 148, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-topbar .student-search .input-group {
   margin: auto;
   margin-right: 20px;
 }
-/* line 156, ../scss/templates/_studentInfo.scss */
+/* line 154, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .loader {
   margin-top: 20px;
 }
-/* line 159, ../scss/templates/_studentInfo.scss */
+/* line 157, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content {
   margin-top: 20px;
   background-color: #FFF;
@@ -754,7 +751,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-/* line 164, ../scss/templates/_studentInfo.scss */
+/* line 162, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .manage-title {
   height: 60px;
   line-height: 60px;
@@ -766,22 +763,22 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 3px;
   border-radius: 3px 3px 0 0;
 }
-/* line 173, ../scss/templates/_studentInfo.scss */
+/* line 171, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .table-content {
   padding-top: 10px;
 }
-/* line 178, ../scss/templates/_studentInfo.scss */
+/* line 176, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .table-content table thead tr th {
   height: 40px;
   line-height: 40px;
   padding: 0;
   text-align: left;
 }
-/* line 183, ../scss/templates/_studentInfo.scss */
+/* line 181, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .table-content table thead tr th:nth-of-type(0n+1) {
   padding-left: 20px;
 }
-/* line 191, ../scss/templates/_studentInfo.scss */
+/* line 189, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .table-content table tbody tr td {
   position: relative;
   height: 50px;
@@ -790,15 +787,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-size: 14px;
   text-align: left;
 }
-/* line 198, ../scss/templates/_studentInfo.scss */
+/* line 196, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .table-content table tbody tr td:nth-of-type(0n+1) {
   padding-left: 20px;
 }
-/* line 201, ../scss/templates/_studentInfo.scss */
+/* line 199, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .table-content table tbody tr td.empty {
   text-align: center;
 }
-/* line 205, ../scss/templates/_studentInfo.scss */
+/* line 203, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .table-content table tbody tr.selected {
   background-color: #D1E1FD;
 }

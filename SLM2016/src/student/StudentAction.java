@@ -9,6 +9,9 @@ import java.io.PrintWriter;
 import org.apache.poi.util.IOUtils;
 import com.google.gson.Gson;
 
+import courseManager.Course;
+import courseManager.CourseManagerWithDatabase;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -155,6 +158,7 @@ public class StudentAction extends HttpServlet {
 			if (studentDBManager.updateStudent(studentModel)) {
 				result.put("status", "true");
 			} else {
+
 				result.put("status", "false");
 			}
 
@@ -221,6 +225,13 @@ public class StudentAction extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void insertStudentFromGoogleForm(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException, SQLException {
+		// CourseManagerWithDatabase courseDB = new CourseManagerWithDatabase();
+		// System.out.println(courseDB.getCourseId("TTTT"));
+
 	}
 
 }

@@ -62,13 +62,14 @@ public class StudentDBManager {
 	public boolean insertStudent(StudentModel studentModel) throws SQLException {
 
 		String sql = String.format(
-				"INSERT INTO `student_info`(`name`, `email`, `nickname`, `phone`, `company`, `apartment`, `title`, `ticket_type`, `ticket_price`, `receipt_type`, `receipt_company_name`, `receipt_company_EIN`, `receipt_EIN`,`student_status`, `payment_status`, `receipt_status`, `vege_meat`, `team_members`, `comment`, `timestamp`, `fk_course_info_id`) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",
+				"INSERT INTO `student_info`(`name`, `email`, `nickname`, `phone`, `company`, `apartment`, `title`, `ticket_type`, `ticket_price`, `receipt_type`, `receipt_company_name`, `receipt_company_EIN`, `receipt_EIN`,`student_status`, `payment_status`, `receipt_status`, `vege_meat`, `team_members`, `comment`, `timestamp`, `fk_course_info_id`,`certification_img`,`certification_pdf`) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",
 				studentModel.getName(), studentModel.getEmail(), studentModel.getNickname(), studentModel.getPhone(),
 				studentModel.getCompany(), studentModel.getApartment(), studentModel.getTitle(),
 				studentModel.getTicketType(), studentModel.getTicketPrice(), studentModel.getReceiptType(),
 				studentModel.getReceiptCompanyName(), studentModel.getReceiptCompanyEIN(), studentModel.getReceiptEIN(),
 				"已報名", "未繳費", "未開立", studentModel.getVegeMeat(), studentModel.getTeamMembers(),
-				studentModel.getComment(), studentModel.getTimestamp(), studentModel.getFkCourseInfoId());
+				studentModel.getComment(), studentModel.getTimestamp(), studentModel.getFkCourseInfoId(),
+				studentModel.getCertificationImg(), studentModel.getCertificationPdf());
 
 		// "ON DUPLICATE KEY UPDATE `name` = '%s'
 
@@ -81,14 +82,15 @@ public class StudentDBManager {
 
 	public boolean updateStudent(StudentModel studentModel) {
 		String sql = String.format(
-				"UPDATE `student_info` SET `name`='%s',`email`='%s',`nickname`='%s',`phone`='%s',`company`='%s',`apartment`='%s',`title`='%s',`ticket_type`='%s',`ticket_price`='%s',`receipt_type`='%s',`receipt_company_name`='%s',`receipt_company_EIN`='%s',`receipt_EIN`='%s',`student_status`='%s',`payment_status`='%s',`receipt_status`='%s',`vege_meat`='%s',`team_members`='%s',`comment`='%s',`timestamp`='%s',`fk_course_info_id`='%s' WHERE `id` = `%s`",
+				"UPDATE `student_info` SET `name`='%s',`email`='%s',`nickname`='%s',`phone`='%s',`company`='%s',`apartment`='%s',`title`='%s',`ticket_type`='%s',`ticket_price`='%s',`receipt_type`='%s',`receipt_company_name`='%s',`receipt_company_EIN`='%s',`receipt_EIN`='%s',`student_status`='%s',`payment_status`='%s',`receipt_status`='%s',`vege_meat`='%s',`team_members`='%s',`comment`='%s',`timestamp`='%s',`fk_course_info_id`='%s',`certification_img` = '%s', `certification_pdf` = '%s' WHERE `id` = '%s'",
 				studentModel.getName(), studentModel.getEmail(), studentModel.getNickname(), studentModel.getPhone(),
 				studentModel.getCompany(), studentModel.getApartment(), studentModel.getTitle(),
 				studentModel.getTicketType(), studentModel.getTicketPrice(), studentModel.getReceiptType(),
 				studentModel.getReceiptCompanyName(), studentModel.getReceiptCompanyEIN(), studentModel.getReceiptEIN(),
 				studentModel.getStudentStatus(), studentModel.getPaymentStatus(), studentModel.getReceiptStatus(),
 				studentModel.getVegeMeat(), studentModel.getTeamMembers(), studentModel.getComment(),
-				studentModel.getTimestamp(), studentModel.getFkCourseInfoId(), studentModel.getId());
+				studentModel.getTimestamp(), studentModel.getFkCourseInfoId(), studentModel.getCertificationImg(),
+				studentModel.getCertificationPdf(), studentModel.getId());
 		if (slmDBUtility.updateSQL((sql))) {
 			return true;
 		} else {
@@ -127,6 +129,8 @@ public class StudentDBManager {
 			studentModel.setStudentStatus(map.get("student_status"));
 			studentModel.setPaymentStatus(map.get("payment_status"));
 			studentModel.setReceiptStatus(map.get("receipt_status"));
+			studentModel.setCertificationImg(map.get("certification_img"));
+			studentModel.setCertificationPdf(map.get("certification_pdf"));
 
 			return studentModel;
 
@@ -138,6 +142,15 @@ public class StudentDBManager {
 
 	public boolean deleteStudent(String phone) throws SQLException {
 		String sql = String.format("DELETE FROM `student_info` WHERE `student_info`.`phone` = '%s'", phone);
+		if (slmDBUtility.deleteSQL(sql)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean deleteStudentsByCourseId(String courseId) throws SQLException {
+		String sql = String.format("DELETE FROM `student_info` WHERE `fk_course_info_id` =  '%s'", courseId);
 		if (slmDBUtility.deleteSQL(sql)) {
 			return true;
 		} else {
