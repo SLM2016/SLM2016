@@ -24,8 +24,8 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
 			function setemailcontent(){
 				var con='title<br>'+
 				"Hi Erica "+
-				courseName.value+'<br>'+
-				studentName.value
+				parse[index].courseName+'<br>'+
+				parse[index].studentName
 				+"";
 				CK=CKEDITOR.instances['editor1'];
 				if (CK) {
@@ -71,11 +71,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
 
 			if(++index <= parse.length-1){	
 				previousButton.disabled = "";
-				courseName.value = parse[index].courseName;
-	    		studentName.value = parse[index].studentName;
-	    		date.value = parse[index].date;
-	    		studentId.value = parse[index].studentId;
-	    		couresDuration.value = parse[index].couresDuration;
+				setValue();
 			}	
 			if(index == parse.length-1){
 				nextButton.disabled = "disabled";
@@ -88,11 +84,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
 			
 			if(--index >= 0){
 				nextButton.disabled = "";
-				courseName.value = parse[index].courseName;
-	    		studentName.value = parse[index].studentName;
-	    		date.value = parse[index].date;
-	    		studentId.value = parse[index].studentId;
-	    		couresDuration.value = parse[index].couresDuration;
+				setValue();
 			}	
 			if(index == 0){
 				previousButton.disabled = "disabled";
