@@ -106,7 +106,7 @@ var app = angular.module('app', [
             views: {
                 'createCourse@': {
                     templateUrl: "templates/createCoursePage.html",
-                    controller: 'CreateCoursePageController'
+                    controller: 'CreateCoursePageController as ctrl'
                 }
             }
         })

@@ -36,7 +36,7 @@
 				<label for="companyName">梯次</label>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="Batch" placeholder="請輸入梯次" ng-model="data.batch">
+				<input type="text" class="form-control" id="Batch" placeholder="請輸入公開班梯次或企業內訓單位" ng-model="data.batch">
 			</div>		
 			<div class="ticketinput-wrapper company">
 				<div class="form-group id" >
@@ -146,7 +146,18 @@
 				<label for="companyName">狀態</label>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="Status" placeholder="準備中" DISABLED>
+				<div>
+					<input-dropdown
+						input-placeholder="選擇課程狀態"
+						input-name="status"
+						input-required="false"
+    					selected-item="ctrl.selectedDropdownStatusItem"
+    					default-dropdown-items="ctrl.dropdownStatusItems"
+    					filter-list-method="ctrl.filterStatusList(userInput)"
+          				item-selected-method="ctrl.itemStatusSelected(item)">
+  					</input-dropdown>
+  				</div>
+				<!-- <input type="text" class="form-control" id="Status" placeholder="準備中" DISABLED>-->
 			</div>
 			<div class="si-upload" >	
         		<input class="btn btn-info btn-orange" type="submit" value="瀏覽檔案" id="addattachment_button" name="addattachment_button" ngf-select="fileChanged($file)">

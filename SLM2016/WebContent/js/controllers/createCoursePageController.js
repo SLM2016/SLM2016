@@ -9,22 +9,17 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	var showDateList = [];
 	var typeSelected = null;
 	var ticketTypeSelected = null;
-	var typeTextBoxFlag = false ;
-	var ticketTextBoxFlag = false ;
+	var statusSelected = null;
 	
 	this.selectedDropdownTypeItem = null;
-	this.dropdownTypeItems = ['公開班', '企業內訓', '演講', '其他'];
+	this.dropdownTypeItems = ['公開班', '企業內訓', '演講'];
 	
 	this.filterTypeList = function(userInput) {
-		if(userInput != '其他' && typeTextBoxFlag){
-			var otherType = document.getElementById("otherTypeDiv");
-			otherType.innerHTML = "";
-			typeTextBoxFlag = false;
-		}
+		typeSelected = userInput;
         var filter = $q.defer();
-        var normalisedInput = userInput.toLowerCase();
-        var filteredArray = this.dropdownTypeItems.filter(function(country) {
-        	return country.toLowerCase().indexOf(normalisedInput) == 0;
+        //var normalisedInput = userInput.toLowerCase();
+        var filteredArray = this.dropdownTypeItems.filter(function(type) {
+        	return type.toLowerCase().indexOf('') == 0;
         });
         filter.resolve(filteredArray);
         return filter.promise;
@@ -32,37 +27,17 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     
     this.itemTypeSelected = function(item) {
     	typeSelected = item;
-    	if((item == '其他') && !typeTextBoxFlag){
-    		var otherType = document.getElementById("otherTypeDiv");
-    		var textbox = document.createElement("input");
-    		textbox.type = "text";
-    		textbox.name = "otherType";
-    		textbox.value = "";
-    		otherType.appendChild(textbox);
-    		typeTextBoxFlag = true;
-    	}
-    	else{
-    		if(item != '其他' && typeTextBoxFlag){
-    			var otherType = document.getElementById("otherTypeDiv");
-    			otherType.innerHTML = "";
-    			typeTextBoxFlag = false;
-    		}
-    	}
     };
     
     this.selectedDropdownTicketTypeItem = null;
-    this.dropdownTicketTypeItems = ['原價', '早鳥', '泰迪之友', '四人團報', '其他'];
+    this.dropdownTicketTypeItems = ['原價', '早鳥', '泰迪之友', '四人團報'];
 	
     this.filterTicketTypeList = function(userInput) {
-    	if(userInput != '其他' && ticketTextBoxFlag){
-			var otherTicket = document.getElementById("otherTicket");
-			otherTicket.innerHTML = "";
-			ticketTextBoxFlag = false;
-		}
+    	ticketTicketTypeSelected = userInput;
         var filter = $q.defer();
-        var normalisedInput = userInput.toLowerCase();
-        var filteredArray = this.dropdownTicketTypeItems.filter(function(country) {
-        	return country.toLowerCase().indexOf(normalisedInput) == 0;
+        //var normalisedInput = userInput.toLowerCase();
+        var filteredArray = this.dropdownTicketTypeItems.filter(function(ticketType) {
+        	return ticketType.toLowerCase().indexOf('') == 0;
         });
         filter.resolve(filteredArray);
         return filter.promise;
@@ -70,22 +45,24 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
       
     this.itemTicketTypeSelected = function(item) {
     	ticketTicketTypeSelected = item;
-    	if((item == '其他') && !ticketTextBoxFlag){
-    		var otherTicket = document.getElementById("otherTicket");
-    		var textbox = document.createElement("input");
-    		textbox.type = "text";
-    		textbox.name = "otherTicket";
-    		textbox.value = "";
-    		otherTicket.appendChild(textbox);
-    		ticketTextBoxFlag = true;
-    	}
-    	else{
-    		if(item != '其他' && ticketTextBoxFlag){
-    			var otherTicket = document.getElementById("otherTicket");
-    			otherTicket.innerHTML = "";
-    			ticketTextBoxFlag = false;
-    		}
-    	}
+    };
+    
+    this.selectedDropdownStatusItem = null;
+    this.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
+	
+    this.filterStatusList = function(userInput) {
+    	statusSelected = userInput;
+        var filter = $q.defer();
+        //var normalisedInput = userInput.toLowerCase();
+        var filteredArray = this.dropdownTicketTypeItems.filter(function(ticketType) {
+        	return ticketType.toLowerCase().indexOf('') == 0;
+        });
+        filter.resolve(filteredArray);
+        return filter.promise;
+    };
+      
+    this.itemStatusSelected = function(item) {
+    	statusSelected = item;
     };
 	
 	function getTeddyCourseData() {
@@ -112,14 +89,8 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 			data.lecturer_ = $scope.data.lecturer;
 			data.hyperlink_ = $scope.data.hyperlink;
 			data.ccAddresses_ = $scope.showCcList;
-			if(typeSelected=='其他'){
-				var otherType = document.getElementsByName('otherType')[0].value;
-				data.type_ = otherType;
-			}
-			else{
-				data.type_ = typeSelected;
-			}
-			data.status_ = "準備中";
+			data.type_ = typeSelected;
+			data.status_ = statusSelected;
 			$.post("/SLM2016/CourseManagerServlet",
 				JSON.stringify(data)).done(function(data) {
 					window.alert(data);
@@ -130,10 +101,6 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 
 	var clickAddTicketButton=function() {
 		var regex=/^[a-zA-Z]+$/;
-		if(ticketTicketTypeSelected=='其他'){
-			var otherTicket = document.getElementsByName('otherTicket')[0].value;
-			ticketTicketTypeSelected = otherTicket;
-		}
 		if(((ticketTicketTypeSelected) == null) ||(($scope.data.price) == null)||(($scope.data.price.length) == 0)|((ticketTicketTypeSelected.length) == 0)){
 			window.alert("課程票價或票種請修正");
 		}
