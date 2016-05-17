@@ -144,4 +144,13 @@ public class StudentDBManager {
 			return false;
 		}
 	}
+
+	public boolean deleteStudentsByCourseId(String courseId) throws SQLException {
+		String sql = String.format("DELETE FROM `student_info` WHERE `fk_course_info_id` =  '%s'", courseId);
+		if (slmDBUtility.deleteSQL(sql)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
