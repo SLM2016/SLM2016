@@ -37,11 +37,10 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
     		studentName.value = parse[index].studentName;
     		date.value = parse[index].date;
     		studentId.value = parse[index].studentId;
-    		couresDuration.value = parse[index].couresDuration;
+    		couresDuration.value = parse[index].couresDuration;    		
 		}
 		
 		var ClickNextButton = function(){	
-			console.debug(tinyMCE.activeEditor.getContent());
 			if(++index <= parse.length-1){	
 				previousButton.disabled = "";
 				courseName.value = parse[index].courseName;
