@@ -81,7 +81,7 @@ public class StudentDBManager {
 
 	public boolean updateStudent(StudentModel studentModel) {
 		String sql = String.format(
-				"UPDATE `student_info` SET `name`='%s',`email`='%s',`nickname`='%s',`phone`='%s',`company`='%s',`apartment`='%s',`title`='%s',`ticket_type`='%s',`ticket_price`='%s',`receipt_type`='%s',`receipt_company_name`='%s',`receipt_company_EIN`='%s',`receipt_EIN`='%s',`student_status`='%s',`payment_status`='%s',`receipt_status`='%s',`vege_meat`='%s',`team_members`='%s',`comment`='%s',`timestamp`='%s',`fk_course_info_id`='%s' WHERE `id` = `%s`",
+				"UPDATE `student_info` SET `name`='%s',`email`='%s',`nickname`='%s',`phone`='%s',`company`='%s',`apartment`='%s',`title`='%s',`ticket_type`='%s',`ticket_price`='%s',`receipt_type`='%s',`receipt_company_name`='%s',`receipt_company_EIN`='%s',`receipt_EIN`='%s',`student_status`='%s',`payment_status`='%s',`receipt_status`='%s',`vege_meat`='%s',`team_members`='%s',`comment`='%s',`timestamp`='%s',`fk_course_info_id`='%s' WHERE `id` = '%s'",
 				studentModel.getName(), studentModel.getEmail(), studentModel.getNickname(), studentModel.getPhone(),
 				studentModel.getCompany(), studentModel.getApartment(), studentModel.getTitle(),
 				studentModel.getTicketType(), studentModel.getTicketPrice(), studentModel.getReceiptType(),

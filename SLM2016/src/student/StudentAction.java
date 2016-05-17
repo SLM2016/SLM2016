@@ -155,6 +155,7 @@ public class StudentAction extends HttpServlet {
 			if (studentDBManager.updateStudent(studentModel)) {
 				result.put("status", "true");
 			} else {
+
 				result.put("status", "false");
 			}
 
