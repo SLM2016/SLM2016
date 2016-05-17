@@ -1,15 +1,33 @@
 app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams', '$timeout', '$rootScope', 'StudentInfoService',  
     function ($scope, $state, $stateParams, $timeout, $rootScope, StudentInfoService) {  
-	
+
+			function getcontext(){
+			  				  
+			   var saveData = $.ajax({
+			        url: "http://httpbin.org/post",
+			        type: "POST",
+			        data: { emailcontent:g, method: "example" },
+			        dataType: "json"
+			    });
+			}
+
+
+			function setcontent(d){
+			 	CKEDITOR.instances.editor1.setData(d);
+			
+			}
+			function getcontent() {
+			  	  return CKEDITOR.instances.editor1.getData();
+			}
+			function example(){
+				setcontent('<a href="http://www.w3schools.com/html/">Visit our HTML tutorial</a>');
+				console.debug(getcontent());
+			}
+
+
+		
 		var Sendcontext =function(){
-			console.debug(tinyMCE.activeEditor.getContent());
-	  	    var i=tinyMCE.get("con").getContent();
-	  	    var g=tinyMCE.activeEditor.getContent({format : 'raw'});
-	  	      var saveData =
-  	    	$.ajax({url: "http://httpbin.org/post",
-		  	        type: "POST",
-		  	        data: { emailcontent:g, method: "example"},
-		  	        dataType: "json"});
+			example();
 	  	    
 	  	    
 	  	}
@@ -57,10 +75,8 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
     		if(parse.length-1 > 0){
     			nextButton.disabled = "";
     		}
-    		tinymce.init({  selector:'textarea',
-			    			theme:"modern",
-			    			plugins: [" autolink link"],
-			    			menubar: false,toolbar: "link" });
+    		 CKEDITOR.replace( 'editor1' );
+    		
         }
 
 		/*==========================
