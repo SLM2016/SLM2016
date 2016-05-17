@@ -123,7 +123,9 @@ public class StudentAction extends HttpServlet {
 		String result = null;
 					
 		try {
-			result = studentDbManager.getSendMailInfo(studentSendMailData);			
+			result = studentDbManager.getSendMailInfo(studentSendMailData);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(result);
 		} catch (SQLException e) {
 			e.printStackTrace();
