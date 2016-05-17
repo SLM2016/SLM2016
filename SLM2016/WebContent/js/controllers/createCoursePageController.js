@@ -95,18 +95,11 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     //set Status dropdownList
     this.selectedDropdownStatusItem = null;
     this.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
-	
+    
     this.filterStatusList = function(userInput) {
-    	statusSelected = userInput;
-        var filter = $q.defer();
-        //var normalisedInput = userInput.toLowerCase();
-        var filteredArray = this.dropdownTicketTypeItems.filter(function(ticketType) {
-        	return ticketType.toLowerCase().indexOf('') == 0;
-        });
-        filter.resolve(filteredArray);
-        return filter.promise;
+    	statusSelected = '';
     };
-      
+    
     this.itemStatusSelected = function(item) {
     	statusSelected = item;
     };
@@ -178,7 +171,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		}
 		else{
 			if(lastAtPos < lastDotPos && lastAtPos > 0 && ($scope.data.ccAddresses).indexOf('@@') == -1 && lastDotPos > 2 && (($scope.data.ccAddresses).length - lastDotPos) > 2){
-				$scope.ShowCcList.push($scope.data.ccAddresses);
+				$scope.showCcList.push($scope.data.ccAddresses);
 				$scope.data.ccAddresses = null;
 			}
 			else{
@@ -217,8 +210,16 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 			window.alert("課程名稱欄位不可為空白");
 			return;
 		}
+		if(((statusSelected)== null)){
+			window.alert("狀態欄位不可為空白");
+			return;
+		}
 		if(((courseNameSelected)== 0)){
-			window.alert("欄位不可為空白");
+			window.alert("課程名稱欄位不可為空白");
+			return;
+		}
+		if(((statusSelected)== 0)){
+			window.alert("狀態欄位不正確");
 			return;
 		}
 		addCourse();
