@@ -7,10 +7,35 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	var showticketList = [];
 	var updateticketsList = [];
 	var showDateList = [];
+	
+	var courseNameSelected = null;
+	var locationSelected = null;
 	var typeSelected = null;
 	var ticketTypeSelected = null;
 	var statusSelected = null;
 	
+	//set CourseName dropdownList
+	this.selectedDropdownCourseNameItem = null;
+	this.dropdownCourseNameItems = ['Scrum敏捷方法實作班', '看板方法與精實開發實作班', '軟體重構入門實作班', '敏捷產品經理實作班', 
+	                                '敏捷大師百寶箱系列課程', 'Design Patterns入門實作班', 'Design Patterns進階實作班', 
+	                                '單元測試與持續整合實作班', '例外處理設計與重構實作班'];
+	
+	this.filterCourseNameList = function(userInput) {
+		courseNameSelected = userInput;
+        var filter = $q.defer();
+        //var normalisedInput = userInput.toLowerCase();
+        var filteredArray = this.dropdownCourseNameItems.filter(function(type) {
+        	return type.toLowerCase().indexOf('') == 0;
+        });
+        filter.resolve(filteredArray);
+        return filter.promise;
+    };
+    
+    this.itemCourseNameSelected = function(item) {
+    	courseNameSelected = item;
+    };
+	
+	//set Type dropdownList
 	this.selectedDropdownTypeItem = null;
 	this.dropdownTypeItems = ['公開班', '企業內訓', '演講'];
 	
@@ -29,6 +54,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     	typeSelected = item;
     };
     
+    //set TicketType dropdownList
     this.selectedDropdownTicketTypeItem = null;
     this.dropdownTicketTypeItems = ['原價', '早鳥', '泰迪之友', '四人團報'];
 	
@@ -47,6 +73,26 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     	ticketTicketTypeSelected = item;
     };
     
+    //set Location dropdownList
+    this.selectedLocationItem = null;
+	this.dropdownLocationItems = ['延平南路12號4樓', '北科科研1622室', '北科育成305室', '北科育成201室'];
+	
+	this.filterLocationList = function(userInput) {
+		locationSelected = userInput;
+        var filter = $q.defer();
+        //var normalisedInput = userInput.toLowerCase();
+        var filteredArray = this.dropdownLocationItems.filter(function(type) {
+        	return type.toLowerCase().indexOf('') == 0;
+        });
+        filter.resolve(filteredArray);
+        return filter.promise;
+    };
+    
+    this.itemLocationSelected = function(item) {
+    	locationSelected = item;
+    };
+    
+    //set Status dropdownList
     this.selectedDropdownStatusItem = null;
     this.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
 	
@@ -79,13 +125,14 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	
 	function addCourse() {
 			var data = new Object();
-			data.courseName_ = $scope.data.courseName;
+			console.log(courseNameSelected);
+			data.courseName_ = courseNameSelected;
 			data.batch_ = $scope.data.batch;
 			data.dates_ = $scope.showDateList;
 			data.duration_ = $scope.data.duration;
 			data.ticketTypes_ = $scope.ticketTypeList;
 			data.prices_ = $scope.ticketPriceList;
-			data.location_ = $scope.data.location;
+			data.location_ = locationSelected;
 			data.lecturer_ = $scope.data.lecturer;
 			data.hyperlink_ = $scope.data.hyperlink;
 			data.ccAddresses_ = $scope.showCcList;
@@ -166,11 +213,11 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	}
 	
 	function checkInput(){
-		if((($scope.data.courseName)== null)){
+		if(((courseNameSelected)== null)){
 			window.alert("課程名稱欄位不可為空白");
 			return;
 		}
-		if((($scope.data.courseName.length)== 0)){
+		if(((courseNameSelected)== 0)){
 			window.alert("欄位不可為空白");
 			return;
 		}
