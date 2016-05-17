@@ -19,6 +19,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
 
         var changeStudentList = function(course) {
             $scope.currentCourse = course;
+            $scope.studentList = [];
             getStudentList();
         }
 
@@ -62,7 +63,6 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
 
             StudentInfoService.updateStudentReceiptStatus(student.receipt_EIN,student.payment_status,student.receipt_status,student.id).then(function(result) 
             {
-                //getStudentList();
                 for (var i = 0; i < $scope.studentList.length; i++) {
                     if($scope.studentList[i].id == student.id) {
                         $scope.studentList[i].receipt_EIN = student.receipt_EIN;
