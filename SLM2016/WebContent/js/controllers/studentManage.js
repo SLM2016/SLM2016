@@ -53,6 +53,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         			mailData[i].studentName = $scope.studentList[j].name;
         			mailData[i].courseId = $scope.studentList[j].fk_course_info_id;
         			mailData[i].date = $scope.studentList[j].timestamp;
+        			mailData[i].address = $scope.studentList[j].email;
         			i++;
         		} 
         	}        	
@@ -65,7 +66,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
                     	mailData[i].couresDuration = parse[j].duration;
                     	j++;
                 	}               	
-                }
+                }             
                 $state.go('studentInfo.Sendmail', {'showData' : JSON.stringify(mailData)});
             }, function(error) {
             	console.log('Get DB Has Error');

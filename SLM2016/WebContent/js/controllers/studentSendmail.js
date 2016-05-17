@@ -26,10 +26,15 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
 
 
 		
-		var Sendcontext =function(){
-			example();
-	  	    
-	  	    
+		var Send =function(){
+			var mailData = [];
+			mailData[0] = new Object();
+			mailData[0].address = $scope.studentList[j].email;
+			$.post("/SLM2016/SendGmailServlet",JSON.stringify(mailData))
+			.done(function(data)
+			{
+				
+			});
 	  	}
 	  
 		var setValue = function(){ 		
@@ -108,7 +113,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
     	var sendButton = document.getElementById("send");
     	
     	
-    	$scope.Sendcontext = Sendcontext;
+    	$scope.Send = Send;
     	$scope.ClickNextButton = ClickNextButton;
     	$scope.ClickPreviousButton = ClickPreviousButton;
     	
