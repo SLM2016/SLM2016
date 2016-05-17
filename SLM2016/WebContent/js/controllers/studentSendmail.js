@@ -33,14 +33,14 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
 					   CKEDITOR.add(CK);
 				 }
 				CKEDITOR.instances.editor1.setData(con);
-
+				console.log(getcontent());
 			}
 
 
 		
 		var Sendcontext =function(){
+		
 			
-	  	    
 	  	}
 	  
 		var setValue = function(){ 		
@@ -48,11 +48,11 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
     		studentName.value = parse[index].studentName;
     		date.value = parse[index].date;
     		studentId.value = parse[index].studentId;
-    		couresDuration.value = parse[index].couresDuration;
+    		couresDuration.value = parse[index].couresDuration;    		
 		}
 		
 		var ClickNextButton = function(){	
-			
+
 			if(++index <= parse.length-1){	
 				previousButton.disabled = "";
 				courseName.value = parse[index].courseName;

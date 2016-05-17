@@ -40,8 +40,13 @@ public class SendGmailServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String requestString = request.getReader().readLine();
 		String header = request.getHeader("isSend");
+		String headerCertification = request.getHeader("isSendCertification");
 		if (header != null) {
 			doPostClassIndex(request, response, requestString);
+			return;
+		}
+		if(headerCertification != null) {
+			doPostSendMailAttachment(request, response, requestString);
 			return;
 		}
 		doPostSendMail(request, response, requestString);
@@ -90,5 +95,32 @@ public class SendGmailServlet extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
+	}
+	
+	private void doPostSendMailAttachment(HttpServletRequest request, HttpServletResponse response, String requestString)
+			throws ServletException, IOException {
+		Gson gson = new Gson();
+		StudentSelectedIndex sendStudentIndex = gson.fromJson(requestString, StudentSelectedIndex.class);
+		
+		String addresses = sendStudentIndex.getAddresses();
+		String ccAddresses = sendStudentIndex.getCCAddresses();
+		String text = sendStudentIndex.getText();
+		byte[] attachment = sendStudentIndex.getAttachment();
+		
+		String username = "news.teddysoft.tw@gmail.com";
+		String password = "clfddzifoyfvvxqa";
+		GmailSender gmailSender = new GmailSender(username, password);
+		String subject = "感謝您";
+		String result = "";
+		result = gmailSender.send(addresses, ccAddresses, subject, text, attachment);
+		String json = new Gson().toJson(result);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(json);
+		System.out.println(subject);
+		System.out.println(addresses);
+		System.out.println(ccAddresses);
+		System.out.println(attachment);
+		System.out.println(text);
 	}
 }
