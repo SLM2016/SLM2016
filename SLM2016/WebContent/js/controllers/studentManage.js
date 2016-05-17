@@ -60,7 +60,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         	StudentInfoService.getSendMailInfo(JSON.stringify(mailData)).then(function(courseData) {
                 var parse = JSON.parse(JSON.stringify(courseData));
                 for(var i = 0, j = 0; i < mailData.length; i++){
-                	if(parse[j].id == mailData[i].courseId){
+                	if( (j < parse.length) && (parse[j].id == mailData[i].courseId)){
                 		mailData[i].courseName = parse[j].name;
                     	mailData[i].couresDuration = parse[j].duration;
                     	j++;
