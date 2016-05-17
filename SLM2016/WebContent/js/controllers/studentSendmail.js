@@ -47,6 +47,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
 			{
 				
 			});
+		}
 	  
 		var setValue = function(){ 		
 			courseName.value = parse[index].courseName;
@@ -129,14 +130,10 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
     	
     	var sendButton = document.getElementById("send");
     	
-    	 CKEDITOR.replace( 'editor1' );
+    	CKEDITOR.replace( 'editor1' );
     	
-<<<<<<< HEAD
+
     	$scope.Send = Send;
-=======
-    	  
-    	$scope.Sendcontext = Sendcontext;
->>>>>>> 1e85afd33eea82e98bda4fc0961319ac0aa60243
     	$scope.ClickNextButton = ClickNextButton;
     	$scope.ClickPreviousButton = ClickPreviousButton;
     	
