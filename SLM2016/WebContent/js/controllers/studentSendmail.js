@@ -38,14 +38,24 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
 
 
 		
-		var Send =function(){
-			var mailData = [];
-			mailData[0] = new Object();
-			mailData[0].address = $scope.studentList[j].email;
-			$.post("/SLM2016/SendGmailServlet",JSON.stringify(mailData))
-			.done(function(data)
-			{
-				
+		var Send =function(){	
+			var mailData = new Object();
+			//mailData.addresses_ = parse[index].email;
+			mailData.addresses_ = "t100310313@ntut.org.tw";
+			mailData.ccAddresses_ = "t100310313@ntut.org.tw";
+			mailData.text_ = getcontent();
+			mailData.attachment_ = "1231231";
+			$.ajax({
+			    url: 'SendGmailServlet',
+			    type: 'post',
+			    data: JSON.stringify(mailData),
+			    headers: {
+			    	isSendCertification: 1
+			    },
+			    dataType: 'json',
+			    success: function (data) {
+			        console.log(data);
+			    }
 			});
 		}
 	  

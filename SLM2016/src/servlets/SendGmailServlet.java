@@ -99,28 +99,29 @@ public class SendGmailServlet extends HttpServlet {
 	
 	private void doPostSendMailAttachment(HttpServletRequest request, HttpServletResponse response, String requestString)
 			throws ServletException, IOException {
+		System.out.println(requestString);
 		Gson gson = new Gson();
 		StudentSelectedIndex sendStudentIndex = gson.fromJson(requestString, StudentSelectedIndex.class);
 		
 		String addresses = sendStudentIndex.getAddresses();
 		String ccAddresses = sendStudentIndex.getCCAddresses();
 		String text = sendStudentIndex.getText();
-		byte[] attachment = sendStudentIndex.getAttachment();
+//		byte[] attachment = sendStudentIndex.getAttachment();
 		
 		String username = "news.teddysoft.tw@gmail.com";
 		String password = "clfddzifoyfvvxqa";
 		GmailSender gmailSender = new GmailSender(username, password);
 		String subject = "感謝您";
 		String result = "";
-		result = gmailSender.send(addresses, ccAddresses, subject, text, attachment);
+		result = gmailSender.send(addresses, ccAddresses, subject, text, null);
 		String json = new Gson().toJson(result);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
-		System.out.println(subject);
-		System.out.println(addresses);
-		System.out.println(ccAddresses);
-		System.out.println(attachment);
-		System.out.println(text);
+//		System.out.println(subject);
+//		System.out.println(addresses);
+//		System.out.println(ccAddresses);
+//		System.out.println(attachment);
+//		System.out.println(text);
 	}
 }
