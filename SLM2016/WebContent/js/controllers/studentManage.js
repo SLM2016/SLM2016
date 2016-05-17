@@ -19,6 +19,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
 
         var changeStudentList = function(course) {
             $scope.currentCourse = course;
+            $scope.studentList = [];
             getStudentList();
         }
 
