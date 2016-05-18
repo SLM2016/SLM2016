@@ -383,7 +383,7 @@ public class CourseManagerWithDatabase {
 		return result;
 	}
 	
-	public String getAllCourseIdAndName(){
+	public String getAllCourseIdAndName() throws SQLException{
 		SqlHelper helper = new SqlHelper();
 		String sqlString = "SELECT * FROM `course_info`'";
 		CachedRowSet data = new CachedRowSetImpl();
