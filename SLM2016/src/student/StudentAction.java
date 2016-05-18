@@ -345,7 +345,12 @@ public class StudentAction extends HttpServlet {
 		String ccAddresses = courseManagerWithDatabase.getCcAddressByCourseId(courseId);
 		String hyperlink = courseManagerWithDatabase.getHyperlinkByCourseId(courseId);
 		
-		sendApplySuccessfullyMail.Send(name, email, ccAddresses, courseName, hyperlink);
+		if(courseId!=null){
+			sendApplySuccessfullyMail.Send(name, email, ccAddresses, courseName, hyperlink);
+		}
+		else{
+	        System.out.println("No Match Course!!!");
+	    }
 
 		return sendResult;
 	}
