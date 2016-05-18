@@ -72,7 +72,7 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 			else {
 				$scope.isFileEmpty = false;
 			}
-			if(isCourseEmpty) {
+			if($scope.isCourseEmpty) {
 				return;
 			}
 			$scope.isUploadFail = false;
