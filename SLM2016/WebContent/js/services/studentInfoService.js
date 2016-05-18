@@ -2,6 +2,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 	function($q, $rootScope, $http, Upload) {
 		
 		var factory = this;
+		var studentSendmailDataArray;
 
 		// 讀取Excel檔並轉成Json格式
         var readFile = function(file, readCells, toJSON) {
@@ -55,6 +56,34 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 
             return defer.promise;
         }
+		
+		// 取得寄出郵件資料
+		var getSendMailInfo = function(mailData) {
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/StudentAction",
+                method: "GET",
+                params: {
+                    op: 3,
+                    mailData: mailData
+                }
+            }).success(function(courseData) {
+                defer.resolve(courseData);
+            }).error(function(courseData, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+		
+		var putStudentSendMailData = function(data){
+			studentSendmailDataArray = data;
+		}
+		
+		var getStudentSendMailData = function(){
+			return JSON.stringify(studentSendmailDataArray);
+		} 
 
         var getStudentListByCourseId = function(courseId) {
             var defer = $q.defer();
@@ -131,6 +160,9 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.readFile = readFile;
         factory.uploadStudentFile = uploadStudentFile;
         factory.getStudentList = getStudentList;
+        factory.getSendMailInfo = getSendMailInfo;
+        factory.putStudentSendMailData = putStudentSendMailData;
+        factory.getStudentSendMailData = getStudentSendMailData;
         factory.getStudentListByCourseId = getStudentListByCourseId;
         factory.saveStudentFile = saveStudentFile;
         factory.updateStudentReceiptStatus = updateStudentReceiptStatus;

@@ -13,6 +13,8 @@ import com.google.gson.Gson;
 import courseManager.CourseManagerWithDatabase;
 import mailSending.SendApplySuccessfullyMail;
 
+import java.io.StringReader;
+import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,17 +32,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
+import com.jspsmart.upload.SmartUpload;
+
 @WebServlet("/StudentAction")
 @MultipartConfig()
 public class StudentAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	private static final String OP_INSERT_INTO_STUDENT = "1";
 	private static final String OP_GET_STUDENT_LIST = "2";
 	private static final String OP_INSERT_STUDENT_FROM_GOOGLE_FORM = "3";
 	private static final String OP_SAVE_STUDENT_EXCEL_FILE = "4";
 	private static final String OP_GET_STUDENT_LIST_BY_COURSE_ID = "5";
 	private static final String OP_UPDATE_STUDENT_RECEIPT_STATUS = "6";
+	private static final String OP_GET_SENDMAILINFO = "7";
 
 	private static Gson gson = new Gson();
 
@@ -50,11 +58,14 @@ public class StudentAction extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
 		String op = request.getParameter("op");
 		switch (op) {
 		case OP_GET_STUDENT_LIST:
 			getStudentList(request, response);
+			break;
+		case OP_GET_SENDMAILINFO:
+			getSendMailInfo(request, response);
 			break;
 		case OP_GET_STUDENT_LIST_BY_COURSE_ID:
 			getStudentListByCourseId(request, response);
@@ -62,7 +73,7 @@ public class StudentAction extends HttpServlet {
 		default:
 			break;
 		}
-
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -99,7 +110,7 @@ public class StudentAction extends HttpServlet {
 		// Gson gson = new Gson();
 		// out.println(gson.toJson(result));
 	}
-
+	
 	private Map<String, Object> getGoogleFormData(HttpServletRequest request) throws IOException {
 		request.setCharacterEncoding("UTF-8");
 
@@ -121,10 +132,10 @@ public class StudentAction extends HttpServlet {
 	private void getStudentList(HttpServletRequest request, HttpServletResponse response) {
 		StudentDBManager studentDbManager = new StudentDBManager();
 		String json = null;
-
+		
 		try {
 			json = studentDbManager.getStudentList();
-
+			
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
@@ -134,8 +145,28 @@ public class StudentAction extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
+	
+	private void getSendMailInfo(HttpServletRequest request, HttpServletResponse response) {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        StudentSendMailData[] studentSendMailData = gson.fromJson(request.getParameter("mailData"), StudentSendMailData[].class);
+        
+		StudentDBManager studentDbManager = new StudentDBManager();
+		String result = null;
+					
+		try {
+			result = studentDbManager.getSendMailInfo(studentSendMailData);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	private void insertIntoStudent(HttpServletRequest request, HttpServletResponse response)
+
 			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		// final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
@@ -150,11 +181,11 @@ public class StudentAction extends HttpServlet {
 			StudentModelFactory factory = new StudentModelFactory(filePart.getInputStream(), courseId);
 
 			ArrayList<StudentModel> arr = factory.buildStudentModelArray();
-			StudentDBManager studentDbManager = new StudentDBManager();
+				StudentDBManager studentDbManager = new StudentDBManager();
 			for (StudentModel s : arr) {
 				// System.out.println(s.getComment());
 				studentDbManager.insertStudent(s);
-			}
+				}
 
 			result.put("status", "true");
 		} catch (Exception e) {
@@ -190,7 +221,7 @@ public class StudentAction extends HttpServlet {
 			} else {
 
 				result.put("status", "false");
-			}
+}
 
 		} catch (Exception e) {
 			result.put("status", "false");

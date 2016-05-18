@@ -8,6 +8,7 @@ import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Base64;
 import javax.imageio.ImageIO;
@@ -126,6 +127,7 @@ public class CertificationManager {
 	      Base64.Encoder base64Encoder = Base64.getEncoder();
 	      base64EncodedCertificationToPDF_ = base64Encoder.encodeToString(byteArrayOutputStream.toByteArray());
 	      byteArrayOutputStream.close();
+      
 	    }
 	    catch (Exception e) {
 	      e.printStackTrace();
