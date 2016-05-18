@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import student.StudentDBManager;
+import student.StudentModel;
 
 public class StudentDBManagerTest {
 
@@ -26,31 +27,34 @@ public class StudentDBManagerTest {
 
 	@Test
 	public void testStudentDBManager() {
-		ArrayList<HashMap> array = new ArrayList<HashMap>();
+		ArrayList<HashMap<String, String>> array = new ArrayList<HashMap<String, String>>();
 		boolean boolResult = false;
 		StudentDBManager studentDBManager = new StudentDBManager();
+		StudentModel s = new StudentModel();
 		String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-		String ticketType = "票的種類";
-		String name = "測試名";
+		s.setTimestamp(timestamp);
+		s.setTicketType("票的種類");
+		// String name = "測試名";
+		s.setName("測試名");
 		String nickname = "測試用";
+		s.setNickname(nickname);
 		String email = "testHelloEmail@gmail.com";
-		String phone = "0912399888";
+		s.setEmail(email);
+		String phone = "0912-987654";
+		s.setPhone(phone);
 		String company = "測試公司";
+		s.setCompany(company);
 		String apartment = "測試部門";
+		s.setApartment(apartment);
 		String title = "測試用";
+		s.setTitle(title);
 		String vegeMeat = "葷食";
+		s.setVegeMeat(vegeMeat);
 		String receiptType = "二聯式";
-		String companyNameAndEIN = "";
-		String classInfo = "測試";
-		String hasScrum = "測試";
-		String flowOk = "測試";
-		String teamMembers = "測試";
-		String comment = "測試";
+		s.setReceiptType(receiptType);
 
 		try {
-			studentDBManager.insertStudent(name, email, nickname, phone, company, apartment, title, ticketType,
-					vegeMeat, receiptType, companyNameAndEIN, classInfo, hasScrum, flowOk, teamMembers, comment,
-					timestamp);
+			studentDBManager.insertStudent(s);
 
 			array = studentDBManager.getStudentByPhone(phone);
 

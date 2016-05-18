@@ -25,12 +25,23 @@
             .si-control-group {
                 @include display-flex(flex);
                 height: 35px;
+                .class-dropdown {
+                    position: relative;
+                    margin-right: 20px;
+                    .spin-style {
+                        display: inline-block;
+                        margin-right: 10px;
+                    }
+                }
                 .si-upload {
-                    width: calc(100% - 400px);
+                    width: calc(100% - 556px);
                     margin-right: 20px;
                     border: 1px solid #ccc;
                     cursor: pointer;
                     @include border-radius(3px);
+                    &.is-empty {
+                        border: 1px solid #F14342;
+                    }
                     .upload-title {
                         width: 80px;
                         height: 34px;
@@ -61,17 +72,15 @@
                         height: 36px;
                     }
                 }
-                .upload-btn {
-                    margin-left: 20px;
-                }
                 .result-container {
                     display: none;
                     width: 100px;
+                    margin-left: 20px;
                     .label {
                         height: 24px;
                         line-height: 24px;
                         padding: 0 10px;
-                        margin: auto;
+                        margin: auto 10px;
                     }
                     .spin-style {
                         margin: auto;
@@ -118,6 +127,10 @@
                     margin-left: 20px;
                     #class-label {
                         margin: auto;
+                        .spin-style {
+                            display: inline-block;
+                            margin-right: 10px;
+                        }
                     }
                     .dropdown-menu {
                         top: calc(100% - 10px);
@@ -182,6 +195,9 @@
                                     text-align: left;
                                     &:nth-of-type(0n+1) {
                                         padding-left: 20px;
+                                    }
+                                    &.empty {
+                                        text-align: center;
                                     }
                                 }
                                 &.selected {

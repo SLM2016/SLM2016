@@ -17,14 +17,15 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         }
         
         // 上傳學員資料並存入DB
-		var uploadStudentFile = function (file) {
+		var uploadStudentFile = function (file, courseId) {
 		    var defer = $q.defer();
 				
 		    Upload.upload({
 		        url: '/SLM2016/StudentAction',
 		        withCredential: true,
 		        data: {
-		            op: 1
+		            op: 1,
+                    courseId: courseId
 		        },
 		        file: file
 		    }).success(function(file) {
@@ -38,15 +39,14 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 		};
 
 		// 取得學員列表
-		var getStudentList = function(classId) {
+		var getStudentList = function() {
             var defer = $q.defer();
 
             $http({
                 url: "/SLM2016/StudentAction",
                 method: "GET",
                 params: {
-                    op: 2,
-                    classId: classId
+                    op: 2
                 }
             }).success(function(data) {
                 defer.resolve(data);
@@ -85,6 +85,70 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 			return JSON.stringify(studentSendmailDataArray);
 		} 
 
+        var getStudentListByCourseId = function(courseId) {
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/StudentAction",
+                method: "GET",
+                params: {
+                    op: 5,
+                    courseId: courseId
+                }
+            }).success(function(data) {
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+
+        var saveStudentFile = function(file, courseId) {
+            var defer = $q.defer();
+                
+            Upload.upload({
+                url: '/SLM2016/StudentAction',
+                withCredential: true,
+                data: {
+                    op: 4,
+                    courseId: courseId
+                },
+                file: file
+            }).success(function(file) {
+                defer.resolve(file);
+            }).error(function(error) {
+                defer.reject(error);
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+
+        var updateStudentReceiptStatus = function(receiptNumber,payStatus,receiptStatus,studentId)
+        {
+
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/StudentAction",
+                method: "POST",
+                params: {
+                    op: 6,
+                    studentId: studentId,
+                    receiptEIN: receiptNumber,
+                    receiptStatus: receiptStatus,
+                    paymentStatus: payStatus
+                }
+            }).success(function(data) {
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+
 		/*==========================
             Members
         ==========================*/
@@ -99,7 +163,9 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.getSendMailInfo = getSendMailInfo;
         factory.putStudentSendMailData = putStudentSendMailData;
         factory.getStudentSendMailData = getStudentSendMailData;
-
+        factory.getStudentListByCourseId = getStudentListByCourseId;
+        factory.saveStudentFile = saveStudentFile;
+        factory.updateStudentReceiptStatus = updateStudentReceiptStatus;
         /*==========================
             init
         ==========================*/

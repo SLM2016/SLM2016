@@ -15,7 +15,9 @@ var app = angular.module('app', [
     'ct.ui.router.extras',
     'ngScrollbar',
     'ngFileUpload',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'angular-mousetrap',
+    'inputDropdown'
 ])
 
 .config(['$sceProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$animateProvider', '$stickyStateProvider',
@@ -75,7 +77,7 @@ var app = angular.module('app', [
             url: "/studentInfo",
             views: {
                 'studentInfo@': {
-                    templateUrl: "templates/studentInfo.html"
+                    template: "<div ui-view=\"content\"></div>"
                 }
             }
         })
@@ -115,7 +117,7 @@ var app = angular.module('app', [
             views: {
                 'createCourse@': {
                     templateUrl: "templates/createCoursePage.html",
-                    controller: 'CreateCoursePageController',
+                    controller: 'CreateCoursePageController as ctrl'
                 }
             }
         })
@@ -189,5 +191,30 @@ app.directive('loading',  ['$timeout', function($timeout){
   return {
         restrict: 'E',
         templateUrl: "templates/directives/loading.html"
+    };
+}]);
+
+app.directive('spin',  ['$timeout', function($timeout){
+  return {
+        restrict: 'E',
+        template: '<div class="spin"></div>',
+        link: function(scope, element, attrs, ctrls) {
+
+            var spinSize = attrs.spinSize;
+            switch (spinSize) {
+                case "large": 
+                    element.children().addClass("spin-large");
+                    break;
+                case "medium": 
+                    element.children().addClass("spin-medium");
+                    break;
+                case "small": 
+                    element.children().addClass("spin-small");
+                    break;
+                default:
+                    element.children().addClass("spin-small");
+                    break;
+            }
+        }
     };
 }]);

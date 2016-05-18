@@ -1,8 +1,41 @@
-app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 
-    function ($scope, $state, $timeout, $rootScope, StudentInfoService) {  
+app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService',
+    function ($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService) {  
+
+    	var getCourseList = function() {
+            $scope.isCourseLoading = true;
+            CourseService.getCourseSimpleList().then(function(result) {
+            	$scope.isCourseLoading = false;
+                for (var i = 0; i < result.length; i++) {
+                    $scope.courseList.push(result[i]);
+                }
+                getStudentList($scope.courseList[0]);
+            }, function(error) {
+                $scope.isCourseLoading = false;
+                $scope.isCourseLoadError = true;
+            })
+        }
+
+        var changeCurrentCourse = function(course) {
+        	$scope.studentList.length = 0;
+        	$scope.currentCourse = undefined;
+        	getStudentList(course);
+        }
+
+        var getStudentList = function(course) {
+            $scope.isCourseLoading = true;
+            StudentInfoService.getStudentListByCourseId(course.courseId_).then(function(result) {
+                $scope.isCourseLoading = false;
+                $scope.currentCourse = course;
+                for (var i = 0; i < result.length; i++) {
+                    $scope.studentList.push(result[i]);
+                }
+            }, function(error) {
+                $scope.isCourseLoading = false;
+            })
+        }
 
 	    var fileChanged = function(files) {
-	    	init();
+	    	clearFile();
 		    $scope.excelFile = files;
 		    StudentInfoService.readFile($scope.excelFile, $scope.showPreview, $scope.showJSONPreview)
 		        .then(function (xlsxData) {
@@ -27,23 +60,33 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 	   	    
 	    // transfer data to server
 		var uploadFile = function () {
+			if(!$scope.excelFile) {
+				$scope.isFileEmpty = true;
+				return;
+			}
+			else {
+				$scope.isFileEmpty = false;
+			}
+			$scope.isUploadFail = false;
+			$scope.isUploadSuccess = false;
 			$scope.isUploading = true;
-			StudentInfoService.uploadStudentFile($scope.excelFile).then(function(result) {
-				$scope.isUploading = false;
-				console.log(result.status)
-				if(result.status) {
-					$scope.isUploadSuccess = true;
-				}
-				else {
-					$scope.isUploadFail = true;
-				}
+			StudentInfoService.uploadStudentFile($scope.excelFile, $scope.currentCourse.courseId_).then(function(result) {
+				StudentInfoService.saveStudentFile($scope.excelFile, $scope.currentCourse.courseId_).then(function(result) {
+					$scope.isUploading = false;
+					if(result.status) {
+						$scope.isUploadSuccess = true;
+					}
+					else {
+						$scope.isUploadFail = true;
+					}
+				});
 			},function(error) {
 				$scope.isUploading = false;
 				$scope.isUploadFail = true;
 			});
 		};
 
-		var init = function() {
+		var clearFile = function() {
 			$scope.isUploading = false;
 	        $scope.isUploadSuccess = false;
 	        $scope.isUploadFail = false;
@@ -51,6 +94,10 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 	        $scope.items = [];
 	    	$scope.sheets = [];
 	    	$scope.excelFile = undefined;
+		}
+
+		var init = function() {
+	    	getCourseList();
 		}
 
 		/*==========================
@@ -64,10 +111,17 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
         $scope.isUploading = false;
         $scope.isUploadSuccess = false;
         $scope.isUploadFail = false;
+        $scope.isAlreadyUpload = false;
         $scope.showPreview = false; 
 	    $scope.showJSONPreview = true; 
+	    $scope.isFileEmpty = false;
+	    $scope.excelFile = undefined;
 	    $scope.items = [];
 	    $scope.sheets = [];
+	    $scope.courseList = [];
+	    $scope.studentList = [];
+	    $scope.currentCourse;
+	    $scope.isCourseLoading = false;
 
         /*==========================
              Methods
@@ -76,6 +130,7 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
         $scope.fileChanged = fileChanged;
         $scope.updateItems = updateItems;
         $scope.uploadFile = uploadFile;
+        $scope.changeCurrentCourse = changeCurrentCourse;
 
         /*==========================
              init
