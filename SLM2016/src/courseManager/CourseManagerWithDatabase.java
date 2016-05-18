@@ -2,11 +2,14 @@ package courseManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.sql.rowset.CachedRowSet;
 
 import com.sun.rowset.CachedRowSetImpl;
+
+import com.google.gson.Gson;
 
 import javafx.util.Pair;
 import util.SqlHelper;
@@ -378,5 +381,24 @@ public class CourseManagerWithDatabase {
 		result = helper.excuteSql(sqlString, data);
 		data.close();
 		return result;
+	}
+	
+	public String getAllCourseIdAndName(){
+		SqlHelper helper = new SqlHelper();
+		String sqlString = "SELECT * FROM `course_info`'";
+		CachedRowSet data = new CachedRowSetImpl();
+		helper.excuteSql(sqlString, data);
+		
+		HashMap<String, String> allCourseIdAndName = new HashMap<String, String>();
+		
+		while(data.next()){
+			String courseId = data.getString("id");
+			String courseName = data.getString("name");
+			
+			allCourseIdAndName.put(courseId, courseName);
+			}
+		Gson g = new Gson();
+		return g.toJson(allCourseIdAndName);
+		
 	}
 }

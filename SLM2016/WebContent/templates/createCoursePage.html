@@ -13,14 +13,25 @@
 				<label for="companyName">課名*(必填)</label>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="Course" placeholder="請輸入課名" ng-model="data.courseName">
+				<div>
+					<input-dropdown
+						input-placeholder="請輸入課名"
+						input-name="courseName"
+						input-required="true"
+    					selected-item="ctrl.selectedDropdownCourseNameItem"
+    					default-dropdown-items="ctrl.dropdownCourseNameItems"
+    					filter-list-method="ctrl.filterCourseNameList(userInput)"
+          				item-selected-method="ctrl.itemCourseNameSelected(item)">
+  					</input-dropdown>
+	  			</div>
+				<!-- <input type="text" class="form-control" id="Course" placeholder="請輸入課名" ng-model="data.courseName">-->
 			</div>
 			<div class="ticketinput-wrapper company">
 			<div class="form-group id" >
 				<label for="companyName">課程類型</label>
 				<div>
 					<input-dropdown
-						input-placeholder="輸入課程類型"
+						input-placeholder="請輸入課程類型"
 						input-name="type"
 						input-required="true"
     					selected-item="ctrl.selectedDropdownTypeItem"
@@ -36,7 +47,7 @@
 				<label for="companyName">梯次</label>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="Batch" placeholder="請輸入梯次" ng-model="data.batch">
+				<input type="text" class="form-control" id="Batch" placeholder="請輸入公開班梯次或企業內訓單位" ng-model="data.batch">
 			</div>		
 			<div class="ticketinput-wrapper company">
 				<div class="form-group id" >
@@ -77,7 +88,7 @@
 					<label for="companyName">票種</label>
 					<div>
 					<input-dropdown
-						input-placeholder="輸入票種"
+						input-placeholder="請輸入票種"
 						input-name="ticketType"
 						input-required="true"
     					selected-item="ctrl.selectedDropdownTicketTypeItem"
@@ -128,7 +139,18 @@
 				<label for="companyName">地點</label>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="Location" placeholder="請輸入地點" ng-model="data.location">
+				<div>
+					<input-dropdown
+						input-placeholder="請輸入地點"
+						input-name="location"
+						input-required="true"
+    					selected-item="ctrl.selectedDropdownLocationItem"
+    					default-dropdown-items="ctrl.dropdownLocationItems"
+    					filter-list-method="ctrl.filterLocationList(userInput)"
+          				item-selected-method="ctrl.itemLocationSelected(item)">
+  					</input-dropdown>
+	  			</div>
+				<!-- <input type="text" class="form-control" id="Location" placeholder="請輸入地點" ng-model="data.location">-->
 			</div>
 			<div class="form-group name" >
 				<label for="companyName">講師</label>
@@ -143,10 +165,19 @@
 				<input type="text" class="form-control" id="Duration" placeholder="請輸入超連結網址" ng-model="data.hyperlink">
 			</div>
 			<div class="form-group name" >
-				<label for="companyName">狀態</label>
+				<label for="companyName">狀態*(必填)</label>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="Status" placeholder="準備中" DISABLED>
+				<div>
+					<input-dropdown
+						input-placeholder="請選擇課程狀態"
+						input-name="status"
+						input-required="true"
+    					selected-item="ctrl.selectedDropdownStatusItem"
+    					default-dropdown-items="ctrl.dropdownStatusItems">
+  					</input-dropdown>
+  				</div>
+				<!-- <input type="text" class="form-control" id="Status" placeholder="準備中" DISABLED>-->
 			</div>
 			<div class="si-upload" >	
         		<input class="btn btn-info btn-orange" type="submit" value="瀏覽檔案" id="addattachment_button" name="addattachment_button" ngf-select="fileChanged($file)">
