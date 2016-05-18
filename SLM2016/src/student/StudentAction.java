@@ -261,6 +261,7 @@ public class StudentAction extends HttpServlet {
 			throws IOException, ServletException, SQLException {
 		Boolean insertResult = false;
 		CourseManagerWithDatabase courseDB = new CourseManagerWithDatabase();
+
 		Map<String, Object> _map = _insertMap;
 		StudentModel studentModel = new StudentModel();
 
@@ -269,27 +270,34 @@ public class StudentAction extends HttpServlet {
 		String _timestamp = df.format(today);
 		String name = _map.get("name").toString();
 		String email = _map.get("email").toString();
-		String courseName = _map.get("courseName").toString();
-
+	    String courseName = _map.get("courseName").toString();
+	    String batch = _map.get("batch").toString();
+	    
 		studentModel.setTimestamp(_timestamp);
 		studentModel.setName(name);
-		studentModel.setTicketTypeAndPrice(_map.get("ticket").toString());
-		studentModel.setNickname(_map.get("nickname").toString());
-		studentModel.setEmail(email);
-		studentModel.setPhone(_map.get("cellphone").toString());
-		studentModel.setCompany(_map.get("company").toString());
-		studentModel.setApartment(_map.get("apartment").toString());
-		studentModel.setTitle(_map.get("title").toString());
-		studentModel.setVegeMeat(_map.get("vegeMeat").toString());
-		studentModel.setReceiptType(_map.get("receipt").toString());
-		studentModel.setReceiptCompanyEIN(_map.get("companyTitle").toString());
-		studentModel.setFkCourseInfoId(courseDB.getCourseId(courseName));
+	    studentModel.setTicketTypeAndPrice(_map.get("ticket").toString());
+	    studentModel.setNickname(_map.get("nickname").toString());
+	    studentModel.setEmail(email);
+	    studentModel.setPhone(_map.get("cellphone").toString());
+	    studentModel.setCompany(_map.get("company").toString());
+	    studentModel.setApartment(_map.get("apartment").toString());
+	    studentModel.setTitle(_map.get("title").toString());
+	    studentModel.setVegeMeat(_map.get("vegeMeat").toString());
+	    studentModel.setReceiptType(_map.get("receipt").toString());
+	    studentModel.setReceiptCompanyEIN(_map.get("companyTitle").toString());
+	    
+        String _courseID = courseDB.getSignUpCourseIdByCourseNameAndBatch(courseName, batch);
 
-		System.out.println("HeidiTest " + courseName);
-
-		StudentDBManager studentDBManager = new StudentDBManager();
-		insertResult = studentDBManager.insertStudent(studentModel);
-		return insertResult;
+	    if (_courseID!=null)
+	    {
+            studentModel.setFkCourseInfoId(_courseID);
+            StudentDBManager studentDBManager = new StudentDBManager();
+            insertResult = studentDBManager.insertStudent(studentModel);
+	    }
+	    else{
+	        System.out.println("\nNo course!!!");
+	    }
+        return insertResult;
 	}
 
 	private Boolean sendInformMail(Map<String, Object> _insertMap) throws IOException, ServletException, SQLException {

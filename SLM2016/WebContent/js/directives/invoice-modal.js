@@ -191,7 +191,6 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                     $scope.isChangingStatus = false;
                     $scope.isChangeSuccess = false;
                     $scope.isChangeFail = false;
-                    $scope.isStudentUnpaidError = false;
                     $scope.isInvoiceNumberEmpty = false;
                     if($scope.currentStudent.receipt_type == "公司報帳用（三聯式）" && $scope.currentStudent.receipt_company_EIN != ""){
                         var number = 0;
@@ -237,14 +236,6 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                         $scope.isInvoiceNumberEmpty = false;
                     }
 
-                    if(!$scope.isStudentPaid) {
-                        $scope.isStudentUnpaidError = true;
-                        return;
-                    }
-                    else {
-                        $scope.isStudentUnpaidError = false;
-                    }
-
                     if($scope.currentStudent.receipt_EIN == $scope.data.invoiceNumber) {
                         return;
                     }
@@ -279,7 +270,7 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
 
                 var onInvoiceNumberChange = function()
                 {
-                    if(!isNumber($scope.data.invoiceNumber)) {
+                    if(!isInvoiceNumber($scope.data.invoiceNumber)) {
                         $timeout(function() {
                             var errorNumString = $scope.data.invoiceNumber.toString();
                             var rightNumString = errorNumString.substring(0, errorNumString.length - 1);
@@ -411,7 +402,6 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                 $scope.isChangingStatus = false;
                 $scope.isChangeSuccess = false;
                 $scope.isChangeFail = false;
-                $scope.isStudentUnpaidError = false;
                 $scope.isInvoiceNumberEmpty = false;
 
                 /*==========================
