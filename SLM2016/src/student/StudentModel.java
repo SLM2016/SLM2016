@@ -252,5 +252,30 @@ public class StudentModel {
 			this.setTicketPrice(ticketPrice);
 		}
 	}
+	
+	   public void setReceiptCommpanyTitleAndEIN(String companyTitleAndEIN) {
+	        String companyEINReg = "(\\d+,*)+";
+	        String companyTitleReg = ".*[\\s]";
+
+	        String companyEIN = "";
+	        String companyTitle = "";
+
+	        Pattern EINPattern = Pattern.compile(companyEINReg);
+	        Pattern TitlePattern = Pattern.compile(companyTitleReg);
+
+	        Matcher tMatcher = TitlePattern.matcher(companyTitleAndEIN);
+
+	        if (tMatcher.find()) {
+	            companyTitle = companyTitleAndEIN.substring(tMatcher.start(), tMatcher.end());
+	            this.setReceiptCompanyName(companyTitle);
+	        }
+
+	        Matcher eMatcher = EINPattern.matcher(companyTitleAndEIN);
+
+	        if (eMatcher.find()) {
+	            companyEIN = companyTitleAndEIN.substring(eMatcher.start(), eMatcher.end());
+	            this.setReceiptCompanyEIN(companyEIN);
+	        }
+	    }
 
 }
