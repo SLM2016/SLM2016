@@ -9,10 +9,9 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	var showDateList = [];
 	
 	var courseNameSelected = null;
-	var locationSelected = null;
+	var locationSelected = '';
 	var typeSelected = null;
 	var ticketTypeSelected = null;
-	var statusSelected = null;
 	
 	//set CourseName dropdownList
 	this.selectedDropdownCourseNameItem = null;
@@ -92,17 +91,8 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     	locationSelected = item;
     };
     
-    //set Status dropdownList
-    this.selectedDropdownStatusItem = null;
     this.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
-    
-    this.filterStatusList = function(userInput) {
-    	statusSelected = '';
-    };
-    
-    this.itemStatusSelected = function(item) {
-    	statusSelected = item;
-    };
+    this.selectedDropdownStatusItem = this.dropdownStatusItems[0];
 	
 	function getTeddyCourseData() {
 		$scope.isCourseLoading = true;
@@ -118,7 +108,6 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	
 	function addCourse() {
 			var data = new Object();
-			console.log(courseNameSelected);
 			data.courseName_ = courseNameSelected;
 			data.batch_ = $scope.data.batch;
 			data.dates_ = $scope.showDateList;
@@ -130,7 +119,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 			data.hyperlink_ = $scope.data.hyperlink;
 			data.ccAddresses_ = $scope.showCcList;
 			data.type_ = typeSelected;
-			data.status_ = statusSelected;
+			data.status_ = vm.selectedDropdownStatusItem;
 			$.post("/SLM2016/CourseManagerServlet",
 				JSON.stringify(data)).done(function(data) {
 					window.alert(data);
@@ -210,7 +199,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 			window.alert("課程名稱欄位不可為空白");
 			return;
 		}
-		if(((statusSelected)== null)){
+		if(((vm.selectedDropdownStatusItem)== null)){
 			window.alert("狀態欄位不可為空白");
 			return;
 		}
@@ -218,7 +207,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 			window.alert("課程名稱欄位不可為空白");
 			return;
 		}
-		if(((statusSelected)== 0)){
+		if(((vm.selectedDropdownStatusItem)== 0)){
 			window.alert("狀態欄位不正確");
 			return;
 		}

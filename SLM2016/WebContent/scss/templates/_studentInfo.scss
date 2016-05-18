@@ -27,13 +27,14 @@
                 height: 35px;
                 .class-dropdown {
                     position: relative;
+                    margin-right: 20px;
                     .spin-style {
                         display: inline-block;
                         margin-right: 10px;
                     }
                 }
                 .si-upload {
-                    width: calc(100% - 436px);
+                    width: calc(100% - 556px);
                     margin-right: 20px;
                     border: 1px solid #ccc;
                     cursor: pointer;
@@ -70,9 +71,6 @@
                     .form-control {
                         height: 36px;
                     }
-                }
-                .upload-btn {
-                    margin-left: 20px;
                 }
                 .result-container {
                     display: none;

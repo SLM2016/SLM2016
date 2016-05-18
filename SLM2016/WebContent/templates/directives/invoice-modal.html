@@ -42,7 +42,7 @@
 				</div>
 				<div class="form-group">
 				    <label>格式：</label>
-				    <span>三聯</span>
+				    <span>{{data.receipt_type}}</span>
 				</div>
 				<div class="form-group">
 				    <label>狀態：</label>
@@ -82,8 +82,8 @@
 							<tr>
 								<td class="td-answer">{{data.itemName}}</td>
 								<td class="td-answer">{{data.itemNumber}}</td>
-								<td class="td-answer">{{data.itemDollar | number : fractionSize}}</td>
-								<td class="td-answer">{{data.itemTotalDollar | number : fractionSize}}</td>
+								<td class="td-answer">{{data.itemDollar}}</td>
+								<td class="td-answer">{{data.itemTotalDollar}}</td>
 								<td></td>
 							</tr>
 							<tr ng-repeat="i in [0, 1, 2, 3]">
@@ -91,17 +91,17 @@
 							</tr>
 							<tr>
 								<td colspan="3">銷售額合計</td>
-								<td class="td-answer">{{data.salesDollar | number : fractionSize}}</td>
+								<td class="td-answer">{{data.salesDollar}}</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td colspan="3">營業稅</td>
-								<td class="td-answer">{{data.businessTax | number : fractionSize}}</td>
+								<td class="td-answer">{{data.businessTax}}</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td colspan="3">總計</td>
-								<td class="td-answer">{{data.totalDollar | number : fractionSize}}</td>
+								<td class="td-answer">{{data.totalDollar}}</td>
 								<td></td>
 							</tr>
 							<tr>
@@ -118,24 +118,71 @@
 				</div>
 			</div>
 			<!-- 二聯式 -->
-			<div class="invoice-wrapper" ng-show="invoiceType == 'TWO'"></div>
+			<div class="invoice-wrapper" ng-show="invoiceType == 'TWO'">
+				<div class="invoice-title">
+					<span>統</span><span>一</span>
+					<span>發</span><span>票</span>（二聯式）
+				</div>
+				<div class="invoice-desc">{{invoiceYear}} 年 {{invoiceMonth}} 月 份</div>
+				<div class="invoice-date">中華民國 <span>{{todayYY}}</span> 年 <span>{{todayMM}}</span> 月 <span>{{todayDD}}</span> 日</div>
+				<div class="result-content">
+					<div class="invoice-buyer">買受人：<span>{{data.company}}</span></div>
+					<table class="table table-bordered invoice-table">
+						<thead>
+							<tr>
+								<th width="150px">品名</th>
+								<th width="70px">數量</th>
+								<th width="70px">單價</th>
+								<th>金額</th>
+								<th width="110px">備註</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="td-answer">{{data.itemName}}</td>
+								<td class="td-answer">{{data.itemNumber}}</td>
+								<td class="td-answer">{{data.itemDollar}}</td>
+								<td class="td-answer">{{data.itemTotalDollar}}</td>
+								<td></td>
+							</tr>
+							<tr ng-repeat="i in [0, 1, 2, 3 , 4 , 5]">
+								<td ng-repeat="j in [0, 1, 2, 3, 4]"></td>
+							</tr>
+							<tr>
+								<td colspan="3">總計</td>
+								<td class="td-answer">{{data.itemTotalDollar}}</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td colspan="4" class="td-word">
+									<div class="word-item" ng-repeat="w in totalWord">
+										<span class="word">{{w.numberWord}}</span>
+										<span class="unit">{{w.unit}}</span>
+									</div>
+								</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
     </div>
     <div class="modal-footer">
     	<form class="form-inline">
     		<span>發票狀態 : </span>
     		<label class="radio-inline">
-			    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 未開立
+			    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" ng-model="data.radioStatus" value="未開立"> 未開立
 			</label>
 			<label class="radio-inline">
-			    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 已開立
+			    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" ng-model="data.radioStatus" value="已開立"> 已開立
 			</label>
 		    <div class="form-group">
 		    	<label for="invoiceNumber">發票號碼 : </label>
-		    	<input type="text" class="form-control" id="invoiceNumber" placeholder="請輸入發票號碼">
+		    	<input type="text" class="form-control" id="invoiceNumber" placeholder="請輸入發票號碼" ng-model="data.invoiceNumber" ng-change="onInvoiceNumberChange()">
 		    </div>
 		</form>
-		<button type="button" class="btn btn-primary">儲存</button>
+		<button type="button" class="btn btn-primary" ng-click="saveStudentReceiptStatus()">儲存</button>
     </div>
 </div>
 <div class="right-button" ng-click="nextStudent()" ng-class="{'stop': notHasNext()}"><span class="glyphicon glyphicon-menu-right"></span></div>

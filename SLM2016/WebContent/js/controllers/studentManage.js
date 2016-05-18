@@ -19,6 +19,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
 
         var changeStudentList = function(course) {
             $scope.currentCourse = course;
+            $scope.studentList = [];
             getStudentList();
         }
 
@@ -48,8 +49,32 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             student.isSelected = !student.isSelected;
         }
 
-        var changeStudentStatus = function(student) {
+        var changeStudentStatus = function(student,num) {
             student.isSelected = !student.isSelected;
+            console.log(student);
+            if(num == 0)
+                student.payment_status = "免繳費";
+            else if (num == 1)
+                student.payment_status = "未繳費";
+            else if (num == 2)
+                student.payment_status = "課後再繳費";
+            else if (num == 3)
+                student.payment_status = "已繳費";
+
+            StudentInfoService.updateStudentReceiptStatus(student.receipt_EIN,student.payment_status,student.receipt_status,student.id).then(function(result) 
+            {
+                for (var i = 0; i < $scope.studentList.length; i++) {
+                    if($scope.studentList[i].id == student.id) {
+                        $scope.studentList[i].receipt_EIN = student.receipt_EIN;
+                        $scope.studentList[i].payment_status = student.payment_status;
+                        $scope.studentList[i].receipt_status = student.receipt_status;
+                        break;
+                    }
+                }
+                console.log(result);
+            }, function(error) {
+                console.log(error);
+            })
         }
 
         var openInvoiceModal = function(student) {

@@ -96,6 +96,30 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
             return defer.promise;
         }
 
+        var updateStudentReceiptStatus = function(receiptNumber,payStatus,receiptStatus,studentId)
+        {
+
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/StudentAction",
+                method: "POST",
+                params: {
+                    op: 6,
+                    studentId: studentId,
+                    receiptEIN: receiptNumber,
+                    receiptStatus: receiptStatus,
+                    paymentStatus: payStatus
+                }
+            }).success(function(data) {
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+
 		/*==========================
             Members
         ==========================*/
@@ -109,7 +133,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.getStudentList = getStudentList;
         factory.getStudentListByCourseId = getStudentListByCourseId;
         factory.saveStudentFile = saveStudentFile;
-
+        factory.updateStudentReceiptStatus = updateStudentReceiptStatus;
         /*==========================
             init
         ==========================*/

@@ -27,6 +27,7 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
     restrict: 'E',
     scope: {
       defaultDropdownItems: '=',
+      defaultSelectedItem: '=',
       selectedItem: '=',
       inputRequired: '=',
       inputName: '@',
@@ -46,11 +47,15 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
     link: function(scope, element) {
       var pressedDropdown = false;
       var inputScope = element.find('input').isolateScope();
+      //console.log("inputDropdown", scope);
 
       scope.activeItemIndex = 0;
       scope.inputValue = '';
       scope.dropdownVisible = false;
       scope.dropdownItems = scope.defaultDropdownItems || [];
+      if(scope.selectedItem !== undefined) {
+    	  selectedItemChanged(scope.selectedItem, "");
+      }
 
       scope.$watch('dropdownItems', function(newValue, oldValue) {
         if (!angular.equals(newValue, oldValue)) {
@@ -59,25 +64,28 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
         }
       });
 
-      scope.$watch('selectedItem', function(newValue, oldValue) {
-        inputScope.updateInputValidity();
+      scope.$watch('selectedItem', selectedItemChanged);
+      
+      function selectedItemChanged(newValue, oldValue) {
+    	  //console.log(newValue, oldValue)
+          inputScope.updateInputValidity();
 
-        if (!angular.equals(newValue, oldValue)) {
-          if (newValue) {
-            // Update value in input field to match readableName of selected item
-            if (typeof newValue === 'string') {
-              scope.inputValue = newValue;
+          if (!angular.equals(newValue, oldValue)) {
+            if (newValue) {
+              // Update value in input field to match readableName of selected item
+              if (typeof newValue === 'string') {
+                scope.inputValue = newValue;
+              }
+              else {
+                scope.inputValue = newValue.readableName;
+              }
             }
             else {
-              scope.inputValue = newValue.readableName;
+              // Uncomment to clear input field when editing it after making a selection
+              // scope.inputValue = '';
             }
           }
-          else {
-            // Uncomment to clear input field when editing it after making a selection
-            // scope.inputValue = '';
-          }
         }
-      });
 
       scope.setActive = function(itemIndex) {
         scope.activeItemIndex = itemIndex;

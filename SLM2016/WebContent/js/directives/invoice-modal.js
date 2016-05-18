@@ -1,5 +1,5 @@
-app.directive('invoiceModal', ['$rootScope',
-    function($rootScope) {
+app.directive('invoiceModal', ['$rootScope', 'StudentInfoService', 
+    function($rootScope,StudentInfoService) {
         return {
             restrict: "E",
             scope: true,
@@ -77,6 +77,7 @@ app.directive('invoiceModal', ['$rootScope',
                     if($scope.currentIndex < $scope.studentList.length - 1) {
                         $scope.currentIndex++;
                         $scope.currentStudent = $scope.studentList[$scope.currentIndex];
+                        getStudentData();
                     }
                     else {
                         return;
@@ -96,6 +97,7 @@ app.directive('invoiceModal', ['$rootScope',
                     if($scope.currentIndex >= 1) {
                         $scope.currentIndex--;
                         $scope.currentStudent = $scope.studentList[$scope.currentIndex];
+                        getStudentData();
                     }
                     else {
                         return;
@@ -108,6 +110,172 @@ app.directive('invoiceModal', ['$rootScope',
                     }
                     else {
                         return false;
+                    }
+                }
+
+                var onTaxRateChange = function() 
+                {
+                    if(!/^\d+[.]?\d*$/.test($scope.data.taxRate)) {
+                        $timeout(function() {
+                            var errorNumString = $scope.data.taxRate.toString();
+                            var rightNumString = errorNumString.substring(0, errorNumString.length - 1);
+                            $scope.data.taxRate = parseFloat(rightNumString);
+                        }, 100);
+                    }
+                    else
+                        getStudentData();
+                }
+
+                var getAllPriceToInt = function(num)
+                {
+                    var numArray = num.toString().split("");
+                    var priceNum = 0;
+                    for(var i = 0 ; i <= numArray.length-1 ; i++)
+                    {
+                        if(numArray[i] != ",")
+                        {
+                            priceNum *= 10;
+                            priceNum += parseFloat(numArray[i]);
+                        }    
+                    }
+                    return priceNum;
+                }
+
+                var getAllPriceToString = function(num)
+                {
+                    var numArray = num.toString().split("");
+                    var priceNumString = "";
+                    var index = numArray.length % 3;
+                    if(index != 0 && numArray.length > 3)
+                    {
+                        for(var i = 0 ; i <= numArray.length-1 ; i++)
+                        {
+                            if(index == 0)
+                            {
+                                priceNumString += ",";
+                                index = 3;
+                            }
+                            priceNumString += numArray[i];
+                            index--;
+                        }
+                    }
+                    else
+                        for(var i = 0 ; i <= numArray.length-1 ; i++)
+                            priceNumString += numArray[i];
+
+                    return priceNumString;
+                }
+
+                var getStudentPaid = function()
+                {
+                    console.log($scope.currentStudent.payment_status);
+                    if($scope.currentStudent.payment_status == "已繳費")
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+
+
+                var getStudentReceiptStatus = function()
+                {
+                    if($scope.currentStudent.receipt_status == "已開立"){
+                        $scope.data.radioStatus = "已開立";
+                    }
+                    else
+                        $scope.data.radioStatus = "未開立";
+                }
+
+                var getStudentData = function()
+                {
+                    if($scope.currentStudent.receipt_type == "公司報帳用（三聯式）" && $scope.currentStudent.receipt_company_EIN != ""){
+                        var number = 0;
+                        $scope.invoiceType = "THREE"
+                        $scope.data.receipt_type = $scope.currentStudent.receipt_type;
+                        $scope.data.company = $scope.currentStudent.receipt_company_name;
+                        $scope.isStudentPaid = getStudentPaid();
+                        getStudentReceiptStatus();
+                        $scope.data.companyid = $scope.currentStudent.receipt_company_EIN;
+                        $scope.data.companyidArray = $scope.data.companyid.toString().split("");
+                        $scope.data.itemDollar = $scope.currentStudent.ticket_price;
+                        $scope.data.itemTotalDollar = $scope.currentStudent.ticket_price;
+                        $scope.data.salesDollar = getAllPriceToInt($scope.currentStudent.ticket_price);
+                        $scope.data.businessTax = Math.round($scope.data.salesDollar * $scope.data.taxRate / 100);
+                        $scope.data.totalDollar = parseInt($scope.data.businessTax) + parseInt($scope.data.salesDollar);
+                        $scope.data.invoiceNumber = $scope.currentStudent.receipt_EIN;
+                        $scope.data.salesDollar = getAllPriceToString($scope.data.salesDollar);
+                        $scope.data.businessTax = getAllPriceToString($scope.data.businessTax);
+                        $scope.data.totalDollar = getAllPriceToString($scope.data.totalDollar);
+                        getNumWordArray($scope.data.totalDollar);
+                    }
+                    else 
+                    {
+                        $scope.invoiceType = "TWO";
+                        $scope.data.receipt_type = "個人（二聯式）";
+                        $scope.data.company = $scope.currentStudent.name;
+                        $scope.isStudentPaid = getStudentPaid();
+                        getStudentReceiptStatus();
+                        $scope.data.itemDollar = $scope.currentStudent.ticket_price;
+                        $scope.data.invoiceNumber = $scope.currentStudent.receipt_EIN;
+                        $scope.data.itemTotalDollar = $scope.currentStudent.ticket_price;
+                        getNumWordArray($scope.data.itemTotalDollar);
+                    }                  
+                }
+
+                var saveStudentReceiptStatus = function()
+                {
+                    if($scope.data.invoiceNumber != "" && $scope.isStudentPaid)
+                    {
+                        StudentInfoService.updateStudentReceiptStatus($scope.data.invoiceNumber,$scope.currentStudent.payment_status,"已開立",$scope.currentStudent.id).then(function(result) 
+                        {
+                            var index = 0;
+                            for (var i = 0; i < $scope.studentList.length; i++) {
+                                if($scope.studentList[i].id == $scope.currentStudent.id) {
+                                    $scope.studentList[i].receipt_EIN = $scope.data.invoiceNumber;
+                                    $scope.studentList[i].payment_status = $scope.currentStudent.payment_status;
+                                    $scope.studentList[i].receipt_status = "已開立";
+                                    index = i;
+                                    break;
+                                }
+                            }
+                            $scope.currentStudent = $scope.studentList[i];
+                            console.log($scope.currentStudent);
+                            console.log(result);
+                        }, function(error) {
+                            console.log(error);
+                        })
+                    } 
+                }
+
+                var onInvoiceNumberChange = function()
+                {
+                    if(!isNumber($scope.data.invoiceNumber)) {
+                        $timeout(function() {
+                            var errorNumString = $scope.data.invoiceNumber.toString();
+                            var rightNumString = errorNumString.substring(0, errorNumString.length - 1);
+                            $scope.data.invoiceNumber = parseInt(rightNumString);
+                        }, 100);
+                    }
+                }
+
+                var getNumWordArray = function(num) {
+                    clearTotalWord();
+                    var cWord = ['零','壹','貳','參','肆','伍','陸','柒','捌','玖'];
+                    var numArray = num.toString().split("");
+
+                    var wordCt = $scope.totalWord.length - 1;
+                    for (var i = numArray.length - 1; i >= 0; i--) {
+                        if(numArray[i] != ",")
+                        {
+                            $scope.totalWord[wordCt].numberWord = cWord[numArray[i]];
+                            wordCt--;
+                        }
+                    }
+                }
+
+                var clearTotalWord = function() {
+                    for (var i = 0; i < $scope.totalWord.length; i++) {
+                        $scope.totalWord[i].numberWord = "";
                     }
                 }
 
@@ -125,6 +293,7 @@ app.directive('invoiceModal', ['$rootScope',
                     $scope.currentIndex = data.index;
                     $scope.course = data.course;
                     $scope.currentStudent = $scope.studentList[$scope.currentIndex];
+                    getStudentData();
                     Mousetrap.reset();
                     Mousetrap.bind('left', function() { 
                         $scope.$apply(function() {
@@ -135,7 +304,7 @@ app.directive('invoiceModal', ['$rootScope',
                     Mousetrap.bind('right', function() { 
                         $scope.$apply(function() {
                             console.log("right")
-                            nextStudent(); 
+                            nextStudent();
                         })
                     });
                 })
@@ -169,6 +338,9 @@ app.directive('invoiceModal', ['$rootScope',
                     itemNumber: 1,
                     itemDollar: undefined,
                     itemTotalDollar: undefined,
+                    receipt_type: undefined,
+                    radioStatus: undefined,
+                    invoiceNumber: "",
                     time: new Date()
                 }
                 $scope.totalWord = [{
@@ -216,7 +388,9 @@ app.directive('invoiceModal', ['$rootScope',
                 $scope.notHasNext = notHasNext;
                 $scope.prevStudent = prevStudent;
                 $scope.notHasPrev = notHasPrev;
-                
+                $scope.onTaxRateChange = onTaxRateChange;
+                $scope.saveStudentReceiptStatus = saveStudentReceiptStatus;
+                $scope.onInvoiceNumberChange = onInvoiceNumberChange;
                 /*==========================
                     init
                 ==========================*/
