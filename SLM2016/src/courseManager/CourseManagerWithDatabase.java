@@ -382,23 +382,61 @@ public class CourseManagerWithDatabase {
 		data.close();
 		return result;
 	}
+
+	private String getCourseIdByName(String courseName) throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		String result = "";
+		String sqlString = "SELECT id FROM `course_info` WHERE `name`='" + courseName + "'";
+		CachedRowSet data = new CachedRowSetImpl();
+		result = helper.excuteSql(sqlString, data);
+		data.next();
+		data.close();
+		return data.getString("id");
+	}
+
+	public String getCcAddressByName(String courseName) throws SQLException {
+		String id = getCourseIdByName(courseName);
+		SqlHelper helper = new SqlHelper();
+		String result = "";
+		String sqlString = "SELECT cc_email FROM `course_has_cc_address` WHERE `fk_course_id`='" + id + "'";
+		CachedRowSet data = new CachedRowSetImpl();
+		result = helper.excuteSql(sqlString, data);
+		while (data.next()) {
+			result += data.getString("cc_email");
+			result += ",";
+		}
+		result = result.substring(0, result.length() - 1);
+		data.close();
+		return result;
+	}
 	
-	public String getAllCourseIdAndName(){
+	public String getHyperlinkByName(String courseName) throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		String result = "";
+		String sqlString = "SELECT page_link FROM `course_info` WHERE `name`='" + courseName + "'";
+		CachedRowSet data = new CachedRowSetImpl();
+		result = helper.excuteSql(sqlString, data);
+		data.next();
+		data.close();
+		return data.getString("page_link");
+	}
+
+	public String getAllCourseIdAndName() {
 		SqlHelper helper = new SqlHelper();
 		String sqlString = "SELECT * FROM `course_info`'";
 		CachedRowSet data = new CachedRowSetImpl();
 		helper.excuteSql(sqlString, data);
-		
+
 		HashMap<String, String> allCourseIdAndName = new HashMap<String, String>();
-		
-		while(data.next()){
+
+		while (data.next()) {
 			String courseId = data.getString("id");
 			String courseName = data.getString("name");
-			
+
 			allCourseIdAndName.put(courseId, courseName);
-			}
+		}
 		Gson g = new Gson();
 		return g.toJson(allCourseIdAndName);
-		
+
 	}
 }
