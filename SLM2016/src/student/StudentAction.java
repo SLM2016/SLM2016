@@ -229,7 +229,11 @@ public class StudentAction extends HttpServlet {
 
 	private void insertStudentFromGoogleForm(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, SQLException {
-		// CourseManagerWithDatabase courseDB = new CourseManagerWithDatabase();
+		CourseManagerWithDatabase courseDB = new CourseManagerWithDatabase();
+		String name = request.getParameter("name");
+		StudentModel studentModel = new StudentModel();
+		studentModel.setName(name);
+
 		// System.out.println(courseDB.getCourseId("TTTT"));
 
 	}
