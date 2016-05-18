@@ -93,6 +93,23 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
                 course: $scope.currentCourse
             });
         }
+        
+        var openCertificationModal = function(student) {
+            student.isSelected = !student.isSelected;
+
+            var index = 0;
+            for (var i = 0; i < $scope.studentList.length; i++) {
+                if($scope.studentList[i].id == student.id) {
+                    index = i;
+                    break;
+                }
+            }
+            $rootScope.$broadcast("OPEN_Certification_MODAL", {
+                list: $scope.studentList,
+                index: index,
+                course: $scope.currentCourse
+            });
+        }
 
     	var init = function() {
             getCourseList();
@@ -121,6 +138,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.toggleActionDropdown = toggleActionDropdown;
         $scope.changeStudentStatus = changeStudentStatus;
         $scope.openInvoiceModal = openInvoiceModal;
+        $scope.openCertificationModal = openCertificationModal;
         $scope.changeStudentList = changeStudentList;
         /*==========================
              init
