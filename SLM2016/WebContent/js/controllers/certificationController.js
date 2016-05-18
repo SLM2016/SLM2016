@@ -48,7 +48,7 @@ app.controller("CertificationController",['$scope', '$state', '$timeout', '$root
 				{
 					var link = document.createElement('a');
 					link.href = 'data:application/pdf;base64,'+data;
-					link.download = "Download.pdf";
+					link.download = document.getElementById("certificationId").value+" "+document.getElementById("studentName").value+".pdf";
 					document.body.appendChild(link);
 					link.click();
 					document.body.removeChild(link);  

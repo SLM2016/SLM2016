@@ -1,10 +1,15 @@
 package student;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
+import com.mysql.jdbc.ResultSetMetaData;
 
 import util.SLMDBUtility;
 
@@ -15,8 +20,8 @@ public class StudentDBManager {
 		super();
 		slmDBUtility = new SLMDBUtility();
 	}
-
-	public String getStudentList() throws SQLException {
+	
+	public String getStudentList()  throws SQLException {
 		String sql = "select * from `student_info`;";
 		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
 		Gson g = new Gson();
@@ -39,24 +44,38 @@ public class StudentDBManager {
 		// } catch (SQLException e) {
 		// e.printStackTrace();
 		// }
-
+        
 		// return jsonArray.toString();
 		return g.toJson(result);
-	}
-
+                }
+        
 	public String getStudentListByCourseId(String courseId) throws SQLException {
 		String sql = String.format("SELECT * FROM `student_info` WHERE `fk_course_info_id` = '%s';", courseId);
 		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
 		Gson g = new Gson();
 		return g.toJson(result);
 	}
-
+	
 	public ArrayList<HashMap<String, String>> getStudentByPhone(String phone) throws SQLException {
 
 		String sql = String.format("SELECT * FROM `student_info` WHERE `phone` = '%s';", phone);
 		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
 
 		return result;
+	}
+
+	public String getSendMailInfo(StudentSendMailData[] studentSendMailData) throws SQLException {	
+		JsonArray jsonArray = new JsonArray();
+		
+		for(int i = 0; i < studentSendMailData.length; i++){
+			String sql = "select id, name, duration from `course_info` where id = "+"\""+studentSendMailData[i].courseId+"\"";;
+			ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
+			
+			Gson g = new Gson();
+			return g.toJson(result);
+		}		      
+		
+		return jsonArray.toString();
 	}
 
 	public boolean insertStudent(StudentModel studentModel) throws SQLException {
@@ -151,6 +170,30 @@ public class StudentDBManager {
 
 	public boolean deleteStudentsByCourseId(String courseId) throws SQLException {
 		String sql = String.format("DELETE FROM `student_info` WHERE `fk_course_info_id` =  '%s'", courseId);
+		if (slmDBUtility.deleteSQL(sql)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	//only get course data
+	public boolean insertGetMailInfo(String id, String name, String duration, String fk_status_id) throws SQLException {
+		String sql = String.format(
+				"INSERT INTO `course_info`(`id`,`name`,`duration`,`fk_status_id`) VALUES ('%s','%s','%s','%s')", 
+				id,name,duration,fk_status_id);
+		String duplicate = String.format(
+				"ON DUPLICATE KEY UPDATE `id` = '%s',`name` = '%s',`duration` = '%s',`fk_status_id` = '%s'",
+				id,name,duration,fk_status_id);
+		if (slmDBUtility.insertSQL((sql + duplicate))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean deleteGetMailInfo(String id) throws SQLException {
+		String sql = String.format("DELETE FROM `course_info` WHERE `course_info`.`id` = '%s'", id);
 		if (slmDBUtility.deleteSQL(sql)) {
 			return true;
 		} else {

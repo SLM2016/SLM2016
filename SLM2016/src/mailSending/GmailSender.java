@@ -8,7 +8,9 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class GmailSender {
 	private final String host_ = "smtp.gmail.com";
@@ -36,14 +38,24 @@ public class GmailSender {
 		});
 	}
 
-	public String send(String address, String ccAddresses, String subject, String text) {
+	public String send(String address, String ccAddresses, String subject, String text, byte[] data) {
 		try {
 			Message message = new MimeMessage(session_);
+			MimeMultipart multipart = new MimeMultipart();
+			MimeBodyPart messageBody = new MimeBodyPart();
 			message.setFrom(new InternetAddress(username_));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
 			message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccAddresses));
 			message.setSubject(subject);
-			message.setContent(text, "text/html; charset=utf-8");
+			messageBody.setContent(text, "text/html; charset=utf-8");
+			multipart.addBodyPart(messageBody);
+			if(data != null) {
+				messageBody = new MimeBodyPart();
+	            messageBody.setContent(data, "application/pdf");
+	            messageBody.setFileName("certification.pdf");
+	            multipart.addBodyPart(messageBody);
+			}
+            message.setContent(multipart);
 
 			Transport transport = session_.getTransport("smtp");
 			transport.connect(host_, port_, username_, password_);

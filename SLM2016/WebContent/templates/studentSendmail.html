@@ -1,0 +1,65 @@
+<div class="example">
+	<div class="page-content">
+		<div class="inner-wrapper">
+			<div class="content">
+				<div class="info">
+					<div class="title">Send Mail</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label for="courseName"> 課程: </label> <input class="form-control"
+								type="text" id="courseName" value=""><br>
+						</div>
+
+						<div class="col-md-6">
+							<label for="studentName"> 學員: </label> <input
+								class="form-control" type="text" id="studentName" value=""><br>
+						</div>
+						<br>
+
+						<div class="col-md-6">
+							<label for="date"> 日期: </label> <input class="form-control"
+								type="text" id="date" value=""><br>
+						</div>
+
+						<div class="col-md-6">
+							<label for="studentId"> 編號: </label> <input class="form-control"
+								type="text" id="studentId" value=""><br>
+						</div>
+						<br>
+
+						<div class="col-md-6">
+							<label for="couresDuration"> 時長: </label> <input
+								class="form-control" type="text" id="couresDuration" value=""><br>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<img style="display: block; margin: auto"
+								src="./images/template.png" width="100%"></img>
+						</div>
+
+						<div class="col-md-6">
+							<textarea cols="80" id="editor1" name="editor1" rows="10">
+			
+				  
+				  </textarea>
+
+						</div>
+						<br>
+						<br>
+
+					</div>
+					<br>
+					<br> <input class="btn btn-info btn-orange" type="button"
+						value="Send" id="send" ng-click="Send()"> <input
+						class="btn btn-info btn-orange" type="button" value="Next"
+						id="next" ng-click="ClickNextButton()" disabled="disabled">
+					<input class="btn btn-info btn-orange" type="button"
+						value="Previous" id="previous" ng-click="ClickPreviousButton()"
+						disabled="disabled">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
