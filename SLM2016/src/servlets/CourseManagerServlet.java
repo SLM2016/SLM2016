@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import courseManager.Course;
 import courseManager.CourseManagerWithDatabase;
+import student.StudentDBManager;
 
 @WebServlet("/CourseManagerServlet")
 public class CourseManagerServlet extends HttpServlet {
@@ -26,7 +27,7 @@ public class CourseManagerServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String op = "";
-		if(request.getParameter("op") != null) {
+		if (request.getParameter("op") != null) {
 			op = request.getParameter("op");
 		}
 		switch (op) {
@@ -70,6 +71,8 @@ public class CourseManagerServlet extends HttpServlet {
 		String result = "";
 		try {
 			result = courseManagerWithDb_.deleteCourseFromDatabase(id);
+			StudentDBManager studentDBManager = new StudentDBManager();
+			studentDBManager.deleteStudentsByCourseId(id);
 		} catch (SQLException e) {
 
 		}
