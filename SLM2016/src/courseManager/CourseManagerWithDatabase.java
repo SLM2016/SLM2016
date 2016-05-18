@@ -59,6 +59,25 @@ public class CourseManagerWithDatabase {
 		}
 	}
 
+	public String getSignUpCourseIdByCourseNameAndBatch(String courseName, String batch) throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		// String sqlString = "SELECT id FROM `course_info` WHERE `name`='" +
+		// courseName + "'";
+		String sqlString = String.format(
+				"SELECT `course_info`.`id` FROM `course_info`,`course_status` where `course_info`.`fk_status_id` = `course_status`.`id` and `course_info`.`name` = '%s' and `course_info`.`batch` = '%s' and `course_status`.`name`= '報名中';",
+				courseName, batch);
+		CachedRowSet data = new CachedRowSetImpl();
+		helper.excuteSql(sqlString, data);
+		String id = null;
+
+		while (data.next()) {
+			id = data.getString("id");
+			break;
+		}
+		return id;
+
+	}
+
 	private String getNewCourseId() throws SQLException {
 		SqlHelper helper = new SqlHelper();
 		String sqlString = "SELECT id FROM `course_info`";
