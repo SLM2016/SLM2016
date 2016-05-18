@@ -67,7 +67,7 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="student-setting-label">
                                         <li data-toggle="modal" data-target="#invoice-modal" ng-click="openInvoiceModal(s)"><a>產生發票</a></li>
-                                        <li data-toggle="modal" data-target="#invoice-modal" ng-click="openCertificationModal(s)"><a>寄送證書</a></li>
+                                        <li><a>寄送證書</a></li>
                                     </ul>
                                 </td>
                             </tr>
@@ -75,11 +75,12 @@
                                 <td colspan="7" ng-show="studentList.length == 0" class="empty">此課程尚未有學員資料</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table>                  
                 </div>
             </div>
+                    <input class="btn btn-info btn-orange" type="submit" value="Send Mail Data" id="sendMailData" name="form_submit" ng-click="sendMailData()" disabled="disabled">	
         </div>
-    </div>
+    </div>   
 </div>
 
 <!-- Invoice Modal -->
@@ -87,7 +88,6 @@
     <div class="modal-dialog modal-lg" role="document">
         <invoice-modal></invoice-modal>
     </div>
-    
-	<input class="btn btn-info btn-orange" type="submit" value="Send Mail Data" id="sendMailData" name="form_submit" ng-click="sendMailData()" disabled="disabled">	
+    	
 	
 </div>

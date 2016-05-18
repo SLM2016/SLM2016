@@ -38,12 +38,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         }
 
         var toggleSelectStudent = function(student) {
-            student.isSelected = !student.isSelected;
-           
-            }
-            
-        var toggleSelectStudent = function($event, student) {
-            student.isSelected = !student.isSelected 
+            student.isSelected = !student.isSelected; 
             
             var i = 0;
             var sendMailDataButton = document.getElementById("sendMailData");
@@ -60,6 +55,38 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             else{
             	sendMailDataButton.disabled = "disabled";
             }
+        }
+        
+        var sendMailData = function(){
+        	var mailData = [];
+        	var i = 0;
+        	
+        	for(var j = 0; j < $scope.studentList.length; j++){
+        		if($scope.studentList[j].isSelected){
+        			mailData[i] = new Object();
+        			mailData[i].studentId = $scope.studentList[j].id;
+        			mailData[i].studentName = $scope.studentList[j].name;
+        			mailData[i].courseId = $scope.studentList[j].fk_course_info_id;
+        			mailData[i].date = $scope.studentList[j].timestamp;
+        			mailData[i].address = $scope.studentList[j].email;
+        			i++;
+        		} 
+        	}        	
+        	
+        	StudentInfoService.getSendMailInfo(JSON.stringify(mailData)).then(function(courseData) {
+                var parse = JSON.parse(JSON.stringify(courseData));
+                for(var i = 0, j = 0; i < mailData.length; i++){
+                	if( (j < parse.length) && (parse[j].id == mailData[i].courseId)){
+                		mailData[i].courseName = parse[j].name;
+                    	mailData[i].couresDuration = parse[j].duration;
+                    	j++;
+                	}               	
+                }  
+                StudentInfoService.putStudentSendMailData(mailData);
+                $state.go('studentInfo.Sendmail');
+            }, function(error) {
+            	console.log('Get DB Has Error');
+            })                     
         }
 
         var toggleStatusDropdown = function(student) {
@@ -114,24 +141,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
                 course: $scope.currentCourse
             });
         }
-        
-        var openCertificationModal = function(student) {
-            student.isSelected = !student.isSelected;
-
-            var index = 0;
-            for (var i = 0; i < $scope.studentList.length; i++) {
-                if($scope.studentList[i].id == student.id) {
-                    index = i;
-                    break;
-                }
-            }
-            $rootScope.$broadcast("OPEN_Certification_MODAL", {
-                list: $scope.studentList,
-                index: index,
-                course: $scope.currentCourse
-            });
-        }
-
+              
     	var init = function() {
             getCourseList();
         }
@@ -160,7 +170,6 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.toggleActionDropdown = toggleActionDropdown;
         $scope.changeStudentStatus = changeStudentStatus;
         $scope.openInvoiceModal = openInvoiceModal;
-        $scope.openCertificationModal = openCertificationModal;
         $scope.changeStudentList = changeStudentList;
         /*==========================
              init
