@@ -6,7 +6,7 @@
 
 function sendHttpPost() {
     var eventObject = getFormResponse();
-    var myJsonString = JSON.stringify(eventObject);
+        var myJsonString = JSON.stringify(eventObject);
     var body =
     {
         "contentType" : "utf-8",
@@ -14,17 +14,15 @@ function sendHttpPost() {
         "payload" : myJsonString,
         "muteHttpExceptions" : true,
     };
+  
     var url = "http://demo.teddysoft.tw:8080/SLM2016/StudentAction?op=3";
     var result = UrlFetchApp.fetch(url, body);
     Logger.log(myJsonString);
  }
  
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 var GLOBAL = {
-  formTitle : FormApp.getActiveForm().getTitle(),
+  formTitle : JSON.stringify(FormApp.getActiveForm().getTitle()),
   formId : FormApp.getActiveForm().getId(),  
   formMap : {
     ticket: "票種",
@@ -62,7 +60,7 @@ function getFormResponse(e) {
     var thisItem = itemResponses[i].getItem().getTitle(),
         thisResponse = itemResponses[i].getResponse();
 
-    switch (thisItem) {
+    switch (thisItem) {     
       case GLOBAL.formMap.ticket:
         eventObject.ticket = thisResponse;
         break;
@@ -114,7 +112,7 @@ function getFormResponse(e) {
         break;
     } 
   }    
-
+  eventObject.courseName = FormApp.getActiveForm().getTitle();
   return eventObject;
 }
 
