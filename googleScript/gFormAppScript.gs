@@ -113,6 +113,7 @@ function getFormResponse(e) {
     } 
   }    
   eventObject.courseName = FormApp.getActiveForm().getTitle();
+  eventObject.batch = FormApp.getActiveForm().getDescription();
   return eventObject;
 }
 
