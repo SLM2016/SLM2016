@@ -1,5 +1,6 @@
 package student;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,46 +69,14 @@ public class StudentDBManager {
 		
 		for(int i = 0; i < studentSendMailData.length; i++){
 			String sql = "select id, name, duration from `course_info` where id = "+"\""+studentSendMailData[i].courseId+"\"";;
-			ResultSet result = slmDBUtility.selectSQL(sql);
+			ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
 			
-			String columnName, columnValue = null;
-	        JsonObject element = null;
-	        ResultSetMetaData rsmd = null;
-	                
-	        try {
-	            rsmd = (ResultSetMetaData) result.getMetaData();
-	            while (result.next()) {
-	                element = new JsonObject();
-	                for (int j = 1; j <= rsmd.getColumnCount(); j++) {	                	
-	                	columnName = rsmd.getColumnName(j);
-	                    columnValue = result.getString(columnName);
-	                    element.addProperty(columnName, columnValue);                                 
-	                }
-	                jsonArray.add(element);
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }	     
+			Gson g = new Gson();
+			return g.toJson(result);
 		}		      
 		
 		return jsonArray.toString();
 	}
-
-	public ArrayList<HashMap> getStudents() throws SQLException {
-		ArrayList<HashMap> arrayList = new ArrayList<HashMap>();
-		String sql = "select * from `student_info`;";
-		ResultSet result = slmDBUtility.selectSQL(sql);
-		while (result.next()) {
-			// Retrieve by column name
-			HashMap map = new HashMap();
-			int id = result.getInt("id");
-			String name = result.getString("name");
-			String phoneNumber = result.getString("phone");
-			map.put("id", id);
-			map.put("name", name);
-			map.put("phone", phoneNumber);
-			arrayList.add(map);
-		}
 
 	public boolean insertStudent(StudentModel studentModel) throws SQLException {
 
@@ -205,28 +174,9 @@ public class StudentDBManager {
 			return true;
 		} else {
 			return false;
+		}
 	}
 
-	public ArrayList<HashMap> getCourseById(String id) throws SQLException {
-		ArrayList<HashMap> arrayList = new ArrayList<HashMap>();
-		String sql = String.format("select * from `course_info` where `id` = '%s';", id);
-		ResultSet result = slmDBUtility.selectSQL(sql);
-		while (result.next()) {
-			// Retrieve by column name
-			HashMap map = new HashMap();
-			String cource_id = result.getString("id");
-			String name = result.getString("name");
-			String duration = result.getString("duration");
-			String fk_status_id = result.getString("fk_status_id");
-			map.put("id", cource_id);
-			map.put("name", name);
-			map.put("duration", duration);
-			map.put("fk_status_id", fk_status_id);
-			arrayList.add(map);
-		}
-		return arrayList;
-	}
-	
 	//only get course data
 	public boolean insertGetMailInfo(String id, String name, String duration, String fk_status_id) throws SQLException {
 		String sql = String.format(

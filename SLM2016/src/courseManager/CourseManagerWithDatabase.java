@@ -364,7 +364,7 @@ public class CourseManagerWithDatabase {
 		return result;
 	}
 	
-	public String getAllCourseIdAndName(){
+	/*public String getAllCourseIdAndName(){
 		SqlHelper helper = new SqlHelper();
 		String sqlString = "SELECT * FROM `course_info`'";
 		CachedRowSet data = new CachedRowSetImpl();
@@ -381,5 +381,5 @@ public class CourseManagerWithDatabase {
 		Gson g = new Gson();
 		return g.toJson(allCourseIdAndName);
 		
-	}
+	}*/
 }
