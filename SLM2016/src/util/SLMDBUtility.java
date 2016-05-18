@@ -11,7 +11,8 @@ import java.sql.ResultSetMetaData;
 
 public class SLMDBUtility {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost:3306/SLM2016?useUnicode=true&characterEncoding=utf-8";
+	static final String DB_URL = "jdbc:mysql://45.32.62.194:3306/SLM2016?useUnicode=true&characterEncoding=utf-8";
+	//static final String DB_URL = "jdbc:mysql://localhost:3306/SLM2016?useUnicode=true&characterEncoding=utf-8";
 	static final String USER = "SLM2016";
 	static final String PASS = "Teddysoft";
 	Connection connection = null;
