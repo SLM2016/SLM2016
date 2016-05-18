@@ -188,6 +188,11 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
 
                 var getStudentData = function()
                 {
+                    $scope.isChangingStatus = false;
+                    $scope.isChangeSuccess = false;
+                    $scope.isChangeFail = false;
+                    $scope.isStudentUnpaidError = false;
+                    $scope.isInvoiceNumberEmpty = false;
                     if($scope.currentStudent.receipt_type == "公司報帳用（三聯式）" && $scope.currentStudent.receipt_company_EIN != ""){
                         var number = 0;
                         $scope.invoiceType = "THREE"
@@ -224,27 +229,52 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
 
                 var saveStudentReceiptStatus = function()
                 {
-                    if($scope.data.invoiceNumber != "" && $scope.isStudentPaid)
+                    if($scope.data.invoiceNumber == "") {
+                        $scope.isInvoiceNumberEmpty = true;
+                        return;
+                    }
+                    else {
+                        $scope.isInvoiceNumberEmpty = false;
+                    }
+
+                    if(!$scope.isStudentPaid) {
+                        $scope.isStudentUnpaidError = true;
+                        return;
+                    }
+                    else {
+                        $scope.isStudentUnpaidError = false;
+                    }
+
+                    if($scope.currentStudent.receipt_EIN == $scope.data.invoiceNumber) {
+                        return;
+                    }
+
+                    $scope.isChangingStatus = true;
+                    $scope.isChangeSuccess = false;
+                    $scope.isChangeFail = false;
+
+                    StudentInfoService.updateStudentReceiptStatus($scope.data.invoiceNumber,$scope.currentStudent.payment_status,"已開立",$scope.currentStudent.id).then(function(result) 
                     {
-                        StudentInfoService.updateStudentReceiptStatus($scope.data.invoiceNumber,$scope.currentStudent.payment_status,"已開立",$scope.currentStudent.id).then(function(result) 
-                        {
-                            var index = 0;
-                            for (var i = 0; i < $scope.studentList.length; i++) {
-                                if($scope.studentList[i].id == $scope.currentStudent.id) {
-                                    $scope.studentList[i].receipt_EIN = $scope.data.invoiceNumber;
-                                    $scope.studentList[i].payment_status = $scope.currentStudent.payment_status;
-                                    $scope.studentList[i].receipt_status = "已開立";
-                                    index = i;
-                                    break;
-                                }
+                        $scope.isChangingStatus = false;
+                        $scope.isChangeSuccess = true;
+                        var index = 0;
+                        for (var i = 0; i < $scope.studentList.length; i++) {
+                            if($scope.studentList[i].id == $scope.currentStudent.id) {
+                                $scope.studentList[i].receipt_EIN = $scope.data.invoiceNumber;
+                                $scope.studentList[i].payment_status = $scope.currentStudent.payment_status;
+                                $scope.studentList[i].receipt_status = "已開立";
+                                index = i;
+                                break;
                             }
-                            $scope.currentStudent = $scope.studentList[i];
-                            console.log($scope.currentStudent);
-                            console.log(result);
-                        }, function(error) {
-                            console.log(error);
-                        })
-                    } 
+                        }
+                        $scope.currentStudent = $scope.studentList[i];
+                        console.log($scope.currentStudent);
+                        console.log(result);
+                    }, function(error) {
+                        console.log(error);
+                        $scope.isChangingStatus = false;
+                        $scope.isChangeFail = true;
+                    })
                 }
 
                 var onInvoiceNumberChange = function()
@@ -377,6 +407,12 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                 $scope.dateOptions = {
                     locale: 'ru'
                 };
+
+                $scope.isChangingStatus = false;
+                $scope.isChangeSuccess = false;
+                $scope.isChangeFail = false;
+                $scope.isStudentUnpaidError = false;
+                $scope.isInvoiceNumberEmpty = false;
 
                 /*==========================
                     Methods

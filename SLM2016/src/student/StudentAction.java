@@ -1,5 +1,6 @@
 package student;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,9 +14,13 @@ import courseManager.Course;
 import courseManager.CourseManagerWithDatabase;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -24,6 +29,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+
+import com.google.gson.Gson;
+
+
 
 @WebServlet("/StudentAction")
 @MultipartConfig()
@@ -76,6 +86,12 @@ public class StudentAction extends HttpServlet {
 			saveFile(request, response);
 			break;
 		case OP_INSERT_STUDENT_FROM_GOOGLE_FORM:
+		    Map<String,Object> insertMap = getGoogleFormData(request);
+		    try{
+		        insertStudentFromGoogleForm(insertMap);
+		    } catch(SQLException e){
+		        e.printStackTrace();
+		    }
 			break;
 		case OP_UPDATE_STUDENT_RECEIPT_STATUS:
 			updateStudentReceiptStatus(request, response);
@@ -87,6 +103,25 @@ public class StudentAction extends HttpServlet {
 		// Gson gson = new Gson();
 		// out.println(gson.toJson(result));
 	}
+	
+	
+    private Map<String, Object> getGoogleFormData(HttpServletRequest request) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+
+        // Read from request
+        StringBuilder buffer = new StringBuilder();
+        BufferedReader reader = request.getReader();
+        
+        String line;
+        while ((line = reader.readLine()) != null) {
+            buffer.append(line);
+        }
+        String gData = buffer.toString();
+        Gson gson = new Gson(); 
+        Map<String,Object> map = new HashMap<String,Object>();
+        map = (Map<String,Object>) gson.fromJson(gData, map.getClass());
+        return map;
+    }
 
 	private void getStudentList(HttpServletRequest request, HttpServletResponse response) {
 		StudentDBManager studentDbManager = new StudentDBManager();
@@ -227,11 +262,39 @@ public class StudentAction extends HttpServlet {
 		}
 	}
 
-	private void insertStudentFromGoogleForm(HttpServletRequest request, HttpServletResponse response)
+	private Boolean insertStudentFromGoogleForm(Map<String, Object> _insertMap)
 			throws IOException, ServletException, SQLException {
-		// CourseManagerWithDatabase courseDB = new CourseManagerWithDatabase();
-		// System.out.println(courseDB.getCourseId("TTTT"));
+	    Boolean insertResult = false;
+		CourseManagerWithDatabase courseDB = new CourseManagerWithDatabase();
+		Map<String,Object> _map = _insertMap;
+		StudentModel studentModel = new StudentModel();
+		
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date today = Calendar.getInstance().getTime();        
+		String _timestamp = df.format(today);
+		String name = _map.get("name").toString();
+	    String email = _map.get("email").toString();
+	    String courseName = _map.get("courseName").toString();
+	    
+		studentModel.setTimestamp(_timestamp);
+		studentModel.setName(name);
+	    studentModel.setTicketTypeAndPrice(_map.get("ticket").toString());
+	    studentModel.setNickname(_map.get("nickname").toString());
+	    studentModel.setEmail(email);
+	    studentModel.setPhone(_map.get("cellphone").toString());
+	    studentModel.setCompany(_map.get("company").toString());
+	    studentModel.setApartment(_map.get("apartment").toString());
+	    studentModel.setTitle(_map.get("title").toString());
+	    studentModel.setVegeMeat(_map.get("vegeMeat").toString());
+	    studentModel.setReceiptType(_map.get("receipt").toString());
+	    studentModel.setReceiptCompanyEIN(_map.get("companyTitle").toString());
+	    studentModel.setFkCourseInfoId(courseDB.getCourseId(courseName));
+	    
+	    System.out.println("HeidiTest " + courseName);
 
+        StudentDBManager studentDBManager = new StudentDBManager();
+	    insertResult = studentDBManager.insertStudent(studentModel);
+        return insertResult;
 	}
 
 }

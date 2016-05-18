@@ -80,6 +80,10 @@ input, textarea {
 	&.btn-orange {
 		background-image: linear-gradient(to bottom, #ffb489 0%, #ff7323 100%);
 		border-color: #FF5D01;
+		&.disable {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
 		&:hover, &:focus{
 			background-color: #FF7323;
 			outline: none;

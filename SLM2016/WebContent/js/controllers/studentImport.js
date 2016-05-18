@@ -5,10 +5,15 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
             $scope.isCourseLoading = true;
             CourseService.getCourseSimpleList().then(function(result) {
             	$scope.isCourseLoading = false;
-                for (var i = 0; i < result.length; i++) {
-                    $scope.courseList.push(result[i]);
+            	if(result.length > 0) {
+            		for (var i = 0; i < result.length; i++) {
+	                    $scope.courseList.push(result[i]);
+	                }
+	                getStudentList($scope.courseList[0]);
+            	}
+                else {
+                	$scope.isCourseEmpty = true;
                 }
-                getStudentList($scope.courseList[0]);
             }, function(error) {
                 $scope.isCourseLoading = false;
                 $scope.isCourseLoadError = true;
@@ -67,6 +72,9 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 			else {
 				$scope.isFileEmpty = false;
 			}
+			if(isCourseEmpty) {
+				return;
+			}
 			$scope.isUploadFail = false;
 			$scope.isUploadSuccess = false;
 			$scope.isUploading = true;
@@ -108,6 +116,7 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
             Members
         ==========================*/
 
+        $scope.isCourseEmpty = false;
         $scope.isUploading = false;
         $scope.isUploadSuccess = false;
         $scope.isUploadFail = false;
