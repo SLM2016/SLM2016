@@ -1,4 +1,7 @@
 #invoice-modal {
+    .modal-dialog {
+        margin: 18px auto;
+    }
     .modal-header {
         position: relative;
         .close {
@@ -173,7 +176,7 @@
     }
     .modal-footer {
         text-align: left;
-        padding:  20px 30px;
+        padding:  15px 30px;
         .form-inline {
             display: inline-block;
             span {
@@ -203,6 +206,25 @@
         }
         .btn {
             float: right;
+        }
+        .result-container {
+            display: none;
+            height: 34px;
+            margin-right: 20px;
+            float: right;
+            .label {
+                height: 24px;
+                line-height: 24px;
+                padding: 0 10px;
+                margin: auto 10px;
+            }
+            .spin-style {
+                margin: auto;
+            }
+
+            &.show-result {
+                @include display-flex(flex);
+            }
         }
     }
     .right-button, .left-button {

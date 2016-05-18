@@ -6,11 +6,16 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             $scope.isStudentLoading = true;
             CourseService.getCourseSimpleList().then(function(result) {
                 $scope.isCourseLoading = false;
-                for (var i = 0; i < result.length; i++) {
-                    $scope.courseList.push(result[i]);
+                if(result.length > 0) {
+                    for (var i = 0; i < result.length; i++) {
+                        $scope.courseList.push(result[i]);
+                    }
+                    $scope.currentCourse = $scope.courseList[0];
+                    getStudentList()
                 }
-                $scope.currentCourse = $scope.courseList[0];
-                getStudentList()
+                else {
+                    $scope.isCourseEmpty = true;
+                }
             }, function(error) {
                 $scope.isCourseLoading = false;
                 $scope.isStudentLoadError = true;
@@ -105,7 +110,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         /*==========================
             Members
         ==========================*/
-
+        $scope.isCourseEmpty = false;
         $scope.isStudentLoadError = false;
         $scope.isStudentLoading = false;
         $scope.studentList = [];
