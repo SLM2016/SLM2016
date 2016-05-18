@@ -421,7 +421,7 @@ public class CourseManagerWithDatabase {
 		return data.getString("page_link");
 	}
 
-	public String getAllCourseIdAndName() {
+	public String getAllCourseIdAndName() throws SQLException{
 		SqlHelper helper = new SqlHelper();
 		String sqlString = "SELECT * FROM `course_info`'";
 		CachedRowSet data = new CachedRowSetImpl();
