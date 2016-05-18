@@ -266,6 +266,7 @@ public class StudentAction extends HttpServlet {
 			throws IOException, ServletException, SQLException {
 	    Boolean insertResult = false;
 		CourseManagerWithDatabase courseDB = new CourseManagerWithDatabase();
+
 		Map<String,Object> _map = _insertMap;
 		StudentModel studentModel = new StudentModel();
 		
@@ -275,6 +276,7 @@ public class StudentAction extends HttpServlet {
 		String name = _map.get("name").toString();
 	    String email = _map.get("email").toString();
 	    String courseName = _map.get("courseName").toString();
+	    String batch = _map.get("batch").toString();
 	    
 		studentModel.setTimestamp(_timestamp);
 		studentModel.setName(name);
@@ -288,12 +290,18 @@ public class StudentAction extends HttpServlet {
 	    studentModel.setVegeMeat(_map.get("vegeMeat").toString());
 	    studentModel.setReceiptType(_map.get("receipt").toString());
 	    studentModel.setReceiptCompanyEIN(_map.get("companyTitle").toString());
-	    studentModel.setFkCourseInfoId(courseDB.getCourseId(courseName));
 	    
-	    System.out.println("HeidiTest " + courseName);
+        String _courseID = courseDB.getSignUpCourseIdByCourseNameAndBatch(courseName, batch);
 
-        StudentDBManager studentDBManager = new StudentDBManager();
-	    insertResult = studentDBManager.insertStudent(studentModel);
+	    if (_courseID!=null)
+	    {
+            studentModel.setFkCourseInfoId(_courseID);
+            StudentDBManager studentDBManager = new StudentDBManager();
+            insertResult = studentDBManager.insertStudent(studentModel);
+	    }
+	    else{
+	        System.out.println("\nNo course!!!");
+	    }
         return insertResult;
 	}
 
