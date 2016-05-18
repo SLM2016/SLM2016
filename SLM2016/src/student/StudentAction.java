@@ -284,7 +284,7 @@ public class StudentAction extends HttpServlet {
 	    studentModel.setTitle(_map.get("title").toString());
 	    studentModel.setVegeMeat(_map.get("vegeMeat").toString());
 	    studentModel.setReceiptType(_map.get("receipt").toString());
-	    studentModel.setReceiptCompanyEIN(_map.get("companyTitle").toString());
+	    studentModel.setReceiptCommpanyTitleAndEIN(_map.get("companyTitle").toString());
 	    
         String _courseID = courseDB.getSignUpCourseIdByCourseNameAndBatch(courseName, batch);
 
