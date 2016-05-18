@@ -7,7 +7,9 @@ import java.util.HashMap;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.stream.JsonReader;
 import com.mysql.jdbc.ResultSetMetaData;
 
@@ -65,17 +67,12 @@ public class StudentDBManager {
 	}
 
 	public String getSendMailInfo(StudentSendMailData[] studentSendMailData) throws SQLException {	
-		JsonArray jsonArray = new JsonArray();
-		
+		ArrayList<HashMap<String, String>> queryData = new ArrayList<HashMap<String, String>>();
 		for(int i = 0; i < studentSendMailData.length; i++){
 			String sql = "select id, name, duration from `course_info` where id = "+"\""+studentSendMailData[i].courseId+"\"";;
-			ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
-			
-			Gson g = new Gson();
-			return g.toJson(result);
+			queryData.addAll(slmDBUtility.selectSQL(sql));		
 		}		      
-		
-		return jsonArray.toString();
+		return new Gson().toJson(queryData);
 	}
 
 	public boolean insertStudent(StudentModel studentModel) throws SQLException {

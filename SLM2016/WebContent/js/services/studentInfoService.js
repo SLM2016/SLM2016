@@ -65,7 +65,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
                 url: "/SLM2016/StudentAction",
                 method: "GET",
                 params: {
-                    op: 3,
+                    op: 7,
                     mailData: mailData
                 }
             }).success(function(courseData) {

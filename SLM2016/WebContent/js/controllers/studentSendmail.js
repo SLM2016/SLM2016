@@ -33,18 +33,16 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 					   CKEDITOR.add(CK);
 				 }
 				CKEDITOR.instances.editor1.setData(con);
-				console.log(getcontent());
 			}
 
 
 		
 		var Send =function(){	
 			var mailData = new Object();
-			//mailData.addresses_ = parse[index].email;
-			mailData.addresses_ = "t100310313@ntut.org.tw";
-			mailData.ccAddresses_ = "t100310313@ntut.org.tw";
+			mailData.addresses_ = parse[index].address;
 			mailData.text_ = getcontent();
 			mailData.attachment_ = "1231231";
+			
 			$.ajax({
 			    url: 'SendGmailServlet',
 			    type: 'post',
@@ -64,7 +62,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
     		studentName.value = parse[index].studentName;
     		date.value = parse[index].date;
     		studentId.value = parse[index].studentId;
-    		couresDuration.value = parse[index].couresDuration;    		
+    		couresDuration.value = parse[index].couresDuration;   
 		}
 		
 		var ClickNextButton = function(){	
