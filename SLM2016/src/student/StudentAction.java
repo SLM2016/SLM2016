@@ -311,8 +311,8 @@ public class StudentAction extends HttpServlet {
 		String courseName = _map.get("courseName").toString();
 		String batch = _map.get("batch").toString();
 		String courseId = courseManagerWithDatabase.getSignUpCourseIdByCourseNameAndBatch(courseName, batch);
-		String ccAddresses = courseManagerWithDatabase.getCcAddressByCourseName(courseId);
-		String hyperlink = courseManagerWithDatabase.getHyperlinkByName(courseId);
+		String ccAddresses = courseManagerWithDatabase.getCcAddressByCourseId(courseId);
+		String hyperlink = courseManagerWithDatabase.getHyperlinkByCourseId(courseId);
 		
 		sendApplySuccessfullyMail.Send(name, email, ccAddresses, courseName, hyperlink);
 
