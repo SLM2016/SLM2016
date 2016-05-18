@@ -309,8 +309,10 @@ public class StudentAction extends HttpServlet {
 		String name = _map.get("name").toString();
 		String email = _map.get("email").toString();
 		String courseName = _map.get("courseName").toString();
-		String ccAddresses = courseManagerWithDatabase.getCcAddressByName(courseName);
-		String hyperlink = courseManagerWithDatabase.getHyperlinkByName(courseName);
+		String batch = _map.get("batch").toString();
+		String courseId = courseManagerWithDatabase.getSignUpCourseIdByCourseNameAndBatch(courseName, batch);
+		String ccAddresses = courseManagerWithDatabase.getCcAddressByCourseName(courseId);
+		String hyperlink = courseManagerWithDatabase.getHyperlinkByName(courseId);
 		
 		sendApplySuccessfullyMail.Send(name, email, ccAddresses, courseName, hyperlink);
 

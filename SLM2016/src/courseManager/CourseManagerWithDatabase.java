@@ -383,22 +383,10 @@ public class CourseManagerWithDatabase {
 		return result;
 	}
 
-	private String getCourseIdByName(String courseName) throws SQLException {
+	public String getCcAddressByCourseName(String courseId) throws SQLException {
 		SqlHelper helper = new SqlHelper();
 		String result = "";
-		String sqlString = "SELECT id FROM `course_info` WHERE `name`='" + courseName + "'";
-		CachedRowSet data = new CachedRowSetImpl();
-		result = helper.excuteSql(sqlString, data);
-		data.next();
-		data.close();
-		return data.getString("id");
-	}
-
-	public String getCcAddressByName(String courseName) throws SQLException {
-		String id = getCourseIdByName(courseName);
-		SqlHelper helper = new SqlHelper();
-		String result = "";
-		String sqlString = "SELECT cc_email FROM `course_has_cc_address` WHERE `fk_course_id`='" + id + "'";
+		String sqlString = "SELECT cc_email FROM `course_has_cc_address` WHERE `fk_course_id`='" + courseId + "'";
 		CachedRowSet data = new CachedRowSetImpl();
 		result = helper.excuteSql(sqlString, data);
 		while (data.next()) {
@@ -410,12 +398,11 @@ public class CourseManagerWithDatabase {
 		return result;
 	}
 	
-	public String getHyperlinkByName(String courseName) throws SQLException {
+	public String getHyperlinkByName(String courseId) throws SQLException {
 		SqlHelper helper = new SqlHelper();
-		String result = "";
-		String sqlString = "SELECT page_link FROM `course_info` WHERE `name`='" + courseName + "'";
+		String sqlString = "SELECT page_link FROM `course_info` WHERE `id`='" + courseId + "'";
 		CachedRowSet data = new CachedRowSetImpl();
-		result = helper.excuteSql(sqlString, data);
+		helper.excuteSql(sqlString, data);
 		data.next();
 		data.close();
 		return data.getString("page_link");
