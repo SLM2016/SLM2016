@@ -52,6 +52,9 @@
         	</div>
 		</div>
 		<div class="invoice-content">
+			<div class="invoice-pager">
+				<span class="pager" ng-repeat="s in studentList" ng-class="{'active': currentStudent.id == s.id}"></span>
+			</div>
 			<!-- 三聯式 -->
 			<div class="invoice-wrapper" ng-show="invoiceType == 'THREE'">
 				<div class="invoice-title">
@@ -177,12 +180,17 @@
 			<label class="radio-inline">
 			    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" ng-model="data.radioStatus" value="已開立"> 已開立
 			</label>
-		    <div class="form-group">
+		    <div class="form-group" ng-class="{'has-error': isInvoiceNumberEmpty}">
 		    	<label for="invoiceNumber">發票號碼 : </label>
 		    	<input type="text" class="form-control" id="invoiceNumber" placeholder="請輸入發票號碼" ng-model="data.invoiceNumber" ng-change="onInvoiceNumberChange()">
 		    </div>
 		</form>
 		<button type="button" class="btn btn-primary" ng-click="saveStudentReceiptStatus()">儲存</button>
+		<div class="result-container" ng-class="{'show-result': isChangingStatus || isChangeSuccess || isChangeFail}">
+            <spin spin-size="medium" class="spin-style" ng-show="isChangingStatus"></spin>
+            <span class="label label-info" ng-show="isChangeSuccess">儲存成功</span>
+            <span class="label label-danger" ng-show="isChangeFail">儲存失敗</span>
+        </div>
     </div>
 </div>
 <div class="right-button" ng-click="nextStudent()" ng-class="{'stop': notHasNext()}"><span class="glyphicon glyphicon-menu-right"></span></div>

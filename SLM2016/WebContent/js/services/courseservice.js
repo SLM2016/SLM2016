@@ -36,6 +36,7 @@ app.factory('CourseService', ['$q', '$http', '$timeout', '$rootScope',
             return defer.promise;
         }
 
+
 		/*==========================
             Members
         ==========================*/

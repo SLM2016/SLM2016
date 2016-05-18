@@ -27,6 +27,24 @@ public class StudentModel {
 	private String studentStatus = "";
 	private String paymentStatus = "";
 	private String receiptStatus = "";
+	private String certificationImg = "";
+	private String certificationPdf = "";
+
+	public String getCertificationImg() {
+		return certificationImg;
+	}
+
+	public void setCertificationImg(String certificationImg) {
+		this.certificationImg = certificationImg;
+	}
+
+	public String getCertificationPdf() {
+		return certificationPdf;
+	}
+
+	public void setCertificationPdf(String certificationPdf) {
+		this.certificationPdf = certificationPdf;
+	}
 
 	public String getId() {
 		return id;

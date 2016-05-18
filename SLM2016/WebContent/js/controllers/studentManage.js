@@ -6,11 +6,16 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             $scope.isStudentLoading = true;
             CourseService.getCourseSimpleList().then(function(result) {
                 $scope.isCourseLoading = false;
-                for (var i = 0; i < result.length; i++) {
-                    $scope.courseList.push(result[i]);
+                if(result.length > 0) {
+                    for (var i = 0; i < result.length; i++) {
+                        $scope.courseList.push(result[i]);
+                    }
+                    $scope.currentCourse = $scope.courseList[0];
+                    getStudentList()
                 }
-                $scope.currentCourse = $scope.courseList[0];
-                getStudentList()
+                else {
+                    $scope.isCourseEmpty = true;
+                }
             }, function(error) {
                 $scope.isCourseLoading = false;
                 $scope.isStudentLoadError = true;
@@ -93,6 +98,23 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
                 course: $scope.currentCourse
             });
         }
+        
+        var openCertificationModal = function(student) {
+            student.isSelected = !student.isSelected;
+
+            var index = 0;
+            for (var i = 0; i < $scope.studentList.length; i++) {
+                if($scope.studentList[i].id == student.id) {
+                    index = i;
+                    break;
+                }
+            }
+            $rootScope.$broadcast("OPEN_Certification_MODAL", {
+                list: $scope.studentList,
+                index: index,
+                course: $scope.currentCourse
+            });
+        }
 
     	var init = function() {
             getCourseList();
@@ -105,7 +127,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         /*==========================
             Members
         ==========================*/
-
+        $scope.isCourseEmpty = false;
         $scope.isStudentLoadError = false;
         $scope.isStudentLoading = false;
         $scope.studentList = [];
@@ -121,6 +143,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.toggleActionDropdown = toggleActionDropdown;
         $scope.changeStudentStatus = changeStudentStatus;
         $scope.openInvoiceModal = openInvoiceModal;
+        $scope.openCertificationModal = openCertificationModal;
         $scope.changeStudentList = changeStudentList;
         /*==========================
              init

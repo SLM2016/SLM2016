@@ -5,12 +5,15 @@
                 <div class="class-dropdown">
                     <button id="class-label" type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span>{{currentCourse.courseName_}}</span>
-                        <span ng-show="currentCourse.batch_ != '' && !isCourseLoading"> - {{currentCourse.batch_}}</span>
+                        <span ng-show="currentCourse.batch_ != '' && !isCourseLoading && !isCourseEmpty"> - {{currentCourse.batch_}}</span>
+                        <span ng-show="isCourseEmpty">
+                            系統中尚無課程
+                        </span>
                         <span ng-show="isCourseLoading">
                             讀取中...
                             <spin spin-size="small" class="spin-style"></spin>
                         </span>
-                        <span class="caret"></span>
+                        <span class="caret" ng-show="!isCourseLoading && !isCourseEmpty"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="class-label">
                         <li ng-repeat="course in courseList" ng-click="changeStudentList(course)">
@@ -67,7 +70,7 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="student-setting-label">
                                         <li data-toggle="modal" data-target="#invoice-modal" ng-click="openInvoiceModal(s)"><a>產生發票</a></li>
-                                        <li><a>寄送證書</a></li>
+                                        <li data-toggle="modal" ng-click="openCertificationModal(s)"><a>寄送證書</a></li>
                                     </ul>
                                 </td>
                             </tr>

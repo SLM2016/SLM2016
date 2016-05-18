@@ -7,24 +7,43 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	var showticketList = [];
 	var updateticketsList = [];
 	var showDateList = [];
+	
+	var courseNameSelected = null;
+	var locationSelected = '';
 	var typeSelected = null;
 	var ticketTypeSelected = null;
-	var typeTextBoxFlag = false ;
-	var ticketTextBoxFlag = false ;
 	
+	//set CourseName dropdownList
+	this.selectedDropdownCourseNameItem = null;
+	this.dropdownCourseNameItems = ['Scrum敏捷方法實作班', '看板方法與精實開發實作班', '軟體重構入門實作班', '敏捷產品經理實作班', 
+	                                '敏捷大師百寶箱系列課程', 'Design Patterns入門實作班', 'Design Patterns進階實作班', 
+	                                '單元測試與持續整合實作班', '例外處理設計與重構實作班'];
+	
+	this.filterCourseNameList = function(userInput) {
+		courseNameSelected = userInput;
+        var filter = $q.defer();
+        //var normalisedInput = userInput.toLowerCase();
+        var filteredArray = this.dropdownCourseNameItems.filter(function(type) {
+        	return type.toLowerCase().indexOf('') == 0;
+        });
+        filter.resolve(filteredArray);
+        return filter.promise;
+    };
+    
+    this.itemCourseNameSelected = function(item) {
+    	courseNameSelected = item;
+    };
+	
+	//set Type dropdownList
 	this.selectedDropdownTypeItem = null;
-	this.dropdownTypeItems = ['公開班', '企業內訓', '演講', '其他'];
+	this.dropdownTypeItems = ['公開班', '企業內訓', '演講'];
 	
 	this.filterTypeList = function(userInput) {
-		if(userInput != '其他' && typeTextBoxFlag){
-			var otherType = document.getElementById("otherTypeDiv");
-			otherType.innerHTML = "";
-			typeTextBoxFlag = false;
-		}
+		typeSelected = userInput;
         var filter = $q.defer();
-        var normalisedInput = userInput.toLowerCase();
-        var filteredArray = this.dropdownTypeItems.filter(function(country) {
-        	return country.toLowerCase().indexOf(normalisedInput) == 0;
+        //var normalisedInput = userInput.toLowerCase();
+        var filteredArray = this.dropdownTypeItems.filter(function(type) {
+        	return type.toLowerCase().indexOf('') == 0;
         });
         filter.resolve(filteredArray);
         return filter.promise;
@@ -32,37 +51,18 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
     
     this.itemTypeSelected = function(item) {
     	typeSelected = item;
-    	if((item == '其他') && !typeTextBoxFlag){
-    		var otherType = document.getElementById("otherTypeDiv");
-    		var textbox = document.createElement("input");
-    		textbox.type = "text";
-    		textbox.name = "otherType";
-    		textbox.value = "";
-    		otherType.appendChild(textbox);
-    		typeTextBoxFlag = true;
-    	}
-    	else{
-    		if(item != '其他' && typeTextBoxFlag){
-    			var otherType = document.getElementById("otherTypeDiv");
-    			otherType.innerHTML = "";
-    			typeTextBoxFlag = false;
-    		}
-    	}
     };
     
+    //set TicketType dropdownList
     this.selectedDropdownTicketTypeItem = null;
-    this.dropdownTicketTypeItems = ['原價', '早鳥', '泰迪之友', '四人團報', '其他'];
+    this.dropdownTicketTypeItems = ['原價', '早鳥', '泰迪之友', '四人團報'];
 	
     this.filterTicketTypeList = function(userInput) {
-    	if(userInput != '其他' && ticketTextBoxFlag){
-			var otherTicket = document.getElementById("otherTicket");
-			otherTicket.innerHTML = "";
-			ticketTextBoxFlag = false;
-		}
+    	ticketTicketTypeSelected = userInput;
         var filter = $q.defer();
-        var normalisedInput = userInput.toLowerCase();
-        var filteredArray = this.dropdownTicketTypeItems.filter(function(country) {
-        	return country.toLowerCase().indexOf(normalisedInput) == 0;
+        //var normalisedInput = userInput.toLowerCase();
+        var filteredArray = this.dropdownTicketTypeItems.filter(function(ticketType) {
+        	return ticketType.toLowerCase().indexOf('') == 0;
         });
         filter.resolve(filteredArray);
         return filter.promise;
@@ -70,23 +70,29 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
       
     this.itemTicketTypeSelected = function(item) {
     	ticketTicketTypeSelected = item;
-    	if((item == '其他') && !ticketTextBoxFlag){
-    		var otherTicket = document.getElementById("otherTicket");
-    		var textbox = document.createElement("input");
-    		textbox.type = "text";
-    		textbox.name = "otherTicket";
-    		textbox.value = "";
-    		otherTicket.appendChild(textbox);
-    		ticketTextBoxFlag = true;
-    	}
-    	else{
-    		if(item != '其他' && ticketTextBoxFlag){
-    			var otherTicket = document.getElementById("otherTicket");
-    			otherTicket.innerHTML = "";
-    			ticketTextBoxFlag = false;
-    		}
-    	}
     };
+    
+    //set Location dropdownList
+    this.selectedLocationItem = null;
+	this.dropdownLocationItems = ['延平南路12號4樓', '北科科研1622室', '北科育成305室', '北科育成201室'];
+	
+	this.filterLocationList = function(userInput) {
+		locationSelected = userInput;
+        var filter = $q.defer();
+        //var normalisedInput = userInput.toLowerCase();
+        var filteredArray = this.dropdownLocationItems.filter(function(type) {
+        	return type.toLowerCase().indexOf('') == 0;
+        });
+        filter.resolve(filteredArray);
+        return filter.promise;
+    };
+    
+    this.itemLocationSelected = function(item) {
+    	locationSelected = item;
+    };
+    
+    this.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
+    this.selectedDropdownStatusItem = this.dropdownStatusItems[0];
 	
 	function getTeddyCourseData() {
 		$scope.isCourseLoading = true;
@@ -102,24 +108,18 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	
 	function addCourse() {
 			var data = new Object();
-			data.courseName_ = $scope.data.courseName;
+			data.courseName_ = courseNameSelected;
 			data.batch_ = $scope.data.batch;
 			data.dates_ = $scope.showDateList;
 			data.duration_ = $scope.data.duration;
 			data.ticketTypes_ = $scope.ticketTypeList;
 			data.prices_ = $scope.ticketPriceList;
-			data.location_ = $scope.data.location;
+			data.location_ = locationSelected;
 			data.lecturer_ = $scope.data.lecturer;
 			data.hyperlink_ = $scope.data.hyperlink;
 			data.ccAddresses_ = $scope.showCcList;
-			if(typeSelected=='其他'){
-				var otherType = document.getElementsByName('otherType')[0].value;
-				data.type_ = otherType;
-			}
-			else{
-				data.type_ = typeSelected;
-			}
-			data.status_ = "準備中";
+			data.type_ = typeSelected;
+			data.status_ = vm.selectedDropdownStatusItem;
 			$.post("/SLM2016/CourseManagerServlet",
 				JSON.stringify(data)).done(function(data) {
 					window.alert(data);
@@ -130,10 +130,6 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 
 	var clickAddTicketButton=function() {
 		var regex=/^[a-zA-Z]+$/;
-		if(ticketTicketTypeSelected=='其他'){
-			var otherTicket = document.getElementsByName('otherTicket')[0].value;
-			ticketTicketTypeSelected = otherTicket;
-		}
 		if(((ticketTicketTypeSelected) == null) ||(($scope.data.price) == null)||(($scope.data.price.length) == 0)|((ticketTicketTypeSelected.length) == 0)){
 			window.alert("課程票價或票種請修正");
 		}
@@ -164,7 +160,7 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 		}
 		else{
 			if(lastAtPos < lastDotPos && lastAtPos > 0 && ($scope.data.ccAddresses).indexOf('@@') == -1 && lastDotPos > 2 && (($scope.data.ccAddresses).length - lastDotPos) > 2){
-				$scope.ShowCcList.push($scope.data.ccAddresses);
+				$scope.showCcList.push($scope.data.ccAddresses);
 				$scope.data.ccAddresses = null;
 			}
 			else{
@@ -199,12 +195,20 @@ app.controller("CreateCoursePageController",['$scope', '$state', '$timeout', '$r
 	}
 	
 	function checkInput(){
-		if((($scope.data.courseName)== null)){
+		if(((courseNameSelected)== null)){
 			window.alert("課程名稱欄位不可為空白");
 			return;
 		}
-		if((($scope.data.courseName.length)== 0)){
-			window.alert("欄位不可為空白");
+		if(((vm.selectedDropdownStatusItem)== null)){
+			window.alert("狀態欄位不可為空白");
+			return;
+		}
+		if(((courseNameSelected)== 0)){
+			window.alert("課程名稱欄位不可為空白");
+			return;
+		}
+		if(((vm.selectedDropdownStatusItem)== 0)){
+			window.alert("狀態欄位不正確");
 			return;
 		}
 		addCourse();
