@@ -52,6 +52,9 @@
         	</div>
 		</div>
 		<div class="invoice-content">
+			<div class="invoice-pager">
+				<span class="pager" ng-repeat="s in studentList" ng-class="{'active': currentStudent.id == s.id}"></span>
+			</div>
 			<!-- 三聯式 -->
 			<div class="invoice-wrapper" ng-show="invoiceType == 'THREE'">
 				<div class="invoice-title">
