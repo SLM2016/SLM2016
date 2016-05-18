@@ -186,11 +186,10 @@
 		    </div>
 		</form>
 		<button type="button" class="btn btn-primary" ng-click="saveStudentReceiptStatus()">儲存</button>
-		<div class="result-container" ng-class="{'show-result': isChangingStatus || isChangeSuccess || isChangeFail || isStudentUnpaidError}">
+		<div class="result-container" ng-class="{'show-result': isChangingStatus || isChangeSuccess || isChangeFail}">
             <spin spin-size="medium" class="spin-style" ng-show="isChangingStatus"></spin>
             <span class="label label-info" ng-show="isChangeSuccess">儲存成功</span>
             <span class="label label-danger" ng-show="isChangeFail">儲存失敗</span>
-            <span class="label label-danger" ng-show="isStudentUnpaidError">學員尚未繳費</span>
         </div>
     </div>
 </div>
