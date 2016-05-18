@@ -2,6 +2,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 	function($q, $rootScope, $http, Upload) {
 		
 		var factory = this;
+		var studentSendmailDataArray;
 
 		// 讀取Excel檔並轉成Json格式
         var readFile = function(file, readCells, toJSON) {
@@ -75,6 +76,14 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 
             return defer.promise;
         }
+		
+		var putStudentSendMailData = function(data){
+			studentSendmailDataArray = data;
+		}
+		
+		var getStudentSendMailData = function(){
+			return JSON.stringify(studentSendmailDataArray);
+		} 
 
 		/*==========================
             Members
@@ -88,6 +97,8 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.uploadStudentFile = uploadStudentFile;
         factory.getStudentList = getStudentList;
         factory.getSendMailInfo = getSendMailInfo;
+        factory.putStudentSendMailData = putStudentSendMailData;
+        factory.getStudentSendMailData = getStudentSendMailData;
 
         /*==========================
             init

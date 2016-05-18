@@ -66,8 +66,9 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
                     	mailData[i].couresDuration = parse[j].duration;
                     	j++;
                 	}               	
-                }             
-                $state.go('studentInfo.Sendmail', {'showData' : JSON.stringify(mailData)});
+                }  
+                StudentInfoService.putStudentSendMailData(mailData);
+                $state.go('studentInfo.Sendmail');
             }, function(error) {
             	console.log('Get DB Has Error');
             })                     

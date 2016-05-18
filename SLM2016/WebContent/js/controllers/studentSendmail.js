@@ -1,5 +1,5 @@
-app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams', '$timeout', '$rootScope', 'StudentInfoService',  
-    function ($scope, $state, $stateParams, $timeout, $rootScope, StudentInfoService) {  
+app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService',  
+    function ($scope, $state, $timeout, $rootScope, StudentInfoService) {  
 
 			function getcontext(){
 			  				  
@@ -94,7 +94,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$stateParams',
 		}
 
     	var init = function() { 		
-    		parse = JSON.parse($stateParams.showData);
+    		parse = JSON.parse(StudentInfoService.getStudentSendMailData());
     		setValue();
     		if(parse.length-1 > 0){
     			nextButton.disabled = "";
