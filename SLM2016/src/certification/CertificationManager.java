@@ -114,7 +114,7 @@ public class CertificationManager {
 	      Base64.Decoder base64Decoder = Base64.getDecoder();
 	      com.itextpdf.text.Image Image = com.itextpdf.text.Image.getInstance(base64Decoder.decode(base64EncodedCertification_));
 	      Rectangle imageSize = new Rectangle(Image.getWidth(),Image.getHeight());
-	      Document document = new Document(imageSize,10,10,10,10);		
+	      Document document = new Document(imageSize,0,0,0,0);		
 	      ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 	      PdfWriter writer = PdfWriter.getInstance(document, byteArrayOutputStream);      
 	      writer.open();
