@@ -67,7 +67,7 @@ public class CourseManagerWithDatabase {
 		// String sqlString = "SELECT id FROM `course_info` WHERE `name`='" +
 		// courseName + "'";
 		String sqlString = String.format(
-				"SELECT `course_info`.`id` FROM `course_info`,`course_status` where `course_info`.`fk_status_id` = `course_status`.`id` and `course_info`.`name` = '%s' and `course_info`.`batch` = '%s' and `course_status`.`name`= '���W��'",
+				"SELECT `course_info`.`id` FROM `course_info`,`course_status` where `course_info`.`fk_status_id` = `course_status`.`id` and `course_info`.`name` = '%s' and `course_info`.`batch` = '%s' and `course_status`.`name`= '報名中'",
 				courseName, batch);
 		CachedRowSet data = new CachedRowSetImpl();
 		helper.excuteSql(sqlString, data);
