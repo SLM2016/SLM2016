@@ -1,18 +1,10 @@
 package student;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.stream.JsonReader;
-import com.mysql.jdbc.ResultSetMetaData;
-
 import util.SLMDBUtility;
 
 public class StudentDBManager {

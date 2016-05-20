@@ -13,8 +13,6 @@ import com.google.gson.Gson;
 import courseManager.CourseManagerWithDatabase;
 import mailSending.SendApplySuccessfullyMail;
 
-import java.io.StringReader;
-import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,10 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
-import com.jspsmart.upload.SmartUpload;
 
 @WebServlet("/StudentAction")
 @MultipartConfig()
