@@ -51,8 +51,8 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			    	isSendCertification: 1
 			    },
 			    dataType: 'json',
-			    success: function (data) {
-			        console.log(data);
+			    success: function (data) {		        
+			        alert(data);
 			    }
 			});
 		}
