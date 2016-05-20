@@ -2,14 +2,11 @@ package courseManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.sql.rowset.CachedRowSet;
 
 import com.sun.rowset.CachedRowSetImpl;
-
-import com.google.gson.Gson;
 
 import javafx.util.Pair;
 import util.SqlHelper;
@@ -23,6 +20,22 @@ public class CourseManagerWithDatabase {
 		} catch (SQLException e) {
 
 		}
+	}
+	
+	public String getCourseIdByCourseNameAndBatchAndStatus(String courseName, String batch, String status) throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		String sqlString = String.format(
+				"SELECT `course_info`.`id` FROM `course_info`,`course_status` where `course_info`.`fk_status_id` = `course_status`.`id` and `course_info`.`name` = '%s' and `course_info`.`batch` = '%s' and `course_status`.`name`= '%s'",
+				courseName, batch, status);
+		CachedRowSet data = new CachedRowSetImpl();
+		helper.excuteSql(sqlString, data);
+		String id = null;
+
+		while (data.next()) {
+			id = data.getString("id");
+			break;
+		}
+		return id;
 	}
 
 	private String getCourseStatusTable() throws SQLException {
@@ -60,23 +73,6 @@ public class CourseManagerWithDatabase {
 			tempId = tempId.substring(0, index + 1);
 			return tempId + max;
 		}
-	}
-
-	public String getSignUpCourseIdByCourseNameAndBatchAndStatus(String courseName, String batch, String status) throws SQLException {
-		SqlHelper helper = new SqlHelper();
-		String sqlString = String.format(
-				"SELECT `course_info`.`id` FROM `course_info`,`course_status` where `course_info`.`fk_status_id` = `course_status`.`id` and `course_info`.`name` = '%s' and `course_info`.`batch` = '%s' and `course_status`.`name`= '%s'",
-				courseName, batch, status);
-		CachedRowSet data = new CachedRowSetImpl();
-		helper.excuteSql(sqlString, data);
-		String id = null;
-
-		while (data.next()) {
-			id = data.getString("id");
-			break;
-		}
-		return id;
-
 	}
 
 	private String getNewCourseId() throws SQLException {
@@ -120,12 +116,7 @@ public class CourseManagerWithDatabase {
 			String fk = data.getString("fk_status_id");
 			Course course = new Course(id);
 			course.setCourseName(data.getString("name"));
-			course.setType(data.getString("type"));
 			course.setBatch(data.getString("batch"));
-			course.setDuration(Integer.parseInt(data.getString("duration")));
-			course.setLocation(data.getString("location"));
-			course.setLecturer(data.getString("lecturer"));
-			course.setHyperlink(data.getString("page_link"));
 			for (int i = 0; i < courseStatus_.size(); i++) {
 				if (courseStatus_.get(i).getKey().equals(fk)) {
 					course.setStatus(courseStatus_.get(i).getValue());

@@ -70,6 +70,18 @@ public class CourseManagerServletTest {
 		tag_.doGet(requestMock, responseMock);
 		assertNotEquals("[]", output.toString());
 	}
+	
+	@Test
+	public void testDoGetCourseSimpleData() throws ServletException, IOException {
+		HttpServletRequest requestMock = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse responseMock = Mockito.mock(HttpServletResponse.class);
+
+		Mockito.when(requestMock.getHeader("simpleData")).thenReturn("true");
+		Writer output = new StringWriter();
+		Mockito.when(responseMock.getWriter()).thenReturn(new PrintWriter(output));
+		tag_.doGet(requestMock, responseMock);
+		assertNotEquals("[]", output.toString());
+	}
 
 	@Test
 	public void testDoPostDeleteCourse() throws ServletException, IOException {

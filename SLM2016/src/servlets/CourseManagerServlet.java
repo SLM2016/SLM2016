@@ -18,7 +18,6 @@ import student.StudentDBManager;
 @WebServlet("/CourseManagerServlet")
 public class CourseManagerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String OP_INSERT_INTO_STUDENT = "1";
 	public CourseManagerWithDatabase courseManagerWithDb_ = new CourseManagerWithDatabase();
 
 	public CourseManagerServlet() {
@@ -26,15 +25,10 @@ public class CourseManagerServlet extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String op = "";
-		if (request.getParameter("op") != null) {
-			op = request.getParameter("op");
-		}
-		switch (op) {
-		case OP_INSERT_INTO_STUDENT:
+		String simpleData = request.getHeader("simpleData");
+		if (simpleData != null) {
 			getCourseSimpleData(request, response);
-			break;
-		default:
+		} else {
 			List<Course> courses_ = new ArrayList<Course>();
 			String result = "";
 			try {
@@ -51,8 +45,27 @@ public class CourseManagerServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
-			break;
 		}
+	}
+
+	private void getCourseSimpleData(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		List<Course> courses_ = new ArrayList<Course>();
+		String result = "";
+		try {
+			result = courseManagerWithDb_.getCourseSimpleDataFromDatabase(courses_);
+		} catch (SQLException e) {
+
+		}
+		String json;
+		if (result != "Success") {
+			json = new Gson().toJson(result);
+		} else {
+			json = new Gson().toJson(courses_);
+		}
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(json);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -83,37 +96,22 @@ public class CourseManagerServlet extends HttpServlet {
 
 	private void doPostAddCourse(HttpServletRequest request, HttpServletResponse response, String requestString)
 			throws ServletException, IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
 		Gson gson = new Gson();
 		Course course = gson.fromJson(requestString, Course.class);
 		String result = "success";
 		try {
+			if (courseManagerWithDb_.getCourseIdByCourseNameAndBatchAndStatus(course.getCourseName(), course.getBatch(),
+					course.getStatus()) != null) {
+				result = "已存在相同課程";
+			}
 			result = courseManagerWithDb_.addCourseIntoDatabase(course);
 		} catch (SQLException e) {
 
 		}
 		String json = new Gson().toJson(result);
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(json);
-	}
-
-	private void getCourseSimpleData(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		List<Course> courses_ = new ArrayList<Course>();
-		String result = "";
-		try {
-			result = courseManagerWithDb_.getCourseSimpleDataFromDatabase(courses_);
-		} catch (SQLException e) {
-
-		}
-		String json;
-		if (result != "Success") {
-			json = new Gson().toJson(result);
-		} else {
-			json = new Gson().toJson(courses_);
-		}
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
 	}
 }

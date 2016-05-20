@@ -24,8 +24,8 @@ app.factory('CourseService', ['$q', '$http', '$timeout', '$rootScope',
             $http({
                 url: "/SLM2016/CourseManagerServlet",
                 method: "GET",
-                params: {
-                    op: 1
+                headers: {
+                    simpleData: true
                 }
             }).success(function(data) {
                 defer.resolve(data);
