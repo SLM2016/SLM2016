@@ -62,13 +62,11 @@ public class CourseManagerWithDatabase {
 		}
 	}
 
-	public String getSignUpCourseIdByCourseNameAndBatch(String courseName, String batch) throws SQLException {
+	public String getSignUpCourseIdByCourseNameAndBatchAndStatus(String courseName, String batch, String status) throws SQLException {
 		SqlHelper helper = new SqlHelper();
-		// String sqlString = "SELECT id FROM `course_info` WHERE `name`='" +
-		// courseName + "'";
 		String sqlString = String.format(
-				"SELECT `course_info`.`id` FROM `course_info`,`course_status` where `course_info`.`fk_status_id` = `course_status`.`id` and `course_info`.`name` = '%s' and `course_info`.`batch` = '%s' and `course_status`.`name`= '報名中'",
-				courseName, batch);
+				"SELECT `course_info`.`id` FROM `course_info`,`course_status` where `course_info`.`fk_status_id` = `course_status`.`id` and `course_info`.`name` = '%s' and `course_info`.`batch` = '%s' and `course_status`.`name`= '%s'",
+				courseName, batch, status);
 		CachedRowSet data = new CachedRowSetImpl();
 		helper.excuteSql(sqlString, data);
 		String id = null;
@@ -409,23 +407,4 @@ public class CourseManagerWithDatabase {
 		data.close();
 		return result;
 	}
-
-	/*public String getAllCourseIdAndName() throws SQLException {
-		SqlHelper helper = new SqlHelper();
-		String sqlString = "SELECT * FROM `course_info`'";
-		CachedRowSet data = new CachedRowSetImpl();
-		helper.excuteSql(sqlString, data);
-
-		HashMap<String, String> allCourseIdAndName = new HashMap<String, String>();
-
-		while (data.next()) {
-			String courseId = data.getString("id");
-			String courseName = data.getString("name");
-
-			allCourseIdAndName.put(courseId, courseName);
-		}
-		Gson g = new Gson();
-		return g.toJson(allCourseIdAndName);
-
-	}*/
 }

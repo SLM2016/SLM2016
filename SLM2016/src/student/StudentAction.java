@@ -317,7 +317,7 @@ public class StudentAction extends HttpServlet {
 	    studentModel.setReceiptType(_map.get("receipt").toString());
 	    studentModel.setReceiptCommpanyTitleAndEIN(_map.get("companyTitle").toString());
 	    
-        String _courseID = courseDB.getSignUpCourseIdByCourseNameAndBatch(courseName, batch);
+        String _courseID = courseDB.getSignUpCourseIdByCourseNameAndBatchAndStatus(courseName, batch, "報名中");
 
 	    if (_courseID!=null)
 	    {
@@ -341,7 +341,7 @@ public class StudentAction extends HttpServlet {
 		String email = _map.get("email").toString();
 		String courseName = _map.get("courseName").toString();
 		String batch = _map.get("batch").toString();
-		String courseId = courseManagerWithDatabase.getSignUpCourseIdByCourseNameAndBatch(courseName, batch);
+		String courseId = courseManagerWithDatabase.getSignUpCourseIdByCourseNameAndBatchAndStatus(courseName, batch, "報名中");
 		String ccAddresses = courseManagerWithDatabase.getCcAddressByCourseId(courseId);
 		String hyperlink = courseManagerWithDatabase.getHyperlinkByCourseId(courseId);
 		
@@ -354,5 +354,4 @@ public class StudentAction extends HttpServlet {
 
 		return sendResult;
 	}
-
 }

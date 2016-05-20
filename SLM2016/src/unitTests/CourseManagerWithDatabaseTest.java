@@ -98,8 +98,8 @@ public class CourseManagerWithDatabaseTest {
 	}
 	
 	@Test
-	public void testgetSignUpCourseIdByCourseNameAndBatch() throws SQLException {
-		String result = courseManagerWithDb_.getSignUpCourseIdByCourseNameAndBatch("Scurm敏捷方法實作班","401");
+	public void testgetSignUpCourseIdByCourseNameAndBatchAndStatus() throws SQLException {
+		String result = courseManagerWithDb_.getSignUpCourseIdByCourseNameAndBatchAndStatus("Scurm敏捷方法實作班","401","報名中");
 		assertEquals("test01", result);
 	}
 }
