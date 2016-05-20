@@ -8,11 +8,11 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         var updateticketsList = [];
         var showDateList = [];
 
-        var courseNameSelected = null;
-        var locationSelected = null;
-        var ccAddressSelected = null;
-        var typeSelected = null;
-        var ticketTypeSelected = null;
+        var courseNameSelected = '';
+        var locationSelected = '';
+        var ccAddressSelected = '';
+        var typeSelected = '';
+        var ticketTypeSelected = '';
 
         //set CourseName dropdownList
         this.selectedDropdownCourseNameItem = null;
@@ -129,10 +129,10 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             data.courseName_ = courseNameSelected;
             data.batch_ = $scope.data.batch;
             data.dates_ = $scope.showDateList;
-            data.duration_ = $scope.data.duration;
+            data.duration_ = parseInt($scope.data.duration);
             data.ticketTypes_ = $scope.ticketTypeList;
             data.prices_ = $scope.ticketPriceList;
-            data.location_ = $scope.data.location;
+            data.location_ = locationSelected;
             data.lecturer_ = $scope.data.lecturer;
             data.hyperlink_ = $scope.data.hyperlink;
             data.ccAddresses_ = $scope.showCcList;
@@ -148,6 +148,7 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
 
                 getTeddyCourseData();
                 resetAllDropdownList();
+                deleteData();
             });
             setTimeout(function() {
                 $scope.$apply(function() {
@@ -240,6 +241,21 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
                 window.alert("狀態欄位不正確");
                 return;
             }
+            if ((($scope.data.batch) == null)) {
+            	if ((($scope.data.batch) == 0)) {
+            		window.alert("梯次欄位不正確");
+            		return;
+            	}
+        	}
+            var regex=/^\d+/;
+    		if((($scope.data.duration) != null)){
+    			var x = $scope.data.duration;
+    			console.log(String(x).match(regex));
+    			if (!(String(x).match(regex))){
+    				window.alert("課程時間需要為數字");
+    				return;
+    			}
+    		}
             addCourse();
         }
 
@@ -286,10 +302,34 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             $scope.isDatePickerOpen = true;
         }
 
+        function deleteData(){
+    		$scope.data.batch = "";
+    		$scope.showDateList = [];
+    		$scope.data.duration = 0;
+    		$scope.ticketTypeList = [];
+    		$scope.ticketPriceList = [];
+    		$scope.data.lecturer = "";
+    		$scope.data.hyperlink = "";
+    		$scope.showCcList = [];
+    		$scope.showticketList = [];
+    		document.forms['courseName'].reset();
+    		document.forms['type'].reset();
+    		document.forms['ticketType'].reset();
+    		document.forms['location'].reset();
+    		document.forms['status'].reset();
+    		document.forms['ccAddress'].reset();
+    		courseNameSelected = '';
+    		locationSelected = '';
+    		ccAddressSelected = '';
+    		typeSelected = '';
+    		ticketTypeSelected = '';
+        }	
+        
         var init = function() {
             $scope.data = {
                 batch: "",
                 duration: 0,
+                lecturer:"",
                 hyperlink: ""
             };
             typeSelected = "";

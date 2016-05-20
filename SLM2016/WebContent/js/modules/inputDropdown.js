@@ -54,6 +54,7 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
             scope.dropdownItems = scope.defaultDropdownItems || [];
 
             if (scope.defaultSelectedItem !== undefined) {
+            	scope.selectedItem = scope.defaultSelectedItem;
                 selectedItemChanged(scope.defaultSelectedItem, "");
             }
 
