@@ -22,11 +22,16 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 				
 			}
 			function setemailcontent(){
-				var con='title<br>'+
-				"Hi Erica "+
-				parse[index].courseName+'<br>'+
-				parse[index].studentName
-				+'<a href="http://www.w3schools.com/html/">Visit our HTML tutorial</a>';
+				var con="Hi "+
+				parse[index].studentName+",<br><br>"+
+				"很開心這次和大家一起進行了兩天的課程，希望透過上課的講解與實作練習能對"+parse[index].courseName+"有更深的瞭解與應用的機會。<br><br>"+
+				"附件為本次課程證書，請參考。<br><br>"+
+				"課程照片將放在："+'<a href="https://www.facebook.com/groups/ezScrum/">https://www.facebook.com/groups/ezScrum/</a>'+"<br><br>"+
+				
+				"我們也會持續舉辦C.C. Agile每月聚會或不定期舉辦泰迪軟體學員同樂會，歡迎和我們保持聯絡，課後任何有疑問都可以來聊聊。<br><br>"+
+				"更多消息可參考："+"<br>"+
+				"搞笑談軟工FB社團"+ '<a href="https://www.facebook.com/groups/teddy.tw/">https://www.facebook.com/groups/teddy.tw/</a>'+"<br>"+
+				"泰迪軟體敏捷開發課程社團"+ '<a href="https://www.facebook.com/groups/ezScrum/">https://www.facebook.com/groups/ezScrum/</a>'+"<br>";
 				CK=CKEDITOR.instances['editor1'];
 				if (CK) {
 					   CKEDITOR.remove(CKEDITOR.instances['editor1']); //Does the same as line below
