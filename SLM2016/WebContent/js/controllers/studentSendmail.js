@@ -26,7 +26,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 				"Hi Erica "+
 				parse[index].courseName+'<br>'+
 				parse[index].studentName
-				+"";
+				+'<a href="http://www.w3schools.com/html/">Visit our HTML tutorial</a>';
 				CK=CKEDITOR.instances['editor1'];
 				if (CK) {
 					   CKEDITOR.remove(CKEDITOR.instances['editor1']); //Does the same as line below
@@ -51,8 +51,8 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			    	isSendCertification: 1
 			    },
 			    dataType: 'json',
-			    success: function (data) {
-			        console.log(data);
+			    success: function (data) {		        
+			        alert(data);
 			    }
 			});
 		}
