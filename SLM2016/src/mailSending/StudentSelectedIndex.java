@@ -5,7 +5,7 @@ import java.util.List;
 
 public class StudentSelectedIndex {
 	private int classIndex_;
-	private String addresses_, ccAddresses_, subject_, text_, attachment_;
+	private String addresses_, ccAddresses_, subject_, text_, attachment_, courseName_, id_;
 	private ArrayList<Integer> indexes_;
 
 	public StudentSelectedIndex(int index, String ccAddresses) {
@@ -29,6 +29,14 @@ public class StudentSelectedIndex {
 	public List<Integer> getIndexes() {
 		return indexes_;
 	}
+	
+	public String getCourseName() {
+		return courseName_;
+	}
+	
+	public String getStudentId() {
+		return id_;
+	}
 
 	public int getClassIndex() {
 		return classIndex_;
@@ -40,10 +48,6 @@ public class StudentSelectedIndex {
 	
 	public String getCCAddresses() {
 		return ccAddresses_;
-	}
-	
-	public String getSubject() {
-		return subject_;
 	}
 	
 	public String getText() {

@@ -39,7 +39,8 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 		
 		var Send =function(){	
 			var mailData = new Object();
-			mailData.id = parse[index].studentId;
+			mailData.id_ = parse[index].studentId;
+			mailData.courseName_ = parse[index].courseName;
 			mailData.addresses_ = parse[index].address;
 			mailData.text_ = getcontent();
 			
