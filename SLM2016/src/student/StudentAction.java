@@ -46,6 +46,8 @@ public class StudentAction extends HttpServlet {
 	private static final String OP_GET_STUDENT_LIST_BY_COURSE_ID = "5";
 	private static final String OP_UPDATE_STUDENT_RECEIPT_STATUS = "6";
 	private static final String OP_GET_SENDMAILINFO = "7";
+	private static final String OP_UPDATE_STUDENT_Certification_IMAGE = "8";
+	private static final String OP_UPDATE_STUDENT_Certification_PDF = "9";
 
 	private static Gson gson = new Gson();
 
@@ -92,6 +94,12 @@ public class StudentAction extends HttpServlet {
 			break;
 		case OP_UPDATE_STUDENT_RECEIPT_STATUS:
 			updateStudentReceiptStatus(request, response);
+			break;
+		case OP_UPDATE_STUDENT_Certification_IMAGE:
+			updateStudentCertificationtImage(request, response);
+			break;
+		case OP_UPDATE_STUDENT_Certification_PDF:
+			updateStudentCertificationtPdf(request, response);
 			break;
 		default:
 			break;
@@ -203,6 +211,60 @@ public class StudentAction extends HttpServlet {
 		out.println(gson.toJson(result));
 	}
 
+	private void updateStudentCertificationtImage(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		PrintWriter out = response.getWriter();
+		HashMap<String, String> result = new HashMap<String, String>();
+		
+		try{
+			StudentModel studentModel;
+			StudentDBManager studentDBManager = new StudentDBManager();
+			String studentID = request.getParameter("studentId");
+			String certificationImg = request.getParameter("certificationImg");
+			
+			studentModel = studentDBManager.getStudentById(studentID);
+			studentModel.setCertificationImg(certificationImg);
+			
+			if (studentDBManager.updateStudent(studentModel)) {
+				result.put("status", "true");
+			} else {
+
+				result.put("status", "false");
+			}
+		}catch (Exception e) {
+			result.put("status", "false");
+			e.printStackTrace();
+		}
+		out.println(gson.toJson(result));
+	}
+
+	private void updateStudentCertificationtPdf(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		PrintWriter out = response.getWriter();
+		HashMap<String, String> result = new HashMap<String, String>();
+		
+		try{
+			StudentModel studentModel;
+			StudentDBManager studentDBManager = new StudentDBManager();
+			String studentID = request.getParameter("studentId");
+			String certificationPdf = request.getParameter("certificationPdf");
+			
+			studentModel = studentDBManager.getStudentById(studentID);
+			studentModel.setCertificationPdf(certificationPdf);
+			
+			if (studentDBManager.updateStudent(studentModel)) {
+				result.put("status", "true");
+			} else {
+
+				result.put("status", "false");
+			}
+		}catch (Exception e) {
+			result.put("status", "false");
+			e.printStackTrace();
+		}
+		out.println(gson.toJson(result));
+	}
+	
 	private void saveFile(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
