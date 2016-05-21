@@ -69,7 +69,9 @@ public class StudentDBManager {
 	public String getSendMailInfo(StudentSendMailData[] studentSendMailData) throws SQLException {	
 		ArrayList<HashMap<String, String>> queryData = new ArrayList<HashMap<String, String>>();
 		for(int i = 0; i < studentSendMailData.length; i++){
-			String sql = "select id, name, duration from `course_info` where id = "+"\""+studentSendMailData[i].courseId+"\"";;
+			String sql = "select courseInfo.id, courseInfo.name, courseInfo.duration,  courseDate.date "
+					+ "from `course_info` courseInfo, `course_has_date` courseDate "
+					+ "where courseDate.fk_course_id = "+"\""+studentSendMailData[i].courseId+"\"";;
 			queryData.addAll(slmDBUtility.selectSQL(sql));		
 		}		      
 		return new Gson().toJson(queryData);

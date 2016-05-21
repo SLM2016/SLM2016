@@ -67,7 +67,6 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         			mailData[i].studentId = $scope.studentList[j].id;
         			mailData[i].studentName = $scope.studentList[j].name;
         			mailData[i].courseId = $scope.studentList[j].fk_course_info_id;
-        			mailData[i].date = $scope.studentList[j].timestamp;
         			mailData[i].address = $scope.studentList[j].email;
         			i++;
         		} 
@@ -77,8 +76,11 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
                 var parse = JSON.parse(JSON.stringify(courseData));
                 for(var i = 0, j = 0; i < mailData.length; i++){
                 	if( (j < parse.length) && (parse[j].id == mailData[i].courseId)){
+                		var date = new Date(parse[j].date);
+                		var duration = Number(parse[j].duration);
                 		mailData[i].courseName = parse[j].name;
-                    	mailData[i].couresDuration = parse[j].duration;
+                    	mailData[i].couresDuration = duration.toLocaleString('zh-Hans-CN-u-nu-hanidec');
+                    	mailData[i].courseDate = date.getFullYear()+ " 年 " + (date.getMonth()+1) + " 月 " + date.getDate() + " 日";
                     	j++;
                 	}               	
                 }  

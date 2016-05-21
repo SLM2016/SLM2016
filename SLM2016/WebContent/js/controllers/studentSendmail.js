@@ -66,7 +66,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 		var setValue = function(){ 		
 			courseName.value = parse[index].courseName;
     		studentName.value = parse[index].studentName;
-    		date.value = parse[index].date;
+    		date.value = parse[index].courseDate;
     		studentId.value = parse[index].studentId;
     		couresDuration.value = parse[index].couresDuration; 
     		
@@ -92,9 +92,9 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			data.id_ = parse[index].studentId;
 			data.owner_ =  parse[index].studentName;
 			data.date_ = today.getFullYear()+ " 年 " + (today.getMonth()+1) + " 月 " + today.getDate() + " 日" ;
-			data.courceDate_ = parse[index].date;
+			data.courceDate_ = " 於 " + parse[index].courseDate;
 			data.courceName_ = parse[index].courseName;
-			data.courceDuration_ = parse[index].couresDuration; 
+			data.courceDuration_ = "全期共"+parse[index].couresDuration+"小時研習期滿，特此證明"; 
 						
 			$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
 			.done(function(imgData)
