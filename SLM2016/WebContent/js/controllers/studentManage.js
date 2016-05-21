@@ -85,7 +85,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
                 StudentInfoService.putStudentSendMailData(mailData);
                 $state.go('studentInfo.Sendmail');
             }, function(error) {
-            	console.log('Get DB Has Error');
+            	console.log('Get DB Data Has Error');
             })                     
         }
 

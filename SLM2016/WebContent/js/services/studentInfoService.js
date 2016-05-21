@@ -77,6 +77,25 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
             return defer.promise;
         }
 		
+		var getCertificationInfo = function(studentId) {
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/StudentAction",
+                method: "GET",
+                params: {
+                    op: 8,
+                    studentId: studentId
+                }
+            }).success(function(certificationData) {
+                defer.resolve(certificationData);
+            }).error(function(certificationData, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+		
 		var putStudentSendMailData = function(data){
 			studentSendmailDataArray = data;
 		}
@@ -148,7 +167,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 
             return defer.promise;
         }
-
+                
 		/*==========================
             Members
         ==========================*/
@@ -166,6 +185,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.getStudentListByCourseId = getStudentListByCourseId;
         factory.saveStudentFile = saveStudentFile;
         factory.updateStudentReceiptStatus = updateStudentReceiptStatus;
+        factory.getCertificationInfo = getCertificationInfo;       
         /*==========================
             init
         ==========================*/
