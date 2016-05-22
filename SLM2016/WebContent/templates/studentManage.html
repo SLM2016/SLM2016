@@ -1,6 +1,7 @@
 <div class="studentinfo">
     <div class="inner-wrapper">
-        <div class="manage">
+    	<loading ng-show="isCertificationLoading">證書產生中</loading>
+        <div class="manage" ng-show="!isCertificationLoading">
             <div class="manage-topbar">
                 <div class="class-dropdown">
                     <button id="class-label" type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

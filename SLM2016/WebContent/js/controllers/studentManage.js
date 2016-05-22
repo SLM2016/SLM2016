@@ -58,6 +58,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         }
         
         var sendMailData = function(){
+        	$scope.isCertificationLoading = true;
         	var mailData = [];
         	var i = 0;
         	for(var j = 0; j < $scope.studentList.length; j++){
@@ -205,6 +206,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.studentList = [];
         $scope.courseList = [];
         $scope.currentCourse;
+    	$scope.isCertificationLoading = false;
                
         /*==========================
              Methods
