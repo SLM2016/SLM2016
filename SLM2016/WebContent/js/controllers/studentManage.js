@@ -74,14 +74,24 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         	
         	StudentInfoService.getSendMailInfo(JSON.stringify(mailData)).then(function(courseData) {
                 var parse = JSON.parse(JSON.stringify(courseData));
+                var dataInterval = (parse.length) / mailData.length;
                 for(var i = 0, j = 0; i < mailData.length; i++){
                 	if( (j < parse.length) && (parse[j].id == mailData[i].courseId)){
-                		var date = new Date(parse[j].date);
                 		var duration = Number(parse[j].duration);
+                		var date = new Date(parse[j].date);
                 		mailData[i].courseName = parse[j].name;
                     	mailData[i].couresDuration = numberToChinese(duration);
-                    	mailData[i].courseDate = date.getFullYear()+ " 年 " + (date.getMonth()+1) + " 月 " + date.getDate() + " 日";
-                    	j++;
+                    	mailData[i].courseDate = date.getFullYear()+ " 年 " + (date.getMonth()+1) + " 月 ";
+                		for(var k = 0; k < dataInterval; k++){
+                			var date = new Date(parse[j].date);      
+                			if(k != dataInterval-1){
+                				mailData[i].courseDate += date.getDate() + "、";
+                			}
+                			else{
+                				mailData[i].courseDate += date.getDate() + " 日 ";
+                			}                       	
+                        	j++;
+                		}             		
                 	}       
                 }  
                 StudentInfoService.putStudentSendMailData(mailData);

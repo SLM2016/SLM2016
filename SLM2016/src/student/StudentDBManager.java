@@ -73,7 +73,7 @@ public class StudentDBManager {
 					+ "from `course_info` courseInfo, `course_has_date` courseDate "
 					+ "where courseInfo.id = "+"\""+studentSendMailData[i].courseId+"\" AND "
 					+ "courseDate.fk_course_id = "+"\""+studentSendMailData[i].courseId+"\" "
-					+ "ORDER BY date DESC LIMIT 0,1";;
+					+ "ORDER BY date";;
 			queryData.addAll(slmDBUtility.selectSQL(sql));	
 		}	
 		return new Gson().toJson(queryData);

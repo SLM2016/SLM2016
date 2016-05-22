@@ -64,6 +64,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 		}
 	  
 		var setValue = function(){ 		
+			$scope.isStudentLoading = true;
 			courseName.value = parse[index].courseName;
     		studentName.value = parse[index].studentName;
     		date.value = parse[index].courseDate;
@@ -79,9 +80,11 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
     			else{
     				console.log("DB 有資料，直接顯示");
     				document.getElementById("certificationImg").setAttribute('src','data:image/png;base64,'+parse[0].certification_img);
+    				$scope.isStudentLoading = false;
     			}
             }, function(error) {
             	console.log('Get DB Data Has Error');
+            	$scope.isStudentLoading = false;
             });		
 		}
 		
@@ -108,6 +111,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 				.done(function(pdfData)
 				{
 					console.log("save");
+					$scope.isStudentLoading = false;
 				});
 			});
 		}
@@ -179,10 +183,11 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
     	
     	CKEDITOR.replace( 'editor1' );
     	
-
+    	$scope.isStudentLoading = false;
     	$scope.Send = Send;
     	$scope.ClickNextButton = ClickNextButton;
     	$scope.ClickPreviousButton = ClickPreviousButton;
+    	
     	
         init();
 		
