@@ -79,7 +79,7 @@ public class CertificationServlet extends HttpServlet {
 				result.put("status", "false");
 				e.printStackTrace();
 			}
-			System.out.println(gson.toJson(result));
+			//System.out.println(gson.toJson(result));
 		}
 	}
 }

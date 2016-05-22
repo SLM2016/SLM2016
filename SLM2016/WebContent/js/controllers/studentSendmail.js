@@ -64,7 +64,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 		}
 	  
 		var setValue = function(){ 		
-			$scope.isStudentLoading = true;
+			$scope.isCertificationLoading = true;
 			courseName.value = parse[index].courseName;
     		studentName.value = parse[index].studentName;
     		date.value = parse[index].courseDate;
@@ -75,20 +75,20 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
     			var parse = JSON.parse(JSON.stringify(certificationData));   			
     			
     			if(parse[0].certification_img == ""){
-    				makeCertificationIMG();
+    				makeCertification();   				
     			}  
     			else{
     				console.log("DB 有資料，直接顯示");
     				document.getElementById("certificationImg").setAttribute('src','data:image/png;base64,'+parse[0].certification_img);
-    				$scope.isStudentLoading = false;
+    				$scope.isCertificationLoading = false;
     			}
             }, function(error) {
             	console.log('Get DB Data Has Error');
-            	$scope.isStudentLoading = false;
+            	$scope.isCertificationLoading = false;
             });		
 		}
 		
-		var makeCertificationIMG = function(){
+		var makeCertification = function(){
 			console.log("製作證書PNG中");
 			var data = new Object();
     		var today = new Date();
@@ -111,8 +111,9 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 				.done(function(pdfData)
 				{
 					console.log("save");
-					$scope.isStudentLoading = false;
-				});
+					$scope.isCertificationLoading = false;
+					$scope.$apply();
+				});				
 			});
 		}
 		
@@ -183,7 +184,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
     	
     	CKEDITOR.replace( 'editor1' );
     	
-    	$scope.isStudentLoading = false;
+    	$scope.isCertificationLoading = false;
     	$scope.Send = Send;
     	$scope.ClickNextButton = ClickNextButton;
     	$scope.ClickPreviousButton = ClickPreviousButton;
