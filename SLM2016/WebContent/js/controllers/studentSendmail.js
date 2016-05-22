@@ -95,7 +95,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			data.courceDate_ = " 於 " + parse[index].courseDate;
 			data.courceName_ = parse[index].courseName;
 			data.courceDuration_ = "全期共"+parse[index].couresDuration+"小時研習期滿，特此證明"; 
-						
+
 			$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
 			.done(function(imgData)
 			{

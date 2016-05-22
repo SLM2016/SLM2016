@@ -67,7 +67,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         			mailData[i].studentId = $scope.studentList[j].id;
         			mailData[i].studentName = $scope.studentList[j].name;
         			mailData[i].courseId = $scope.studentList[j].fk_course_info_id;
-        			mailData[i].address = $scope.studentList[j].email;
+        			mailData[i].address = $scope.studentList[j].email;      			
         			i++;
         		} 
         	}        	
@@ -79,10 +79,10 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
                 		var date = new Date(parse[j].date);
                 		var duration = Number(parse[j].duration);
                 		mailData[i].courseName = parse[j].name;
-                    	mailData[i].couresDuration = duration.toLocaleString('zh-Hans-CN-u-nu-hanidec');
+                    	mailData[i].couresDuration = numberToChinese(duration);
                     	mailData[i].courseDate = date.getFullYear()+ " 年 " + (date.getMonth()+1) + " 月 " + date.getDate() + " 日";
                     	j++;
-                	}               	
+                	}       
                 }  
                 StudentInfoService.putStudentSendMailData(mailData);
                 $state.go('studentInfo.Sendmail');
@@ -90,7 +90,47 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             	console.log('Get DB Data Has Error');
             })                     
         }
+        
+        var numberChar = ["零","一","二","三","四","五","六","七","八","九"];
+        var unitChar = ["","十"];
+        
+        function numberToChinese(number){
+            var result = '';
+            
+            if(number === 0){
+                return numberChar[0];
+            }
 
+            while(number > 0){
+                var section = number % 100;
+                result = sectionToChinese(section);
+                number = Math.floor(number / 100);
+            }
+            if((result.length >= 2) && (result.indexOf("一") == 0)){
+            	result = result.replace("一","");
+            }
+             
+            return result;
+        }
+        
+        function sectionToChinese(section){
+            var tempChar = '', result = '';
+            var unitCharIndex = 0;
+            while(section > 0){
+                var numberCharIndex = section % 10;
+                if(numberCharIndex !==0){
+                	tempChar = numberChar[numberCharIndex];
+                    tempChar += unitChar[unitCharIndex]
+                    result = tempChar + result;
+                }             
+                             
+                unitCharIndex++;
+                section = Math.floor(section / 10);
+            }
+           
+            return result;
+        }
+             
         var toggleStatusDropdown = function(student) {
             student.isSelected = !student.isSelected;
         }
@@ -145,8 +185,8 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         }
               
     	var init = function() {
-            getCourseList();
-        }
+            getCourseList();          
+    	}
 
 		/*==========================
             Events
