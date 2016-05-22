@@ -83,7 +83,7 @@ public class CertificationManager {
 		
 		graphics.setFont(new Font("DFKai-SB", Font.PLAIN, template.getCourceDurationSize()));
 		graphics.drawString(certification.getCourceDuration(), template.getCourceDurationLocation().x, template.getCourceDurationLocation().y);
-		
+
 		graphics.setPaint(Color.red);
 		graphics.setFont(new Font("DFKai-SB", Font.PLAIN, template.getDateTextSize()));
 		graphics.drawString(certification.getDate(), template.getDateLocation().x, template.getDateLocation().y);

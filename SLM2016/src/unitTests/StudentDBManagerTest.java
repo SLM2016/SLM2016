@@ -87,7 +87,6 @@ public class StudentDBManagerTest {
 		studentSendMailData[0] = new StudentSendMailData();
 		studentSendMailData[0].address = "123@gmail.com";
 		studentSendMailData[0].courseId = "teddysoftware-course-03-1";
-		studentSendMailData[0].date = "20160519";
 		studentSendMailData[0].studentId = 1;
 		studentSendMailData[0].studentName = "Chen Teddy";
 		

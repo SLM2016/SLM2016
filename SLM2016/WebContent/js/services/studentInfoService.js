@@ -77,6 +77,25 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
             return defer.promise;
         }
 		
+		var getCertificationInfo = function(studentId) {
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/StudentAction",
+                method: "GET",
+                params: {
+                    op: 8,
+                    studentId: studentId
+                }
+            }).success(function(certificationData) {
+                defer.resolve(certificationData);
+            }).error(function(certificationData, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+		
 		var putStudentSendMailData = function(data){
 			studentSendmailDataArray = data;
 		}
@@ -148,50 +167,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 
             return defer.promise;
         }
-
-        var updateStudentCertificationImage = function(certificationImageStatus,studentId, index)
-        {
-
-            var defer = $q.defer();
-
-            $http({
-                url: "/SLM2016/StudentAction",
-                method: "POST",
-                params: {
-                    op: 8,
-                    studentId: studentId,
-                    certificationImg: certificationImageStatus,
-                }
-            }).success(function(data) {
-                defer.resolve(data);
-            }).error(function(data, status, headers, config) {
-                console.error("status : " + status);
-            });
-
-            return defer.promise;
-        }
-        
-        var updateStudentCertificationPdf = function(certificationPdfStatus,studentId, index)
-        {
-
-            var defer = $q.defer();
-
-            $http({
-                url: "/SLM2016/StudentAction",
-                method: "POST",
-                params: {
-                    op: 9,
-                    studentId: studentId,
-                    certificationPdf: certificationPdfStatus
-                }
-            }).success(function(data) {
-                defer.resolve(data);
-            }).error(function(data, status, headers, config) {
-                console.error("status : " + status);
-            });
-            return defer.promise;
-        }
-        
+                
 		/*==========================
             Members
         ==========================*/
@@ -209,8 +185,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.getStudentListByCourseId = getStudentListByCourseId;
         factory.saveStudentFile = saveStudentFile;
         factory.updateStudentReceiptStatus = updateStudentReceiptStatus;
-        factory.updateStudentCertificationImage = updateStudentCertificationImage;
-        factory.updateStudentCertificationPdf = updateStudentCertificationPdf;
+        factory.getCertificationInfo = getCertificationInfo;       
         /*==========================
             init
         ==========================*/

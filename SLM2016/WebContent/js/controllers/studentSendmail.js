@@ -44,9 +44,10 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 		
 		var Send =function(){	
 			var mailData = new Object();
+			mailData.id_ = parse[index].studentId;
+			mailData.courseName_ = parse[index].courseName;
 			mailData.addresses_ = parse[index].address;
 			mailData.text_ = getcontent();
-			mailData.attachment_ = "1231231";
 			
 			$.ajax({
 			    url: 'SendGmailServlet',
@@ -63,11 +64,57 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 		}
 	  
 		var setValue = function(){ 		
+			$scope.isCertificationLoading = true;
 			courseName.value = parse[index].courseName;
     		studentName.value = parse[index].studentName;
-    		date.value = parse[index].date;
+    		date.value = parse[index].courseDate;
     		studentId.value = parse[index].studentId;
-    		couresDuration.value = parse[index].couresDuration;   
+    		couresDuration.value = parse[index].couresDuration; 
+    		
+    		StudentInfoService.getCertificationInfo(JSON.stringify(parse[index].studentId)).then(function(certificationData) {
+    			var parse = JSON.parse(JSON.stringify(certificationData));   			
+    			
+    			if(parse[0].certification_img == ""){
+    				makeCertification();   				
+    			}  
+    			else{
+    				console.log("DB 有資料，直接顯示");
+    				document.getElementById("certificationImg").setAttribute('src','data:image/png;base64,'+parse[0].certification_img);
+    				$scope.isCertificationLoading = false;
+    			}
+            }, function(error) {
+            	console.log('Get DB Data Has Error');
+            	$scope.isCertificationLoading = false;
+            });		
+		}
+		
+		var makeCertification = function(){
+			console.log("製作證書PNG中");
+			var data = new Object();
+    		var today = new Date();
+			data.id_ = parse[index].studentId;
+			data.owner_ =  parse[index].studentName;
+			data.date_ = today.getFullYear()+ " 年 " + (today.getMonth()+1) + " 月 " + today.getDate() + " 日" ;
+			data.courceDate_ = " 於 " + parse[index].courseDate;
+			data.courceName_ = parse[index].courseName;
+			data.courceDuration_ = "全期共"+parse[index].couresDuration+"小時研習期滿，特此證明"; 
+
+			$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
+			.done(function(imgData)
+			{
+				document.getElementById("certificationImg").setAttribute('src','data:image/png;base64,'+imgData);
+				
+				var saveData = new Object();
+				saveData.saveDB = "save";
+				saveData.studentId = parse[index].studentId;
+				$.post("/SLM2016/CertificationServlet",JSON.stringify(saveData))
+				.done(function(pdfData)
+				{
+					console.log("save");
+					$scope.isCertificationLoading = false;
+					$scope.$apply();
+				});				
+			});
 		}
 		
 		var ClickNextButton = function(){	
@@ -103,7 +150,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
     			nextButton.disabled = "";
     		}
     	
-    		 setemailcontent();
+    		setemailcontent();
         }
 
 		/*==========================
@@ -137,10 +184,11 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
     	
     	CKEDITOR.replace( 'editor1' );
     	
-
+    	$scope.isCertificationLoading = false;
     	$scope.Send = Send;
     	$scope.ClickNextButton = ClickNextButton;
     	$scope.ClickPreviousButton = ClickPreviousButton;
+    	
     	
         init();
 		

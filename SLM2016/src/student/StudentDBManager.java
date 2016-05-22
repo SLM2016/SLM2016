@@ -69,10 +69,19 @@ public class StudentDBManager {
 	public String getSendMailInfo(StudentSendMailData[] studentSendMailData) throws SQLException {	
 		ArrayList<HashMap<String, String>> queryData = new ArrayList<HashMap<String, String>>();
 		for(int i = 0; i < studentSendMailData.length; i++){
-			String sql = "select id, name, duration from `course_info` where id = "+"\""+studentSendMailData[i].courseId+"\"";;
-			queryData.addAll(slmDBUtility.selectSQL(sql));		
-		}		      
+			String sql = "select courseInfo.id, courseInfo.name, courseInfo.duration,  courseDate.date "
+					+ "from `course_info` courseInfo, `course_has_date` courseDate "
+					+ "where courseInfo.id = "+"\""+studentSendMailData[i].courseId+"\" AND "
+					+ "courseDate.fk_course_id = "+"\""+studentSendMailData[i].courseId+"\" "
+					+ "ORDER BY date";;
+			queryData.addAll(slmDBUtility.selectSQL(sql));	
+		}	
 		return new Gson().toJson(queryData);
+	}
+	
+	public String getCertificationInfo(String studentID) throws SQLException {	
+		String sql = "select certification_img from `student_info` where id = "+studentID;;		      		
+		return new Gson().toJson(slmDBUtility.selectSQL(sql));
 	}
 
 	public boolean insertStudent(StudentModel studentModel) throws SQLException {

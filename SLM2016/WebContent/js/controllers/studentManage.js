@@ -58,53 +58,89 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         }
         
         var sendMailData = function(){
-        	$scope.isCertificationLoading = true;
         	var mailData = [];
         	var i = 0;
+        	
         	for(var j = 0; j < $scope.studentList.length; j++){
-        		
         		if($scope.studentList[j].isSelected){
         			mailData[i] = new Object();
         			mailData[i].studentId = $scope.studentList[j].id;
         			mailData[i].studentName = $scope.studentList[j].name;
         			mailData[i].courseId = $scope.studentList[j].fk_course_info_id;
-        			mailData[i].address = $scope.studentList[j].email;
-        			if($scope.studentList[j].certificationImg != null){
-        				mailData[i].certificationImg = $scope.studentList[j].certificationImg;
-        				mailData[i].certificationPdf = $scope.studentList[j].certificationPdf;
-        			}
-        			else{
-        				mailData[i].certificationImg = "";
-        				mailData[i].certificationPdf = "";
-        			}
+        			mailData[i].address = $scope.studentList[j].email;      			
         			i++;
         		} 
         	}        	
         	
         	StudentInfoService.getSendMailInfo(JSON.stringify(mailData)).then(function(courseData) {
                 var parse = JSON.parse(JSON.stringify(courseData));
+                var dataInterval = (parse.length) / mailData.length;
                 for(var i = 0, j = 0; i < mailData.length; i++){
                 	if( (j < parse.length) && (parse[j].id == mailData[i].courseId)){
+                		var duration = Number(parse[j].duration);
+                		var date = new Date(parse[j].date);
                 		mailData[i].courseName = parse[j].name;
-                    	mailData[i].couresDuration = parse[j].duration;
-                    	mailData[i].date = parse[j].dates;
-                    	j++;
-                	}                	
-                }
-                         
-                for(var i = 0; i < mailData.length; i++){
-                	if(mailData[i].certificationImg == ""){
-                		makeCertification(i, mailData);                    		
-                		}
-                }
-                
+                    	mailData[i].couresDuration = numberToChinese(duration);
+                    	mailData[i].courseDate = date.getFullYear()+ " 年 " + (date.getMonth()+1) + " 月 ";
+                		for(var k = 0; k < dataInterval; k++){
+                			var date = new Date(parse[j].date);      
+                			if(k != dataInterval-1){
+                				mailData[i].courseDate += date.getDate() + "、";
+                			}
+                			else{
+                				mailData[i].courseDate += date.getDate() + " 日 ";
+                			}                       	
+                        	j++;
+                		}             		
+                	}       
+                }  
                 StudentInfoService.putStudentSendMailData(mailData);
                 $state.go('studentInfo.Sendmail');
             }, function(error) {
-            	console.log('Get DB Has Error');
-            })
+            	console.log('Get DB Data Has Error');
+            })                     
         }
+        
+        var numberChar = ["零","一","二","三","四","五","六","七","八","九"];
+        var unitChar = ["","十"];
+        
+        function numberToChinese(number){
+            var result = '';
+            
+            if(number === 0){
+                return numberChar[0];
+            }
 
+            while(number > 0){
+                var section = number % 100;
+                result = sectionToChinese(section);
+                number = Math.floor(number / 100);
+            }
+            if((result.length >= 2) && (result.indexOf("一") == 0)){
+            	result = result.replace("一","");
+            }
+             
+            return result;
+        }
+        
+        function sectionToChinese(section){
+            var tempChar = '', result = '';
+            var unitCharIndex = 0;
+            while(section > 0){
+                var numberCharIndex = section % 10;
+                if(numberCharIndex !==0){
+                	tempChar = numberChar[numberCharIndex];
+                    tempChar += unitChar[unitCharIndex]
+                    result = tempChar + result;
+                }             
+                             
+                unitCharIndex++;
+                section = Math.floor(section / 10);
+            }
+           
+            return result;
+        }
+             
         var toggleStatusDropdown = function(student) {
             student.isSelected = !student.isSelected;
         }
@@ -159,40 +195,9 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         }
               
     	var init = function() {
-            getCourseList();
-        }
-    	
-    	var makeCertification = function(index , maildata){
-    		//製作證書
-    		var data = new Object();
-    		var Today = new Date();
-    		data.id_ = maildata[index].studentId;
-    		data.owner_ =  maildata[index].studentName;
-    		data.date_ =  Today.getFullYear()+ " 年 " + (Today.getMonth()+1) + " 月 " + Today.getDate() + " 日" ;
-    		data.courceDate_ = maildata[index].couresDate;
-    		data.courceName_ =  maildata[index].courseName;
-    		data.courcourceDuration_ =  maildata[index].couresDuration;
-    		    		
-    		CertificationPostToDB(data, maildata[index].studentId, index);
+            getCourseList();          
     	}
-    	    	
-    	var CertificationPostToDB = function(data, studentId, index){
-    		
-    		$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
-			.done(function(imageString){
-				var imageData = new Object();
-				
-				$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
-				.done(function(pdfString){
-					//將Pdf寫入DB
-					StudentInfoService.updateStudentCertificationPdf(pdfString, studentId, index);
-				});
-				//將Image寫入DB
-				StudentInfoService.updateStudentCertificationImage(imageString, studentId, index);
-			});
-    	}
-    	
-    	
+
 		/*==========================
             Events
         ==========================*/
@@ -204,9 +209,9 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.isStudentLoadError = false;
         $scope.isStudentLoading = false;
         $scope.studentList = [];
+        $scope.sendMailData = sendMailData;
         $scope.courseList = [];
         $scope.currentCourse;
-    	$scope.isCertificationLoading = false;
                
         /*==========================
              Methods
@@ -215,7 +220,6 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.toggleSelectStudent = toggleSelectStudent;
         $scope.toggleStatusDropdown = toggleStatusDropdown;
         $scope.toggleActionDropdown = toggleActionDropdown;
-        $scope.sendMailData = sendMailData;
         $scope.changeStudentStatus = changeStudentStatus;
         $scope.openInvoiceModal = openInvoiceModal;
         $scope.changeStudentList = changeStudentList;
