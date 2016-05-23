@@ -27,7 +27,7 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
         restrict: 'E',
         scope: {
             defaultDropdownItems: '=',
-            defaultSelectedItem: '=',
+            //defaultSelectedItem: '=',
             selectedItem: '=',
             inputRequired: '=',
             inputName: '@',
@@ -53,9 +53,8 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
             scope.dropdownVisible = false;
             scope.dropdownItems = scope.defaultDropdownItems || [];
 
-            if (scope.defaultSelectedItem !== undefined) {
-            	scope.selectedItem = scope.defaultSelectedItem;
-                selectedItemChanged(scope.defaultSelectedItem, "");
+            if (scope.selectedItem !== undefined) {
+                selectedItemChanged(scope.selectedItem, "");
             }
 
             scope.$watch('dropdownItems', function(newValue, oldValue) {

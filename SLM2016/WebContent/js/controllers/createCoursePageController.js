@@ -109,8 +109,7 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         };
 
         this.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
-        this.selectedDropdownStatusItem = null;
-        this.defaultSelectedDropdownStatusItem = this.dropdownStatusItems[0];
+        this.selectedDropdownStatusItem = this.dropdownStatusItems[0];
 
         function getTeddyCourseData() {
             $scope.isCourseLoading = true;
