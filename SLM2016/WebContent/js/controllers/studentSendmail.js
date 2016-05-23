@@ -21,10 +21,17 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			function removeemailcontent() {
 				
 			}
+			function howManydays(D){
+				var res = D.split("、");
+				console.log(res);
+				return res.length;
+			}
 			function setemailcontent(){
+				
+				
 				var con="Hi "+
 				parse[index].studentName+",<br><br>"+
-				"很開心這次和大家一起進行了兩天的課程，希望透過上課的講解與實作練習能對"+parse[index].courseName+"有更深的瞭解與應用的機會。<br><br>"+
+				"很開心這次和大家一起進行了"+howManydays(date.value)+"天的課程，希望透過上課的講解與實作練習能對"+parse[index].courseName+"有更深的瞭解與應用的機會。<br><br>"+
 				"附件為本次課程證書，請參考。<br><br>"+
 				"課程照片將放在："+'<a href="https://www.facebook.com/groups/ezScrum/">https://www.facebook.com/groups/ezScrum/</a>'+"<br><br>"+
 				
@@ -145,11 +152,12 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 
     	var init = function() { 		
     		parse = JSON.parse(StudentInfoService.getStudentSendMailData());
+//    		console.log(parse);
     		setValue();
     		if(parse.length-1 > 0){
     			nextButton.disabled = "";
     		}
-    	
+    		
     		setemailcontent();
         }
 
