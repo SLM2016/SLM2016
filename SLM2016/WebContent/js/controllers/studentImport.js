@@ -83,6 +83,11 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 					$scope.isUploading = false;
 					if(result.status) {
 						$scope.isUploadSuccess = true;
+						$scope.items = [];
+				    	$scope.sheets = [];
+				    	$scope.excelFile = undefined;
+				    	$scope.showData = undefined;
+				    	alert("上傳成功！");
 					}
 					else {
 						$scope.isUploadFail = true;
@@ -118,7 +123,7 @@ app.controller('StudentImportController', ['$scope', '$state', '$timeout', '$roo
 
         $scope.isCourseEmpty = false;
         $scope.isUploading = false;
-        $scope.isUploadSuccess = false;
+        $scope.isUploadSuccess = true;
         $scope.isUploadFail = false;
         $scope.isAlreadyUpload = false;
         $scope.showPreview = false; 

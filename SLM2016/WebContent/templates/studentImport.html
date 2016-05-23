@@ -35,39 +35,53 @@
                 </div> -->
                 <button class="btn btn-info btn-orange" ng-click="uploadFile()" ng-class="{'disable': isCourseEmpty || isCourseLoading}">上傳</button>
 
-                <div class="result-container" ng-class="{'show-result': isUploading || isUploadSuccess || isUploadFail || studentList.length > 0}">
+                <div class="result-container" ng-class="{'show-result': studentList.length > 0}">
                     <span class="label label-warning  num" ng-show="studentList.length > 0">此課程已有{{studentList.length}}名學員資料</span>
-                    <spin spin-size="medium" class="spin-style" ng-show="isUploading"></spin>
+                    <!-- <spin spin-size="medium" class="spin-style" ng-show="isUploading"></spin>
                     <span class="label label-info" ng-show="isUploadSuccess">上傳成功</span>
-                    <span class="label label-danger" ng-show="isUploadFail">上傳失敗</span>
+                    <span class="label label-danger" ng-show="isUploadFail">上傳失敗</span> -->
+                </div>
+            </div>
+            <div class="result-content">
+                <div class="load-layout" ng-show="isUploading || isUploadFail">
+                    <div class="load-block" ng-show="isUploading">
+                        <div class="layout-title">
+                            <span>正在上傳...</span>
+                            <spin spin-size="medium" class="spin-style"></spin>
+                        </div>
+                    </div>
+                    <div class="load-block" ng-show="isUploadFail">
+                        <div class="layout-title">上傳失敗，請重新上傳一次</div>
+                    </div>
+                </div>
+                <div class="si-div" ng-scrollbar include-padding="true" ng-class="{'show': items.length != 0}">
+                    <table class="table table-bordered si-table table-hover">
+                        <thead>
+                            <th ng-repeat="terms in terms" nowrap="nowrap">{{ terms}}</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="showData in showData">
+                                <td>{{showData[0]}}</td>
+                                <td>{{showData[1]}}</td>
+                                <td>{{showData[2]}}</td>
+                                <td>{{showData[3]}}</td>
+                                <td>{{showData[4]}}</td>
+                                <td>{{showData[5]}}</td>
+                                <td>{{showData[6]}}</td>
+                                <td>{{showData[7]}}</td>
+                                <td>{{showData[8]}}</td>
+                                <td>{{showData[9]}}</td>
+                                <td>{{showData[10]}}</td>
+                                <td>{{showData[11]}}</td>
+                                <td>{{showData[12]}}</td>
+                                <td>{{showData[13]}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
-            <div class="si-div" ng-scrollbar include-padding="true" ng-class="{'show': items.length != 0}">
-                <table class="table table-bordered si-table table-hover">
-                    <thead>
-                        <th ng-repeat="terms in terms" width:50px nowrap="nowrap">{{ terms}}</th>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="showData in showData">
-                            <td>{{showData[0]}}</td>
-                            <td>{{showData[1]}}</td>
-                            <td>{{showData[2]}}</td>
-                            <td>{{showData[3]}}</td>
-                            <td>{{showData[4]}}</td>
-                            <td>{{showData[5]}}</td>
-                            <td>{{showData[6]}}</td>
-                            <td>{{showData[7]}}</td>
-                            <td>{{showData[8]}}</td>
-                            <td>{{showData[9]}}</td>
-                            <td>{{showData[10]}}</td>
-                            <td>{{showData[11]}}</td>
-                            <td>{{showData[12]}}</td>
-                            <td>{{showData[13]}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                
         </div>
     </div>
 </div>
