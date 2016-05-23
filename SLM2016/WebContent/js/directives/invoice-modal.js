@@ -236,10 +236,6 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                         $scope.isInvoiceNumberEmpty = false;
                     }
 
-                    if($scope.currentStudent.receipt_EIN == $scope.data.invoiceNumber) {
-                        return;
-                    }
-
                     $scope.isChangingStatus = true;
                     $scope.isChangeSuccess = false;
                     $scope.isChangeFail = false;
