@@ -23,7 +23,6 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			}
 			function howManydays(D){
 				var res = D.split("、");
-				console.log(res);
 				return res.length;
 			}
 			function setemailcontent(){
@@ -56,18 +55,20 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			mailData.addresses_ = parse[index].address;
 			mailData.text_ = getcontent();
 			
-			$.ajax({
-			    url: 'SendGmailServlet',
-			    type: 'post',
-			    data: JSON.stringify(mailData),
-			    headers: {
-			    	isSendCertification: 1
-			    },
-			    dataType: 'json',
-			    success: function (data) {		        
-			        alert(data);
-			    }
-			});
+			if (confirm("是否確認寄送!?") == true){
+				$.ajax({
+					url: 'SendGmailServlet',
+					type: 'post',
+					data: JSON.stringify(mailData),
+					headers: {
+						isSendCertification: 1
+					},
+					dataType: 'json',
+					success: function (data) {		        
+						alert(data);
+					}
+				});				
+			}
 		}
 	  
 		var setValue = function(){ 		
@@ -152,7 +153,6 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 
     	var init = function() { 		
     		parse = JSON.parse(StudentInfoService.getStudentSendMailData());
-//    		console.log(parse);
     		setValue();
     		if(parse.length-1 > 0){
     			nextButton.disabled = "";
