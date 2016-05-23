@@ -81,7 +81,7 @@ public class CertificationManager {
 		
 		graphics.setFont(new Font("DFKai-SB", Font.PLAIN, template.getCourceDurationSize()));
 		graphics.drawString(certification.getCourceDuration(), template.getCourceDurationLocation().x, template.getCourceDurationLocation().y);
-		
+
 		graphics.setPaint(Color.red);
 		graphics.setFont(new Font("DFKai-SB", Font.PLAIN, template.getDateTextSize()));
 		graphics.drawString(certification.getDate(), template.getDateLocation().x, template.getDateLocation().y);
@@ -107,15 +107,14 @@ public class CertificationManager {
 	}
 	
 	public void makeCertificationPDF() {
-		Document document = new Document();		
-		Base64.Decoder base64Decoder = Base64.getDecoder();
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-				
-	    try {     
+			
+	    try { 
+	      Base64.Decoder base64Decoder = Base64.getDecoder();
 	      com.itextpdf.text.Image Image = com.itextpdf.text.Image.getInstance(base64Decoder.decode(base64EncodedCertification_));
-	      PdfWriter writer = PdfWriter.getInstance(document, byteArrayOutputStream);
 	      Rectangle imageSize = new Rectangle(Image.getWidth(),Image.getHeight());
-	      document.setPageSize(imageSize);
+	      Document document = new Document(imageSize,0,0,0,0);		
+	      ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+	      PdfWriter writer = PdfWriter.getInstance(document, byteArrayOutputStream);      
 	      writer.open();
 	      document.open();
 	      document.add(Image);
