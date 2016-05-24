@@ -1,5 +1,5 @@
-app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService',  
-    function ($scope, $state, $timeout, $rootScope, StudentInfoService) {  
+app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService',  
+    function ($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService) {  
 
 			function getcontext(){
 			  				  
@@ -29,8 +29,8 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 				
 				
 				var con="Hi "+
-				parse[index].studentName+",<br><br>"+
-				"很開心這次和大家一起進行了"+howManydays(date.value)+"天的課程，希望透過上課的講解與實作練習能對"+parse[index].courseName+"有更深的瞭解與應用的機會。<br><br>"+
+				parseMailData[index].studentName+",<br><br>"+
+				"很開心這次和大家一起進行了"+howManydays(date.value)+"天的課程，希望透過上課的講解與實作練習能對"+parseMailData[index].courseName+"有更深的瞭解與應用的機會。<br><br>"+
 				"附件為本次課程證書，請參考。<br><br>"+
 				"課程照片將放在："+'<a href="https://www.facebook.com/groups/ezScrum/">https://www.facebook.com/groups/ezScrum/</a>'+"<br><br>"+
 				
@@ -50,9 +50,9 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 		
 		var Send =function(){	
 			var mailData = new Object();
-			mailData.id_ = parse[index].studentId;
-			mailData.courseName_ = parse[index].courseName;
-			mailData.addresses_ = parse[index].address;
+			mailData.id_ = parseMailData[index].studentId;
+			mailData.courseName_ = parseMailData[index].courseName;
+			mailData.addresses_ = parseMailData[index].address;
 			mailData.text_ = getcontent();
 			
 			if (confirm("是否確認寄送!?") == true){
@@ -73,13 +73,13 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 	  
 		var setValue = function(){ 		
 			$scope.isCertificationLoading = true;
-			courseName.value = parse[index].courseName;
-    		studentName.value = parse[index].studentName;
-    		date.value = parse[index].courseDate;
-    		studentId.value = parse[index].studentId;
-    		couresDuration.value = parse[index].couresDuration; 
+			courseName.value = parseMailData[index].courseName;
+    		studentName.value = parseMailData[index].studentName;
+    		date.value = parseMailData[index].courseDate;
+    		studentId.value = parseMailData[index].studentId;
+    		couresDuration.value = parseMailData[index].couresDuration; 
     		
-    		StudentInfoService.getCertificationInfo(JSON.stringify(parse[index].studentId)).then(function(certificationData) {
+    		StudentInfoService.getCertificationInfo(JSON.stringify(parseMailData[index].studentId)).then(function(certificationData) {
     			var parse = JSON.parse(JSON.stringify(certificationData));   			
     			
     			if(parse[0].certification_img == ""){
@@ -96,16 +96,56 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
             });		
 		}
 		
+		var numberChar = ["零","一","二","三","四","五","六","七","八","九"];
+        var unitChar = ["","十"];
+        
+        function numberToChinese(number){
+            var result = '';
+            
+            if(number === 0){
+                return numberChar[0];
+            }
+
+            while(number > 0){
+                var section = number % 100;
+                result = sectionToChinese(section);
+                number = Math.floor(number / 100);
+            }
+            if((result.length >= 2) && (result.indexOf("一") == 0)){
+            	result = result.replace("一","");
+            }
+             
+            return result;
+        }
+        
+        function sectionToChinese(section){
+            var tempChar = '', result = '';
+            var unitCharIndex = 0;
+            while(section > 0){
+                var numberCharIndex = section % 10;
+                if(numberCharIndex !==0){
+                	tempChar = numberChar[numberCharIndex];
+                    tempChar += unitChar[unitCharIndex]
+                    result = tempChar + result;
+                }             
+                             
+                unitCharIndex++;
+                section = Math.floor(section / 10);
+            }
+           
+            return result;
+        }
+		
 		var makeCertification = function(){
 			console.log("製作證書PNG中");
 			var data = new Object();
     		var today = new Date();
-			data.id_ = parse[index].studentId;
-			data.owner_ =  parse[index].studentName;
+			data.id_ = parseMailData[index].studentId;
+			data.owner_ =  parseMailData[index].studentName;
 			data.date_ = today.getFullYear()+ " 年 " + (today.getMonth()+1) + " 月 " + today.getDate() + " 日" ;
-			data.courceDate_ = " 於 " + parse[index].courseDate;
-			data.courceName_ = parse[index].courseName;
-			data.courceDuration_ = "全期共"+parse[index].couresDuration+"小時研習期滿，特此證明"; 
+			data.courceDate_ = " 於 " + parseMailData[index].courseDate;
+			data.courceName_ = parseMailData[index].courseName;
+			data.courceDuration_ = "全期共"+parseMailData[index].couresDuration+"小時研習期滿，特此證明"; 
 
 			$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
 			.done(function(imgData)
@@ -114,7 +154,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 				
 				var saveData = new Object();
 				saveData.saveDB = "save";
-				saveData.studentId = parse[index].studentId;
+				saveData.studentId = parseMailData[index].studentId;
 				$.post("/SLM2016/CertificationServlet",JSON.stringify(saveData))
 				.done(function(pdfData)
 				{
@@ -127,11 +167,11 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 		
 		var ClickNextButton = function(){	
 
-			if(++index <= parse.length-1){	
+			if(++index <= parseMailData.length-1){	
 				previousButton.disabled = "";
 				setValue();
 			}	
-			if(index == parse.length-1){
+			if(index == parseMailData.length-1){
 				nextButton.disabled = "disabled";
 			}
 		
@@ -151,15 +191,49 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			setemailcontent();
 		}
 
-    	var init = function() { 		
-    		parse = JSON.parse(StudentInfoService.getStudentSendMailData());
-    		setValue();
-    		if(parse.length-1 > 0){
-    			nextButton.disabled = "";
-    		}
-    		
-    		setemailcontent();
-        }
+		var init = function() { 
+			$scope.isCertificationLoading = true;
+			parseMailData = JSON.parse(StudentInfoService.getStudentSendMailData());
+
+			CourseService.getCourseList().then(function(courseData) {
+				var courseIndex;
+				for (var i = 0; i < courseData.length; i++) {
+					if(parseMailData[0].courseId == courseData[i].courseId_){
+						courseIndex = i;
+						break;
+					}
+				}
+
+				var duration = Number(courseData[courseIndex].duration_);
+				var couresDuration = numberToChinese(duration);
+				var date = new Date(courseData[courseIndex].dates_[0]);
+				var dateInterval = courseData[courseIndex].dates_.length;
+
+				for(var i = 0; i < parseMailData.length; i++){
+					parseMailData[i].courseName = courseData[courseIndex].courseName_;
+					parseMailData[i].couresDuration = couresDuration;
+					parseMailData[i].courseDate = date.getFullYear()+ " 年 " + (date.getMonth()+1) + " 月 ";
+					for(var j = 0; j < dateInterval; j++){
+						var date = new Date(courseData[courseIndex].dates_[j]);      
+						if(j != dateInterval-1){
+							parseMailData[i].courseDate += date.getDate() + "、";
+						}
+						else{
+							parseMailData[i].courseDate += date.getDate() + " 日 ";
+						}                       	
+					}         
+				}
+				setValue();
+			}, function(error) {
+				console.log('Get DB Data Has Error');
+			})
+
+			if(parseMailData.length-1 > 0){
+				nextButton.disabled = "";
+			}
+
+			setemailcontent();
+		}
 
 		/*==========================
             Events
@@ -177,7 +251,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
              init
         ==========================*/
  
-    	var parse;
+    	var parseMailData;
     	var index = 0;
     	var courseName = document.getElementById("courseName");	
     	var studentName = document.getElementById("studentName");	

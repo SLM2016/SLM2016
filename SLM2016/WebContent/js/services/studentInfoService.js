@@ -57,26 +57,6 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
             return defer.promise;
         }
 		
-		// 取得寄出郵件資料
-		var getSendMailInfo = function(mailData) {
-            var defer = $q.defer();
-
-            $http({
-                url: "/SLM2016/StudentAction",
-                method: "GET",
-                params: {
-                    op: 7,
-                    mailData: mailData
-                }
-            }).success(function(courseData) {
-                defer.resolve(courseData);
-            }).error(function(courseData, status, headers, config) {
-                console.error("status : " + status);
-            });
-
-            return defer.promise;
-        }
-		
 		var getCertificationInfo = function(studentId) {
             var defer = $q.defer();
 
@@ -84,7 +64,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
                 url: "/SLM2016/StudentAction",
                 method: "GET",
                 params: {
-                    op: 8,
+                    op: 7,
                     studentId: studentId
                 }
             }).success(function(certificationData) {
@@ -179,7 +159,6 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.readFile = readFile;
         factory.uploadStudentFile = uploadStudentFile;
         factory.getStudentList = getStudentList;
-        factory.getSendMailInfo = getSendMailInfo;
         factory.putStudentSendMailData = putStudentSendMailData;
         factory.getStudentSendMailData = getStudentSendMailData;
         factory.getStudentListByCourseId = getStudentListByCourseId;

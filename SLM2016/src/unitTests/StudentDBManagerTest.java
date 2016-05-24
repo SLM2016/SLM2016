@@ -79,34 +79,4 @@ public class StudentDBManagerTest {
 		assertEquals(boolResult, true);
 	}
 		
-	@Test
-	public void testGetMailInfo() {	
-		
-		StudentDBManager studentDBManager = new StudentDBManager();
-		StudentSendMailData[] studentSendMailData = new StudentSendMailData[1];
-		studentSendMailData[0] = new StudentSendMailData();
-		studentSendMailData[0].address = "123@gmail.com";
-		studentSendMailData[0].courseId = "teddysoftware-course-03-1";
-		studentSendMailData[0].studentId = 1;
-		studentSendMailData[0].studentName = "Chen Teddy";
-		
-		try {
-			String result = studentDBManager.getSendMailInfo(studentSendMailData);
-			GsonBuilder gsonBuilder = new GsonBuilder();
-	        Gson gson = gsonBuilder.create();
-	        TestCourseData[] queryData = gson.fromJson(result, TestCourseData[].class);
-			assertEquals("teddysoftware-course-03-1", queryData[0].id);
-			assertEquals("單元測試與持續整合實作班", queryData[0].name);
-			assertEquals("20", queryData[0].duration);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}		
-	}
-	
-	class TestCourseData {
-		public String duration;
-		public String name;
-		public String id;
-	}
-
 }

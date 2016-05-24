@@ -7,25 +7,25 @@
 					<div class="title">Send Mail</div>
 						<div class="row">
 							<div class="col-md-6">
-								<label for="courseName"> 課程: </label> <input class="form-control" type="text" id="courseName" value=""><br>
+								<label for="courseName"> 課程: </label>  <input class="form-control" type="text" id="courseName" value=""  disabled="disabled"><br>
 							</div>
 
 							<div class="col-md-6">
-								<label for="studentName"> 學員: </label> <input class="form-control" type="text" id="studentName" value=""><br>
-							</div>
-							<br>
-
-							<div class="col-md-6">
-								<label for="date"> 課程日期: </label> <input class="form-control" type="text" id="date" value=""><br>
-							</div>
-
-							<div class="col-md-6">
-								<label for="studentId"> 證書編號: </label> <input class="form-control" type="text" id="studentId" value=""><br>
+								<label for="studentName"> 學員: </label> <input class="form-control" type="text" id="studentName" value=""  disabled="disabled"><br>
 							</div>
 							<br>
 
 							<div class="col-md-6">
-								<label for="couresDuration"> 課程時數: </label> <input class="form-control" type="text" id="couresDuration" value=""><br>
+								<label for="date"> 課程日期: </label> <input class="form-control" type="text" id="date" value=""  disabled="disabled"><br>
+							</div>
+
+							<div class="col-md-6">
+								<label for="studentId"> 證書編號: </label> <input class="form-control" type="text" id="studentId" value=""  disabled="disabled"><br>
+							</div>
+							<br>
+
+							<div class="col-md-6">
+								<label for="couresDuration"> 課程時數: </label> <input class="form-control" type="text" id="couresDuration" value=""  disabled="disabled"><br>
 							</div>
 						</div>
 
@@ -45,9 +45,9 @@
 
 					</div>
 					<br><br> 
-					<input class="btn btn-info btn-orange" type="button" value="Send" id="send" ng-click="Send()"> 
-					<input class="btn btn-info btn-orange" type="button" value="Next" id="next" ng-click="ClickNextButton()" disabled="disabled">
-					<input class="btn btn-info btn-orange" type="button" value="Previous" id="previous" ng-click="ClickPreviousButton()" disabled="disabled">
+					<input class="btn btn-info btn-orange" type="button" value="寄信" id="send" ng-click="Send()"> 
+					<input class="btn btn-info btn-orange" type="button" value="下一封" id="next" ng-click="ClickNextButton()" disabled="disabled">
+					<input class="btn btn-info btn-orange" type="button" value="上一封" id="previous" ng-click="ClickPreviousButton()" disabled="disabled">
 				</div>
 			</div>
 		</div>
