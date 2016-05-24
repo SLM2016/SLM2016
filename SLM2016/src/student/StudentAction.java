@@ -45,8 +45,7 @@ public class StudentAction extends HttpServlet {
 	private static final String OP_SAVE_STUDENT_EXCEL_FILE = "4";
 	private static final String OP_GET_STUDENT_LIST_BY_COURSE_ID = "5";
 	private static final String OP_UPDATE_STUDENT_RECEIPT_STATUS = "6";
-	private static final String OP_GET_SEND_MAIL_INFO = "7";
-	private static final String OP_GET_CERTIFICATION_INFO = "8";
+	private static final String OP_GET_CERTIFICATION_INFO = "7";
 
 
 	private static Gson gson = new Gson();
@@ -65,9 +64,6 @@ public class StudentAction extends HttpServlet {
 			break;		
 		case OP_GET_STUDENT_LIST_BY_COURSE_ID:
 			getStudentListByCourseId(request, response);
-			break;
-		case OP_GET_SEND_MAIL_INFO:
-			getSendMailInfo(request, response);
 			break;
 		case OP_GET_CERTIFICATION_INFO:
 			getCertificationInfo(request, response);
@@ -117,26 +113,6 @@ public class StudentAction extends HttpServlet {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void getSendMailInfo(HttpServletRequest request, HttpServletResponse response) {
-		GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        StudentSendMailData[] studentSendMailData = gson.fromJson(request.getParameter("mailData"), StudentSendMailData[].class);
-        
-		StudentDBManager studentDbManager = new StudentDBManager();
-		String result = null;
-					
-		try {
-			result = studentDbManager.getSendMailInfo(studentSendMailData);
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

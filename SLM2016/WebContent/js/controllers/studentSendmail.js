@@ -1,5 +1,5 @@
-app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService',  
-    function ($scope, $state, $timeout, $rootScope, StudentInfoService) {  
+app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService',  
+    function ($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService) {  
 
 			function getcontext(){
 			  				  
@@ -191,43 +191,49 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			setemailcontent();
 		}
 
-    	var init = function() { 	
-    		$scope.isCertificationLoading = true;
-    		parseMailData = JSON.parse(StudentInfoService.getStudentSendMailData());
-    		
-    		StudentInfoService.getSendMailInfo(JSON.stringify(parseMailData)).then(function(courseData) {
-                var parse = JSON.parse(JSON.stringify(courseData));
-                var dataInterval = (parse.length) / parseMailData.length;
-                for(var i = 0, j = 0; i < parseMailData.length; i++){
-                	if( (j < parse.length) && (parse[j].id == parseMailData[i].courseId)){
-                		var duration = Number(parse[j].duration);
-                		var date = new Date(parse[j].date);
-                		parseMailData[i].courseName = parse[j].name;
-                    	parseMailData[i].couresDuration = numberToChinese(duration);
-                    	parseMailData[i].courseDate = date.getFullYear()+ " 年 " + (date.getMonth()+1) + " 月 ";
-                		for(var k = 0; k < dataInterval; k++){
-                			var date = new Date(parse[j].date);      
-                			if(k != dataInterval-1){
-                				parseMailData[i].courseDate += date.getDate() + "、";
-                			}
-                			else{
-                				parseMailData[i].courseDate += date.getDate() + " 日 ";
-                			}                       	
-                        	j++;
-                		}             		
-                	}       
-                }  
-                setValue();
-            }, function(error) {
-            	console.log('Get DB Data Has Error');
-            })                     
-             		
-    		if(parseMailData.length-1 > 0){
-    			nextButton.disabled = "";
-    		}
-    		
-    		setemailcontent();
-        }
+		var init = function() { 
+			$scope.isCertificationLoading = true;
+			parseMailData = JSON.parse(StudentInfoService.getStudentSendMailData());
+
+			CourseService.getCourseList().then(function(courseData) {
+				var courseIndex;
+				for (var i = 0; i < courseData.length; i++) {
+					if(parseMailData[0].courseId == courseData[i].courseId_){
+						courseIndex = i;
+						break;
+					}
+				}
+
+				var duration = Number(courseData[courseIndex].duration_);
+				var couresDuration = numberToChinese(duration);
+				var date = new Date(courseData[courseIndex].dates_[0]);
+				var dateInterval = courseData[courseIndex].dates_.length;
+
+				for(var i = 0; i < parseMailData.length; i++){
+					parseMailData[i].courseName = courseData[courseIndex].courseName_;
+					parseMailData[i].couresDuration = couresDuration;
+					parseMailData[i].courseDate = date.getFullYear()+ " 年 " + (date.getMonth()+1) + " 月 ";
+					for(var j = 0; j < dateInterval; j++){
+						var date = new Date(courseData[courseIndex].dates_[j]);      
+						if(j != dateInterval-1){
+							parseMailData[i].courseDate += date.getDate() + "、";
+						}
+						else{
+							parseMailData[i].courseDate += date.getDate() + " 日 ";
+						}                       	
+					}         
+				}
+				setValue();
+			}, function(error) {
+				console.log('Get DB Data Has Error');
+			})
+
+			if(parseMailData.length-1 > 0){
+				nextButton.disabled = "";
+			}
+
+			setemailcontent();
+		}
 
 		/*==========================
             Events

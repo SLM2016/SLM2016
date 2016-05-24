@@ -70,7 +70,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         			mailData[i].address = $scope.studentList[j].email;      			
         			i++;
         		} 
-        	}        	
+        	}  
         	StudentInfoService.putStudentSendMailData(mailData);
             $state.go('studentInfo.Sendmail');      	
         }
