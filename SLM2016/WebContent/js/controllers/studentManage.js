@@ -71,76 +71,10 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         			i++;
         		} 
         	}        	
-        	
-        	StudentInfoService.getSendMailInfo(JSON.stringify(mailData)).then(function(courseData) {
-                var parse = JSON.parse(JSON.stringify(courseData));
-                var dataInterval = (parse.length) / mailData.length;
-                for(var i = 0, j = 0; i < mailData.length; i++){
-                	if( (j < parse.length) && (parse[j].id == mailData[i].courseId)){
-                		var duration = Number(parse[j].duration);
-                		var date = new Date(parse[j].date);
-                		mailData[i].courseName = parse[j].name;
-                    	mailData[i].couresDuration = numberToChinese(duration);
-                    	mailData[i].courseDate = date.getFullYear()+ " 年 " + (date.getMonth()+1) + " 月 ";
-                		for(var k = 0; k < dataInterval; k++){
-                			var date = new Date(parse[j].date);      
-                			if(k != dataInterval-1){
-                				mailData[i].courseDate += date.getDate() + "、";
-                			}
-                			else{
-                				mailData[i].courseDate += date.getDate() + " 日 ";
-                			}                       	
-                        	j++;
-                		}             		
-                	}       
-                }  
-                StudentInfoService.putStudentSendMailData(mailData);
-                $state.go('studentInfo.Sendmail');
-            }, function(error) {
-            	console.log('Get DB Data Has Error');
-            })                     
+        	StudentInfoService.putStudentSendMailData(mailData);
+            $state.go('studentInfo.Sendmail');      	
         }
-        
-        var numberChar = ["零","一","二","三","四","五","六","七","八","九"];
-        var unitChar = ["","十"];
-        
-        function numberToChinese(number){
-            var result = '';
-            
-            if(number === 0){
-                return numberChar[0];
-            }
-
-            while(number > 0){
-                var section = number % 100;
-                result = sectionToChinese(section);
-                number = Math.floor(number / 100);
-            }
-            if((result.length >= 2) && (result.indexOf("一") == 0)){
-            	result = result.replace("一","");
-            }
-             
-            return result;
-        }
-        
-        function sectionToChinese(section){
-            var tempChar = '', result = '';
-            var unitCharIndex = 0;
-            while(section > 0){
-                var numberCharIndex = section % 10;
-                if(numberCharIndex !==0){
-                	tempChar = numberChar[numberCharIndex];
-                    tempChar += unitChar[unitCharIndex]
-                    result = tempChar + result;
-                }             
-                             
-                unitCharIndex++;
-                section = Math.floor(section / 10);
-            }
-           
-            return result;
-        }
-             
+                          
         var toggleStatusDropdown = function(student) {
             student.isSelected = !student.isSelected;
         }

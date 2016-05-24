@@ -89,7 +89,7 @@ public class StudentDBManagerTest {
 		studentSendMailData[0].courseId = "teddysoftware-course-03-1";
 		studentSendMailData[0].studentId = 1;
 		studentSendMailData[0].studentName = "Chen Teddy";
-		
+
 		try {
 			String result = studentDBManager.getSendMailInfo(studentSendMailData);
 			GsonBuilder gsonBuilder = new GsonBuilder();
@@ -98,6 +98,11 @@ public class StudentDBManagerTest {
 			assertEquals("teddysoftware-course-03-1", queryData[0].id);
 			assertEquals("單元測試與持續整合實作班", queryData[0].name);
 			assertEquals("20", queryData[0].duration);
+			assertEquals("2016-05-30", queryData[0].date);
+			assertEquals("teddysoftware-course-03-1", queryData[1].id);
+			assertEquals("單元測試與持續整合實作班", queryData[1].name);
+			assertEquals("20", queryData[1].duration);
+			assertEquals("2016-05-31", queryData[1].date);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
@@ -107,6 +112,7 @@ public class StudentDBManagerTest {
 		public String duration;
 		public String name;
 		public String id;
+		public String date;
 	}
 
 }
