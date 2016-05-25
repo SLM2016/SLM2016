@@ -21,16 +21,14 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			function removeemailcontent() {
 				
 			}
-			function howManydays(D){
-				var res = D.split("、");
+			function howManydays(D){			
+				var res = String(D).split("、");
 				return res.length;
 			}
-			function setemailcontent(){
-				
-				
+			function setemailcontent(){				
 				var con="Hi "+
 				parseMailData[index].studentName+",<br><br>"+
-				"很開心這次和大家一起進行了"+howManydays(date.value)+"天的課程，希望透過上課的講解與實作練習能對"+parseMailData[index].courseName+"有更深的瞭解與應用的機會。<br><br>"+
+				"很開心這次和大家一起進行了"+howManydays(parseMailData[index].courseDate)+"天的課程，希望透過上課的講解與實作練習能對"+parseMailData[index].courseName+"有更深的瞭解與應用的機會。<br><br>"+
 				"附件為本次課程證書，請參考。<br><br>"+
 				"課程照片將放在："+'<a href="https://www.facebook.com/groups/ezScrum/">https://www.facebook.com/groups/ezScrum/</a>'+"<br><br>"+
 				
@@ -48,36 +46,51 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 
 
 		
-		var Send =function(){	
-			var mailData = new Object();
-			mailData.id_ = parseMailData[index].studentId;
-			mailData.courseName_ = parseMailData[index].courseName;
-			mailData.addresses_ = parseMailData[index].address;
-			mailData.text_ = getcontent();
-			
-			if (confirm("是否確認寄送!?") == true){
-				$.ajax({
-					url: 'SendGmailServlet',
-					type: 'post',
-					data: JSON.stringify(mailData),
-					headers: {
-						isSendCertification: 1
-					},
-					dataType: 'json',
-					success: function (data) {		        
-						alert(data);
+			var Send =function(){	
+				if(!parseMailData[index].hasSent){
+					var mailData = new Object();
+					mailData.id_ = parseMailData[index].studentId;
+					mailData.courseName_ = parseMailData[index].courseName;
+					mailData.addresses_ = parseMailData[index].address;
+					mailData.text_ = getcontent();
+
+					if (confirm("是否確認寄送!?") == true){
+						parseMailData[index].hasSent = true;
+						$.ajax({
+							url: 'SendGmailServlet',
+							type: 'post',
+							data: JSON.stringify(mailData),
+							headers: {
+								isSendCertification: 1
+							},
+							dataType: 'json',
+							success: function (data) {		        
+								$('#sendMailSuccess').show();
+							}
+						});				
 					}
-				});				
+				}
+				else{
+					$('#sendMailWarning').show();
+				}
 			}
-		}
 	  
 		var setValue = function(){ 		
 			$scope.isCertificationLoading = true;
-			courseName.value = parseMailData[index].courseName;
-    		studentName.value = parseMailData[index].studentName;
-    		date.value = parseMailData[index].courseDate;
-    		studentId.value = parseMailData[index].studentId;
-    		couresDuration.value = parseMailData[index].couresDuration; 
+			
+			if(parseMailData[index].hasSent){
+				$('#sendMailWarning').show();
+			} 
+			else{
+				$('#sendMailSuccess').hide();
+				$('#sendMailWarning').hide();
+			}
+			
+			$scope.courseName = parseMailData[index].courseName;
+			$scope.studentName = parseMailData[index].studentName;
+			$scope.date = parseMailData[index].courseDate;
+    		$scope.studentId = parseMailData[index].studentId;
+    		$scope.couresDuration = parseMailData[index].couresDuration;
     		
     		StudentInfoService.getCertificationInfo(JSON.stringify(parseMailData[index].studentId)).then(function(certificationData) {
     			var parse = JSON.parse(JSON.stringify(certificationData));   			
@@ -209,6 +222,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 				var dateInterval = courseData[courseIndex].dates_.length;
 
 				for(var i = 0; i < parseMailData.length; i++){
+					parseMailData[i].hasSent = false;
 					parseMailData[i].courseName = courseData[courseIndex].courseName_;
 					parseMailData[i].couresDuration = couresDuration;
 					parseMailData[i].courseDate = date.getFullYear()+ " 年 " + (date.getMonth()+1) + " 月 ";
@@ -224,15 +238,14 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 					}         
 				}
 				setValue();
+				setemailcontent();
 			}, function(error) {
 				console.log('Get DB Data Has Error');
 			})
 
 			if(parseMailData.length-1 > 0){
 				nextButton.disabled = "";
-			}
-
-			setemailcontent();
+			}		
 		}
 
 		/*==========================
@@ -253,11 +266,6 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
  
     	var parseMailData;
     	var index = 0;
-    	var courseName = document.getElementById("courseName");	
-    	var studentName = document.getElementById("studentName");	
-    	var date = document.getElementById("date");	
-    	var studentId = document.getElementById("studentId");	
-    	var couresDuration = document.getElementById("couresDuration");	
     	
     	var nextButton = document.getElementById("next");
     	var previousButton = document.getElementById("previous");
