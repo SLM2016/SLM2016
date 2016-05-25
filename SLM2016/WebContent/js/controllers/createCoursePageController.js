@@ -240,21 +240,19 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
                 window.alert("狀態欄位不正確");
                 return;
             }
-            if ((($scope.data.batch) == null)) {
-            	if ((($scope.data.batch) == 0)) {
-            		window.alert("梯次欄位不正確");
-            		return;
-            	}
-        	}
-            var regex=/^\d+/;
-    		if((($scope.data.duration) != null)){
-    			var x = $scope.data.duration;
-    			console.log(String(x).match(regex));
-    			if (!(String(x).match(regex))){
-    				window.alert("課程時間需要為數字");
-    				return;
-    			}
-    		}
+            if ((($scope.data.batch) == null) || (($scope.data.batch).length == 0)) {
+                window.alert("梯次欄位不正確");
+                return;
+            }
+            var regex = /^\d+/;
+            if ((($scope.data.duration) != null)) {
+                var x = $scope.data.duration;
+                console.log(String(x).match(regex));
+                if (!(String(x).match(regex))) {
+                    window.alert("課程時間需要為數字");
+                    return;
+                }
+            }
             addCourse();
         }
 
@@ -301,34 +299,34 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             $scope.isDatePickerOpen = true;
         }
 
-        function deleteData(){
-    		$scope.data.batch = "";
-    		$scope.showDateList = [];
-    		$scope.data.duration = 0;
-    		$scope.ticketTypeList = [];
-    		$scope.ticketPriceList = [];
-    		$scope.data.lecturer = "";
-    		$scope.data.hyperlink = "";
-    		$scope.showCcList = [];
-    		$scope.showticketList = [];
-    		document.forms['courseName'].reset();
-    		document.forms['type'].reset();
-    		document.forms['ticketType'].reset();
-    		document.forms['location'].reset();
-    		document.forms['status'].reset();
-    		document.forms['ccAddress'].reset();
-    		courseNameSelected = '';
-    		locationSelected = '';
-    		ccAddressSelected = '';
-    		typeSelected = '';
-    		ticketTypeSelected = '';
-        }	
-        
+        function deleteData() {
+            $scope.data.batch = "";
+            $scope.showDateList = [];
+            $scope.data.duration = 0;
+            $scope.ticketTypeList = [];
+            $scope.ticketPriceList = [];
+            $scope.data.lecturer = "";
+            $scope.data.hyperlink = "";
+            $scope.showCcList = [];
+            $scope.showticketList = [];
+            document.forms['courseName'].reset();
+            document.forms['type'].reset();
+            document.forms['ticketType'].reset();
+            document.forms['location'].reset();
+            document.forms['status'].reset();
+            document.forms['ccAddress'].reset();
+            courseNameSelected = '';
+            locationSelected = '';
+            ccAddressSelected = '';
+            typeSelected = '';
+            ticketTypeSelected = '';
+        }
+
         var init = function() {
             $scope.data = {
                 batch: "",
                 duration: 0,
-                lecturer:"",
+                lecturer: "",
                 hyperlink: ""
             };
             typeSelected = "";

@@ -1,6 +1,6 @@
 angular.module('inputDropdown', []).directive('inputDropdown', [function() {
     var templateString =
-        '<div class="input-dropdown">' +
+        '<div class="{{style}}">' +
         '<input type="text"' +
         'name="{{inputName}}"' +
         'placeholder="{{inputPlaceholder}}"' +
@@ -26,6 +26,7 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
     return {
         restrict: 'E',
         scope: {
+            style: '@',
             defaultDropdownItems: '=',
             //defaultSelectedItem: '=',
             selectedItem: '=',
