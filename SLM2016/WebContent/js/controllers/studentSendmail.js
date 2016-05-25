@@ -139,10 +139,9 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 		var makeCertification = function(){
 			console.log("製作證書PNG中");
 			var data = new Object();
-    		var today = new Date();
 			data.id_ = parseMailData[index].studentId;
 			data.owner_ =  parseMailData[index].studentName;
-			data.date_ = today.getFullYear()+ " 年 " + (today.getMonth()+1) + " 月 " + today.getDate() + " 日" ;
+			data.date_ = parseMailData[index].certificateDate;
 			data.courceDate_ = " 於 " + parseMailData[index].courseDate;
 			data.courceName_ = parseMailData[index].courseName;
 			data.courceDuration_ = "全期共"+parseMailData[index].couresDuration+"小時研習期滿，特此證明"; 
@@ -220,6 +219,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 						}
 						else{
 							parseMailData[i].courseDate += date.getDate() + " 日 ";
+							parseMailData[i].certificateDate = date.getFullYear()+ " 年 " + (date.getMonth()+1) + " 月 " + date.getDate() + " 日 ";
 						}                       	
 					}         
 				}
