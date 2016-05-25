@@ -5,4 +5,5 @@ public class StudentSendMailData {
     public String studentName;   
     public String courseId;
     public String address; 
+    public String result;
 }

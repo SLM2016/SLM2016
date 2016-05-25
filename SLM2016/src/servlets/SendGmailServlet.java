@@ -20,6 +20,7 @@ import mailSending.StudentInfomation;
 import mailSending.StudentSelectedIndex;
 import student.StudentDBManager;
 import student.StudentModel;
+import student.StudentSendMailData;
 
 @WebServlet("/SendGmailServlet")
 public class SendGmailServlet extends HttpServlet {
@@ -124,16 +125,20 @@ public class SendGmailServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		System.out.println(addresses);
-		System.out.println(text);
-		
 		String username = "news.teddysoft.tw@gmail.com";
 		String password = "clfddzifoyfvvxqa";
 		GmailSender gmailSender = new GmailSender(username, password);
 		String subject = courseName + " - 課程證書";
 		String result = "";
 		result = gmailSender.send(addresses, ccAddresses, subject, text, attachment);
-		String json = new Gson().toJson(result);
+		
+		StudentSendMailData studentSendMailData = new StudentSendMailData();
+		studentSendMailData.studentId = Integer.parseInt(sendStudentIndex.getStudentId());
+		studentSendMailData.studentName = studentInformation.getName();
+		studentSendMailData.address = sendStudentIndex.getAddresses();
+		studentSendMailData.result = result;
+		
+		String json = new Gson().toJson(studentSendMailData);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);

@@ -64,8 +64,10 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 								isSendCertification: 1
 							},
 							dataType: 'json',
-							success: function (data) {		        
+							success: function (data) {		   
+								var parseData = JSON.parse(JSON.stringify(data));
 								$('#sendMailSuccess').show();
+								$('#sendMailAlert').html('<div class="alert alert alert-success alert-dismissible"><a class="close" data-dismiss="alert">×</a><span>'+parseData.studentName+" "+parseData.result+'</span></div>')								
 							}
 						});				
 					}
