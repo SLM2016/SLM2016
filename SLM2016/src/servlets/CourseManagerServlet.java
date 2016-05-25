@@ -106,8 +106,9 @@ public class CourseManagerServlet extends HttpServlet {
 			if (courseManagerWithDb_.getCourseIdByCourseNameAndBatchAndStatus(course.getCourseName(), course.getBatch(),
 					course.getStatus()) != null) {
 				result = "已存在相同課程";
+			} else {
+				result = courseManagerWithDb_.addCourseIntoDatabase(course);
 			}
-			result = courseManagerWithDb_.addCourseIntoDatabase(course);
 		} catch (SQLException e) {
 
 		}

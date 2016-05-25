@@ -247,7 +247,6 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             var regex = /^\d+/;
             if ((($scope.data.duration) != null)) {
                 var x = $scope.data.duration;
-                console.log(String(x).match(regex));
                 if (!(String(x).match(regex))) {
                     window.alert("課程時間需要為數字");
                     return;
@@ -273,7 +272,7 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
                 $scope.$apply(function() {
                     $scope.time = new Date();
                 });
-            }, 300);
+            }, 500);
         }
 
         var deleteTicket = function(index) {
