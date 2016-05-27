@@ -10,11 +10,13 @@
             <div class="invoice" ng-show="loadType == 'Upload'">
                 <div class="title">課程檔案管理系統</div>
                 <div class="form-group name">
-                    <label for="companyName">課名*(必填)</label>
+                    <label for="companyName">課名</label>
+                    <label style='color: Red'>*</label>
+                    <label for="companyName">(必填)</label>
                 </div>
                 <div class="form-group">
                     <form id="courseName">
-                        <input-dropdown input-placeholder="請輸入課名" input-name="courseName" input-required="false" selected-item="ctrl.selectedDropdownCourseNameItem" default-dropdown-items="ctrl.dropdownCourseNameItems" filter-list-method="ctrl.filterCourseNameList(userInput)" item-selected-method="ctrl.itemCourseNameSelected(item)">
+                        <input-dropdown style="input-dropdown-large" input-placeholder="請輸入課名" input-name="courseName" input-required="false" selected-item="ctrl.selectedDropdownCourseNameItem" default-dropdown-items="ctrl.dropdownCourseNameItems" filter-list-method="ctrl.filterCourseNameList(userInput)" item-selected-method="ctrl.itemCourseNameSelected(item)">
                         </input-dropdown>
                     </form>
                     <!-- <input type="text" class="form-control" id="Course" placeholder="請輸入課名" ng-model="data.courseName">-->
@@ -23,14 +25,16 @@
                     <div class="form-group id">
                         <label for="companyName">課程類型</label>
                         <form id="type">
-                            <input-dropdown input-placeholder="請輸入課程類型" input-name="type" input-required="false" selected-item="ctrl.selectedDropdownTypeItem" default-dropdown-items="ctrl.dropdownTypeItems" filter-list-method="ctrl.filterTypeList(userInput)" item-selected-method="ctrl.itemTypeSelected(item)">
+                            <input-dropdown style="input-dropdown" input-placeholder="請輸入課程類型" input-name="type" input-required="false" selected-item="ctrl.selectedDropdownTypeItem" default-dropdown-items="ctrl.dropdownTypeItems" filter-list-method="ctrl.filterTypeList(userInput)" item-selected-method="ctrl.itemTypeSelected(item)">
                             </input-dropdown>
                         </form>
                         <div id="otherTypeDiv"></div>
                     </div>
                 </div>
                 <div class="form-group name">
-                    <label for="companyName">梯次*(必填且須與Google form相同)</label>
+                    <label for="companyName">梯次</label>
+                    <label style='color: Red'>*</label>
+                    <label for="companyName">(必填且須與Google form相同)</label>
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" id="Batch" placeholder="請輸入公開班梯次或企業內訓單位" ng-model="data.batch">
@@ -74,7 +78,7 @@
                     <div class="form-group">
                         <label for="companyName">票種</label>
                         <form id="ticketType">
-                            <input-dropdown input-placeholder="請輸入票種" input-name="ticketType" input-required="false" selected-item="ctrl.selectedDropdownTicketTypeItem" default-dropdown-items="ctrl.dropdownTicketTypeItems" filter-list-method="ctrl.filterTicketTypeList(userInput)" item-selected-method="ctrl.itemTicketTypeSelected(item)">
+                            <input-dropdown style="input-dropdown" input-placeholder="請輸入票種" input-name="ticketType" input-required="false" selected-item="ctrl.selectedDropdownTicketTypeItem" default-dropdown-items="ctrl.dropdownTicketTypeItems" filter-list-method="ctrl.filterTicketTypeList(userInput)" item-selected-method="ctrl.itemTicketTypeSelected(item)">
                             </input-dropdown>
                         </form>
                         <div id="otherTicket"></div>
@@ -100,10 +104,10 @@
                 </table>
                 <br>
                 <div class="ticketinput-wrapper company">
-                    <div class="form-group id">
+                    <div class="form-group">
                         <label for="companyName">副本收件者</label>
                         <form id="ccAddress">
-                            <input-dropdown input-placeholder="請輸入講師" input-name="ccAddress" input-required="false" selected-item="ctrl.selectedDropdownCcAddressItem" default-dropdown-items="ctrl.dropdownCcAddressItems" filter-list-method="ctrl.filterCcAddressList(userInput)" item-selected-method="ctrl.itemCcAddressSelected(item)">
+                            <input-dropdown style="input-dropdown" input-placeholder="請輸入講師" input-name="ccAddress" input-required="false" selected-item="ctrl.selectedDropdownCcAddressItem" default-dropdown-items="ctrl.dropdownCcAddressItems" filter-list-method="ctrl.filterCcAddressList(userInput)" item-selected-method="ctrl.itemCcAddressSelected(item)">
                             </input-dropdown>
                         </form>
                         <!--<input type="text" class="form-control" id="CcType" placeholder="請輸入副本收件者" ng-model="data.ccAddresses">-->
@@ -128,7 +132,7 @@
                 </div>
                 <div class="form-group">
                     <form id="location">
-                        <input-dropdown input-placeholder="請輸入地點" input-name="location" input-required="false" selected-item="ctrl.selectedDropdownLocationItem" default-dropdown-items="ctrl.dropdownLocationItems" filter-list-method="ctrl.filterLocationList(userInput)" item-selected-method="ctrl.itemLocationSelected(item)">
+                        <input-dropdown style="input-dropdown" input-placeholder="請輸入地點" input-name="location" input-required="false" selected-item="ctrl.selectedDropdownLocationItem" default-dropdown-items="ctrl.dropdownLocationItems" filter-list-method="ctrl.filterLocationList(userInput)" item-selected-method="ctrl.itemLocationSelected(item)">
                         </input-dropdown>
                     </form>
                     <!-- <input type="text" class="form-control" id="Location" placeholder="請輸入地點" ng-model="data.location">-->
@@ -146,11 +150,13 @@
                     <input type="text" class="form-control" id="Duration" placeholder="請輸入超連結網址" ng-model="data.hyperlink">
                 </div>
                 <div class="form-group name">
-                    <label for="companyName">狀態*(必填)</label>
+                    <label for="companyName">狀態</label>
+                    <label style='color: Red'>*</label>
+                    <label for="companyName">(必填)</label>
                 </div>
                 <div class="form-group">
                     <form id="status">
-                        <input-dropdown input-placeholder="請選擇課程狀態" input-name="status" input-required="true" default-selected-item="ctrl.defaultSelectedDropdownStatusItem" selected-item="ctrl.selectedDropdownStatusItem" default-dropdown-items="ctrl.dropdownStatusItems">
+                        <input-dropdown style="input-dropdown" input-placeholder="請選擇課程狀態" input-name="status" input-required="true" selected-item="ctrl.selectedDropdownStatusItem" default-dropdown-items="ctrl.dropdownStatusItems">
                         </input-dropdown>
                     </form>
                     <!-- <input type="text" class="form-control" id="Status" placeholder="準備中" DISABLED>-->
@@ -168,48 +174,50 @@
                     <div class="title">課程檔案管理系統</div>
                 </div>
                 <div style="width:900px;overflow-x:auto;overflow-y:auto;">
-                    <table class="table table-bordered si-table table-hover" style="width:1500px;"id="courseInfo" border="1" cellpadding="9"  >
-				<thead>
-				  <tr>
-	                  <td>課名</td>
-	                  <td>類型</td>
-	                  <td>梯次</td>
-	                  <td>開課日期</td>
-	                  <td>課程時間</td>
-	                  <td>票種</td>
-	                  <td>價錢</td>
-	                  <td>地點</td>
-	                  <td>講師</td>
-	                  <td>副本收件人</td>	                
-	                  <td>狀態</td>
-	                  <td></td>
-	              </tr>
-				</thead>
-                    <tbody>
-                        <tr ng-repeat="course in courseList track by $index">
-                            <td>{{course.courseName_}}</td>
-                            <td>{{course.type_}}</td>
-                            <td>{{course.batch_}}</td>
-                            <td>
-                            	<p ng-repeat="dates in course.dates_">{{dates}}</p>
-                            </td>
-                            <td>{{course.duration_}}</td>
-                            <td>
-                            	<p ng-repeat="ticketType in course.ticketTypes_">{{ticketType}}</p>
-                            </td>
-                            <td>
-                            	<p ng-repeat="prices in course.prices_">{{prices}}</p>
-                            </td>
-                            <td>{{course.location_}}</td>
-                            <td>{{course.lecturer_}}</td>
-                            <td>
-								<p ng-repeat="ccAddresses in course.ccAddresses_">{{ccAddresses}}</p>
-                            </td>
-                            <td>{{course.status_}}</td>
-                            <td><input type="submit" class="btn btn-info btn-orange"  value = "刪除" ng-click="deleteRow(course.courseId_)"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <table class="table table-bordered si-table table-hover" style="width:1500px;" id="courseInfo" border="1" cellpadding="9">
+                        <thead>
+                            <tr>
+                                <td>課名</td>
+                                <td>類型</td>
+                                <td>梯次</td>
+                                <td>開課日期</td>
+                                <td>課程時間</td>
+                                <td>票種</td>
+                                <td>價錢</td>
+                                <td>地點</td>
+                                <td>講師</td>
+                                <td>副本收件人</td>
+                                <td>狀態</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="course in courseList track by $index">
+                                <td>{{course.courseName_}}</td>
+                                <td>{{course.type_}}</td>
+                                <td>{{course.batch_}}</td>
+                                <td>
+                                    <p ng-repeat="dates in course.dates_">{{dates}}</p>
+                                </td>
+                                <td>{{course.duration_}}</td>
+                                <td>
+                                    <p ng-repeat="ticketType in course.ticketTypes_">{{ticketType}}</p>
+                                </td>
+                                <td>
+                                    <p ng-repeat="prices in course.prices_">{{prices}}</p>
+                                </td>
+                                <td>{{course.location_}}</td>
+                                <td>{{course.lecturer_}}</td>
+                                <td>
+                                    <p ng-repeat="ccAddresses in course.ccAddresses_">{{ccAddresses}}</p>
+                                </td>
+                                <td>{{course.status_}}</td>
+                                <td>
+                                    <input type="submit" class="btn btn-info btn-orange" value="刪除" ng-click="deleteRow(course.courseId_)">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <loading ng-show="isCourseLoading"></loading>
                 </div>
             </div>

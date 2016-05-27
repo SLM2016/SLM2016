@@ -12,8 +12,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+
 import student.StudentDBManager;
 import student.StudentModel;
+import student.StudentSendMailData;
+
+import util.SLMDBUtility;
 
 public class StudentDBManagerTest {
 
@@ -71,34 +78,5 @@ public class StudentDBManagerTest {
 		}
 		assertEquals(boolResult, true);
 	}
-	
-//	@Test
-//	public void testGetMailInfo() {
-//		ArrayList<HashMap> array = new ArrayList<HashMap>();
-//		boolean boolResult = false;
-//		StudentDBManager studentDBManager = new StudentDBManager();
-//		String id = "cource_123";
-//		String name = "Scrum";
-//		String duration = "18";
-//		String fk_status_id = "status001";
-//		
-//		try {
-//			studentDBManager.insertGetMailInfo(id, name, duration,fk_status_id);
-//			
-//			array = studentDBManager.getCourseById(id);
-//		} 
-//		catch (SQLException e) {
-//			fail("Exception Error" + e);
-//		}
-//		assertEquals(array.size(), 1);
-//		assertEquals(array.get(0).get("id"), id);
-//		try {
-//			boolResult = studentDBManager.deleteGetMailInfo(id);
-//
-//		} catch (SQLException e) {
-//			fail("Exception Error");
-//		}
-//		assertEquals(boolResult, true);
-//	}
-
+		
 }

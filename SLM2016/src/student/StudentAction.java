@@ -43,7 +43,8 @@ public class StudentAction extends HttpServlet {
 	private static final String OP_SAVE_STUDENT_EXCEL_FILE = "4";
 	private static final String OP_GET_STUDENT_LIST_BY_COURSE_ID = "5";
 	private static final String OP_UPDATE_STUDENT_RECEIPT_STATUS = "6";
-	private static final String OP_GET_SENDMAILINFO = "7";
+	private static final String OP_GET_CERTIFICATION_INFO = "7";
+
 
 	private static Gson gson = new Gson();
 
@@ -58,12 +59,12 @@ public class StudentAction extends HttpServlet {
 		switch (op) {
 		case OP_GET_STUDENT_LIST:
 			getStudentList(request, response);
-			break;
-		case OP_GET_SENDMAILINFO:
-			getSendMailInfo(request, response);
-			break;
+			break;		
 		case OP_GET_STUDENT_LIST_BY_COURSE_ID:
 			getStudentListByCourseId(request, response);
+			break;
+		case OP_GET_CERTIFICATION_INFO:
+			getCertificationInfo(request, response);
 			break;
 		default:
 			break;
@@ -98,6 +99,7 @@ public class StudentAction extends HttpServlet {
 		case OP_UPDATE_STUDENT_RECEIPT_STATUS:
 			updateStudentReceiptStatus(request, response);
 			break;
+	
 		default:
 			break;
 		}
@@ -141,16 +143,12 @@ public class StudentAction extends HttpServlet {
 		}
 	}
 	
-	private void getSendMailInfo(HttpServletRequest request, HttpServletResponse response) {
-		GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        StudentSendMailData[] studentSendMailData = gson.fromJson(request.getParameter("mailData"), StudentSendMailData[].class);
-        
+	private void getCertificationInfo(HttpServletRequest request, HttpServletResponse response) {      
 		StudentDBManager studentDbManager = new StudentDBManager();
 		String result = null;
 					
 		try {
-			result = studentDbManager.getSendMailInfo(studentSendMailData);
+			result = studentDbManager.getCertificationInfo(request.getParameter("studentId"));
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(result);
@@ -160,6 +158,7 @@ public class StudentAction extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
 	private void insertIntoStudent(HttpServletRequest request, HttpServletResponse response)
 
 			throws ServletException, IOException {
@@ -216,7 +215,7 @@ public class StudentAction extends HttpServlet {
 			} else {
 
 				result.put("status", "false");
-}
+			}
 
 		} catch (Exception e) {
 			result.put("status", "false");
@@ -225,7 +224,7 @@ public class StudentAction extends HttpServlet {
 
 		out.println(gson.toJson(result));
 	}
-
+	
 	private void saveFile(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 

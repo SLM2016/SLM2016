@@ -57,8 +57,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
             return defer.promise;
         }
 		
-		// 取得寄出郵件資料
-		var getSendMailInfo = function(mailData) {
+		var getCertificationInfo = function(studentId) {
             var defer = $q.defer();
 
             $http({
@@ -66,11 +65,11 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
                 method: "GET",
                 params: {
                     op: 7,
-                    mailData: mailData
+                    studentId: studentId
                 }
-            }).success(function(courseData) {
-                defer.resolve(courseData);
-            }).error(function(courseData, status, headers, config) {
+            }).success(function(certificationData) {
+                defer.resolve(certificationData);
+            }).error(function(certificationData, status, headers, config) {
                 console.error("status : " + status);
             });
 
@@ -148,7 +147,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 
             return defer.promise;
         }
-
+                
 		/*==========================
             Members
         ==========================*/
@@ -160,12 +159,12 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.readFile = readFile;
         factory.uploadStudentFile = uploadStudentFile;
         factory.getStudentList = getStudentList;
-        factory.getSendMailInfo = getSendMailInfo;
         factory.putStudentSendMailData = putStudentSendMailData;
         factory.getStudentSendMailData = getStudentSendMailData;
         factory.getStudentListByCourseId = getStudentListByCourseId;
         factory.saveStudentFile = saveStudentFile;
         factory.updateStudentReceiptStatus = updateStudentReceiptStatus;
+        factory.getCertificationInfo = getCertificationInfo;       
         /*==========================
             init
         ==========================*/

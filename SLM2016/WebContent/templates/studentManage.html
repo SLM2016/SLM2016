@@ -1,6 +1,7 @@
 <div class="studentinfo">
     <div class="inner-wrapper">
-        <div class="manage">
+    	<loading ng-show="isCertificationLoading">證書產生中</loading>
+        <div class="manage" ng-show="!isCertificationLoading">
             <div class="manage-topbar">
                 <div class="class-dropdown">
                     <button id="class-label" type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,7 +82,7 @@
                     </table>                  
                 </div>
             </div>
-                    <input class="btn btn-info btn-orange" type="submit" value="Send Mail Data" id="sendMailData" name="form_submit" ng-click="sendMailData()" disabled="disabled">	
+                    <input class="btn btn-info btn-orange" type="submit" value="批次寄發證書" id="sendMailData" name="form_submit" ng-click="sendMailData()" disabled="disabled">	
         </div>
     </div>   
 </div>

@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,9 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import certification.Certification;
 import certification.CertificationManager;
+import student.StudentDBManager;
+import student.StudentModel;
+import student.StudentSendMailData;
 
 @WebServlet("/CertificationServlet")
 public class CertificationServlet extends HttpServlet {
@@ -34,7 +39,7 @@ public class CertificationServlet extends HttpServlet {
 		StringBuffer requestInfo = new StringBuffer();
 		requestInfo.append(request.getReader().readLine());
 				
-		if(requestInfo.indexOf("imagePath_", 0) < 0){
+		if(requestInfo.indexOf("id", 0) > 0){
 			Certification certification=son.fromJson(requestInfo.toString(), Certification.class);
 			
 			manager.makeCertification(certification, getServletContext().getRealPath("images/template.png").toString());
@@ -45,6 +50,36 @@ public class CertificationServlet extends HttpServlet {
 		else{
 			manager.makeCertificationPDF();
 			response.getWriter().write(manager.getCertificationPDFJsonString());
-		}		
+		}	
+		
+		if(requestInfo.indexOf("saveDB", 0) > 0){
+	        Gson gson = new Gson();
+	        StudentSendMailData studentSendMailData = gson.fromJson(requestInfo.toString(), StudentSendMailData.class);
+			HashMap<String, String> result = new HashMap<String, String>();
+
+			try {
+				StudentModel studentModel;
+				StudentDBManager studentDBManager = new StudentDBManager();
+				String studentID = studentSendMailData.studentId+"";
+				String certificationIMG = manager.getCertificationJsonString();
+				String certificationPDF = manager.getCertificationPDFJsonString();
+
+				studentModel = studentDBManager.getStudentById(studentID);
+				studentModel.setCertificationImg(certificationIMG);
+				studentModel.setCertificationPdf(certificationPDF);
+
+				if(studentDBManager.updateStudent(studentModel)){
+					result.put("status", "true");
+				}
+				else{
+					result.put("status", "false");
+				}
+
+			}catch(Exception e){
+				result.put("status", "false");
+				e.printStackTrace();
+			}
+			//System.out.println(gson.toJson(result));
+		}
 	}
 }

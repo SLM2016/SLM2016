@@ -74,38 +74,38 @@ public class StudentInfomation {
 		studentsName_.add("Charlotte");
 		studentsName_.add("Doris");
 
-		mailAddresses_.add("t104598007+a@ntut.org.tw");
-		mailAddresses_.add("t104598007+b@ntut.org.tw");
-		mailAddresses_.add("t104598007+c@ntut.org.tw");
-		mailAddresses_.add("t104598007+d@ntut.org.tw");
-		mailAddresses_.add("t104598007+aaa@ntut.org.tw");
-		mailAddresses_.add("t104598007+bbb@ntut.org.tw");
-		mailAddresses_.add("t104598007+ccc@ntut.org.tw");
-		mailAddresses_.add("t104598007+ddd@ntut.org.tw");
-		mailAddresses_.add("t104598007+eee@ntut.org.tw");
-		mailAddresses_.add("t104598007+fff@ntut.org.tw");
+		mailAddresses_.add("Alice@clarence.party");
+		mailAddresses_.add("Bob@clarence.party");
+		mailAddresses_.add("Chris@clarence.party");
+		mailAddresses_.add("David@clarence.party");
+		mailAddresses_.add("Edison@clarence.party");
+		mailAddresses_.add("Frank@clarence.party");
+		mailAddresses_.add("George@clarence.party");
+		mailAddresses_.add("Harry@clarence.party");
+		mailAddresses_.add("Ivan@clarence.party");
+		mailAddresses_.add("Jack@clarence.party");
 
-		mailAddresses_.add("t104598007+ggg@ntut.org.tw");
-		mailAddresses_.add("t104598007+hhh@ntut.org.tw");
-		mailAddresses_.add("t104598007+iii@ntut.org.tw");
-		mailAddresses_.add("t104598007+jjj@ntut.org.tw");
-		mailAddresses_.add("t104598007+kkk@ntut.org.tw");
-		mailAddresses_.add("t104598007+lll@ntut.org.tw");
-		mailAddresses_.add("t104598007+mmm@ntut.org.tw");
-		mailAddresses_.add("t104598007+nnn@ntut.org.tw");
-		mailAddresses_.add("t104598007+ooo@ntut.org.tw");
-		mailAddresses_.add("t104598007+ppp@ntut.org.tw");
+		mailAddresses_.add("Kevin@clarence.party");
+		mailAddresses_.add("Lee@clarence.party");
+		mailAddresses_.add("Mark@clarence.party");
+		mailAddresses_.add("Nick@clarence.party");
+		mailAddresses_.add("Oliver@clarence.party");
+		mailAddresses_.add("Pandora@clarence.party");
+		mailAddresses_.add("Queena@clarence.party");
+		mailAddresses_.add("Ray@clarence.party");
+		mailAddresses_.add("Sam@clarence.party");
+		mailAddresses_.add("Ted@clarence.party");
 
-		mailAddresses_.add("t104598007+qqq@ntut.org.tw");
-		mailAddresses_.add("t104598007+rrr@ntut.org.tw");
-		mailAddresses_.add("t104598007+sss@ntut.org.tw");
-		mailAddresses_.add("t104598007+ttt@ntut.org.tw");
-		mailAddresses_.add("t104598007+uuu@ntut.org.tw");
-		mailAddresses_.add("t104598007+vvv@ntut.org.tw");
-		mailAddresses_.add("t104598007+www@ntut.org.tw");
-		mailAddresses_.add("t104598007+xxx@ntut.org.tw");
-		mailAddresses_.add("t104598007+yyy@ntut.org.tw");
-		mailAddresses_.add("t104598007+zzz@ntut.org.tw");
+		mailAddresses_.add("Ultraman@clarence.party ");
+		mailAddresses_.add("Victor@clarence.party");
+		mailAddresses_.add("William@clarence.party");
+		mailAddresses_.add("Xenia@clarence.party");
+		mailAddresses_.add("Yolanda@clarence.party");
+		mailAddresses_.add("Zack@clarence.party");
+		mailAddresses_.add("Alicia@clarence.party");
+		mailAddresses_.add("Betty@clarence.party");
+		mailAddresses_.add("Charlotte@clarence.party");
+		mailAddresses_.add("Doris@clarence.party");
 	}
 
 	public void generateFakeDataTwo() {
@@ -131,27 +131,27 @@ public class StudentInfomation {
 		studentsName_.add("Sam");
 		studentsName_.add("Ted");
 
-		mailAddresses_.add("t104598007+aaa@ntut.org.tw");
-		mailAddresses_.add("t104598007+bbb@ntut.org.tw");
-		mailAddresses_.add("t104598007+ccc@ntut.org.tw");
-		mailAddresses_.add("t104598007+ddd@ntut.org.tw");
-		mailAddresses_.add("t104598007+eee@ntut.org.tw");
-		mailAddresses_.add("t104598007+fff@ntut.org.tw");
-		mailAddresses_.add("t104598007+ggg@ntut.org.tw");
-		mailAddresses_.add("t104598007+hhh@ntut.org.tw");
-		mailAddresses_.add("t104598007+iii@ntut.org.tw");
-		mailAddresses_.add("t104598007+jjj@ntut.org.tw");
+		mailAddresses_.add("Alice@clarence.party");
+		mailAddresses_.add("Bob@clarence.party");
+		mailAddresses_.add("Chris@clarence.party");
+		mailAddresses_.add("David@clarence.party");
+		mailAddresses_.add("Edison@clarence.party");
+		mailAddresses_.add("Frank@clarence.party");
+		mailAddresses_.add("George@clarence.party");
+		mailAddresses_.add("Harry@clarence.party");
+		mailAddresses_.add("Ivan@clarence.party");
+		mailAddresses_.add("Jack@clarence.party");
 
-		mailAddresses_.add("t104598007+kkk@ntut.org.tw");
-		mailAddresses_.add("t104598007+lll@ntut.org.tw");
-		mailAddresses_.add("t104598007+mmm@ntut.org.tw");
-		mailAddresses_.add("t104598007+nnn@ntut.org.tw");
-		mailAddresses_.add("t104598007+ooo@ntut.org.tw");
-		mailAddresses_.add("t104598007+ppp@ntut.org.tw");
-		mailAddresses_.add("t104598007+qqq@ntut.org.tw");
-		mailAddresses_.add("t104598007+rrr@ntut.org.tw");
-		mailAddresses_.add("t104598007+sss@ntut.org.tw");
-		mailAddresses_.add("t104598007+ttt@ntut.org.tw");
+		mailAddresses_.add("Kevin@clarence.party");
+		mailAddresses_.add("Lee@clarence.party");
+		mailAddresses_.add("Mark@clarence.party");
+		mailAddresses_.add("Nick@clarence.party");
+		mailAddresses_.add("Oliver@clarence.party");
+		mailAddresses_.add("Pandora@clarence.party");
+		mailAddresses_.add("Queena@clarence.party");
+		mailAddresses_.add("Ray@clarence.party");
+		mailAddresses_.add("Sam@clarence.party");
+		mailAddresses_.add("Ted@clarence.party");
 	}
 
 	public void generateFakeDataThree() {
@@ -166,15 +166,15 @@ public class StudentInfomation {
 		studentsName_.add("Ivan");
 		studentsName_.add("Jack");
 
-		mailAddresses_.add("t104598007+aaa@ntut.org.tw");
-		mailAddresses_.add("t104598007+bbb@ntut.org.tw");
-		mailAddresses_.add("t104598007+ccc@ntut.org.tw");
-		mailAddresses_.add("t104598007+ddd@ntut.org.tw");
-		mailAddresses_.add("t104598007+eee@ntut.org.tw");
-		mailAddresses_.add("t104598007+fff@ntut.org.tw");
-		mailAddresses_.add("t104598007+ggg@ntut.org.tw");
-		mailAddresses_.add("t104598007+hhh@ntut.org.tw");
-		mailAddresses_.add("t104598007+iii@ntut.org.tw");
-		mailAddresses_.add("t104598007+jjj@ntut.org.tw");
+		mailAddresses_.add("Alice@clarence.party");
+		mailAddresses_.add("Bob@clarence.party");
+		mailAddresses_.add("Chris@clarence.party");
+		mailAddresses_.add("David@clarence.party");
+		mailAddresses_.add("Edison@clarence.party");
+		mailAddresses_.add("Frank@clarence.party");
+		mailAddresses_.add("George@clarence.party");
+		mailAddresses_.add("Harry@clarence.party");
+		mailAddresses_.add("Ivan@clarence.party");
+		mailAddresses_.add("Jack@clarence.party");
 	}
 }

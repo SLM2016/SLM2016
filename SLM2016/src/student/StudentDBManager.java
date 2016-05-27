@@ -58,13 +58,9 @@ public class StudentDBManager {
 		return result;
 	}
 
-	public String getSendMailInfo(StudentSendMailData[] studentSendMailData) throws SQLException {	
-		ArrayList<HashMap<String, String>> queryData = new ArrayList<HashMap<String, String>>();
-		for(int i = 0; i < studentSendMailData.length; i++){
-			String sql = "select id, name, duration from `course_info` where id = "+"\""+studentSendMailData[i].courseId+"\"";;
-			queryData.addAll(slmDBUtility.selectSQL(sql));		
-		}		      
-		return new Gson().toJson(queryData);
+	public String getCertificationInfo(String studentID) throws SQLException {	
+		String sql = "select certification_img from `student_info` where id = "+studentID;;		      		
+		return new Gson().toJson(slmDBUtility.selectSQL(sql));
 	}
 
 	public boolean insertStudent(StudentModel studentModel) throws SQLException {

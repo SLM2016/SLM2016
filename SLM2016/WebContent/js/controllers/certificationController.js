@@ -39,11 +39,9 @@ app.controller("CertificationController",['$scope', '$state', '$timeout', '$root
 		
 		var ClickDownloadPDFButton=function() {
 			var imgData = document.getElementById("someImg").getAttribute('src');
-			var data = new Object();
-			data.imagePath_ = imgData;
 
 			if(imgData != null){
-				$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
+				$.post("/SLM2016/CertificationServlet")
 				.done(function(data)
 				{
 					var link = document.createElement('a');

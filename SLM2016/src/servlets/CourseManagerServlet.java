@@ -70,7 +70,6 @@ public class CourseManagerServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String requestString = request.getReader().readLine();
-		System.out.println(requestString);
 		String header = request.getHeader("Delete");
 		if (header != null) {
 			doPostDeleteCourse(request, response, requestString);
@@ -107,8 +106,9 @@ public class CourseManagerServlet extends HttpServlet {
 			if (courseManagerWithDb_.getCourseIdByCourseNameAndBatchAndStatus(course.getCourseName(), course.getBatch(),
 					course.getStatus()) != null) {
 				result = "已存在相同課程";
+			} else {
+				result = courseManagerWithDb_.addCourseIntoDatabase(course);
 			}
-			result = courseManagerWithDb_.addCourseIntoDatabase(course);
 		} catch (SQLException e) {
 
 		}
