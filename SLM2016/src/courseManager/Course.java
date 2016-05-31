@@ -17,6 +17,7 @@ public class Course {
 	private String status_;
 	private List<String> ccAddresses_ = new ArrayList<String>();
 	private String hyperlink_;
+	private String courseCode_;
 
 	public Course(String id) {
 		courseId_ = id;
@@ -25,6 +26,7 @@ public class Course {
 	public Course clone() {
 		Course cloneObject = new Course(courseId_);
 		cloneObject.courseName_ = courseName_;
+		cloneObject.courseCode_ = courseCode_;
 		cloneObject.type_ = type_;
 		cloneObject.batch_ = batch_;
 		cloneObject.dates_.addAll(dates_);
@@ -103,6 +105,10 @@ public class Course {
 		hyperlink_ = hyperlink;
 	}
 
+	public void setCourseCode(String courseCode) {
+		courseCode_ = courseCode;
+	}
+
 	public String getCourseId() {
 		return courseId_;
 	}
@@ -153,5 +159,9 @@ public class Course {
 
 	public String getHyperlink() {
 		return hyperlink_;
+	}
+
+	public String getCourseCode() {
+		return courseCode_;
 	}
 }

@@ -14,102 +14,117 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         var typeSelected = '';
         var ticketTypeSelected = '';
 
+        var Course = function(courseName, courseCode) {
+            this.name = courseName;
+            this.code = courseCode;
+            this.readableName = courseName;
+        };
+
         //set CourseName dropdownList
-        this.selectedDropdownCourseNameItem = null;
-        this.dropdownCourseNameItems = ['Scrum敏捷方法實作班', '看板方法與精實開發實作班', '軟體重構入門實作班', '敏捷產品經理實作班',
-            '敏捷大師百寶箱系列課程', 'Design Patterns入門實作班', 'Design Patterns進階實作班',
-            '單元測試與持續整合實作班', '例外處理設計與重構實作班'
+        vm.selectedDropdownCourseNameItem = null;
+        vm.dropdownCourseNameItems = [
+            new Course('Scrum敏捷方法實作班', 'Scrum'),
+            new Course('看板方法與精實開發實作班', '看板'),
+            new Course('軟體重構入門實作班', '重構'),
+            new Course('敏捷產品經理實作班', '產品'),
+            new Course('敏捷大師百寶箱系列課程', '百寶箱'),
+            new Course('Design Patterns入門實作班', 'DP1'),
+            new Course('Design Patterns進階實作班', 'DP2'),
+            new Course('單元測試與持續整合實作班', '測試'),
+            new Course('例外處理設計與重構實作班', '例外')
         ];
 
-        this.filterCourseNameList = function(userInput) {
+        vm.filterCourseNameList = function(userInput) {
             courseNameSelected = userInput;
+            $scope.data.code = '';
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = this.dropdownCourseNameItems.filter(function(type) {
+            var filteredArray = vm.dropdownCourseNameItems.filter(function(type) {
                 return type.toLowerCase().indexOf('') == 0;
             });
             filter.resolve(filteredArray);
             return filter.promise;
         };
 
-        this.itemCourseNameSelected = function(item) {
+        vm.itemCourseNameSelected = function(item) {
             courseNameSelected = item;
+            $scope.data.code = item.code;
         };
 
         //set Type dropdownList
-        this.selectedDropdownTypeItem = null;
-        this.dropdownTypeItems = ['公開班', '企業內訓', '演講'];
+        vm.selectedDropdownTypeItem = null;
+        vm.dropdownTypeItems = ['公開班', '企業內訓', '演講'];
 
-        this.filterTypeList = function(userInput) {
+        vm.filterTypeList = function(userInput) {
             typeSelected = userInput;
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = this.dropdownTypeItems.filter(function(type) {
+            var filteredArray = vm.dropdownTypeItems.filter(function(type) {
                 return type.toLowerCase().indexOf('') == 0;
             });
             filter.resolve(filteredArray);
             return filter.promise;
         };
 
-        this.itemTypeSelected = function(item) {
+        vm.itemTypeSelected = function(item) {
             typeSelected = item;
         };
 
         //set TicketType dropdownList
-        this.selectedDropdownTicketTypeItem = null;
-        this.dropdownTicketTypeItems = ['原價', '早鳥', '泰迪之友', '四人團報'];
+        vm.selectedDropdownTicketTypeItem = null;
+        vm.dropdownTicketTypeItems = ['原價', '早鳥', '泰迪之友', '四人團報'];
 
-        this.filterTicketTypeList = function(userInput) {
+        vm.filterTicketTypeList = function(userInput) {
             ticketTicketTypeSelected = userInput;
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = this.dropdownTicketTypeItems.filter(function(ticketType) {
+            var filteredArray = vm.dropdownTicketTypeItems.filter(function(ticketType) {
                 return ticketType.toLowerCase().indexOf('') == 0;
             });
             filter.resolve(filteredArray);
             return filter.promise;
         };
 
-        this.itemTicketTypeSelected = function(item) {
+        vm.itemTicketTypeSelected = function(item) {
             ticketTicketTypeSelected = item;
         };
 
         //set CcAddress dropdownList
-        this.selectedDropdownCcAddressItem = null;
-        this.dropdownCcAddressItems = ['service@teddysoft.tw', 'teddy@teddysoft.tw', 'erica@teddysoft.tw'];
+        vm.selectedDropdownCcAddressItem = null;
+        vm.dropdownCcAddressItems = ['service@teddysoft.tw', 'teddy@teddysoft.tw', 'erica@teddysoft.tw'];
 
-        this.filterCcAddressList = function(userInput) {
+        vm.filterCcAddressList = function(userInput) {
             ccAddressSelected = userInput;
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = this.dropdownCcAddressItems.filter(function(type) {
+            var filteredArray = vm.dropdownCcAddressItems.filter(function(type) {
                 return type.toLowerCase().indexOf('') == 0;
             });
             filter.resolve(filteredArray);
             return filter.promise;
         };
 
-        this.itemCcAddressSelected = function(item) {
+        vm.itemCcAddressSelected = function(item) {
             ccAddressSelected = item;
         };
 
         //set Location dropdownList
-        this.selectedDropdownLocationItem = null;
-        this.dropdownLocationItems = ['延平南路12號4樓', '北科科研1622室', '北科育成305室', '北科育成201室'];
+        vm.selectedDropdownLocationItem = null;
+        vm.dropdownLocationItems = ['延平南路12號4樓', '北科科研1622室', '北科育成305室', '北科育成201室'];
 
-        this.filterLocationList = function(userInput) {
+        vm.filterLocationList = function(userInput) {
             locationSelected = userInput;
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = this.dropdownLocationItems.filter(function(type) {
+            var filteredArray = vm.dropdownLocationItems.filter(function(type) {
                 return type.toLowerCase().indexOf('') == 0;
             });
             filter.resolve(filteredArray);
             return filter.promise;
         };
 
-        this.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
-        this.selectedDropdownStatusItem = this.dropdownStatusItems[0];
+        vm.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
+        vm.selectedDropdownStatusItem = vm.dropdownStatusItems[0];
 
         function getTeddyCourseData() {
             $scope.isCourseLoading = true;
