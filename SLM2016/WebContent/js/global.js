@@ -32,3 +32,10 @@ function isEnglish(english) {
 function isChinese(chinese) {  
   return !(/[^\u4e00-\u9fa5]/.test(chinese));  
 }
+
+/* =====================
+ * 檢查是否為發票號碼格式
+ * ===================== */
+function isInvoiceNumber(number) {
+  return (/^[a-zA-Z0-9\-()+\s]+$/.test(number));
+}

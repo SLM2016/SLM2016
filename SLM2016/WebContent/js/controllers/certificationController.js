@@ -38,17 +38,15 @@ app.controller("CertificationController",['$scope', '$state', '$timeout', '$root
 		}     
 		
 		var ClickDownloadPDFButton=function() {
-			var imgData = "";
-			var data = new Object();
-			data.imagePath_ = imgData;
+			var imgData = document.getElementById("someImg").getAttribute('src');
 
 			if(imgData != null){
-				$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
+				$.post("/SLM2016/CertificationServlet")
 				.done(function(data)
 				{
 					var link = document.createElement('a');
 					link.href = 'data:application/pdf;base64,'+data;
-					link.download = "Download.pdf";
+					link.download = document.getElementById("certificationId").value+" "+document.getElementById("studentName").value+".pdf";
 					document.body.appendChild(link);
 					link.click();
 					document.body.removeChild(link);  

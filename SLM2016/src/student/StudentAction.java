@@ -2,37 +2,26 @@ package student;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
+
+import org.apache.poi.util.IOUtils;
+import com.google.gson.Gson;
+
+import courseManager.CourseManagerWithDatabase;
+import mailSending.SendApplySuccessfullyMail;
+
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -41,8 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import com.google.gson.Gson;
-import com.jspsmart.upload.SmartUpload;
+import com.google.gson.GsonBuilder;
 
 @WebServlet("/StudentAction")
 @MultipartConfig()
@@ -51,6 +39,14 @@ public class StudentAction extends HttpServlet {
 	
 	private static final String OP_INSERT_INTO_STUDENT = "1";
 	private static final String OP_GET_STUDENT_LIST = "2";
+	private static final String OP_INSERT_STUDENT_FROM_GOOGLE_FORM = "3";
+	private static final String OP_SAVE_STUDENT_EXCEL_FILE = "4";
+	private static final String OP_GET_STUDENT_LIST_BY_COURSE_ID = "5";
+	private static final String OP_UPDATE_STUDENT_RECEIPT_STATUS = "6";
+	private static final String OP_GET_CERTIFICATION_INFO = "7";
+
+
+	private static Gson gson = new Gson();
 
 	public StudentAction() {
 		super();
@@ -63,6 +59,12 @@ public class StudentAction extends HttpServlet {
 		switch (op) {
 		case OP_GET_STUDENT_LIST:
 			getStudentList(request, response);
+			break;		
+		case OP_GET_STUDENT_LIST_BY_COURSE_ID:
+			getStudentListByCourseId(request, response);
+			break;
+		case OP_GET_CERTIFICATION_INFO:
+			getCertificationInfo(request, response);
 			break;
 		default:
 			break;
@@ -72,21 +74,58 @@ public class StudentAction extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
 		String op = request.getParameter("op");
-		HashMap result = new HashMap();
-		PrintWriter out = response.getWriter();
+		// PrintWriter out = response.getWriter();
 		switch (op) {
 		case OP_INSERT_INTO_STUDENT:
-			result = insertIntoStudent(request, response);
+			insertIntoStudent(request, response);
 			break;
+		case OP_SAVE_STUDENT_EXCEL_FILE:
+			saveFile(request, response);
+			break;
+		case OP_INSERT_STUDENT_FROM_GOOGLE_FORM:
+			Map<String, Object> insertMap = getGoogleFormData(request);
+			try {
+				insertStudentFromGoogleForm(insertMap);
+				sendInformMail(insertMap);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		case OP_UPDATE_STUDENT_RECEIPT_STATUS:
+			updateStudentReceiptStatus(request, response);
+			break;
+	
 		default:
 			break;
 		}
 
-		Gson gson = new Gson();
-		out.println(gson.toJson(result));
+		// Gson gson = new Gson();
+		// out.println(gson.toJson(result));
 	}
 	
+	private Map<String, Object> getGoogleFormData(HttpServletRequest request) throws IOException {
+		request.setCharacterEncoding("UTF-8");
+
+		// Read from request
+		StringBuilder buffer = new StringBuilder();
+		BufferedReader reader = request.getReader();
+
+		String line;
+		while ((line = reader.readLine()) != null) {
+			buffer.append(line);
+		}
+		String gData = buffer.toString();
+		Gson gson = new Gson();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map = (Map<String, Object>) gson.fromJson(gData, map.getClass());
+		return map;
+	}
+
 	private void getStudentList(HttpServletRequest request, HttpServletResponse response) {
 		StudentDBManager studentDbManager = new StudentDBManager();
 		String json = null;
@@ -98,88 +137,215 @@ public class StudentAction extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void getCertificationInfo(HttpServletRequest request, HttpServletResponse response) {      
+		StudentDBManager studentDbManager = new StudentDBManager();
+		String result = null;
+					
+		try {
+			result = studentDbManager.getCertificationInfo(request.getParameter("studentId"));
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void insertIntoStudent(HttpServletRequest request, HttpServletResponse response)
+
+			throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		// final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+		HashMap<String, String> result = new HashMap<String, String>();
+		// Calendar cal = Calendar.getInstance();
+		// SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+
+		String courseId = request.getParameter("courseId");
+		Part filePart = request.getPart("file");
+
+		try {
+			StudentModelFactory factory = new StudentModelFactory(filePart.getInputStream(), courseId);
+
+			ArrayList<StudentModel> arr = factory.buildStudentModelArray();
+				StudentDBManager studentDbManager = new StudentDBManager();
+			for (StudentModel s : arr) {
+				// System.out.println(s.getComment());
+				studentDbManager.insertStudent(s);
+				}
+
+			result.put("status", "true");
+		} catch (Exception e) {
+			// e.printStackTrace();
+			result.put("status", "false");
+		}
+
+		out.println(gson.toJson(result));
+		// return result;
+	}
+
+	private void updateStudentReceiptStatus(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		PrintWriter out = response.getWriter();
+		HashMap<String, String> result = new HashMap<String, String>();
+
+		try {
+
+			StudentModel studentModel;
+			StudentDBManager studentDBManager = new StudentDBManager();
+			String studentID = request.getParameter("studentId");
+			String receiptEIN = request.getParameter("receiptEIN");
+			String receiptStatus = request.getParameter("receiptStatus");
+			String paymentStatus = request.getParameter("paymentStatus");
+
+			studentModel = studentDBManager.getStudentById(studentID);
+			studentModel.setReceiptEIN(receiptEIN);
+			studentModel.setReceiptStatus(receiptStatus);
+			studentModel.setPaymentStatus(paymentStatus);
+
+			if (studentDBManager.updateStudent(studentModel)) {
+				result.put("status", "true");
+			} else {
+
+				result.put("status", "false");
+			}
+
+		} catch (Exception e) {
+			result.put("status", "false");
+			e.printStackTrace();
+		}
+
+		out.println(gson.toJson(result));
+	}
+	
+	private void saveFile(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		HashMap<String, String> result = new HashMap<String, String>();
+		PrintWriter out = response.getWriter();
+
+		Date date = new java.util.Date();
+		String nowTime = Long.toString(date.getTime());
+		String fileName = String.format("%s.xlsx", nowTime);
+
+		String courseId = request.getParameter("courseId");
+		// courseName = "TEST";
+		String dirPath = String.format("./course_excel_file/%s/", courseId);
+		Part filePart = request.getPart("file");
+		try {
+			File f = new File(dirPath);
+			if (!f.exists()) {
+				f.mkdirs();
+			}
+			// System.out.println(f.getAbsolutePath());
+			OutputStream fileOut = new FileOutputStream(dirPath + fileName);
+			IOUtils.copy(filePart.getInputStream(), fileOut);
+			fileOut.close();
+			result.put("status", "true");
+
+		} catch (
+
+		IOException ex) {
+			result.put("status", "false");
+		}
+
+		out.println(gson.toJson(result));
+
+	}
+
+	private void getStudentListByCourseId(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		// response.setContentType("application/json");
+		// response.setCharacterEncoding("UTF-8");
+		String courseId = request.getParameter("courseId");
+
+		StudentDBManager studentDbManager = new StudentDBManager();
+		String json = null;
+
+		try {
+			json = studentDbManager.getStudentListByCourseId(courseId);
+
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private HashMap insertIntoStudent(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		PrintWriter out = response.getWriter();
-		final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
-		HashMap result = new HashMap();
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+	private Boolean insertStudentFromGoogleForm(Map<String, Object> _insertMap)
+			throws IOException, ServletException, SQLException {
+		Boolean insertResult = false;
+		CourseManagerWithDatabase courseDB = new CourseManagerWithDatabase();
 
-		Part filePart1 = request.getPart("file");
-		Workbook workbook = new XSSFWorkbook(filePart1.getInputStream());
+		Map<String, Object> _map = _insertMap;
+		StudentModel studentModel = new StudentModel();
 
-		Sheet firstSheet = workbook.getSheetAt(0);
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date today = Calendar.getInstance().getTime();
+		String _timestamp = df.format(today);
+		String name = _map.get("name").toString();
+		String email = _map.get("email").toString();
+	    String courseName = _map.get("courseName").toString();
+	    String batch = _map.get("batch").toString();
+	    
+		studentModel.setTimestamp(_timestamp);
+		studentModel.setName(name);
+	    studentModel.setTicketTypeAndPrice(_map.get("ticket").toString());
+	    studentModel.setNickname(_map.get("nickname").toString());
+	    studentModel.setEmail(email);
+	    studentModel.setPhone(_map.get("cellphone").toString());
+	    studentModel.setCompany(_map.get("company").toString());
+	    studentModel.setApartment(_map.get("apartment").toString());
+	    studentModel.setTitle(_map.get("title").toString());
+	    studentModel.setVegeMeat(_map.get("vegeMeat").toString());
+	    studentModel.setReceiptType(_map.get("receipt").toString());
+	    studentModel.setReceiptCommpanyTitleAndEIN(_map.get("companyTitle").toString());
+	    
+        String _courseID = courseDB.getCourseIdByCourseNameAndBatchAndStatus(courseName, batch, "報名中");
 
-		try {
-			for (int i = 1; i < firstSheet.getPhysicalNumberOfRows(); i++) {
-				Row row = firstSheet.getRow(i);
-				if (row == null) {
-					continue;
-				}
-				int cells = row.getPhysicalNumberOfCells();
-				Cell cell = row.getCell(0);
-				String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-						.format(new Date(cell.getDateCellValue().getTime()));
-				cell = row.getCell(1);
-				String ticketType = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(2);
-				String name = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(3);
-				String nickname = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(4);
-				String email = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(5);
-				String phone = String.format("%010d", (int) cell.getNumericCellValue());
-				cell = row.getCell(6);
-				String company = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(7);
-				String apartment = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(8);
-				String title = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(9);
-				String vegeMeat = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(10);
-				String receiptType = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(11);
-				String companyNameAndEIN = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(12);
-				String classInfo = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(13);
-				String hasScrum = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(14);
-				String flowOk = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(15);
-				String teamMembers = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(16);
-				String comment = (cell == null ? "" : cell.getStringCellValue());
-				cell = row.getCell(17);
-
-				StudentDBManager studentDbManager = new StudentDBManager();
-				boolean dbResult = studentDbManager.insertStudent(name, email, nickname, phone, company, apartment,
-						title, ticketType, vegeMeat, receiptType, companyNameAndEIN, classInfo, hasScrum, flowOk,
-						teamMembers, comment, timestamp);
-				if (dbResult) {
-					result.put("status", true);
-				} else {
-					result.put("status", false);
-				}
-			}
-		} catch (Exception e) {
-			// e.printStackTrace();
-			result.put("status", false);
-		}
-		return result;
+	    if (_courseID!=null)
+	    {
+            studentModel.setFkCourseInfoId(_courseID);
+            StudentDBManager studentDBManager = new StudentDBManager();
+            insertResult = studentDBManager.insertStudent(studentModel);
+	    }
+	    else{
+	        System.out.println("\nNo course!!!");
+	    }
+        return insertResult;
 	}
 
+	private Boolean sendInformMail(Map<String, Object> _insertMap) throws IOException, ServletException, SQLException {
+		Boolean sendResult = false;
+		SendApplySuccessfullyMail sendApplySuccessfullyMail = new SendApplySuccessfullyMail();
+		CourseManagerWithDatabase courseManagerWithDatabase = new CourseManagerWithDatabase();
+		Map<String, Object> _map = _insertMap;
+
+		String name = _map.get("name").toString();
+		String email = _map.get("email").toString();
+		String courseName = _map.get("courseName").toString();
+		String batch = _map.get("batch").toString();
+		String courseId = courseManagerWithDatabase.getCourseIdByCourseNameAndBatchAndStatus(courseName, batch, "報名中");
+		String ccAddresses = courseManagerWithDatabase.getCcAddressByCourseId(courseId);
+		String hyperlink = courseManagerWithDatabase.getHyperlinkByCourseId(courseId);
+		
+		if(courseId!=null){
+			sendApplySuccessfullyMail.Send(name, email, ccAddresses, courseName, hyperlink);
+		}
+		else{
+	        System.out.println("No Match Course!!!");
+	    }
+
+		return sendResult;
+	}
 }
