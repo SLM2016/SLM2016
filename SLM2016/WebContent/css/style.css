@@ -1291,42 +1291,53 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   line-height: 14px;
 }
 /* line 72, ../scss/directives/_invoice-modal.scss */
+#invoice-modal .modal-body .invoice-info-content .left .form-group .input-block .loading,
+#invoice-modal .modal-body .invoice-info-content .right .form-group .input-block .loading {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+/* line 78, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-info-content .left .form-group .input-block .success, #invoice-modal .modal-body .invoice-info-content .left .form-group .input-block .error,
 #invoice-modal .modal-body .invoice-info-content .right .form-group .input-block .success,
 #invoice-modal .modal-body .invoice-info-content .right .form-group .input-block .error {
   display: none;
 }
-/* line 76, ../scss/directives/_invoice-modal.scss */
+/* line 82, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-info-content .left .form-group .input-block.has-error .success,
 #invoice-modal .modal-body .invoice-info-content .right .form-group .input-block.has-error .success {
   display: none;
 }
-/* line 79, ../scss/directives/_invoice-modal.scss */
+/* line 85, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-info-content .left .form-group .input-block.has-error .error,
 #invoice-modal .modal-body .invoice-info-content .right .form-group .input-block.has-error .error {
   display: block;
 }
-/* line 82, ../scss/directives/_invoice-modal.scss */
+/* line 88, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-info-content .left .form-group .input-block.has-error .company-correct,
 #invoice-modal .modal-body .invoice-info-content .right .form-group .input-block.has-error .company-correct {
   display: block;
 }
-/* line 87, ../scss/directives/_invoice-modal.scss */
+/* line 93, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-info-content .left .form-group .input-block.has-success .success,
 #invoice-modal .modal-body .invoice-info-content .right .form-group .input-block.has-success .success {
   display: block;
 }
-/* line 90, ../scss/directives/_invoice-modal.scss */
+/* line 96, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-info-content .left .form-group .input-block.has-success .error,
 #invoice-modal .modal-body .invoice-info-content .right .form-group .input-block.has-success .error {
   display: none;
 }
-/* line 99, ../scss/directives/_invoice-modal.scss */
+/* line 105, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-pager {
   margin: 20px 0 5px;
   text-align: center;
 }
-/* line 102, ../scss/directives/_invoice-modal.scss */
+/* line 108, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-pager .pager {
   display: inline-block;
   width: 7px;
@@ -1337,11 +1348,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
-/* line 109, ../scss/directives/_invoice-modal.scss */
+/* line 115, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-pager .pager.active {
   background-color: #333;
 }
-/* line 114, ../scss/directives/_invoice-modal.scss */
+/* line 120, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper {
   height: 550px;
   padding: 10px 30px;
@@ -1349,7 +1360,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   text-align: center;
   border: 2px dashed #ccc;
 }
-/* line 120, ../scss/directives/_invoice-modal.scss */
+/* line 126, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .invoice-title {
   font-size: 20px;
   height: 24px;
@@ -1357,61 +1368,61 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   margin-bottom: 8px;
   color: #aaa;
 }
-/* line 126, ../scss/directives/_invoice-modal.scss */
+/* line 132, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .invoice-title span {
   margin: 0 10px;
 }
-/* line 130, ../scss/directives/_invoice-modal.scss */
+/* line 136, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .invoice-desc {
   color: #aaa;
   font-size: 16px;
   margin-bottom: 8px;
 }
-/* line 135, ../scss/directives/_invoice-modal.scss */
+/* line 141, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .invoice-date {
   display: inline-block;
   height: 28px;
   line-height: 28px;
   vertical-align: top;
 }
-/* line 140, ../scss/directives/_invoice-modal.scss */
+/* line 146, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .invoice-date span {
   color: #333;
   font-size: 24px;
 }
-/* line 145, ../scss/directives/_invoice-modal.scss */
+/* line 151, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content {
   text-align: left;
   font-size: 14px;
   color: #aaa;
 }
-/* line 149, ../scss/directives/_invoice-modal.scss */
+/* line 155, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-buyer {
   margin-bottom: 8px;
   height: 28px;
   line-height: 28px;
 }
-/* line 153, ../scss/directives/_invoice-modal.scss */
+/* line 159, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-buyer span {
   color: #333;
   font-size: 24px;
   line-height: 24px;
 }
-/* line 159, ../scss/directives/_invoice-modal.scss */
+/* line 165, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-meta {
   margin-bottom: 15px;
 }
-/* line 161, ../scss/directives/_invoice-modal.scss */
+/* line 167, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-meta .invoice-companyid {
   display: inline-block;
   margin-right: 15px;
 }
-/* line 164, ../scss/directives/_invoice-modal.scss */
+/* line 170, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-meta .invoice-companyid span {
   height: 24px;
   line-height: 28px;
 }
-/* line 168, ../scss/directives/_invoice-modal.scss */
+/* line 174, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-meta .invoice-companyid .id-item {
   width: 28px;
   height: 28px;
@@ -1424,21 +1435,21 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-size: 24px;
   color: #333;
 }
-/* line 179, ../scss/directives/_invoice-modal.scss */
+/* line 185, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-meta .invoice-companyid .id-item:last-child {
   border-right: 1px solid #ccc;
 }
-/* line 185, ../scss/directives/_invoice-modal.scss */
+/* line 191, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table {
   height: 200px;
 }
-/* line 189, ../scss/directives/_invoice-modal.scss */
+/* line 195, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table thead tr th {
   border: 1px solid #C38293;
   font-size: 16px;
   padding: 4px 8px;
 }
-/* line 198, ../scss/directives/_invoice-modal.scss */
+/* line 204, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table tbody tr td {
   height: 40px;
   line-height: 40px;
@@ -1446,56 +1457,56 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   padding: 0 8px;
   font-size: 16px;
 }
-/* line 204, ../scss/directives/_invoice-modal.scss */
+/* line 210, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table tbody tr td.td-answer {
   color: #333;
   font-size: 24px;
 }
-/* line 208, ../scss/directives/_invoice-modal.scss */
+/* line 214, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table tbody tr td.td-word {
   text-align: right;
   font-size: 24px;
 }
-/* line 211, ../scss/directives/_invoice-modal.scss */
+/* line 217, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table tbody tr td.td-word .word-item {
   display: inline-block;
   width: 60px;
   margin-left: 5px;
 }
-/* line 215, ../scss/directives/_invoice-modal.scss */
+/* line 221, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table tbody tr td.td-word .word-item .word {
   display: inline-block;
   margin-right: 5px;
   text-align: center;
   color: #333;
 }
-/* line 221, ../scss/directives/_invoice-modal.scss */
+/* line 227, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-body .invoice-content .invoice-wrapper .result-content .invoice-table tbody tr td.td-word .word-item .unit {
   line-height: 20px;
   font-size: 16px;
 }
-/* line 236, ../scss/directives/_invoice-modal.scss */
+/* line 242, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer {
   text-align: left;
   padding: 15px 30px;
 }
-/* line 239, ../scss/directives/_invoice-modal.scss */
+/* line 245, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer .form-inline {
   display: inline-block;
 }
-/* line 241, ../scss/directives/_invoice-modal.scss */
+/* line 247, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer .form-inline span {
   display: inline-block;
   height: 34px;
   line-height: 34px;
   margin-right: 10px;
 }
-/* line 247, ../scss/directives/_invoice-modal.scss */
+/* line 253, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer .form-inline .radio-inline {
   height: 34px;
   line-height: 34px;
 }
-/* line 250, ../scss/directives/_invoice-modal.scss */
+/* line 256, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer .form-inline .radio-inline input {
   margin: 0;
   top: 48%;
@@ -1505,52 +1516,52 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-/* line 257, ../scss/directives/_invoice-modal.scss */
+/* line 263, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer .form-inline .form-group {
   margin-left: 30px;
 }
-/* line 259, ../scss/directives/_invoice-modal.scss */
+/* line 265, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer .form-inline .form-group label {
   height: 35px;
   line-height: 35px;
   margin-right: 10px;
 }
-/* line 264, ../scss/directives/_invoice-modal.scss */
+/* line 270, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer .form-inline .form-group input {
   width: 130px;
 }
-/* line 266, ../scss/directives/_invoice-modal.scss */
+/* line 272, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer .form-inline .form-group input.tax {
   width: 80px;
 }
-/* line 272, ../scss/directives/_invoice-modal.scss */
+/* line 278, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer .btn {
   float: right;
 }
-/* line 275, ../scss/directives/_invoice-modal.scss */
+/* line 281, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer .result-container {
   display: none;
   height: 34px;
   margin-right: 20px;
   float: right;
 }
-/* line 280, ../scss/directives/_invoice-modal.scss */
+/* line 286, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer .result-container .label {
   height: 24px;
   line-height: 24px;
   padding: 0 10px;
   margin: auto 10px;
 }
-/* line 286, ../scss/directives/_invoice-modal.scss */
+/* line 292, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer .result-container .spin-style {
   margin: auto;
 }
-/* line 290, ../scss/directives/_invoice-modal.scss */
+/* line 296, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .modal-footer .result-container.show-result {
   display: -webkit-flex;
   display: flex;
 }
-/* line 295, ../scss/directives/_invoice-modal.scss */
+/* line 301, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .right-button, #invoice-modal .left-button {
   position: absolute;
   top: 50%;
@@ -1565,32 +1576,32 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-/* line 304, ../scss/directives/_invoice-modal.scss */
+/* line 310, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .right-button span, #invoice-modal .left-button span {
   color: #FFF;
   font-size: 28px;
   margin: auto;
 }
-/* line 309, ../scss/directives/_invoice-modal.scss */
+/* line 315, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .right-button:hover, #invoice-modal .left-button:hover {
   background-color: rgba(51, 51, 51, 0.5);
 }
-/* line 312, ../scss/directives/_invoice-modal.scss */
+/* line 318, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .right-button.stop, #invoice-modal .left-button.stop {
   cursor: not-allowed;
 }
-/* line 314, ../scss/directives/_invoice-modal.scss */
+/* line 320, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .right-button.stop:hover, #invoice-modal .left-button.stop:hover {
   background-color: rgba(51, 51, 51, 0.2);
 }
-/* line 319, ../scss/directives/_invoice-modal.scss */
+/* line 325, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .right-button {
   right: -80px;
   -moz-border-radius: 8px 0 0 8px;
   -webkit-border-radius: 8px;
   border-radius: 8px 0 0 8px;
 }
-/* line 323, ../scss/directives/_invoice-modal.scss */
+/* line 329, ../scss/directives/_invoice-modal.scss */
 #invoice-modal .left-button {
   left: -80px;
   -moz-border-radius: 0 8px 8px 0;

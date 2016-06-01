@@ -30,12 +30,11 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
 
         var getStudentList = function() {
             $scope.isStudentLoading = true;
-            StudentInfoService.getStudentListByCourseId($scope.currentCourse.courseId_, start, len).then(function(result) {
+            StudentInfoService.getStudentListByCourseId($scope.currentCourse.courseId_).then(function(result) {
                 $scope.isStudentLoading = false;
                 for (var i = 0; i < result.length; i++) {
                     result[i].isSelected = false;
                 }
-                start += len;
                 $scope.studentList = result;
             }, function(error) {
                 $scope.isStudentLoading = false;

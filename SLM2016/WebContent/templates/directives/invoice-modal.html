@@ -52,6 +52,7 @@
 					<div class="input-block" ng-class="{'has-error' : isCompanyError, 'has-success' : isCompanySuccess}">
 				    	<input type="text" class="form-control" placeholder="請輸入公司名稱">
 				    	<span class="company-correct">正確名稱：{{data.correctCompany}}</span>
+				    	<span class="loading" ng-show="isCompanyLoading"><spin spin-size="small" class="spin-style"></spin></span>
 						<span class="glyphicon glyphicon-ok form-control-feedback success" aria-hidden="true"></span>
 						<span class="glyphicon glyphicon-remove form-control-feedback error" aria-hidden="true"></span>
 				    </div>

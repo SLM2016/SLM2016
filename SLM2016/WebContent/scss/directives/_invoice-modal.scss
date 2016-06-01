@@ -69,6 +69,12 @@
                             width: 295px;
                             line-height: 14px;
                         }
+                        .loading {
+                            position: absolute;
+                            right: 10px;
+                            top: 50%;
+                            @include transform(translateY(-50%));
+                        }
                         .success, .error {
                             display: none;
                         }
