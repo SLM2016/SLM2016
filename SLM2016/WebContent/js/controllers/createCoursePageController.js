@@ -140,7 +140,8 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
 
         function addCourse() {
             var data = new Object();
-            data.courseName_ = courseNameSelected;
+            data.courseName_ = courseNameSelected.name;
+            data.courseCode_ = $scope.data.code;
             data.batch_ = $scope.data.batch;
             data.dates_ = $scope.showDateList;
             data.duration_ = parseInt($scope.data.duration);

@@ -6,6 +6,7 @@ import java.util.List;
 public class Course {
 	private String courseId_;
 	private String courseName_;
+	private String courseCode_;
 	private String type_;
 	private String batch_;
 	private List<String> dates_ = new ArrayList<String>();
@@ -17,7 +18,6 @@ public class Course {
 	private String status_;
 	private List<String> ccAddresses_ = new ArrayList<String>();
 	private String hyperlink_;
-	private String courseCode_;
 
 	public Course(String id) {
 		courseId_ = id;
@@ -43,6 +43,10 @@ public class Course {
 
 	public void setCourseName(String courseName) {
 		courseName_ = courseName;
+	}
+	
+	public void setCourseCode(String courseCode) {
+		courseCode_ = courseCode;
 	}
 
 	public void setType(String type) {
@@ -105,16 +109,16 @@ public class Course {
 		hyperlink_ = hyperlink;
 	}
 
-	public void setCourseCode(String courseCode) {
-		courseCode_ = courseCode;
-	}
-
 	public String getCourseId() {
 		return courseId_;
 	}
 
 	public String getCourseName() {
 		return courseName_;
+	}
+	
+	public String getCourseCode() {
+		return courseCode_;
 	}
 
 	public String getType() {
@@ -159,9 +163,5 @@ public class Course {
 
 	public String getHyperlink() {
 		return hyperlink_;
-	}
-
-	public String getCourseCode() {
-		return courseCode_;
 	}
 }
