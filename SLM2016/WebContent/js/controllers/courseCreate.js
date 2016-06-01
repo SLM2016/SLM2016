@@ -1,4 +1,4 @@
-app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$rootScope', '$q',
+app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$rootScope', '$q',
     function($scope, $state, $timeout, $rootScope, $q, UploadAttachmentService) {
         var vm = this;
         var showCcList = [];
@@ -111,14 +111,6 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         this.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
         this.selectedDropdownStatusItem = this.dropdownStatusItems[0];
 
-        function getTeddyCourseData() {
-            $scope.isCourseLoading = true;
-            $.get("/SLM2016/CourseManagerServlet", function(responseText) {
-                $scope.courseList = responseText;
-                $scope.isCourseLoading = false;
-            });
-        }
-
         var changeloadType = function(type) {
             $scope.loadType = type;
         }
@@ -144,8 +136,6 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
                 } else {
                     window.alert("開課失敗\n" + data);
                 }
-
-                getTeddyCourseData();
                 resetAllDropdownList();
                 deleteData();
             });
@@ -255,26 +245,6 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             addCourse();
         }
 
-        var deleteRow = function(id) {
-            $.ajax({
-                url: "/SLM2016/CourseManagerServlet",
-                type: "POST",
-                data: id,
-                dataType: "text",
-                headers: {
-                    Delete: true
-                },
-                success: function() {
-                    getTeddyCourseData();
-                }
-            })
-            setTimeout(function() {
-                $scope.$apply(function() {
-                    $scope.time = new Date();
-                });
-            }, 500);
-        }
-
         var deleteTicket = function(index) {
             $scope.showticketList.splice(index, '1');
             $scope.ticketTypeList.splice(index, '1');
@@ -329,8 +299,6 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
                 hyperlink: ""
             };
             typeSelected = "";
-
-            getTeddyCourseData();
         }
 
         /*

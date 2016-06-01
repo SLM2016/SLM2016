@@ -27,10 +27,9 @@
         <div class="wrapper">
             <nav-sidebar></nav-sidebar>
             <div ui-view="home" ng-show="isHomeView()"></div>
-            <div ui-view="invoice" ng-show="isInvoiceView()"></div>
-            <div ui-view="studentInfo" ng-show="studentInfoView()"></div>
-            <div ui-view="certification" ng-show="isCertificationView()"></div>
-            <div ui-view="sendMail" ng-show="isSendMailView()"></div>      
+            <div ui-view="courseInfo" ng-show="isCourseInfoView()"></div>
+            <div ui-view="studentInfo" ng-show="isStudentInfoView()"></div>
+            <div ui-view="others" ng-show="isOthersView()"></div>
             <div ui-view="createCourse" ng-show="isCreateCourseView()"></div>          
         </div>
     </div>
@@ -78,7 +77,8 @@
     <script src="js/controllers/studentImport.js"></script>
     <script src="js/controllers/studentManage.js"></script>
     <script src="js/controllers/studentSendmail.js"></script>
-    <script src="js/controllers/createCoursePageController.js"></script>
+    <script src="js/controllers/courseCreate.js"></script>
+    <script src="js/controllers/courseManage.js"></script>
     <script src="js/modules/inputDropdown.js"></script>
 	<script src="js/ckeditor/ckeditor.js"></script>
  	

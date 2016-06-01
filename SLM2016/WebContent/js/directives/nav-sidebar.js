@@ -20,16 +20,16 @@ app.directive('navSidebar', ['$rootScope',
                         return $state.includes(STATES.HOME);
                     }
 
-                    var isCertificationView = function() {
-                        return $state.includes(STATES.CERTIFICATION);
+                    var isCourseInfoView = function() {
+                        return $state.includes(STATES.COURSEINFO);
                     }
-                    
-                    var isSendMailView = function() {
-                        return $state.includes(STATES.SENDMAIL);
+
+                    var isCourseInfoManageView = function() {
+                        return $state.includes(STATES.COURSEINFO_MANAGE);
                     }
-                    
-                    var isInvoiceView = function() {
-                        return $state.includes(STATES.INVOICE);
+
+                    var isCourseInfoCreateView = function() {
+                        return $state.includes(STATES.COURSEINFO_CREATE);
                     }
 
                     var isStudentInfoView = function() {
@@ -43,13 +43,33 @@ app.directive('navSidebar', ['$rootScope',
                     var isStudentInfoImportView = function() {
                         return $state.includes(STATES.STUDENT_INFO_IMPORT);
                     }
+
+                    var isOthersView = function() {
+                        return $state.includes(STATES.OTHERS);
+                    }
+
+                    var isOthersCertificationView = function() {
+                        return $state.includes(STATES.OTHERS_CERTIFICATION);
+                    }
                     
-                    var isCreateCourseView = function() {
-                        return $state.includes(STATES.CREATE_COURSE);
+                    var isOthersSendMailView = function() {
+                        return $state.includes(STATES.OTHERS_SENDMAIL);
+                    }
+                    
+                    var isOthersInvoiceView = function() {
+                        return $state.includes(STATES.OTHERS_INVOICE);
+                    }
+
+                    var toggleCourseMenu = function() {
+                        $scope.isShowCourseMenu = !$scope.isShowCourseMenu;
                     }
 
                     var toggleStudentMenu = function() {
                         $scope.isShowStudentMenu = !$scope.isShowStudentMenu;
+                    }
+
+                    var toggleOthersMenu = function() {
+                        $scope.isShowOthersMenu = !$scope.isShowOthersMenu;
                     }
                     /*==========================
                         Events
@@ -59,28 +79,44 @@ app.directive('navSidebar', ['$rootScope',
                         if($state.includes(STATES.STUDENTINFO)) {
                             $scope.isShowStudentMenu = true;
                         }
+                        else if($state.includes(STATES.OTHERS)) {
+                            $scope.isShowOthersMenu = true;
+                        }
+                        else if($state.includes(STATES.COURSEINFO)) {
+                            $scope.isShowCourseMenu = true;
+                        }
                     });
 
                     /*==========================
                         Members
                     ==========================*/
 
+                    $scope.isShowCourseMenu = false
                     $scope.isShowStudentMenu = false;
+                    $scope.isShowOthersMenu = false;
 
                     /*==========================
                         Methods
                     ==========================*/
                     $scope.isHomeView = isHomeView;
 
-                    $scope.isCertificationView = isCertificationView;
-                    $scope.isSendMailView = isSendMailView;                    
-                    $scope.isInvoiceView = isInvoiceView;
-                    $scope.isStudentInfoView = isStudentInfoView;    
+                    $scope.isCourseInfoView = isCourseInfoView;
+                    $scope.isCourseInfoManageView = isCourseInfoManageView;
+                    $scope.isCourseInfoCreateView = isCourseInfoCreateView;
 
+                    $scope.isStudentInfoView = isStudentInfoView;    
                     $scope.isStudentInfoManageView = isStudentInfoManageView;   
                     $scope.isStudentInfoImportView = isStudentInfoImportView;
-                    $scope.isCreateCourseView = isCreateCourseView;
-                    $scope.toggleStudentMenu = toggleStudentMenu;             
+
+
+                    $scope.isOthersView = isOthersView;
+                    $scope.isOthersCertificationView = isOthersCertificationView;
+                    $scope.isOthersSendMailView = isOthersSendMailView;                    
+                    $scope.isOthersInvoiceView = isOthersInvoiceView;
+
+                    $scope.toggleCourseMenu = toggleCourseMenu;
+                    $scope.toggleStudentMenu = toggleStudentMenu;
+                    $scope.toggleOthersMenu = toggleOthersMenu;         
                     /*==========================
                         init
                     ==========================*/
