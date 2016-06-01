@@ -35,13 +35,13 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         ];
 
         vm.filterCourseNameList = function(userInput) {
-            courseNameSelected = userInput;
+            courseNameSelected = new Course(userInput, '');
             $scope.data.code = '';
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownCourseNameItems.filter(function(type) {
-                return type.toLowerCase().indexOf('') == 0;
-            });
+            var filteredArray = vm.dropdownCourseNameItems; //.filter(function(type) {
+            //                return type.toLowerCase().indexOf('') == 0;
+            //            });
             filter.resolve(filteredArray);
             return filter.promise;
         };
@@ -59,9 +59,9 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             typeSelected = userInput;
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownTypeItems.filter(function(type) {
-                return type.toLowerCase().indexOf('') == 0;
-            });
+            var filteredArray = vm.dropdownTypeItems; //.filter(function(type) {
+            //     return type.toLowerCase().indexOf('') == 0;
+            // });
             filter.resolve(filteredArray);
             return filter.promise;
         };
@@ -78,9 +78,9 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             ticketTicketTypeSelected = userInput;
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownTicketTypeItems.filter(function(ticketType) {
-                return ticketType.toLowerCase().indexOf('') == 0;
-            });
+            var filteredArray = vm.dropdownTicketTypeItems; //.filter(function(ticketType) {
+            //     return ticketType.toLowerCase().indexOf('') == 0;
+            // });
             filter.resolve(filteredArray);
             return filter.promise;
         };
@@ -97,9 +97,9 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             ccAddressSelected = userInput;
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownCcAddressItems.filter(function(type) {
-                return type.toLowerCase().indexOf('') == 0;
-            });
+            var filteredArray = vm.dropdownCcAddressItems; //.filter(function(type) {
+            //     return type.toLowerCase().indexOf('') == 0;
+            // });
             filter.resolve(filteredArray);
             return filter.promise;
         };
@@ -116,9 +116,9 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             locationSelected = userInput;
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownLocationItems.filter(function(type) {
-                return type.toLowerCase().indexOf('') == 0;
-            });
+            var filteredArray = vm.dropdownLocationItems; //.filter(function(type) {
+            //     return type.toLowerCase().indexOf('') == 0;
+            // });
             filter.resolve(filteredArray);
             return filter.promise;
         };
@@ -244,6 +244,10 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
                 window.alert("課程名稱欄位不可為空白");
                 return;
             }
+            if ((($scope.data.code) == null) || (($scope.data.code).length == 0)) {
+                window.alert("課程代碼欄位不可為空白");
+                return;
+            }
             if (((vm.selectedDropdownStatusItem) == null)) {
                 window.alert("狀態欄位不可為空白");
                 return;
@@ -315,6 +319,7 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         }
 
         function deleteData() {
+            $scope.data.code = "";
             $scope.data.batch = "";
             $scope.showDateList = [];
             $scope.data.duration = 0;
@@ -339,6 +344,7 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
 
         var init = function() {
             $scope.data = {
+                code: "",
                 batch: "",
                 duration: 0,
                 lecturer: "",
