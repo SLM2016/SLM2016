@@ -130,9 +130,7 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
 		} 
         
         var clearFile = function() {
-	    	$scope.picFile = null;
 	    	$scope.imgFile = null;
-	    	$scope.imgFile;
 		}
         
         var getBackgound=function() {
@@ -172,12 +170,17 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
     		        },
     		        file: $scope.imgFile
     		    }).success(function(data) {
-    		    	if(data=="true")
+    		    	if(data.status=="true"){
     		    		window.alert("上傳成功");
-    		    	else
+    		    		getBackgound();
+    		    	}
+    		    	else{
     		    		window.alert("上傳失敗");
+    		    		console.log(data.status);
+    		    	}
     			}).error(function(error) {
     				window.alert("上傳失敗");
+    				console.log(error);
     			});   		    	
 		} 
         

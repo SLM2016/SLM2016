@@ -40,9 +40,7 @@ public class UpdateCertificationBackgroundServlet extends HttpServlet{
 		super();
 	}
 	
-	public void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		
-	}
+
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -51,17 +49,13 @@ public class UpdateCertificationBackgroundServlet extends HttpServlet{
 		HashMap<String, String> result = new HashMap<String, String>();
 		PrintWriter out = response.getWriter();
 		String courseId = request.getParameter("courseId");		
-		//String dirPath = String.format("C://course_certification_background_file//%s.jpg", courseId);
-		String dirPath = String.format("..//..//course_certification_background_file//%s.jpg", courseId);
+		String dirPath = String.format((getServletContext().getRealPath("images/").toString()+"%s.jpg"),courseId);
+		dirPath=dirPath.replace("\\","//");
+		System.out.println("dirPath:"+dirPath);
 		Part filePart = request.getPart("file");
 		String sqlresult="";
+		if(filePart!=null){
 		try {
-			//File f = new File("C://course_certification_background_file//");
-			File f = new File("..//..//course_certification_background_file//");
-			if (!f.exists()) {
-				f.mkdirs();
-			}
-			System.out.println(f.getAbsolutePath());
 			OutputStream fileOut = new FileOutputStream(dirPath);
 			IOUtils.copy(filePart.getInputStream(), fileOut);
 			fileOut.close();
@@ -85,43 +79,9 @@ public class UpdateCertificationBackgroundServlet extends HttpServlet{
 			System.out.println(ex);
 			result.put("status", "false");
 		}
+		}
+		else
+			result.put("status", "false");
 		out.println(gson.toJson(result));
-	}
-	
-	public static String encodeToString(BufferedImage image, String type) {  
-        String imageString = null;  
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();  
-  
-        try {  
-            ImageIO.write(image, type, bos);  
-            byte[] imageBytes = bos.toByteArray();  
-  
-            BASE64Encoder encoder = new BASE64Encoder();  
-            imageString = encoder.encode(imageBytes);  
-  
-            bos.close();  
-        } catch (IOException e) {  
-            e.printStackTrace();  
-        }  
-        return imageString;  
-    }  
-	
-	public static BufferedImage toBufferedImage(Image img)
-	{
-	    if (img instanceof BufferedImage)
-	    {
-	        return (BufferedImage) img;
-	    }
-
-	    // Create a buffered image with transparency
-	    BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-	    // Draw the image on to the buffered image
-	    Graphics2D bGr = bimage.createGraphics();
-	    bGr.drawImage(img, 0, 0, null);
-	    bGr.dispose();
-
-	    // Return the buffered image
-	    return bimage;
 	}
 }
