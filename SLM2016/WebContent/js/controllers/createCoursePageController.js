@@ -23,25 +23,25 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         //set CourseName dropdownList
         vm.selectedDropdownCourseNameItem = null;
         vm.dropdownCourseNameItems = [
-            new Course('Scrum敏捷方法實作班', 'Scrum'),
-            new Course('看板方法與精實開發實作班', '看板'),
-            new Course('軟體重構入門實作班', '重構'),
-            new Course('敏捷產品經理實作班', '產品'),
-            new Course('敏捷大師百寶箱系列課程', '百寶箱'),
+            new Course('Scrum敏捷方法實作班', 'SC0'),
+            new Course('看板方法與精實開發實作班', 'KB0'),
+            new Course('軟體重構入門實作班', 'RF1'),
+            new Course('敏捷產品經理實作班', 'PO0'),
             new Course('Design Patterns入門實作班', 'DP1'),
             new Course('Design Patterns進階實作班', 'DP2'),
-            new Course('單元測試與持續整合實作班', '測試'),
-            new Course('例外處理設計與重構實作班', '例外')
+            new Course('單元測試與持續整合實作班', 'UT0'),
+            new Course('例外處理設計與重構實作班', 'EH0')
         ];
 
         vm.filterCourseNameList = function(userInput) {
             courseNameSelected = new Course(userInput, '');
-            $scope.data.code = '';
+            document.getElementById('Code').readOnly = false;
             var filter = $q.defer();
-            //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownCourseNameItems; //.filter(function(type) {
-            //                return type.toLowerCase().indexOf('') == 0;
-            //            });
+            var normalisedInput = userInput.toLowerCase();
+            var filteredArray = vm.dropdownCourseNameItems.filter(function(courseName) {
+                var matchCourseName = courseName.name.toLowerCase().indexOf(normalisedInput) === 0;
+                return matchCourseName;
+            });
             filter.resolve(filteredArray);
             return filter.promise;
         };
@@ -49,6 +49,7 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         vm.itemCourseNameSelected = function(item) {
             courseNameSelected = item;
             $scope.data.code = item.code;
+            document.getElementById('Code').readOnly = true;
         };
 
         //set Type dropdownList
@@ -58,10 +59,10 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         vm.filterTypeList = function(userInput) {
             typeSelected = userInput;
             var filter = $q.defer();
-            //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownTypeItems; //.filter(function(type) {
-            //     return type.toLowerCase().indexOf('') == 0;
-            // });
+            var normalisedInput = userInput.toLowerCase();
+            var filteredArray = vm.dropdownTypeItems.filter(function(type) {
+                return type.toLowerCase().indexOf(normalisedInput) == 0;
+            });
             filter.resolve(filteredArray);
             return filter.promise;
         };
@@ -77,10 +78,10 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         vm.filterTicketTypeList = function(userInput) {
             ticketTicketTypeSelected = userInput;
             var filter = $q.defer();
-            //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownTicketTypeItems; //.filter(function(ticketType) {
-            //     return ticketType.toLowerCase().indexOf('') == 0;
-            // });
+            var normalisedInput = userInput.toLowerCase();
+            var filteredArray = vm.dropdownTicketTypeItems.filter(function(ticketType) {
+                return ticketType.toLowerCase().indexOf(normalisedInput) == 0;
+            });
             filter.resolve(filteredArray);
             return filter.promise;
         };
@@ -96,10 +97,10 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         vm.filterCcAddressList = function(userInput) {
             ccAddressSelected = userInput;
             var filter = $q.defer();
-            //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownCcAddressItems; //.filter(function(type) {
-            //     return type.toLowerCase().indexOf('') == 0;
-            // });
+            var normalisedInput = userInput.toLowerCase();
+            var filteredArray = vm.dropdownCcAddressItems.filter(function(ccAddress) {
+                return ccAddress.toLowerCase().indexOf(normalisedInput) == 0;
+            });
             filter.resolve(filteredArray);
             return filter.promise;
         };
@@ -115,10 +116,10 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         vm.filterLocationList = function(userInput) {
             locationSelected = userInput;
             var filter = $q.defer();
-            //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownLocationItems; //.filter(function(type) {
-            //     return type.toLowerCase().indexOf('') == 0;
-            // });
+            var normalisedInput = userInput.toLowerCase();
+            var filteredArray = vm.dropdownLocationItems.filter(function(location) {
+                return location.toLowerCase().indexOf(normalisedInput) == 0;
+            });
             filter.resolve(filteredArray);
             return filter.promise;
         };
@@ -340,6 +341,7 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             ccAddressSelected = '';
             typeSelected = '';
             ticketTypeSelected = '';
+            document.getElementById('Code').readOnly = false;
         }
 
         var init = function() {
