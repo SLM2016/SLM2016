@@ -25,7 +25,6 @@
     
     <div id="container">
         <div class="wrapper">
-            <nav-sidebar></nav-sidebar>
             <div ui-view="home" ng-show="isHomeView()"></div>
             <div ui-view="courseInfo" ng-show="isCourseInfoView()"></div>
             <div ui-view="studentInfo" ng-show="isStudentInfoView()"></div>
@@ -43,7 +42,6 @@
     <script src="js/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="js/vendors/momentjs/moment.min.js"></script>
     <script src="js/vendors/momentjs/lang/zh-tw.js"></script>
-    <script src="js/vendors/jquery-latest.min.js"></script>
 
     <script src="js/vendors/lodash.js"></script>
     <script src="js/vendors/jszip.js"></script>
@@ -61,12 +59,13 @@
     <script src="js/modules/ng-file-upload/ng-file-upload-all.min.js"></script>
     <script src="js/modules/ui-bootstrap-tpls-1.3.2.min.js"></script>
     <script src="js/modules/angular-mousetrap-service.js"></script>
+    <script src="js/modules/dropdown.js"></script>
 
     <script src="js/services/exampleservice.js"></script>
     <script src="js/services/studentInfoService.js"></script>
     <script src="js/services/courseservice.js"></script>
 
-    <script src="js/directives/nav-sidebar.js"></script>
+    <script src="js/directives/navigator.js"></script>
     <script src="js/directives/topbar.js"></script>
     <script src="js/directives/invoice-modal.js"></script>
 

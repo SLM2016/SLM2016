@@ -1,55 +1,58 @@
-<div class="example">
+<div class="courseInfo">
     <div class="inner-wrapper">
-    	<div class="info">
-    		<div class="form-group name">
-                <div class="title">課程檔案管理系統</div>
+    	<div class="manage">
+            <div class="manage-topbar">
+                <div class="topbar-search">
+                    <div class="input-group">
+                          <input type="text" class="form-control" placeholder="課名搜尋">
+                          <div class="input-group-addon">
+                              <span class="glyphicon glyphicon-search"></span>
+                          </div>
+                    </div>
+                </div>
+                <div class="topbar-search">
+                    <div class="input-group">
+                          <input type="text" class="form-control" placeholder="梯次搜尋">
+                          <div class="input-group-addon">
+                              <span class="glyphicon glyphicon-search"></span>
+                          </div>
+                    </div>
+                </div>
+                <div class="topbar-search">
+                    <div class="input-group">
+                          <input type="text" class="form-control" placeholder="講師搜尋">
+                          <div class="input-group-addon">
+                              <span class="glyphicon glyphicon-search"></span>
+                          </div>
+                    </div>
+                </div>
             </div>
-            <div style="width:900px;overflow-x:auto;overflow-y:auto;">
-                <table class="table table-bordered si-table table-hover" style="width:1500px;" id="courseInfo" border="1" cellpadding="9">
-                    <thead>
-                        <tr>
-                            <td>課名</td>
-                            <td>類型</td>
-                            <td>梯次</td>
-                            <td>開課日期</td>
-                            <td>課程時間</td>
-                            <td>票種</td>
-                            <td>價錢</td>
-                            <td>地點</td>
-                            <td>講師</td>
-                            <td>副本收件人</td>
-                            <td>狀態</td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="course in courseList track by $index">
-                            <td>{{course.courseName_}}</td>
-                            <td>{{course.type_}}</td>
-                            <td>{{course.batch_}}</td>
-                            <td>
-                                <p ng-repeat="dates in course.dates_">{{dates}}</p>
-                            </td>
-                            <td>{{course.duration_}}</td>
-                            <td>
-                                <p ng-repeat="ticketType in course.ticketTypes_">{{ticketType}}</p>
-                            </td>
-                            <td>
-                                <p ng-repeat="prices in course.prices_">{{prices}}</p>
-                            </td>
-                            <td>{{course.location_}}</td>
-                            <td>{{course.lecturer_}}</td>
-                            <td>
-                                <p ng-repeat="ccAddresses in course.ccAddresses_">{{ccAddresses}}</p>
-                            </td>
-                            <td>{{course.status_}}</td>
-                            <td>
-                                <input type="submit" class="btn btn-info btn-orange" value="刪除" ng-click="deleteRow(course.courseId_)">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <loading ng-show="isCourseLoading"></loading>
+            <loading ng-show="isCourseLoading"></loading>
+            <div class="manage-content" ng-show="!isCourseLoading">
+                <div class="table-content">
+                    <table class="table table-hover" border="1" cellpadding="9">
+                        <thead>
+                            <!-- <th>課名</th> -->
+                            <th>類型</th>
+                            <th>梯次</th>
+                            <th>講師</th>
+                            <th>狀態</th>
+                            <th>功能</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="course in courseList track by $index" ng-dblclick="goStudentManage(course.courseId_)">
+                                <!-- <td>{{course.courseName_}}</td> -->
+                                <td>{{course.type_}}</td>
+                                <td>{{course.batch_}}</td>
+                                <td>{{course.lecturer_}}</td>
+                                <td>{{course.status_}}</td>
+                                <td>
+                                    <input type="submit" class="btn btn-info btn-orange" value="刪除" ng-click="deleteRow(course.courseId_)">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
     	</div>
     </div>

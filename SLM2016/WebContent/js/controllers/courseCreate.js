@@ -336,7 +336,6 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
         $scope.clickAddDateButton = clickAddDateButton;
         $scope.clickAddCcButton = clickAddCcButton;
         $scope.changeloadType = changeloadType;
-        $scope.deleteRow = deleteRow;
         $scope.deleteTicket = deleteTicket;
         $scope.deleteDate = deleteDate;
         $scope.deleteCc = deleteCc;

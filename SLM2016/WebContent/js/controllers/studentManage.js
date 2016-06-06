@@ -1,36 +1,9 @@
-app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService',
-    function ($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService) {  
-
-        var getCourseList = function() {
-            $scope.isCourseLoading = true;
-            $scope.isStudentLoading = true;
-            CourseService.getCourseSimpleList().then(function(result) {
-                $scope.isCourseLoading = false;
-                if(result.length > 0) {
-                    for (var i = 0; i < result.length; i++) {
-                        $scope.courseList.push(result[i]);
-                    }
-                    $scope.currentCourse = $scope.courseList[0];
-                    getStudentList()
-                }
-                else {
-                    $scope.isCourseEmpty = true;
-                }
-            }, function(error) {
-                $scope.isCourseLoading = false;
-                $scope.isStudentLoadError = true;
-            })
-        }
-
-        var changeStudentList = function(course) {
-            $scope.currentCourse = course;
-            $scope.studentList = [];
-            getStudentList();
-        }
+app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService', '$stateParams',
+    function ($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService, $stateParams) {  
 
         var getStudentList = function() {
             $scope.isStudentLoading = true;
-            StudentInfoService.getStudentListByCourseId($scope.currentCourse.courseId_).then(function(result) {
+            StudentInfoService.getStudentListByCourseId($scope.courseId).then(function(result) {
                 $scope.isStudentLoading = false;
                 for (var i = 0; i < result.length; i++) {
                     result[i].isSelected = false;
@@ -42,24 +15,77 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             })
         }
 
-        var toggleSelectStudent = function(student) {
-            student.isSelected = !student.isSelected; 
-            
-            var i = 0;
-            var sendMailDataButton = document.getElementById("sendMailData");
-            
+        var clearSelectedStudent = function() {
             for(var j = 0; j < $scope.studentList.length; j++){
-            	if($scope.studentList[j].isSelected){
-            		i++;
-            	}
+                if($scope.studentList[j].isSelected){
+                    $scope.studentList[j].isSelected = false;
+                }
             }
-            
-            if(i > 0){           	
-            	sendMailDataButton.disabled = "";
+        }
+
+        var selectAllStudent = function() {
+            for(var j = 0; j < $scope.studentList.length; j++){
+                 $scope.studentList[j].isSelected = true;
             }
-            else{
-            	sendMailDataButton.disabled = "disabled";
+        }
+
+        var selectStudents = function() {
+            if(!$scope.isStudentLoading) {
+                var selectedStudents = getSelectedStudent();
+                if(selectedStudents.length != $scope.studentList.length &&
+                   selectedStudents.length != 0) {
+                    clearSelectedStudent();
+                }
+                else if(getSelectedStudent().length == $scope.studentList.length) {
+                    clearSelectedStudent();
+                }
+                else {
+                    selectAllStudent();
+                }
             }
+            else {
+                return
+            }
+                
+        }
+
+        var getSelectedStudent = function() {
+            var selectedStudents = [];
+
+            for(var i = 0; i < $scope.studentList.length; i++){
+                if($scope.studentList[i].isSelected){
+                    selectedStudents.push($scope.studentList[i]);
+                }
+            }
+
+            return selectedStudents;
+        }
+
+        var toggleSelectStudent = function(student, index, $event) {
+            if($event.ctrlKey) {
+                student.isSelected = !student.isSelected;
+            }
+            else if($event.shiftKey) {
+                if (index > $scope.lastSelectIndex) {
+                    for (var i = $scope.lastSelectIndex; i <= index; i++) {
+                        $scope.studentList[i].isSelected = true;
+                    }
+                }
+                else if(index == $scope.lastSelectIndex){
+                    student.isSelected = false;
+                }
+                else {
+                    for (var i = index; i <= $scope.lastSelectIndex; i++) {
+                        $scope.studentList[i].isSelected = true;
+                    }
+                }
+            }
+            else {
+                clearSelectedStudent();
+                student.isSelected = !student.isSelected;
+            }
+
+            $scope.lastSelectIndex = index;
         }
         
         var sendMailData = function(){
@@ -75,17 +101,16 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         			mailData[i].address = $scope.studentList[j].email;      			
         			i++;
         		} 
-        	}  
-        	StudentInfoService.putStudentSendMailData(mailData);
-            $state.go('studentInfo.Sendmail');      	
-        }
-                          
-        var toggleStatusDropdown = function(student) {
-            student.isSelected = !student.isSelected;
-        }
+        	}
 
-        var toggleActionDropdown = function(student) {
-            student.isSelected = !student.isSelected;
+            if(mailData.length != 0) {
+                StudentInfoService.putStudentSendMailData(mailData);
+                $state.go('studentInfo.Sendmail');          
+            }
+            else {
+                return;
+            }
+        	
         }
 
         var changeStudentStatus = function(student,num) {
@@ -116,25 +141,19 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
             })
         }
 
-        var openInvoiceModal = function(student) {
-            student.isSelected = !student.isSelected;
-
-            var index = 0;
-            for (var i = 0; i < $scope.studentList.length; i++) {
-                if($scope.studentList[i].id == student.id) {
-                    index = i;
-                    break;
-                }
-            }
+        var openInvoiceModal = function() {
             $rootScope.$broadcast("OPEN_INVOICE_MODAL", {
-                list: $scope.studentList,
-                index: index,
+                list: getSelectedStudent(),
                 course: $scope.currentCourse
             });
         }
+
+        var goCourseManage = function() {
+            $state.go(STATES.COURSEINFO_MANAGE)
+        }
               
     	var init = function() {
-            getCourseList();          
+            getStudentList();
     	}
 
 		/*==========================
@@ -151,17 +170,22 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.sendMailData = sendMailData;
         $scope.courseList = [];
         $scope.currentCourse;
+        $scope.courseId = $stateParams.courseId;
+        $scope.lastSelectIndex = 0;
+        $scope.searchName = "";
                
         /*==========================
              Methods
         ==========================*/
 
         $scope.toggleSelectStudent = toggleSelectStudent;
-        $scope.toggleStatusDropdown = toggleStatusDropdown;
-        $scope.toggleActionDropdown = toggleActionDropdown;
         $scope.changeStudentStatus = changeStudentStatus;
         $scope.openInvoiceModal = openInvoiceModal;
-        $scope.changeStudentList = changeStudentList;
+        $scope.goCourseManage = goCourseManage;
+        $scope.getSelectedStudent = getSelectedStudent;
+        $scope.selectAllStudent = selectAllStudent;
+        $scope.selectStudents = selectStudents;
+
         /*==========================
              init
         ==========================*/

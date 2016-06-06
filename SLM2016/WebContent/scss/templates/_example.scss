@@ -6,8 +6,7 @@
     width: 100%;
     .inner-wrapper {
         position: relative;
-        width: calc(100% - 40px - 240px);
-        margin-left: 280px;
+        width: 100%;
         @include border-radius(3px);
         background-color: #FFF;
         @include box-shadow(0px 1px 3px 0px rgba(0, 0, 0, 0.1));

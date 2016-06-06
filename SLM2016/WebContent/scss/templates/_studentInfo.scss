@@ -6,9 +6,8 @@
     width: 100%;
     .inner-wrapper {
         position: relative;
-        width: calc(100% - 40px - 240px);
-        margin-left: 280px;
-        .info {
+        width: 100%;
+        .import {
             padding: 25px 40px;
             height: calc(100vh - 150px);
             background-color: #FFF;
@@ -155,47 +154,81 @@
             }
         }
         .manage {
-            .manage-topbar {
-                height: 50px;
-                line-height: 50px;
-                background-color: #FFF;
-                @include box-shadow(0px 1px 3px 0px rgba(0, 0, 0, 0.1));
-                @include border-radius(3px);
-                .class-dropdown {
-                    @include display-flex(inline-flex);
-                    position: relative;
-                    margin-left: 20px;
-                    #class-label {
-                        margin: auto;
-                        .spin-style {
-                            display: inline-block;
-                            margin-right: 10px;
-                        }
+            .fix-content {
+                position: fixed;
+                top: 70px;
+                height: 102px;
+                padding-top: 25px;
+                margin-left: -1px;
+                width: 1263px;
+                background-color: #E9E9E9;
+                z-index: 99;
+                .top-nav {
+                    height: 22px;
+                    line-height: 22px;
+                    margin-bottom: 4px;
+                    font-size: 16px;
+                    color: #333;
+                    .nav {
+                        display: inline-block;
+                        color: #0F8CF7;
+                        text-decoration: underline;
+                        cursor: pointer;
                     }
-                    .dropdown-menu {
-                        top: calc(100% - 10px);
-                        li {
-                            cursor: pointer;
-                        }
+                    .glyphicon {
+                        margin: 0 5px;
+                        height: 22px;
+                        line-height: 22px;
+                        font-size: 12px;
                     }
                 }
-                .student-search {
-                    @include display-flex(inline-flex);
+                .manage-topbar {
+                    padding: 0 20px;
                     height: 50px;
-                    width: 300px;
-                    vertical-align: top;
-                    float: right;
-                    .input-group {
-                        margin: auto;
-                        margin-right: 20px;
+                    line-height: 50px;
+                    background-color: #FFF;
+                    @include box-shadow(0px 1px 3px 0px rgba(0, 0, 0, 0.1));
+                    @include border-radius(3px);
+                    .btn-group {
+                        .btn {
+                            .select-block {
+                                @include display-flex(flex);
+                                width: 16px;
+                                height: 16px;
+                                margin: 2px;
+                                border: 1px solid #333;
+                                @include border-radius(3px);
+                                span {
+                                    font-size: 12px;
+                                }
+                            }
+                        }
+                    }
+                    .select-info {
+                        display: inline-block;
+                        margin-left: 10px;
+                        height: 50px;
+                        line-height: 50px;
+
+                    }
+                    .student-search {
+                        @include display-flex(inline-flex);
+                        height: 50px;
+                        width: 280px;
+                        vertical-align: top;
+                        float: right;
+                        .input-group {
+                            margin: auto;
+                        }
                     }
                 }
             }
+                
             .loader {
-                margin-top: 20px;
+                margin-top: 75px;
             }
             .manage-content {
-                margin-top: 20px;
+                margin-top: 80px;
                 background-color: #FFF;
                 @include box-shadow(0px 1px 3px 0px rgba(0, 0, 0, 0.1));
                 @include border-radius(3px);
@@ -218,9 +251,6 @@
                                     line-height: 40px;
                                     padding: 0;
                                     text-align: left;
-                                    &:nth-of-type(0n+1) {
-                                        padding-left: 20px;
-                                    }
                                 }
                             }
                         }
@@ -233,9 +263,6 @@
                                     padding: 0;
                                     font-size: 14px;
                                     text-align: left;
-                                    &:nth-of-type(0n+1) {
-                                        padding-left: 20px;
-                                    }
                                     &.empty {
                                         text-align: center;
                                     }

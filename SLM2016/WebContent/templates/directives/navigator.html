@@ -1,11 +1,11 @@
-<div id="nav-sidebar">
+<div id="navigator">
     <div class="action-list">
-        <div class="action-item" ui-sref="home" ng-class="{'active': isHomeView()}">
+        <!-- <div class="action-item" ui-sref="home" ng-class="{'active': isHomeView()}">
             <div class="item-title">
                 <i class="icon-home-outline"></i>
                 <span>首頁</span>
             </div>
-        </div>
+        </div> -->
 
         <div class="action-item" ng-class="{'active': isCourseInfoView(), 'show-menu': isShowCourseMenu}">
             <div class="item-title" ng-click="toggleCourseMenu()">
@@ -21,7 +21,7 @@
             </div>
         </div>
         
-        <div class="action-item" ng-class="{'active': isStudentInfoView(), 'show-menu': isShowStudentMenu}">
+        <!-- <div class="action-item" ng-class="{'active': isStudentInfoView(), 'show-menu': isShowStudentMenu}">
             <div class="item-title" ng-click="toggleStudentMenu()">
                 <i class="icon-users-outline"></i>
                 <span>學員管理</span>
@@ -33,7 +33,7 @@
                     <li class="menu-item" ui-sref="studentInfo.Import" ng-class="{'active': isStudentInfoImportView()}">學員資料上傳</li>
                 </ul>
             </div>
-        </div>
+        </div> -->
 
         <div class="action-item" ng-class="{'active': isOthersView(), 'show-menu': isShowOthersMenu}">
             <div class="item-title" ng-click="toggleOthersMenu()">

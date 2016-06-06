@@ -4,17 +4,36 @@
  *  @time 2016 / 04 / 01
  * ================================*/
 
-app.directive('navSidebar', ['$rootScope',
+app.directive('navigator', ['$rootScope',
     function($rootScope) {
         return {
             restrict: "E",
             scope: true,
-            templateUrl: "templates/directives/nav-sidebar.html",
+            templateUrl: "templates/directives/navigator.html",
             link: function(scope, element, attrs) {},
             controller: ['$scope', '$state', '$timeout',
                 function($scope, $state, $timeout) {
 
-                    var init = function() {}
+                    var init = function() {
+                        openPageNav();
+                    }
+
+                    var openPageNav = function() {
+                        if($state.includes(STATES.STUDENTINFO)) {
+                            $scope.isShowStudentMenu = true;
+                        }
+                        else if($state.includes(STATES.OTHERS) ||
+                                $state.includes(STATES.OTHERS_CERTIFICATION) || 
+                                $state.includes(STATES.OTHERS_SENDMAIL) ||
+                                $state.includes(STATES.OTHERS_INVOICE)) {
+                            $scope.isShowOthersMenu = true;
+                        }
+                        else if($state.includes(STATES.COURSEINFO) ||
+                                $state.includes(STATES.COURSEINFO_MANAGE) ||
+                                $state.includes(STATES.COURSEINFO_CREATE)) {
+                            $scope.isShowCourseMenu = true;
+                        }
+                    }
 
                     var isHomeView = function() {
                         return $state.includes(STATES.HOME);
@@ -76,15 +95,7 @@ app.directive('navSidebar', ['$rootScope',
                     ==========================*/
 
                     $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
-                        if($state.includes(STATES.STUDENTINFO)) {
-                            $scope.isShowStudentMenu = true;
-                        }
-                        else if($state.includes(STATES.OTHERS)) {
-                            $scope.isShowOthersMenu = true;
-                        }
-                        else if($state.includes(STATES.COURSEINFO)) {
-                            $scope.isShowCourseMenu = true;
-                        }
+                        openPageNav();
                     });
 
                     /*==========================

@@ -4,6 +4,7 @@ var STATES = {
     COURSEINFO: "courseInfo",
     COURSEINFO_CREATE: "courseInfo.create",
     COURSEINFO_MANAGE: "courseInfo.manage",
+    COURSEINFO_STUDENT: "courseInfo.student",
 
     STUDENTINFO: "studentInfo",
     STUDENT_INFO_IMPORT: "studentInfo.Import",
@@ -23,6 +24,7 @@ var app = angular.module('app', [
     'ngFileUpload',
     'ui.bootstrap',
     'angular-mousetrap',
+    'ngDropdown',
     'inputDropdown'
 ])
 
@@ -76,6 +78,16 @@ var app = angular.module('app', [
                 'content@courseInfo': {
                     templateUrl: "templates/courseManage.html",
                     controller: 'CourseManageController'
+                }
+            }
+        })
+
+        .state(STATES.COURSEINFO_STUDENT, {
+            url: "/:courseId/manage",
+            views: {
+                'content@courseInfo': {
+                    templateUrl: "templates/studentManage.html",
+                    controller: 'StudentManageController',
                 }
             }
         })

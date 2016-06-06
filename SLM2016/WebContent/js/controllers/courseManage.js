@@ -32,6 +32,12 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
             }, 500);
         }
 
+        var goStudentManage = function(courseId) {
+            $state.go(STATES.COURSEINFO_STUDENT, {
+                courseId: courseId
+            })
+        }
+
         var init = function() {
             getTeddyCourseData();
         }
@@ -48,6 +54,7 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
         ==========================*/
 
         $scope.deleteRow = deleteRow;
+        $scope.goStudentManage = goStudentManage;
 
         /*==========================
             Init

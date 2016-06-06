@@ -307,9 +307,8 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                 $scope.$on("OPEN_INVOICE_MODAL", function(event, data) {
                     console.log(data)
                     $scope.studentList = data.list;
-                    $scope.currentIndex = data.index;
                     $scope.course = data.course;
-                    $scope.currentStudent = $scope.studentList[$scope.currentIndex];
+                    $scope.currentStudent = $scope.studentList[0];
                     getStudentData();
                     Mousetrap.reset();
                     Mousetrap.bind('left', function() { 
@@ -330,7 +329,7 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                     Members
                 ==========================*/
                 $scope.studentList = [];
-                $scope.currentIndex;
+                $scope.currentIndex = 0;
                 $scope.currentStudent;
                 $scope.course;
                 $scope.invoiceType = "THREE";

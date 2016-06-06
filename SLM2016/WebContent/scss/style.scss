@@ -6,6 +6,12 @@
 @import "compass/css3";
 
 // -------------------------------------
+//  Modules
+// -------------------------------------
+
+@import "modules/_dropdown";
+
+// -------------------------------------
 //  Templates
 // -------------------------------------
 
@@ -13,6 +19,7 @@
 @import "templates/_example";
 @import "templates/_invoice";
 @import "templates/_studentInfo";
+@import "templates/_course";
 
 // -------------------------------------
 //  Directives
@@ -21,7 +28,7 @@
 @import "directives/_loading";
 @import "directives/_spin";
 @import "directives/_topbar";
-@import "directives/_nav-sidebar";
+@import "directives/_navigator";
 @import "directives/_invoice-modal";
 
 // -------------------------------------

@@ -1,13 +1,6 @@
-#nav-sidebar {
-    position: fixed;
-    display: inline-block;
-    padding: 8px 0;
-    top: 110px;
+#navigator {
     width: 240px;
-    max-height: calc(100vh - 40px - 110px);
     background-color: #FFF;
-    z-index: 99;
-    @include box-shadow(0px 1px 3px 0px rgba(0, 0, 0, 0.1));
     @include border-radius(3px);
     .action-list {
         .action-item {
@@ -43,6 +36,9 @@
                     overflow: hidden;
                     .menu-item {
                         padding: 10px 0;
+                        height: 34px;
+                        line-height: inherit;
+                        font-size: 16px;
                         &.active {
                             color: #FF5D01;
                         }
