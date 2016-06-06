@@ -231,15 +231,6 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             }
         }
 
-        function resetAllDropdownList() {
-            vm.selectedDropdownStatusItem = vm.dropdownStatusItems[0];
-            vm.selectedDropdownCourseNameItem = { readableName: "" };
-            vm.selectedDropdownTypeItem = { readableName: "" };
-            vm.selectedDropdownTicketTypeItem = { readableName: "" };
-            vm.selectedDropdownCcAddressItem = { readableName: "" };
-            vm.selectedDropdownLocationItem = { readableName: "" };
-        }
-
         function checkInput() {
             if (((courseNameSelected) == null)) {
                 window.alert("課程名稱欄位不可為空白");
