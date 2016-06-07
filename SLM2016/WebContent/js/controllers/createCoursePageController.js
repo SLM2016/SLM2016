@@ -123,6 +123,10 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             filter.resolve(filteredArray);
             return filter.promise;
         };
+        
+        vm.itemLocationSelected = function(item) {
+        	locationSelected = item;
+        };
 
         vm.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
         vm.selectedDropdownStatusItem = vm.dropdownStatusItems[0];
@@ -163,7 +167,6 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
                 }
 
                 getTeddyCourseData();
-                resetAllDropdownList();
                 deleteData();
             });
             setTimeout(function() {
@@ -311,6 +314,7 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         }
 
         function deleteData() {
+        	console.log("reset");
             $scope.data.code = "";
             $scope.data.batch = "";
             $scope.showDateList = [];
