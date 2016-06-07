@@ -36,7 +36,7 @@ import com.google.gson.GsonBuilder;
 @MultipartConfig()
 public class StudentAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final String OP_INSERT_INTO_STUDENT = "1";
 	private static final String OP_GET_STUDENT_LIST = "2";
 	private static final String OP_INSERT_STUDENT_FROM_GOOGLE_FORM = "3";
@@ -45,9 +45,7 @@ public class StudentAction extends HttpServlet {
 	private static final String OP_UPDATE_STUDENT_RECEIPT_STATUS = "6";
 	private static final String OP_GET_CERTIFICATION_INFO = "7";
 	private static final String OP_UPDATE_STUDENT_COMPANY_INFO = "8";
-	
-	
-
+	private static final String OP_DELETE_STUDENT_BY_ID = "9";
 
 	private static Gson gson = new Gson();
 
@@ -57,12 +55,12 @@ public class StudentAction extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String op = request.getParameter("op");
 		switch (op) {
 		case OP_GET_STUDENT_LIST:
 			getStudentList(request, response);
-			break;		
+			break;
 		case OP_GET_STUDENT_LIST_BY_COURSE_ID:
 			getStudentListByCourseId(request, response);
 			break;
@@ -72,7 +70,7 @@ public class StudentAction extends HttpServlet {
 		default:
 			break;
 		}
-		
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -104,7 +102,10 @@ public class StudentAction extends HttpServlet {
 			break;
 		case OP_UPDATE_STUDENT_COMPANY_INFO:
 			updateStudentCompanyEINAndName(request, response);
-	
+			break;
+		case OP_DELETE_STUDENT_BY_ID:
+			deleteStudentByStudentId(request, response);
+			break;
 		default:
 			break;
 		}
@@ -112,7 +113,7 @@ public class StudentAction extends HttpServlet {
 		// Gson gson = new Gson();
 		// out.println(gson.toJson(result));
 	}
-	
+
 	private Map<String, Object> getGoogleFormData(HttpServletRequest request) throws IOException {
 		request.setCharacterEncoding("UTF-8");
 
@@ -134,10 +135,10 @@ public class StudentAction extends HttpServlet {
 	private void getStudentList(HttpServletRequest request, HttpServletResponse response) {
 		StudentDBManager studentDbManager = new StudentDBManager();
 		String json = null;
-		
+
 		try {
 			json = studentDbManager.getStudentList();
-			
+
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
@@ -147,11 +148,11 @@ public class StudentAction extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
-	private void getCertificationInfo(HttpServletRequest request, HttpServletResponse response) {      
+
+	private void getCertificationInfo(HttpServletRequest request, HttpServletResponse response) {
 		StudentDBManager studentDbManager = new StudentDBManager();
 		String result = null;
-					
+
 		try {
 			result = studentDbManager.getCertificationInfo(request.getParameter("studentId"));
 			response.setContentType("application/json");
@@ -163,7 +164,7 @@ public class StudentAction extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void insertIntoStudent(HttpServletRequest request, HttpServletResponse response)
 
 			throws ServletException, IOException {
@@ -180,11 +181,11 @@ public class StudentAction extends HttpServlet {
 			StudentModelFactory factory = new StudentModelFactory(filePart.getInputStream(), courseId);
 
 			ArrayList<StudentModel> arr = factory.buildStudentModelArray();
-				StudentDBManager studentDbManager = new StudentDBManager();
+			StudentDBManager studentDbManager = new StudentDBManager();
 			for (StudentModel s : arr) {
 				// System.out.println(s.getComment());
 				studentDbManager.insertStudent(s);
-				}
+			}
 
 			result.put("status", "true");
 		} catch (Exception e) {
@@ -229,8 +230,7 @@ public class StudentAction extends HttpServlet {
 
 		out.println(gson.toJson(result));
 	}
-	
-	
+
 	private void updateStudentCompanyEINAndName(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		PrintWriter out = response.getWriter();
@@ -262,7 +262,7 @@ public class StudentAction extends HttpServlet {
 
 		out.println(gson.toJson(result));
 	}
-	
+
 	private void saveFile(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
@@ -333,34 +333,32 @@ public class StudentAction extends HttpServlet {
 		String _timestamp = df.format(today);
 		String name = _map.get("name").toString();
 		String email = _map.get("email").toString();
-	    String courseName = _map.get("courseName").toString();
-	    String batch = _map.get("batch").toString();
-	    
+		String courseName = _map.get("courseName").toString();
+		String batch = _map.get("batch").toString();
+
 		studentModel.setTimestamp(_timestamp);
 		studentModel.setName(name);
-	    studentModel.setTicketTypeAndPrice(_map.get("ticket").toString());
-	    studentModel.setNickname(_map.get("nickname").toString());
-	    studentModel.setEmail(email);
-	    studentModel.setPhone(_map.get("cellphone").toString());
-	    studentModel.setCompany(_map.get("company").toString());
-	    studentModel.setApartment(_map.get("apartment").toString());
-	    studentModel.setTitle(_map.get("title").toString());
-	    studentModel.setVegeMeat(_map.get("vegeMeat").toString());
-	    studentModel.setReceiptType(_map.get("receipt").toString());
-	    studentModel.setReceiptCommpanyTitleAndEIN(_map.get("companyTitle").toString());
-	    
-        String _courseID = courseDB.getCourseIdByCourseNameAndBatchAndStatus(courseName, batch, "報名中");
+		studentModel.setTicketTypeAndPrice(_map.get("ticket").toString());
+		studentModel.setNickname(_map.get("nickname").toString());
+		studentModel.setEmail(email);
+		studentModel.setPhone(_map.get("cellphone").toString());
+		studentModel.setCompany(_map.get("company").toString());
+		studentModel.setApartment(_map.get("apartment").toString());
+		studentModel.setTitle(_map.get("title").toString());
+		studentModel.setVegeMeat(_map.get("vegeMeat").toString());
+		studentModel.setReceiptType(_map.get("receipt").toString());
+		studentModel.setReceiptCommpanyTitleAndEIN(_map.get("companyTitle").toString());
 
-	    if (_courseID!=null)
-	    {
-            studentModel.setFkCourseInfoId(_courseID);
-            StudentDBManager studentDBManager = new StudentDBManager();
-            insertResult = studentDBManager.insertStudent(studentModel);
-	    }
-	    else{
-	        System.out.println("\nNo course!!!");
-	    }
-        return insertResult;
+		String _courseID = courseDB.getCourseIdByCourseNameAndBatchAndStatus(courseName, batch, "報名中");
+
+		if (_courseID != null) {
+			studentModel.setFkCourseInfoId(_courseID);
+			StudentDBManager studentDBManager = new StudentDBManager();
+			insertResult = studentDBManager.insertStudent(studentModel);
+		} else {
+			System.out.println("\nNo course!!!");
+		}
+		return insertResult;
 	}
 
 	private Boolean sendInformMail(Map<String, Object> _insertMap) throws IOException, ServletException, SQLException {
@@ -376,14 +374,37 @@ public class StudentAction extends HttpServlet {
 		String courseId = courseManagerWithDatabase.getCourseIdByCourseNameAndBatchAndStatus(courseName, batch, "報名中");
 		String ccAddresses = courseManagerWithDatabase.getCcAddressByCourseId(courseId);
 		String hyperlink = courseManagerWithDatabase.getHyperlinkByCourseId(courseId);
-		
-		if(courseId!=null){
+		if (courseId != null) {
 			sendApplySuccessfullyMail.Send(name, email, ccAddresses, courseName, hyperlink);
+		} else {
+			System.out.println("No Match Course!!!");
 		}
-		else{
-	        System.out.println("No Match Course!!!");
-	    }
 
 		return sendResult;
+	}
+
+	private void deleteStudentByStudentId(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		// response.setContentType("application/json");
+		// response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+		HashMap<String, String> result = new HashMap<String, String>();
+		String studentIds = request.getParameter("studentIds");
+
+		StudentDBManager studentDbManager = new StudentDBManager();
+		// String json = null;
+
+		try {
+			if (studentDbManager.deleteStudentByStudentIds(studentIds)) {
+				result.put("status", "true");
+			} else {
+				result.put("status", "false");
+			}
+		} catch (SQLException e) {
+			result.put("status", "false");
+			e.printStackTrace();
+		}
+
+		out.println(gson.toJson(result));
 	}
 }

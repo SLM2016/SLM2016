@@ -14,8 +14,8 @@ public class StudentDBManager {
 		super();
 		slmDBUtility = new SLMDBUtility();
 	}
-	
-	public String getStudentList()  throws SQLException {
+
+	public String getStudentList() throws SQLException {
 		String sql = "select * from `student_info`;";
 		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
 		Gson g = new Gson();
@@ -38,18 +38,18 @@ public class StudentDBManager {
 		// } catch (SQLException e) {
 		// e.printStackTrace();
 		// }
-        
+
 		// return jsonArray.toString();
 		return g.toJson(result);
-                }
-        
+	}
+
 	public String getStudentListByCourseId(String courseId) throws SQLException {
 		String sql = String.format("SELECT * FROM `student_info` WHERE `fk_course_info_id` = '%s';", courseId);
 		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
 		Gson g = new Gson();
 		return g.toJson(result);
 	}
-	
+
 	public ArrayList<HashMap<String, String>> getStudentByPhone(String phone) throws SQLException {
 
 		String sql = String.format("SELECT * FROM `student_info` WHERE `phone` = '%s';", phone);
@@ -58,8 +58,9 @@ public class StudentDBManager {
 		return result;
 	}
 
-	public String getCertificationInfo(String studentID) throws SQLException {	
-		String sql = "select certification_img from `student_info` where id = "+studentID;;		      		
+	public String getCertificationInfo(String studentID) throws SQLException {
+		String sql = "select certification_img from `student_info` where id = " + studentID;
+		;
 		return new Gson().toJson(slmDBUtility.selectSQL(sql));
 	}
 
@@ -153,6 +154,15 @@ public class StudentDBManager {
 		}
 	}
 
+	public boolean deleteStudentByStudentIds(String studentIds) throws SQLException {
+		String sql = String.format("DELETE FROM  `student_info` WHERE  `student_info`.`id` IN ( %s )", studentIds);
+		if (slmDBUtility.deleteSQL(sql)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public boolean deleteStudentsByCourseId(String courseId) throws SQLException {
 		String sql = String.format("DELETE FROM `student_info` WHERE `fk_course_info_id` =  '%s'", courseId);
 		if (slmDBUtility.deleteSQL(sql)) {
@@ -162,21 +172,21 @@ public class StudentDBManager {
 		}
 	}
 
-	//only get course data
+	// only get course data
 	public boolean insertGetMailInfo(String id, String name, String duration, String fk_status_id) throws SQLException {
 		String sql = String.format(
-				"INSERT INTO `course_info`(`id`,`name`,`duration`,`fk_status_id`) VALUES ('%s','%s','%s','%s')", 
-				id,name,duration,fk_status_id);
+				"INSERT INTO `course_info`(`id`,`name`,`duration`,`fk_status_id`) VALUES ('%s','%s','%s','%s')", id,
+				name, duration, fk_status_id);
 		String duplicate = String.format(
-				"ON DUPLICATE KEY UPDATE `id` = '%s',`name` = '%s',`duration` = '%s',`fk_status_id` = '%s'",
-				id,name,duration,fk_status_id);
+				"ON DUPLICATE KEY UPDATE `id` = '%s',`name` = '%s',`duration` = '%s',`fk_status_id` = '%s'", id, name,
+				duration, fk_status_id);
 		if (slmDBUtility.insertSQL((sql + duplicate))) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	public boolean deleteGetMailInfo(String id) throws SQLException {
 		String sql = String.format("DELETE FROM `course_info` WHERE `course_info`.`id` = '%s'", id);
 		if (slmDBUtility.deleteSQL(sql)) {
