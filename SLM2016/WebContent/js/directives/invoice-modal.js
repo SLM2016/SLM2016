@@ -300,15 +300,15 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                         $scope.isCompanyidSuccess = false;
                         $scope.isCompanyError = true;
                         $scope.isCompanySuccess = false;
-                        $scope.data.correctCompany = "CompanyId is empty";
+                        $scope.isCompanyStatus = false;
                     }
                     else if($scope.data.companyid.length < 8) {
                         $scope.isCompanyidError = true;
                         $scope.isCompanyidSuccess = false;
                         $scope.isCompanyError = true;
                         $scope.isCompanySuccess = false;
+                        $scope.isCompanyStatus = false;
                         $scope.data.company = "";
-                        $scope.data.correctCompany = "CompanyId is not finished";
                     }
                     else if($scope.data.companyid.length == 8) {
                         if(!isNumber($scope.data.companyid)) {
@@ -404,7 +404,6 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
 
                 var changeCompanyData = function()
                 {   
-                    
                     StudentInfoService.updateStudentReceiptCompanyInfo($scope.data.companyid,$scope.data.correctCompany,$scope.currentStudent.id).then(function(result) 
                     {
                         $scope.isCompanyidError = false;
@@ -414,7 +413,6 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                         $scope.currentStudent.receipt_company_name = $scope.data.correctCompany;
                         $scope.data.company = $scope.data.correctCompany;
                         alert("統一編號與公司名稱儲存成功");
-
                     }, function(error) {
                         console.log(error);
                         alert("統一編號與公司名稱儲存失敗");
