@@ -32,7 +32,7 @@ public class CourseManagerServletTest {
 		HttpServletResponse postResponseMock = Mockito.mock(HttpServletResponse.class);
 
 		Reader data = new StringReader(
-				"{\"courseName_\":\"Scurm敏捷方法實作班\",\"type_\":\"公開班\",\"batch_\":\"401\",\"dates_\":[\"2016-06-24\"],\"duration_\":18,\"ticketTypes_\":[\"一般票\"],\"prices_\":[33000],\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"準備中\",\"ccAddresses_\":[\"test@test\"],\"hyperlink_\":\"http://teddysoft.tw\"}");
+				"{\"courseName_\":\"Scurm敏捷方法實作班\",\"courseCode_\":\"Scurm\",\"type_\":\"公開班\",\"batch_\":\"401\",\"dates_\":[\"2016-06-24\"],\"duration_\":18,\"ticketTypes_\":[\"一般票\"],\"prices_\":[33000],\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"準備中\",\"ccAddresses_\":[\"test@test\"],\"hyperlink_\":\"http://teddysoft.tw\"}");
 		Mockito.when(postRequestMock.getReader()).thenReturn(new BufferedReader(data));
 
 		tag_ = new CourseManagerServlet() {
@@ -104,7 +104,7 @@ public class CourseManagerServletTest {
 		HttpServletResponse responseMock = Mockito.mock(HttpServletResponse.class);
 
 		Reader data = new StringReader(
-				"{\"courseName_\":\"Scurm敏捷方法實作班\",\"type_\":\"公開班\",\"batch_\":\"401\",\"dates_\":[\"2016/6/24\"],\"duration_\":18,\"ticketTypes_\":[\"一般票\"],\"prices_\":[33000],\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"準備中\",\"ccAddresses_\":[\"test@test\"],\"hyperlink_\":\"http://teddysoft.tw\"}");
+				"{\"courseName_\":\"Scurm敏捷方法實作班\",\"courseCode_\":\"Scurm\",\"type_\":\"公開班\",\"batch_\":\"404\",\"dates_\":[\"2016/6/24\"],\"duration_\":18,\"ticketTypes_\":[\"一般票\"],\"prices_\":[33000],\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"準備中\",\"ccAddresses_\":[\"test@test\"],\"hyperlink_\":\"http://teddysoft.tw\"}");
 		Mockito.when(requestMock.getReader()).thenReturn(new BufferedReader(data));
 
 		String id = tag_.courseManagerWithDb_.getCourseId("Scurm敏捷方法實作班");
@@ -125,5 +125,20 @@ public class CourseManagerServletTest {
 		Mockito.when(deleteResponseMock.getWriter()).thenReturn(new PrintWriter(deleteOutput));
 		tag_.doPost(deleteRequestMock, deleteResponseMock);
 		assertEquals("Success", deleteOutput.toString());
+	}
+	
+	@Test
+	public void testDoPostAddSameCourse() throws ServletException, IOException, SQLException {
+		HttpServletRequest requestMock = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse responseMock = Mockito.mock(HttpServletResponse.class);
+
+		Reader data = new StringReader(
+				"{\"courseName_\":\"Scurm敏捷方法實作班\",\"courseCode_\":\"Scurm\",\"type_\":\"公開班\",\"batch_\":\"401\",\"dates_\":[\"2016/6/24\"],\"duration_\":18,\"ticketTypes_\":[\"一般票\"],\"prices_\":[33000],\"location_\":\"台北市中正區延平南路12號4樓\",\"lecturer_\":\"Teddy\",\"status_\":\"準備中\",\"ccAddresses_\":[\"test@test\"],\"hyperlink_\":\"http://teddysoft.tw\"}");
+		Mockito.when(requestMock.getReader()).thenReturn(new BufferedReader(data));
+		
+		Writer output = new StringWriter();
+		Mockito.when(responseMock.getWriter()).thenReturn(new PrintWriter(output));
+		tag_.doPost(requestMock, responseMock);
+		assertEquals("\"已存在相同課程\"", output.toString());
 	}
 }

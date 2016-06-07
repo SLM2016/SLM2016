@@ -24,6 +24,8 @@ public class CourseTest {
 	public void testClone() {
 		String courseName = "Scurm敏捷方法實作班";
 		course_.setCourseName(courseName);
+		String courseCode = "Scurm";
+		course_.setCourseCode(courseCode);
 		String type = "公開班";
 		course_.setType(type);
 		String batch = "401";
@@ -45,6 +47,7 @@ public class CourseTest {
 		Course cloneObject = course_.clone();
 		assertEquals("teddysoft-course01-1", cloneObject.getCourseId());
 		assertEquals(courseName, cloneObject.getCourseName());
+		assertEquals(courseCode, cloneObject.getCourseCode());
 		assertEquals(type, cloneObject.getType());
 		assertEquals(batch, cloneObject.getBatch());
 		assertEquals(1, cloneObject.getDates().size());
@@ -184,5 +187,12 @@ public class CourseTest {
 		String hyperlink = "www.test.com";
 		course_.setHyperlink(hyperlink);
 		assertEquals(hyperlink, course_.getHyperlink());
+	}
+	
+	@Test
+	public void testSetCourseCode() {
+		String courseCode = "DP";
+		course_.setCourseCode(courseCode);
+		assertEquals(courseCode, course_.getCourseCode());
 	}
 }

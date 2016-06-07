@@ -14,6 +14,12 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         var typeSelected = '';
         var ticketTypeSelected = '';
 
+        var Course = function(courseName, courseCode) {
+            this.name = courseName;
+            this.code = courseCode;
+            this.readableName = courseName;
+        };
+
         //set CourseName dropdownList
         vm.selectedDropdownCourseNameItem = null;
         vm.dropdownCourseNameItems = [
@@ -40,17 +46,17 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             return filter.promise;
         };
 
-        this.itemCourseNameSelected = function(item) {
+        vm.itemCourseNameSelected = function(item) {
             courseNameSelected = item;
             $scope.data.code = item.code;
             document.getElementById('Code').readOnly = true;
         };
 
         //set Type dropdownList
-        this.selectedDropdownTypeItem = null;
-        this.dropdownTypeItems = ['公開班', '企業內訓', '演講'];
+        vm.selectedDropdownTypeItem = null;
+        vm.dropdownTypeItems = ['公開班', '企業內訓', '演講'];
 
-        this.filterTypeList = function(userInput) {
+        vm.filterTypeList = function(userInput) {
             typeSelected = userInput;
             var filter = $q.defer();
             var normalisedInput = userInput.toLowerCase();
@@ -61,15 +67,15 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             return filter.promise;
         };
 
-        this.itemTypeSelected = function(item) {
+        vm.itemTypeSelected = function(item) {
             typeSelected = item;
         };
 
         //set TicketType dropdownList
-        this.selectedDropdownTicketTypeItem = null;
-        this.dropdownTicketTypeItems = ['原價', '早鳥', '泰迪之友', '四人團報'];
+        vm.selectedDropdownTicketTypeItem = null;
+        vm.dropdownTicketTypeItems = ['原價', '早鳥', '泰迪之友', '四人團報'];
 
-        this.filterTicketTypeList = function(userInput) {
+        vm.filterTicketTypeList = function(userInput) {
             ticketTicketTypeSelected = userInput;
             var filter = $q.defer();
             var normalisedInput = userInput.toLowerCase();
@@ -80,15 +86,15 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             return filter.promise;
         };
 
-        this.itemTicketTypeSelected = function(item) {
+        vm.itemTicketTypeSelected = function(item) {
             ticketTicketTypeSelected = item;
         };
 
         //set CcAddress dropdownList
-        this.selectedDropdownCcAddressItem = null;
-        this.dropdownCcAddressItems = ['service@teddysoft.tw', 'teddy@teddysoft.tw', 'erica@teddysoft.tw'];
+        vm.selectedDropdownCcAddressItem = null;
+        vm.dropdownCcAddressItems = ['service@teddysoft.tw', 'teddy@teddysoft.tw', 'erica@teddysoft.tw'];
 
-        this.filterCcAddressList = function(userInput) {
+        vm.filterCcAddressList = function(userInput) {
             ccAddressSelected = userInput;
             var filter = $q.defer();
             var normalisedInput = userInput.toLowerCase();
@@ -99,15 +105,15 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             return filter.promise;
         };
 
-        this.itemCcAddressSelected = function(item) {
+        vm.itemCcAddressSelected = function(item) {
             ccAddressSelected = item;
         };
 
         //set Location dropdownList
-        this.selectedDropdownLocationItem = null;
-        this.dropdownLocationItems = ['延平南路12號4樓', '北科科研1622室', '北科育成305室', '北科育成201室'];
+        vm.selectedDropdownLocationItem = null;
+        vm.dropdownLocationItems = ['延平南路12號4樓', '北科科研1622室', '北科育成305室', '北科育成201室'];
 
-        this.filterLocationList = function(userInput) {
+        vm.filterLocationList = function(userInput) {
             locationSelected = userInput;
             var filter = $q.defer();
             var normalisedInput = userInput.toLowerCase();
@@ -118,8 +124,8 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             return filter.promise;
         };
 
-        this.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
-        this.selectedDropdownStatusItem = this.dropdownStatusItems[0];
+        vm.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
+        vm.selectedDropdownStatusItem = vm.dropdownStatusItems[0];
 
         function getTeddyCourseData() {
             $scope.isCourseLoading = true;
@@ -135,7 +141,8 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
 
         function addCourse() {
             var data = new Object();
-            data.courseName_ = courseNameSelected;
+            data.courseName_ = courseNameSelected.name;
+            data.courseCode_ = $scope.data.code;
             data.batch_ = $scope.data.batch;
             data.dates_ = $scope.showDateList;
             data.duration_ = parseInt($scope.data.duration);
@@ -229,6 +236,10 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
                 window.alert("課程名稱欄位不可為空白");
                 return;
             }
+            if ((($scope.data.code) == null) || (($scope.data.code).length == 0)) {
+                window.alert("課程代碼欄位不可為空白");
+                return;
+            }
             if (((vm.selectedDropdownStatusItem) == null)) {
                 window.alert("狀態欄位不可為空白");
                 return;
@@ -300,6 +311,7 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         }
 
         function deleteData() {
+            $scope.data.code = "";
             $scope.data.batch = "";
             $scope.showDateList = [];
             $scope.data.duration = 0;
@@ -325,6 +337,7 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
 
         var init = function() {
             $scope.data = {
+                code: "",
                 batch: "",
                 duration: 0,
                 lecturer: "",

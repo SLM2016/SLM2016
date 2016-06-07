@@ -140,6 +140,8 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
         	clearFile();
         	var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
         	uploadpreviewBackground.style.display="none";
+        	var previewBackground = document.getElementById("previewBackground");
+			previewBackground.style.display="none";
         	var data=new Object();
 			data.id_="";
 			data.owner_="";

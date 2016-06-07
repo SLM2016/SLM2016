@@ -45,10 +45,12 @@ public class CertificationServlet extends HttpServlet {
 			if(helper.excuteSql("SELECT certificationPath from course_info where id=\""+courceId+"\"", data).equals("Success"))
 			{
 				data.next();
-				path=data.getString("certificationPath");	
+				if(!data.getString("certificationPath").isEmpty())
+				{
+					path=data.getString("certificationPath");
+				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return path;
 	}

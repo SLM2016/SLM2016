@@ -6,6 +6,7 @@ import java.util.List;
 public class Course {
 	private String courseId_;
 	private String courseName_;
+	private String courseCode_;
 	private String type_;
 	private String batch_;
 	private List<String> dates_ = new ArrayList<String>();
@@ -25,6 +26,7 @@ public class Course {
 	public Course clone() {
 		Course cloneObject = new Course(courseId_);
 		cloneObject.courseName_ = courseName_;
+		cloneObject.courseCode_ = courseCode_;
 		cloneObject.type_ = type_;
 		cloneObject.batch_ = batch_;
 		cloneObject.dates_.addAll(dates_);
@@ -41,6 +43,10 @@ public class Course {
 
 	public void setCourseName(String courseName) {
 		courseName_ = courseName;
+	}
+	
+	public void setCourseCode(String courseCode) {
+		courseCode_ = courseCode;
 	}
 
 	public void setType(String type) {
@@ -109,6 +115,10 @@ public class Course {
 
 	public String getCourseName() {
 		return courseName_;
+	}
+	
+	public String getCourseCode() {
+		return courseCode_;
 	}
 
 	public String getType() {
