@@ -15,18 +15,26 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         var ticketTypeSelected = '';
 
         //set CourseName dropdownList
-        this.selectedDropdownCourseNameItem = null;
-        this.dropdownCourseNameItems = ['Scrum敏捷方法實作班', '看板方法與精實開發實作班', '軟體重構入門實作班', '敏捷產品經理實作班',
-            '敏捷大師百寶箱系列課程', 'Design Patterns入門實作班', 'Design Patterns進階實作班',
-            '單元測試與持續整合實作班', '例外處理設計與重構實作班'
+        vm.selectedDropdownCourseNameItem = null;
+        vm.dropdownCourseNameItems = [
+            new Course('Scrum敏捷方法實作班', 'SC0'),
+            new Course('看板方法與精實開發實作班', 'KB0'),
+            new Course('軟體重構入門實作班', 'RF1'),
+            new Course('敏捷產品經理實作班', 'PO0'),
+            new Course('Design Patterns入門實作班', 'DP1'),
+            new Course('Design Patterns進階實作班', 'DP2'),
+            new Course('單元測試與持續整合實作班', 'UT0'),
+            new Course('例外處理設計與重構實作班', 'EH0')
         ];
 
-        this.filterCourseNameList = function(userInput) {
-            courseNameSelected = userInput;
+        vm.filterCourseNameList = function(userInput) {
+            courseNameSelected = new Course(userInput, '');
+            document.getElementById('Code').readOnly = false;
             var filter = $q.defer();
-            //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = this.dropdownCourseNameItems.filter(function(type) {
-                return type.toLowerCase().indexOf('') == 0;
+            var normalisedInput = userInput.toLowerCase();
+            var filteredArray = vm.dropdownCourseNameItems.filter(function(courseName) {
+                var matchCourseName = courseName.name.toLowerCase().indexOf(normalisedInput) === 0;
+                return matchCourseName;
             });
             filter.resolve(filteredArray);
             return filter.promise;
@@ -34,6 +42,8 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
 
         this.itemCourseNameSelected = function(item) {
             courseNameSelected = item;
+            $scope.data.code = item.code;
+            document.getElementById('Code').readOnly = true;
         };
 
         //set Type dropdownList
@@ -43,9 +53,9 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         this.filterTypeList = function(userInput) {
             typeSelected = userInput;
             var filter = $q.defer();
-            //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = this.dropdownTypeItems.filter(function(type) {
-                return type.toLowerCase().indexOf('') == 0;
+            var normalisedInput = userInput.toLowerCase();
+            var filteredArray = vm.dropdownTypeItems.filter(function(type) {
+                return type.toLowerCase().indexOf(normalisedInput) == 0;
             });
             filter.resolve(filteredArray);
             return filter.promise;
@@ -62,9 +72,9 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         this.filterTicketTypeList = function(userInput) {
             ticketTicketTypeSelected = userInput;
             var filter = $q.defer();
-            //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = this.dropdownTicketTypeItems.filter(function(ticketType) {
-                return ticketType.toLowerCase().indexOf('') == 0;
+            var normalisedInput = userInput.toLowerCase();
+            var filteredArray = vm.dropdownTicketTypeItems.filter(function(ticketType) {
+                return ticketType.toLowerCase().indexOf(normalisedInput) == 0;
             });
             filter.resolve(filteredArray);
             return filter.promise;
@@ -81,9 +91,9 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         this.filterCcAddressList = function(userInput) {
             ccAddressSelected = userInput;
             var filter = $q.defer();
-            //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = this.dropdownCcAddressItems.filter(function(type) {
-                return type.toLowerCase().indexOf('') == 0;
+            var normalisedInput = userInput.toLowerCase();
+            var filteredArray = vm.dropdownCcAddressItems.filter(function(ccAddress) {
+                return ccAddress.toLowerCase().indexOf(normalisedInput) == 0;
             });
             filter.resolve(filteredArray);
             return filter.promise;
@@ -100,9 +110,9 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         this.filterLocationList = function(userInput) {
             locationSelected = userInput;
             var filter = $q.defer();
-            //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = this.dropdownLocationItems.filter(function(type) {
-                return type.toLowerCase().indexOf('') == 0;
+            var normalisedInput = userInput.toLowerCase();
+            var filteredArray = vm.dropdownLocationItems.filter(function(location) {
+                return location.toLowerCase().indexOf(normalisedInput) == 0;
             });
             filter.resolve(filteredArray);
             return filter.promise;
@@ -214,15 +224,6 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             }
         }
 
-        function resetAllDropdownList() {
-            vm.selectedDropdownStatusItem = vm.dropdownStatusItems[0];
-            vm.selectedDropdownCourseNameItem = { readableName: "" };
-            vm.selectedDropdownTypeItem = { readableName: "" };
-            vm.selectedDropdownTicketTypeItem = { readableName: "" };
-            vm.selectedDropdownCcAddressItem = { readableName: "" };
-            vm.selectedDropdownLocationItem = { readableName: "" };
-        }
-
         function checkInput() {
             if (((courseNameSelected) == null)) {
                 window.alert("課程名稱欄位不可為空白");
@@ -319,6 +320,7 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             ccAddressSelected = '';
             typeSelected = '';
             ticketTypeSelected = '';
+            document.getElementById('Code').readOnly = false;
         }
 
         var init = function() {

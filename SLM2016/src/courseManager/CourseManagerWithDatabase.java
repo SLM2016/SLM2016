@@ -21,8 +21,9 @@ public class CourseManagerWithDatabase {
 
 		}
 	}
-	
-	public String getCourseIdByCourseNameAndBatchAndStatus(String courseName, String batch, String status) throws SQLException {
+
+	public String getCourseIdByCourseNameAndBatchAndStatus(String courseName, String batch, String status)
+			throws SQLException {
 		SqlHelper helper = new SqlHelper();
 		String sqlString = String.format(
 				"SELECT `course_info`.`id` FROM `course_info`,`course_status` where `course_info`.`fk_status_id` = `course_status`.`id` and `course_info`.`name` = '%s' and `course_info`.`batch` = '%s' and `course_status`.`name`= '%s'",
@@ -313,6 +314,7 @@ public class CourseManagerWithDatabase {
 
 	public String deleteCourseFromDatabase(String id) throws SQLException {
 		String result = "";
+		String path = getCertificationPathByCourseId(id);
 		result = deleteCourseFromDatabaseCcAddress(id);
 		if (result != "Success")
 			return result;
@@ -325,6 +327,11 @@ public class CourseManagerWithDatabase {
 		result = deleteCourseFromDatabaseInfo(id);
 		if (result != "Success")
 			return result;
+		if (path != null) {
+			result = deleteBackground(path);
+			if (result != "Success")
+				return result;
+		}
 		return "Success";
 	}
 
@@ -397,5 +404,28 @@ public class CourseManagerWithDatabase {
 		result = data.getString("page_link");
 		data.close();
 		return result;
+	}
+
+	private String getCertificationPathByCourseId(String courseId) throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		String result = null;
+		String sqlString = "SELECT certificationPath FROM `course_info` WHERE `id`='" + courseId + "'";
+		CachedRowSet data = new CachedRowSetImpl();
+		helper.excuteSql(sqlString, data);
+		if (data.next()) {
+			result = data.getString("certificationPath");
+		}
+		data.close();
+		return result;
+	}
+
+	private String deleteBackground(String filePath) throws SQLException {
+		try {
+			java.io.File myDelFile = new java.io.File(filePath);
+			myDelFile.delete();
+			return "Success";
+		} catch (Exception e) {
+			return "刪除檔操作出錯";
+		}
 	}
 }
