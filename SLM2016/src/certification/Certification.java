@@ -7,6 +7,7 @@ public class Certification {
 	private String courceDate_ = "";
 	private String courceName_ = "";
 	private String courceDuration_ = "";
+	private String courceId_="";
 
 	public Certification() {
 	}
@@ -51,6 +52,11 @@ public class Certification {
 	public void setCourceDuration(String courceDuration) {
 		courceDuration_ = courceDuration;
 	}
+	
+	public void setCourceId(String courceId)
+	{
+		courceId_=courceId;
+	}
 
 	public String getId() {
 		return id_;
@@ -74,5 +80,10 @@ public class Certification {
 
 	public String getCourceDuration() {
 		return courceDuration_;
+	}
+	
+	public String getCourceId()
+	{
+		return courceId_;
 	}
 }

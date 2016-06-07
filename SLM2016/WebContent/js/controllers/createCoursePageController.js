@@ -14,117 +14,102 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         var typeSelected = '';
         var ticketTypeSelected = '';
 
-        var Course = function(courseName, courseCode) {
-            this.name = courseName;
-            this.code = courseCode;
-            this.readableName = courseName;
-        };
-
         //set CourseName dropdownList
-        vm.selectedDropdownCourseNameItem = null;
-        vm.dropdownCourseNameItems = [
-            new Course('Scrum敏捷方法實作班', 'Scrum'),
-            new Course('看板方法與精實開發實作班', '看板'),
-            new Course('軟體重構入門實作班', '重構'),
-            new Course('敏捷產品經理實作班', '產品'),
-            new Course('敏捷大師百寶箱系列課程', '百寶箱'),
-            new Course('Design Patterns入門實作班', 'DP1'),
-            new Course('Design Patterns進階實作班', 'DP2'),
-            new Course('單元測試與持續整合實作班', '測試'),
-            new Course('例外處理設計與重構實作班', '例外')
+        this.selectedDropdownCourseNameItem = null;
+        this.dropdownCourseNameItems = ['Scrum敏捷方法實作班', '看板方法與精實開發實作班', '軟體重構入門實作班', '敏捷產品經理實作班',
+            '敏捷大師百寶箱系列課程', 'Design Patterns入門實作班', 'Design Patterns進階實作班',
+            '單元測試與持續整合實作班', '例外處理設計與重構實作班'
         ];
 
-        vm.filterCourseNameList = function(userInput) {
-            courseNameSelected = new Course(userInput, '');
-            $scope.data.code = '';
+        this.filterCourseNameList = function(userInput) {
+            courseNameSelected = userInput;
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownCourseNameItems; //.filter(function(type) {
-            //                return type.toLowerCase().indexOf('') == 0;
-            //            });
+            var filteredArray = this.dropdownCourseNameItems.filter(function(type) {
+                return type.toLowerCase().indexOf('') == 0;
+            });
             filter.resolve(filteredArray);
             return filter.promise;
         };
 
-        vm.itemCourseNameSelected = function(item) {
+        this.itemCourseNameSelected = function(item) {
             courseNameSelected = item;
-            $scope.data.code = item.code;
         };
 
         //set Type dropdownList
-        vm.selectedDropdownTypeItem = null;
-        vm.dropdownTypeItems = ['公開班', '企業內訓', '演講'];
+        this.selectedDropdownTypeItem = null;
+        this.dropdownTypeItems = ['公開班', '企業內訓', '演講'];
 
-        vm.filterTypeList = function(userInput) {
+        this.filterTypeList = function(userInput) {
             typeSelected = userInput;
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownTypeItems; //.filter(function(type) {
-            //     return type.toLowerCase().indexOf('') == 0;
-            // });
+            var filteredArray = this.dropdownTypeItems.filter(function(type) {
+                return type.toLowerCase().indexOf('') == 0;
+            });
             filter.resolve(filteredArray);
             return filter.promise;
         };
 
-        vm.itemTypeSelected = function(item) {
+        this.itemTypeSelected = function(item) {
             typeSelected = item;
         };
 
         //set TicketType dropdownList
-        vm.selectedDropdownTicketTypeItem = null;
-        vm.dropdownTicketTypeItems = ['原價', '早鳥', '泰迪之友', '四人團報'];
+        this.selectedDropdownTicketTypeItem = null;
+        this.dropdownTicketTypeItems = ['原價', '早鳥', '泰迪之友', '四人團報'];
 
-        vm.filterTicketTypeList = function(userInput) {
+        this.filterTicketTypeList = function(userInput) {
             ticketTicketTypeSelected = userInput;
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownTicketTypeItems; //.filter(function(ticketType) {
-            //     return ticketType.toLowerCase().indexOf('') == 0;
-            // });
+            var filteredArray = this.dropdownTicketTypeItems.filter(function(ticketType) {
+                return ticketType.toLowerCase().indexOf('') == 0;
+            });
             filter.resolve(filteredArray);
             return filter.promise;
         };
 
-        vm.itemTicketTypeSelected = function(item) {
+        this.itemTicketTypeSelected = function(item) {
             ticketTicketTypeSelected = item;
         };
 
         //set CcAddress dropdownList
-        vm.selectedDropdownCcAddressItem = null;
-        vm.dropdownCcAddressItems = ['service@teddysoft.tw', 'teddy@teddysoft.tw', 'erica@teddysoft.tw'];
+        this.selectedDropdownCcAddressItem = null;
+        this.dropdownCcAddressItems = ['service@teddysoft.tw', 'teddy@teddysoft.tw', 'erica@teddysoft.tw'];
 
-        vm.filterCcAddressList = function(userInput) {
+        this.filterCcAddressList = function(userInput) {
             ccAddressSelected = userInput;
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownCcAddressItems; //.filter(function(type) {
-            //     return type.toLowerCase().indexOf('') == 0;
-            // });
+            var filteredArray = this.dropdownCcAddressItems.filter(function(type) {
+                return type.toLowerCase().indexOf('') == 0;
+            });
             filter.resolve(filteredArray);
             return filter.promise;
         };
 
-        vm.itemCcAddressSelected = function(item) {
+        this.itemCcAddressSelected = function(item) {
             ccAddressSelected = item;
         };
 
         //set Location dropdownList
-        vm.selectedDropdownLocationItem = null;
-        vm.dropdownLocationItems = ['延平南路12號4樓', '北科科研1622室', '北科育成305室', '北科育成201室'];
+        this.selectedDropdownLocationItem = null;
+        this.dropdownLocationItems = ['延平南路12號4樓', '北科科研1622室', '北科育成305室', '北科育成201室'];
 
-        vm.filterLocationList = function(userInput) {
+        this.filterLocationList = function(userInput) {
             locationSelected = userInput;
             var filter = $q.defer();
             //var normalisedInput = userInput.toLowerCase();
-            var filteredArray = vm.dropdownLocationItems; //.filter(function(type) {
-            //     return type.toLowerCase().indexOf('') == 0;
-            // });
+            var filteredArray = this.dropdownLocationItems.filter(function(type) {
+                return type.toLowerCase().indexOf('') == 0;
+            });
             filter.resolve(filteredArray);
             return filter.promise;
         };
 
-        vm.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
-        vm.selectedDropdownStatusItem = vm.dropdownStatusItems[0];
+        this.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
+        this.selectedDropdownStatusItem = this.dropdownStatusItems[0];
 
         function getTeddyCourseData() {
             $scope.isCourseLoading = true;
@@ -140,8 +125,7 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
 
         function addCourse() {
             var data = new Object();
-            data.courseName_ = courseNameSelected.name;
-            data.courseCode_ = $scope.data.code;
+            data.courseName_ = courseNameSelected;
             data.batch_ = $scope.data.batch;
             data.dates_ = $scope.showDateList;
             data.duration_ = parseInt($scope.data.duration);
@@ -244,10 +228,6 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
                 window.alert("課程名稱欄位不可為空白");
                 return;
             }
-            if ((($scope.data.code) == null) || (($scope.data.code).length == 0)) {
-                window.alert("課程代碼欄位不可為空白");
-                return;
-            }
             if (((vm.selectedDropdownStatusItem) == null)) {
                 window.alert("狀態欄位不可為空白");
                 return;
@@ -319,7 +299,6 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         }
 
         function deleteData() {
-            $scope.data.code = "";
             $scope.data.batch = "";
             $scope.showDateList = [];
             $scope.data.duration = 0;
@@ -344,7 +323,6 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
 
         var init = function() {
             $scope.data = {
-                code: "",
                 batch: "",
                 duration: 0,
                 lecturer: "",

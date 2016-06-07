@@ -21,7 +21,6 @@ public class CourseManagerWithDatabaseTest {
 		courseManagerWithDb_ = new CourseManagerWithDatabase();
 		Course course = new Course("test01");
 		course.setCourseName("Scurm敏捷方法實作班");
-		course.setCourseCode("Scurm");
 		course.setType("公開班");
 		course.setBatch("401");
 		course.addDate("2016-05-10");
@@ -47,7 +46,6 @@ public class CourseManagerWithDatabaseTest {
 		String result = courseManagerWithDb_.getCourseFromDatabase(courses);
 		assertEquals("Success", result);
 		assertEquals("Scurm敏捷方法實作班", courses.get(courses.size() - 1).getCourseName());
-		assertEquals("Scurm", courses.get(courses.size() - 1).getCourseCode());
 		assertEquals("公開班", courses.get(courses.size() - 1).getType());
 		assertEquals("401", courses.get(courses.size() - 1).getBatch());
 		assertEquals("2016-05-10", courses.get(courses.size() - 1).getDates().get(0));
@@ -75,7 +73,6 @@ public class CourseManagerWithDatabaseTest {
 	public void testAddCourseIntoDatabase() throws SQLException {
 		Course course = new Course("test02");
 		course.setCourseName("Scurm敏捷方法實作班");
-		course.setCourseCode("Scurm");
 		course.setType("公開班");
 		course.setBatch("401");
 		course.addDate("2016-05-10");

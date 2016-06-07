@@ -51,17 +51,13 @@ public class UpdateCertificationBackgroundServlet extends HttpServlet{
 		HashMap<String, String> result = new HashMap<String, String>();
 		PrintWriter out = response.getWriter();
 		String courseId = request.getParameter("courseId");		
-		//String dirPath = String.format("C://course_certification_background_file//%s.jpg", courseId);
-		String dirPath = String.format("..//..//course_certification_background_file//%s.jpg", courseId);
+		String dirPath = String.format((getServletContext().getRealPath("images/").toString()+"%s.jpg"),courseId);
+		dirPath=dirPath.replace("\\","//");
+		System.out.println("dirPath:"+dirPath);
 		Part filePart = request.getPart("file");
 		String sqlresult="";
+		if(filePart!=null){
 		try {
-			//File f = new File("C://course_certification_background_file//");
-			File f = new File("..//..//course_certification_background_file//");
-			if (!f.exists()) {
-				f.mkdirs();
-			}
-			System.out.println(f.getAbsolutePath());
 			OutputStream fileOut = new FileOutputStream(dirPath);
 			IOUtils.copy(filePart.getInputStream(), fileOut);
 			fileOut.close();
@@ -74,8 +70,10 @@ public class UpdateCertificationBackgroundServlet extends HttpServlet{
 				System.out.println(sqlString);
 				if(sqlresult== "Success")
 					result.put("status", "true");
-				else
+				else{
 					result.put("status", "SQL fail");
+					System.out.println(result);
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -85,7 +83,10 @@ public class UpdateCertificationBackgroundServlet extends HttpServlet{
 			System.out.println(ex);
 			result.put("status", "false");
 		}
-		out.println(gson.toJson(result));
+		}
+		else
+			result.put("status", "false");
+			out.println(gson.toJson(result));
 	}
 	
 	public static String encodeToString(BufferedImage image, String type) {  

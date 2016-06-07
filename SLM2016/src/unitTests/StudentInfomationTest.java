@@ -35,16 +35,16 @@ public class StudentInfomationTest {
 		assertEquals("Ivan", cloneObject.getStudents().get(8));
 		assertEquals("Jack", cloneObject.getStudents().get(9));
 
-		assertEquals("Alice@clarence.party", cloneObject.getMailAddress().get(0));
-		assertEquals("Bob@clarence.party", cloneObject.getMailAddress().get(1));
-		assertEquals("Chris@clarence.party", cloneObject.getMailAddress().get(2));
-		assertEquals("David@clarence.party", cloneObject.getMailAddress().get(3));
-		assertEquals("Edison@clarence.party", cloneObject.getMailAddress().get(4));
-		assertEquals("Frank@clarence.party", cloneObject.getMailAddress().get(5));
-		assertEquals("George@clarence.party", cloneObject.getMailAddress().get(6));
-		assertEquals("Harry@clarence.party", cloneObject.getMailAddress().get(7));
-		assertEquals("Ivan@clarence.party", cloneObject.getMailAddress().get(8));
-		assertEquals("Jack@clarence.party", cloneObject.getMailAddress().get(9));
+		assertEquals("t104598007+aaa@ntut.org.tw", cloneObject.getMailAddress().get(0));
+		assertEquals("t104598007+bbb@ntut.org.tw", cloneObject.getMailAddress().get(1));
+		assertEquals("t104598007+ccc@ntut.org.tw", cloneObject.getMailAddress().get(2));
+		assertEquals("t104598007+ddd@ntut.org.tw", cloneObject.getMailAddress().get(3));
+		assertEquals("t104598007+eee@ntut.org.tw", cloneObject.getMailAddress().get(4));
+		assertEquals("t104598007+fff@ntut.org.tw", cloneObject.getMailAddress().get(5));
+		assertEquals("t104598007+ggg@ntut.org.tw", cloneObject.getMailAddress().get(6));
+		assertEquals("t104598007+hhh@ntut.org.tw", cloneObject.getMailAddress().get(7));
+		assertEquals("t104598007+iii@ntut.org.tw", cloneObject.getMailAddress().get(8));
+		assertEquals("t104598007+jjj@ntut.org.tw", cloneObject.getMailAddress().get(9));
 	}
 
 	@Test

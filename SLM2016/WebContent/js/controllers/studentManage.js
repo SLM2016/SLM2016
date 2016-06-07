@@ -72,7 +72,8 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
         			mailData[i].studentId = $scope.studentList[j].id;
         			mailData[i].studentName = $scope.studentList[j].name;
         			mailData[i].courseId = $scope.studentList[j].fk_course_info_id;
-        			mailData[i].address = $scope.studentList[j].email;      			
+        			mailData[i].address = $scope.studentList[j].email;  
+        			mailData[i].certificationId = $scope.studentList[j].certification_id;    			
         			i++;
         		} 
         	}  
@@ -146,7 +147,7 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
 			data.courceDate_="";
 			data.courceName_="";
 			data.courceDuration_="";
-        	data.courseId=$scope.currentCourse.courseId_;
+        	data.courceId_=$scope.currentCourse.courseId_;
 			$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
 			.done(function(data)
 			{
@@ -172,12 +173,17 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
     		        },
     		        file: $scope.imgFile
     		    }).success(function(data) {
-    		    	if(data=="true")
+    		    	if(data.status=="true"){
     		    		window.alert("上傳成功");
-    		    	else
+    		    		getBackgound();
+    		    	}
+    		    	else{
     		    		window.alert("上傳失敗");
+    		    		console.log(data.status);
+    		    	}
     			}).error(function(error) {
     				window.alert("上傳失敗");
+    				console.log(error);
     			});   		    	
 		} 
         
