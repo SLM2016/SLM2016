@@ -123,9 +123,9 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             filter.resolve(filteredArray);
             return filter.promise;
         };
-        
+
         vm.itemLocationSelected = function(item) {
-        	locationSelected = item;
+            locationSelected = item;
         };
 
         vm.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
@@ -160,14 +160,13 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             data.status_ = vm.selectedDropdownStatusItem;
             $.post("/SLM2016/CourseManagerServlet",
                 JSON.stringify(data)).done(function(data) {
+                deleteData();
                 if (data == "Success") {
                     window.alert("開課成功");
                 } else {
                     window.alert("開課失敗\n" + data);
                 }
-
                 getTeddyCourseData();
-                deleteData();
             });
             setTimeout(function() {
                 $scope.$apply(function() {
@@ -314,7 +313,6 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
         }
 
         function deleteData() {
-        	console.log("reset");
             $scope.data.code = "";
             $scope.data.batch = "";
             $scope.showDateList = [];
@@ -329,8 +327,8 @@ app.controller("CreateCoursePageController", ['$scope', '$state', '$timeout', '$
             document.forms['type'].reset();
             document.forms['ticketType'].reset();
             document.forms['location'].reset();
-            document.forms['status'].reset();
             document.forms['ccAddress'].reset();
+            vm.selectedDropdownStatusItem = vm.dropdownStatusItems[0];
             courseNameSelected = '';
             locationSelected = '';
             ccAddressSelected = '';
