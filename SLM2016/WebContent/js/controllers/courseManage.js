@@ -3,14 +3,45 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
 
         var getTeddyCourseData = function() {
             $scope.isCourseLoading = true;
+            $scope.courseGroupList = [];
             console.log("getTeddyCourseData");
             CourseService.getCourseList().then(function(result) {
+                for (var i = 0; i < result.length; i++) {
+                    if(!isInCourseGroup(result[i])) {
+                        var courseGroup = {
+                            name: result[i].courseName_,
+                            courseList: [],
+                            openLevel: true
+                        }
+                        for (var j = 0; j < result.length; j++) {
+                            if(courseGroup.name == result[j].courseName_) {
+                                courseGroup.courseList.push(result[j]);
+                            }
+                        }
+                        $scope.courseGroupList.push(courseGroup);
+                    }
+                }
                 $scope.isCourseLoading = false;
+<<<<<<< HEAD
+                console.log($scope.courseGroupList)
+=======
                 $scope.courseList = result;
                 console.log(result);
+>>>>>>> d32c60f4b95e9877a34adf04f06ad4b079eec231
             }, function(error) {
                 $scope.isCourseLoading = false;
             });
+        }
+
+        var isInCourseGroup = function(course) {
+            var isInGroup = false
+            for (var i = 0; i < $scope.courseGroupList.length; i++) {
+                if($scope.courseGroupList[i].name == course.courseName_) {
+                    isInGroup = true;
+                    break;
+                }
+            }
+            return isInGroup;
         }
 
         var deleteRow = function(id) {
@@ -32,11 +63,12 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
                 });
             }, 500);
         }
-
-        var goStudentManage = function(courseId,courseName) {
+        var openGroupLevel = function(group) {
+            group.openLevel = !group.openLevel;
+        }
+        var goStudentManage = function(courseId) {
             $state.go(STATES.COURSEINFO_STUDENT, {
-                courseId: courseId,
-                courseName: courseName
+                courseId: courseId
             })
         }
 
@@ -48,7 +80,7 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
             Members
         ==========================*/
 
-        $scope.courseList = [];
+        $scope.courseGroupList = [];
         $scope.isCourseLoading = false;
 
         /*==========================
@@ -57,6 +89,7 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
 
         $scope.deleteRow = deleteRow;
         $scope.goStudentManage = goStudentManage;
+        $scope.openGroupLevel = openGroupLevel;
 
         /*==========================
             Init

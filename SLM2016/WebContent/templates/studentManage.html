@@ -34,7 +34,61 @@
                 
             <loading ng-show="isStudentLoading"></loading>
             <div class="manage-content" ng-show="!isStudentLoading">
-                <div class="table-content">
+                <div class="course-content">
+                    <div class="content-title">課程資訊</div>
+                    <div class="content-info">
+                        <div class="left">
+                            <div class="form-group">
+                                <label>課程名稱：</label>
+                                <span>{{course.courseName_}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label>批次：</label>
+                                <span>{{currentStudent.timestamp}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label>類型：</label>
+                                <span>{{currentStudent.name}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label>課程時間：</label>
+                                <span>{{currentStudent.name}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label>開課日期：</label>
+                            </div>
+                            <div class="form-group">
+                                <label>課程狀態：</label>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="form-group">
+                                <label>地點：</label>
+                                <span>{{course.courseName_}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label>講師：</label>
+                                <span>{{currentStudent.timestamp}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label>票種：</label>
+                                <span>{{currentStudent.name}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label>票價：</label>
+                                <span>{{currentStudent.name}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label>課程連結：</label>
+                            </div>
+                            <div class="form-group">
+                                <label>副本收件人：</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="student-content">
+                    <div class="content-title">學員資訊</div>
                     <table class="table table-hover">
                         <thead>
                             <th style="text-align: center;width:80px;">序號</th>
