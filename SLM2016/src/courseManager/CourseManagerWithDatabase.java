@@ -21,8 +21,9 @@ public class CourseManagerWithDatabase {
 
 		}
 	}
-	
-	public String getCourseIdByCourseNameAndBatchAndStatus(String courseName, String batch, String status) throws SQLException {
+
+	public String getCourseIdByCourseNameAndBatchAndStatus(String courseName, String batch, String status)
+			throws SQLException {
 		SqlHelper helper = new SqlHelper();
 		String sqlString = String.format(
 				"SELECT `course_info`.`id` FROM `course_info`,`course_status` where `course_info`.`fk_status_id` = `course_status`.`id` and `course_info`.`name` = '%s' and `course_info`.`batch` = '%s' and `course_status`.`name`= '%s'",
@@ -396,6 +397,47 @@ public class CourseManagerWithDatabase {
 		data.next();
 		result = data.getString("page_link");
 		data.close();
+		return result;
+	}
+
+	public String getCourseInfoByCourseId(List<Course> courses, String courseId) throws SQLException {
+		String result = "";
+		SqlHelper helper = new SqlHelper();
+		String sqlString = "SELECT * FROM `course_info` where `id` = '" + courseId + "'";
+		CachedRowSet data = new CachedRowSetImpl();
+		result = helper.excuteSql(sqlString, data);
+		if (result != "Success")
+			return result;
+		while (data.next()) {
+			String id = data.getString("id");
+			String fk = data.getString("fk_status_id");
+			Course course = new Course(id);
+			course.setCourseName(data.getString("name"));
+			course.setType(data.getString("type"));
+			course.setBatch(data.getString("batch"));
+			course.setDuration(Integer.parseInt(data.getString("duration")));
+			course.setLocation(data.getString("location"));
+			course.setLecturer(data.getString("lecturer"));
+			course.setHyperlink(data.getString("page_link"));
+			for (int i = 0; i < courseStatus_.size(); i++) {
+				if (courseStatus_.get(i).getKey().equals(fk)) {
+					course.setStatus(courseStatus_.get(i).getValue());
+					break;
+				}
+			}
+			String temp;
+			temp = getCourseFromTicket(course, id);
+			if (temp != "Success")
+				return temp;
+			temp = getCourseFromDate(course, id);
+			if (temp != "Success")
+				return temp;
+			temp = getCourseFromCcAddress(course, id);
+			if (temp != "Success")
+				return temp;
+
+			courses.add(course);
+		}
 		return result;
 	}
 }
