@@ -18,6 +18,8 @@ import student.StudentDBManager;
 @WebServlet("/CourseManagerServlet")
 public class CourseManagerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String OP_GET_COURSE_SIMPLE_DATA = "1";
+	private static final String OP_GET_COURSE_INFO_BY_COURSE_ID = "2";
 	public CourseManagerWithDatabase courseManagerWithDb_ = new CourseManagerWithDatabase();
 
 	public CourseManagerServlet() {

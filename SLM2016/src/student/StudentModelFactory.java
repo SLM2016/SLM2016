@@ -118,27 +118,28 @@ public class StudentModelFactory {
 			Cell cell = row.getCell(phoneIndex);
 
 			String phoneContent = StudentExcelUtility.parseCell(cell);
-			String phoneNumber = "";
 
-			String phonePattern1 = "^09\\d{2}-\\d{3}-\\d{3}";
-			String phonePattern2 = "^09\\d{2}-\\d{6}";
-			String phonePattern3 = "^9\\d{8}";
+//			String phoneNumber = "";
+//
+//			String phonePattern1 = "^09\\d{2}-\\d{3}-\\d{3}";
+//			String phonePattern2 = "^09\\d{2}-\\d{6}";
+//			String phonePattern3 = "^9\\d{8}";
+//
+//			Pattern pattern1 = Pattern.compile(phonePattern1);
+//			Pattern pattern2 = Pattern.compile(phonePattern2);
+//			Pattern pattern3 = Pattern.compile(phonePattern3);
+//
+//			if (pattern1.matcher(phoneContent).find()) {
+//				phoneNumber = phoneContent.substring(0, 4) + "-" + phoneContent.substring(5, 8)
+//						+ phoneContent.substring(9, 12);
+//
+//			} else if (pattern2.matcher(phoneContent).find()) {
+//				phoneNumber = phoneContent;
+//			} else if (pattern3.matcher(phoneContent).find()) {
+//				phoneNumber = "0" + phoneContent.substring(0, 3) + "-" + phoneContent.substring(3, 9);
+//			}
 
-			Pattern pattern1 = Pattern.compile(phonePattern1);
-			Pattern pattern2 = Pattern.compile(phonePattern2);
-			Pattern pattern3 = Pattern.compile(phonePattern3);
-
-			if (pattern1.matcher(phoneContent).find()) {
-				phoneNumber = phoneContent.substring(0, 4) + "-" + phoneContent.substring(5, 8)
-						+ phoneContent.substring(9, 12);
-
-			} else if (pattern2.matcher(phoneContent).find()) {
-				phoneNumber = phoneContent;
-			} else if (pattern3.matcher(phoneContent).find()) {
-				phoneNumber = "0" + phoneContent.substring(0, 3) + "-" + phoneContent.substring(3, 9);
-			}
-
-			studentModel.setPhone(phoneNumber);
+			studentModel.setPhone(phoneContent);
 		}
 
 		int companyIndex = checkIndexExist(nameIndexMap, INDEX_COMPANY);

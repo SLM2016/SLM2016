@@ -1,13 +1,20 @@
 var STATES = {
     HOME: "home",
-    CERTIFICATION: "certification",
-    SENDMAIL: "sendMail",
-    INVOICE: "invoice",
+
+    COURSEINFO: "courseInfo",
+    COURSEINFO_CREATE: "courseInfo.create",
+    COURSEINFO_MANAGE: "courseInfo.manage",
+    COURSEINFO_STUDENT: "courseInfo.student",
+
     STUDENTINFO: "studentInfo",
     STUDENT_INFO_IMPORT: "studentInfo.Import",
     STUDENT_INFO_MANAGE: "studentInfo.Manage",
     STUDENT_INFO_SENDMAIL: "studentInfo.Sendmail",
-    CREATE_COURSE: "createCourse"
+
+    OTHERS: "others",
+    OTHERS_CERTIFICATION: "others.certification",
+    OTHERS_SENDMAIL: "others.sendMail",
+    OTHERS_INVOICE: "others.invoice"
 }
 
 var app = angular.module('app', [
@@ -17,6 +24,7 @@ var app = angular.module('app', [
     'ngFileUpload',
     'ui.bootstrap',
     'angular-mousetrap',
+    'ngDropdown',
     'inputDropdown'
 ])
 
@@ -44,31 +52,42 @@ var app = angular.module('app', [
                 }
             }
         })
-        .state(STATES.CERTIFICATION, {
-            url: "/certification",
+
+        .state(STATES.COURSEINFO, {
+            url: "/courseInfo",
             views: {
-                'certification@': {
-                    templateUrl: "templates/certificationPage.html",
-                    controller: 'CertificationController',
-                }
-            }
-        })
-        .state(STATES.SENDMAIL, {
-            url: "/sendMail",
-            views: {
-                'sendMail@': {
-                    templateUrl: "templates/mailSendingPage.html",
-                    controller: 'MailSendingController',
+                'courseInfo@': {
+                    template: "<div ui-view=\"content\"></div>"
                 }
             }
         })
 
-	    .state(STATES.INVOICE, {
-            url: "/invoice",
+        .state(STATES.COURSEINFO_CREATE, {
+            url: "/create",
             views: {
-                'invoice@': {
-                    templateUrl: "templates/invoice.html",
-                    controller: 'InvoiceController',
+                'content@courseInfo': {
+                    templateUrl: "templates/courseCreate.html",
+                    controller: 'CourseCreateController as ctrl'
+                }
+            }
+        })
+
+        .state(STATES.COURSEINFO_MANAGE, {
+            url: "/manage",
+            views: {
+                'content@courseInfo': {
+                    templateUrl: "templates/courseManage.html",
+                    controller: 'CourseManageController'
+                }
+            }
+        })
+
+        .state(STATES.COURSEINFO_STUDENT, {
+            url: "/:courseId/:courseName/manage",
+            views: {
+                'content@courseInfo': {
+                    templateUrl: "templates/studentManage.html",
+                    controller: 'StudentManageController',
                 }
             }
         })
@@ -111,13 +130,41 @@ var app = angular.module('app', [
                 }
             }
         })
-        
-        .state(STATES.CREATE_COURSE, {
-            url: "/createCourse",
+
+        .state(STATES.OTHERS, {
+            url: "/others",
             views: {
-                'createCourse@': {
-                    templateUrl: "templates/createCoursePage.html",
-                    controller: 'CreateCoursePageController as ctrl'
+                'others@': {
+                    template: "<div ui-view=\"content\"></div>"
+                }
+            }
+        })
+
+        .state(STATES.OTHERS_CERTIFICATION, {
+            url: "/certification",
+            views: {
+                'content@others': {
+                    templateUrl: "templates/certificationPage.html",
+                    controller: 'CertificationController',
+                }
+            }
+        })
+        .state(STATES.OTHERS_SENDMAIL, {
+            url: "/sendMail",
+            views: {
+                'content@others': {
+                    templateUrl: "templates/mailSendingPage.html",
+                    controller: 'MailSendingController',
+                }
+            }
+        })
+
+        .state(STATES.OTHERS_INVOICE, {
+            url: "/invoice",
+            views: {
+                'content@others': {
+                    templateUrl: "templates/invoice.html",
+                    controller: 'InvoiceController',
                 }
             }
         })
@@ -131,27 +178,15 @@ var app = angular.module('app', [
             return $state.includes(STATES.HOME);
         }
 
-        var isCertificationView = function() {
-            return $state.includes(STATES.CERTIFICATION);
-        }
-        
-        var isSendMailView = function() {
-            return $state.includes(STATES.SENDMAIL);
+        var isCourseInfoView = function() {
+            return $state.includes(STATES.COURSEINFO);
         }
 
-        var isInvoiceView = function() {
-            return $state.includes(STATES.INVOICE);
+        var isOthersView = function() {
+            return $state.includes(STATES.OTHERS);
         }
 
-        var isInvoiceView = function() {
-            return $state.includes(STATES.INVOICE);
-        }
-        
-        var isCreateCourseView = function() {
-            return $state.includes(STATES.CREATE_COURSE);
-        }     
-
-        var studentInfoView = function() {
+        var isStudentInfoView = function() {
             return $state.includes(STATES.STUDENTINFO);
         }        
 
@@ -172,11 +207,9 @@ var app = angular.module('app', [
         ==========================*/
 
         $scope.isHomeView = isHomeView;
-        $scope.isCertificationView = isCertificationView;
-        $scope.isSendMailView = isSendMailView;
-        $scope.isInvoiceView = isInvoiceView;
-        $scope.studentInfoView = studentInfoView;
-        $scope.isCreateCourseView = isCreateCourseView;
+        $scope.isCourseInfoView = isCourseInfoView;
+        $scope.isOthersView = isOthersView;
+        $scope.isStudentInfoView = isStudentInfoView;
 
         /*==========================
              init

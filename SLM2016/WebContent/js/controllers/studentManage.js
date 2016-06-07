@@ -1,65 +1,182 @@
-app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService','Upload',
-    function ($q,$scope, $state, $timeout, $rootScope, StudentInfoService, CourseService , Upload) {  
-
-        var getCourseList = function() {
-            $scope.isCourseLoading = true;
-            $scope.isStudentLoading = true;
-            CourseService.getCourseSimpleList().then(function(result) {
-                $scope.isCourseLoading = false;
-                if(result.length > 0) {
-                    for (var i = 0; i < result.length; i++) {
-                        $scope.courseList.push(result[i]);
-                    }
-                    $scope.currentCourse = $scope.courseList[0];
-                    getStudentList()
-                }
-                else {
-                    $scope.isCourseEmpty = true;
-                }
-            }, function(error) {
-                $scope.isCourseLoading = false;
-                $scope.isStudentLoadError = true;
-            })
-        }
-
-        var changeStudentList = function(course) {
-            $scope.currentCourse = course;
-            $scope.studentList = [];
-            getStudentList();
-        }
+app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService', '$stateParams', 'Upload',
+    function ($q,$scope, $state, $timeout, $rootScope, StudentInfoService, CourseService, $stateParams, Upload) {  
 
         var getStudentList = function() {
-            $scope.isStudentLoading = true;
-            StudentInfoService.getStudentListByCourseId($scope.currentCourse.courseId_).then(function(result) {
+
+            StudentInfoService.getStudentListByCourseId($scope.courseId).then(function(result) {
                 $scope.isStudentLoading = false;
                 for (var i = 0; i < result.length; i++) {
                     result[i].isSelected = false;
-                    $scope.studentList.push(result[i]);
                 }
+                $scope.studentList = result;
             }, function(error) {
                 $scope.isStudentLoading = false;
                 $scope.isStudentLoadError = true;
             })
         }
 
-        var toggleSelectStudent = function(student) {
-            student.isSelected = !student.isSelected; 
-            
-            var i = 0;
-            var sendMailDataButton = document.getElementById("sendMailData");
-            
+    var changeCertificationBackground=function(file) {
+    	clearFile();
+    	var previewBackground = document.getElementById("previewBackground");
+    	var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
+    	$scope.imgFile = file;
+    	if($scope.imgFile!=null){
+    		previewBackground.style.display="none";
+    		uploadpreviewBackground.style.display="";
+    	}
+    	else
+    		previewBackground.style.display="";
+	} 
+    
+    var clearFile = function() {
+    	$scope.picFile = null;
+    	$scope.imgFile = null;
+    	$scope.imgFile;
+	}
+    
+    var getBackgound=function() {
+    	clearFile();
+    	var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
+    	var loadingBackground = document.getElementById("loadingBackground");
+    	loadingBackground.style.display="";
+    	uploadpreviewBackground.style.display="none";
+    	var previewBackground = document.getElementById("previewBackground");
+		previewBackground.style.display="none";
+    	var data=new Object();
+		data.id_="";
+		data.owner_="";
+		data.date_="";
+		data.courceDate_="";
+		data.courceName_="";
+		data.courceDuration_="";
+    	data.courceId_=$scope.currentCourse.courseId_;
+		$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
+		.done(function(data)
+		{
+			loadingBackground.style.display="none";
+			document.getElementById("blah").setAttribute('src','data:image/png;base64,'+data);
+			var previewBackground = document.getElementById("previewBackground");
+			previewBackground.style.display="";
+		});	
+	} 
+    
+    
+    
+    var uploadBackground=function() {
+    	if(!$scope.imgFile) {
+    		window.alert("請選取檔案");
+			return;
+		}      	 
+		    var defer = $q.defer();
+		    Upload.upload({
+		        url: '/SLM2016/UpdateCertificationBackgroundServlet',
+		        withCredential: true,
+		        data: {
+                    courseId: $scope.currentCourse.courseId_
+		        },
+		        file: $scope.imgFile
+		    }).success(function(data) {
+		    	if(data.status=="true"){
+		    		window.alert("上傳成功");
+		    		getBackgound();
+		    	}
+		    	else{
+		    		window.alert("上傳失敗");
+		    		console.log(data.status);
+		    	}
+			}).error(function(error) {
+				window.alert("上傳失敗");
+				console.log(error);
+			});   		    	
+	} 
+        var getCourseInfo = function() {
+            $scope.isStudentLoading = true;
+
+            CourseService.getCourseById($scope.courseId).then(function(result) {
+                $scope.currentCourse = result[0];
+                getStudentList();
+            }, function(error) {
+                $scope.isStudentLoading = false;
+                $scope.isStudentLoadError = true;
+            })
+        }
+
+        var clearSelectedStudent = function() {
             for(var j = 0; j < $scope.studentList.length; j++){
-            	if($scope.studentList[j].isSelected){
-            		i++;
-            	}
+                if($scope.studentList[j].isSelected){
+                    $scope.studentList[j].isSelected = false;
+                }
             }
-            
-            if(i > 0){           	
-            	sendMailDataButton.disabled = "";
+        }
+
+        var selectAllStudent = function() {
+            for(var j = 0; j < $scope.studentList.length; j++){
+                 $scope.studentList[j].isSelected = true;
             }
-            else{
-            	sendMailDataButton.disabled = "disabled";
+        }
+
+        var selectStudents = function() {
+            if(!$scope.isStudentLoading) {
+                var selectedStudents = getSelectedStudent();
+                if(selectedStudents.length != $scope.studentList.length &&
+                   selectedStudents.length != 0) {
+                    clearSelectedStudent();
+                }
+                else if(getSelectedStudent().length == $scope.studentList.length) {
+                    clearSelectedStudent();
+                }
+                else {
+                    selectAllStudent();
+                }
             }
+            else {
+                return
+            }
+                
+        }
+
+        var getSelectedStudent = function() {
+            var selectedStudents = [];
+
+            for(var i = 0; i < $scope.studentList.length; i++){
+                if($scope.studentList[i].isSelected){
+                    selectedStudents.push($scope.studentList[i]);
+                }
+            }
+
+            return selectedStudents;
+
+        }
+              
+    	var init = function() {
+            getCourseList();          
+    	}
+
+        var toggleSelectStudent = function(student, index, $event) {
+            if($event.ctrlKey) {
+                student.isSelected = !student.isSelected;
+            }
+            else if($event.shiftKey) {
+                if (index > $scope.lastSelectIndex) {
+                    for (var i = $scope.lastSelectIndex; i <= index; i++) {
+                        $scope.studentList[i].isSelected = true;
+                    }
+                }
+                else if(index == $scope.lastSelectIndex){
+                    student.isSelected = false;
+                }
+                else {
+                    for (var i = index; i <= $scope.lastSelectIndex; i++) {
+                        $scope.studentList[i].isSelected = true;
+                    }
+                }
+            }
+            else {
+                clearSelectedStudent();
+                student.isSelected = !student.isSelected;
+            }
+
+            $scope.lastSelectIndex = index;
         }
         
         var sendMailData = function(){
@@ -72,21 +189,19 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
         			mailData[i].studentId = $scope.studentList[j].id;
         			mailData[i].studentName = $scope.studentList[j].name;
         			mailData[i].courseId = $scope.studentList[j].fk_course_info_id;
-        			mailData[i].address = $scope.studentList[j].email;  
-        			mailData[i].certificationId = $scope.studentList[j].certification_id;    			
+        			mailData[i].address = $scope.studentList[j].email;      			
         			i++;
         		} 
-        	}  
-        	StudentInfoService.putStudentSendMailData(mailData);
-            $state.go('studentInfo.Sendmail');      	
-        }
-                          
-        var toggleStatusDropdown = function(student) {
-            student.isSelected = !student.isSelected;
-        }
+        	}
 
-        var toggleActionDropdown = function(student) {
-            student.isSelected = !student.isSelected;
+            if(mailData.length != 0) {
+                StudentInfoService.putStudentSendMailData(mailData);
+                $state.go('studentInfo.Sendmail');          
+            }
+            else {
+                return;
+            }
+        	
         }
 
         var changeStudentStatus = function(student,num) {
@@ -131,19 +246,13 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
 		} 
         
         var clearFile = function() {
-	    	$scope.picFile = null;
 	    	$scope.imgFile = null;
-	    	$scope.imgFile;
 		}
         
         var getBackgound=function() {
         	clearFile();
         	var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
-        	var loadingBackground = document.getElementById("loadingBackground");
-        	loadingBackground.style.display="";
         	uploadpreviewBackground.style.display="none";
-        	var previewBackground = document.getElementById("previewBackground");
-			previewBackground.style.display="none";
         	var data=new Object();
 			data.id_="";
 			data.owner_="";
@@ -151,18 +260,15 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
 			data.courceDate_="";
 			data.courceName_="";
 			data.courceDuration_="";
-        	data.courceId_=$scope.currentCourse.courseId_;
+        	data.courseId=$scope.currentCourse.courseId_;
 			$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
 			.done(function(data)
 			{
-				loadingBackground.style.display="none";
 				document.getElementById("blah").setAttribute('src','data:image/png;base64,'+data);
 				var previewBackground = document.getElementById("previewBackground");
 				previewBackground.style.display="";
 			});	
-		} 
-        
-        
+		}
         
         var uploadBackground=function() {
         	if(!$scope.imgFile) {
@@ -190,27 +296,21 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
     				window.alert("上傳失敗");
     				console.log(error);
     			});   		    	
-		} 
+		}
         
-        var openInvoiceModal = function(student) {
-            student.isSelected = !student.isSelected;
-
-            var index = 0;
-            for (var i = 0; i < $scope.studentList.length; i++) {
-                if($scope.studentList[i].id == student.id) {
-                    index = i;
-                    break;
-                }
-            }
+        var openInvoiceModal = function() {
             $rootScope.$broadcast("OPEN_INVOICE_MODAL", {
-                list: $scope.studentList,
-                index: index,
+                list: getSelectedStudent(),
                 course: $scope.currentCourse
             });
         }
+
+        var goCourseManage = function() {
+            $state.go(STATES.COURSEINFO_MANAGE)
+        }
               
     	var init = function() {
-            getCourseList();          
+            getCourseInfo();
     	}
 
 		/*==========================
@@ -227,7 +327,10 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
         $scope.sendMailData = sendMailData;
         $scope.courseList = [];
         $scope.currentCourse;
-               
+        $scope.courseId = $stateParams.courseId;
+        $scope.lastSelectIndex = 0;
+        $scope.searchName = "";
+
         /*==========================
              Methods
         ==========================*/
@@ -235,11 +338,14 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
         $scope.getBackgound = getBackgound;
         $scope.changeCertificationBackground = changeCertificationBackground;
         $scope.toggleSelectStudent = toggleSelectStudent;
-        $scope.toggleStatusDropdown = toggleStatusDropdown;
-        $scope.toggleActionDropdown = toggleActionDropdown;
+
         $scope.changeStudentStatus = changeStudentStatus;
         $scope.openInvoiceModal = openInvoiceModal;
-        $scope.changeStudentList = changeStudentList;
+        $scope.goCourseManage = goCourseManage;
+        $scope.getSelectedStudent = getSelectedStudent;
+        $scope.selectAllStudent = selectAllStudent;
+        $scope.selectStudents = selectStudents;
+
         /*==========================
              init
         ==========================*/

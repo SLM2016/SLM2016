@@ -22,6 +22,7 @@ import certification.CertificationManager;
 import student.StudentDBManager;
 import student.StudentModel;
 import student.StudentSendMailData;
+
 import util.SqlHelper;
 
 @WebServlet("/CertificationServlet")
@@ -64,8 +65,7 @@ public class CertificationServlet extends HttpServlet {
 		Gson son=new Gson();
 		StringBuffer requestInfo = new StringBuffer();
 		requestInfo.append(request.getReader().readLine());
-				
-		
+
 		if(requestInfo.indexOf("courceId_", 0) > 0)
 		{
 			Certification certification=son.fromJson(requestInfo.toString(), Certification.class);

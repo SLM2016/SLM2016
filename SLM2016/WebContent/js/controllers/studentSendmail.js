@@ -94,8 +94,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
     		$scope.studentId = parseMailData[index].studentId;
     		$scope.couresDuration = parseMailData[index].couresDuration;
     		
-			makeCertification();   			
-		}
+			makeCertification();   		
 		
 		var numberChar = ["零","一","二","三","四","五","六","七","八","九"];
         var unitChar = ["","十"];
@@ -269,5 +268,5 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
     	
     	
         init();
-		
+		}
 }]);

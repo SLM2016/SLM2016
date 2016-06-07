@@ -127,7 +127,28 @@ public class StudentModel {
 	}
 
 	public void setPhone(String phone) {
-		this.phone = phone;
+		String phoneNumber = "";
+
+		String phonePattern1 = "^09\\d{2}-\\d{3}-\\d{3}";
+		String phonePattern2 = "^09\\d{2}-\\d{6}";
+		String phonePattern3 = "^9\\d{8}";
+
+		Pattern pattern1 = Pattern.compile(phonePattern1);
+		Pattern pattern2 = Pattern.compile(phonePattern2);
+		Pattern pattern3 = Pattern.compile(phonePattern3);
+
+		if (pattern1.matcher(phone).find()) {
+			phoneNumber = phone.substring(0, 4) + "-" + phone.substring(5, 8)
+					+ phone.substring(9, 12);
+
+		} else if (pattern2.matcher(phone).find()) {
+			phoneNumber = phone;
+		} else if (pattern3.matcher(phone).find()) {
+			phoneNumber = "0" + phone.substring(0, 3) + "-" + phone.substring(3, 9);
+		}
+		
+		
+		this.phone = phoneNumber;
 	}
 
 	public String getCompany() {

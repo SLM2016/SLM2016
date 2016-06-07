@@ -44,7 +44,7 @@ public class StudentAction extends HttpServlet {
 	private static final String OP_GET_STUDENT_LIST_BY_COURSE_ID = "5";
 	private static final String OP_UPDATE_STUDENT_RECEIPT_STATUS = "6";
 	private static final String OP_GET_CERTIFICATION_INFO = "7";
-
+	private static final String OP_UPDATE_STUDENT_COMPANY_INFO = "8";
 
 	private static Gson gson = new Gson();
 
@@ -99,13 +99,11 @@ public class StudentAction extends HttpServlet {
 		case OP_UPDATE_STUDENT_RECEIPT_STATUS:
 			updateStudentReceiptStatus(request, response);
 			break;
-	
+		case OP_UPDATE_STUDENT_COMPANY_INFO:
+			updateStudentCompanyEINAndName(request, response);
 		default:
 			break;
 		}
-
-		// Gson gson = new Gson();
-		// out.println(gson.toJson(result));
 	}
 	
 	private Map<String, Object> getGoogleFormData(HttpServletRequest request) throws IOException {
@@ -185,6 +183,7 @@ public class StudentAction extends HttpServlet {
 		} catch (Exception e) {
 			// e.printStackTrace();
 			result.put("status", "false");
+//<<<<<<< HEAD
 		}
 
 		out.println(gson.toJson(result));
@@ -259,7 +258,117 @@ public class StudentAction extends HttpServlet {
 		out.println(gson.toJson(result));
 
 	}
+//
+//=======
+//		}
+//
+//		out.println(gson.toJson(result));
+//		// return result;
+//	}
+//
+//	private void updateStudentReceiptStatus(HttpServletRequest request, HttpServletResponse response)
+//			throws IOException {
+//		PrintWriter out = response.getWriter();
+//		HashMap<String, String> result = new HashMap<String, String>();
+//
+//		try {
+//
+//			StudentModel studentModel;
+//			StudentDBManager studentDBManager = new StudentDBManager();
+//			String studentID = request.getParameter("studentId");
+//			String receiptEIN = request.getParameter("receiptEIN");
+//			String receiptStatus = request.getParameter("receiptStatus");
+//			String paymentStatus = request.getParameter("paymentStatus");
+//
+//			studentModel = studentDBManager.getStudentById(studentID);
+//			studentModel.setReceiptEIN(receiptEIN);
+//			studentModel.setReceiptStatus(receiptStatus);
+//			studentModel.setPaymentStatus(paymentStatus);
+//
+//			if (studentDBManager.updateStudent(studentModel)) {
+//				result.put("status", "true");
+//			} else {
+//
+//				result.put("status", "false");
+//			}
+//
+//		} catch (Exception e) {
+//			result.put("status", "false");
+//			e.printStackTrace();
+//		}
+//
+//		out.println(gson.toJson(result));
+//	}
+//	
+//	
+	private void updateStudentCompanyEINAndName(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		PrintWriter out = response.getWriter();
+		HashMap<String, String> result = new HashMap<String, String>();
 
+		try {
+
+			StudentModel studentModel;
+			StudentDBManager studentDBManager = new StudentDBManager();
+			String studentID = request.getParameter("studentId");
+			String companyEIN = request.getParameter("receipt_company_EIN");
+			String companyName = request.getParameter("receipt_company_name");
+
+			studentModel = studentDBManager.getStudentById(studentID);
+			studentModel.setReceiptCompanyEIN(companyEIN);
+			studentModel.setReceiptCompanyName(companyName);
+
+			if (studentDBManager.updateStudent(studentModel)) {
+				result.put("status", "true");
+			} else {
+
+				result.put("status", "false");
+			}
+
+		} catch (Exception e) {
+			result.put("status", "false");
+			e.printStackTrace();
+		}
+
+		out.println(gson.toJson(result));
+	}
+//	
+//	private void saveFile(HttpServletRequest request, HttpServletResponse response)
+//			throws IOException, ServletException {
+//
+//		HashMap<String, String> result = new HashMap<String, String>();
+//		PrintWriter out = response.getWriter();
+//
+//		Date date = new java.util.Date();
+//		String nowTime = Long.toString(date.getTime());
+//		String fileName = String.format("%s.xlsx", nowTime);
+//
+//		String courseId = request.getParameter("courseId");
+//		// courseName = "TEST";
+//		String dirPath = String.format("./course_excel_file/%s/", courseId);
+//		Part filePart = request.getPart("file");
+//		try {
+//			File f = new File(dirPath);
+//			if (!f.exists()) {
+//				f.mkdirs();
+//			}
+//			// System.out.println(f.getAbsolutePath());
+//			OutputStream fileOut = new FileOutputStream(dirPath + fileName);
+//			IOUtils.copy(filePart.getInputStream(), fileOut);
+//			fileOut.close();
+//			result.put("status", "true");
+//
+//		} catch (
+//
+//		IOException ex) {
+//			result.put("status", "false");
+//		}
+//
+//		out.println(gson.toJson(result));
+//
+//	}
+//
+//>>>>>>> 856446d08412df98c46f48b6f67e40b820e190a5
 	private void getStudentListByCourseId(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		// response.setContentType("application/json");

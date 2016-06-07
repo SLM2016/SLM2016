@@ -147,6 +147,29 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 
             return defer.promise;
         }
+        
+        var updateStudentReceiptCompanyInfo = function(company_EIN,company_EIN_Name,studentId)
+        {
+
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/StudentAction",
+                method: "POST",
+                params: {
+                    op: 8,
+                    studentId: studentId,
+                    receipt_company_EIN: company_EIN,
+                    receipt_company_name: company_EIN_Name
+                }
+            }).success(function(data) {
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
                 
 		/*==========================
             Members
@@ -164,6 +187,8 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.getStudentListByCourseId = getStudentListByCourseId;
         factory.saveStudentFile = saveStudentFile;
         factory.updateStudentReceiptStatus = updateStudentReceiptStatus;
+
+        factory.updateStudentReceiptCompanyInfo = updateStudentReceiptCompanyInfo;
         factory.getCertificationInfo = getCertificationInfo;       
         /*==========================
             init
