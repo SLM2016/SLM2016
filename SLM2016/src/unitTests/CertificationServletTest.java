@@ -41,6 +41,7 @@ public class CertificationServletTest{
 		Mockito.when(requestMock.getReader()).thenReturn(new BufferedReader(data));
 		
 		ServletContext context=Mockito.mock(ServletContext.class,Mockito.RETURNS_DEEP_STUBS);
+		
 		CertificationServlet tag=new CertificationServlet(){
 			private static final long serialVersionUID = 1L;
 
