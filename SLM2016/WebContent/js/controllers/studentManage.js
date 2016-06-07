@@ -139,6 +139,8 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
         var getBackgound=function() {
         	clearFile();
         	var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
+        	var loadingBackground = document.getElementById("loadingBackground");
+        	loadingBackground.style.display="";
         	uploadpreviewBackground.style.display="none";
         	var previewBackground = document.getElementById("previewBackground");
 			previewBackground.style.display="none";
@@ -153,6 +155,7 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
 			$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
 			.done(function(data)
 			{
+				loadingBackground.style.display="none";
 				document.getElementById("blah").setAttribute('src','data:image/png;base64,'+data);
 				var previewBackground = document.getElementById("previewBackground");
 				previewBackground.style.display="";

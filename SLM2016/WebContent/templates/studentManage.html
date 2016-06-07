@@ -101,11 +101,14 @@
         <Background-Change-modal>
        		<input class="btn btn-info btn-orange" type="submit" value="瀏覽檔案" id="loadbackground_button" name="file" ngf-select="changeCertificationBackground($file)"  accept="image/png, image/jpeg, image/jpg" ng-model="picFile" ngf-max-size="20MB">
        		<input class="btn btn-info btn-orange" type="submit" value="上傳" id="uploadbackground_button" name="uploadbackground_button" ng-click="uploadBackground(picFile)">
+        	<div id="loadingBackground" style="display:">              
+            	<spin spin-size="small" class="spin-style"></spin>
+			</div>
         	<div id="previewBackground" style="display: none">
         	<br>
         	<img id="blah" src="#" alt="your image" height="700" width="1000" />
         	</div>
-        	<div id="uploadpreviewBackground" style="display: ">
+        	<div id="uploadpreviewBackground" style="display:">
         	<br>
         	<img ngf-thumbnail="picFile" height="700" width="1000">
         	</div>
