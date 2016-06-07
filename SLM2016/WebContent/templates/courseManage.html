@@ -28,32 +28,39 @@
                 </div>
             </div>
             <loading ng-show="isCourseLoading"></loading>
-            <div class="manage-content" ng-show="!isCourseLoading">
-                <div class="table-content">
-                    <table class="table table-hover" border="1" cellpadding="9">
-                        <thead>
-                            <!-- <th>課名</th> -->
-                            <th>類型</th>
-                            <th>梯次</th>
-                            <th>講師</th>
-                            <th>狀態</th>
-                            <th>功能</th>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="course in courseList track by $index" ng-dblclick="goStudentManage(course.courseId_)">
-                                <!-- <td>{{course.courseName_}}</td> -->
-                                <td>{{course.type_}}</td>
-                                <td>{{course.batch_}}</td>
-                                <td>{{course.lecturer_}}</td>
-                                <td>{{course.status_}}</td>
-                                <td>
-                                    <input type="submit" class="btn btn-info btn-orange" value="刪除" ng-click="deleteRow(course.courseId_)">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="content-wrapper" ng-show="!isCourseLoading">
+                <div class="manage-content" ng-repeat="group in courseGroupList" ng-class="{'open-level': group.openLevel}">
+                    <div class="content-title" ng-click="openGroupLevel(group)">
+                        <span>{{group.name}}</span>
+                        <span class="glyphicon glyphicon-menu-right"></span>
+                    </div>
+                    <div class="table-content">
+                        <table class="table table-hover" border="1" cellpadding="9">
+                            <thead>
+                                <!-- <th>課名</th> -->
+                                <th>梯次</th>
+                                <th>類型</th>
+                                <th>講師</th>
+                                <th>狀態</th>
+                                <th>功能</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="course in group.courseList track by $index">
+                                    <!-- <td>{{course.courseName_}}</td> -->
+                                    <td class="batch" ng-click="goStudentManage(course.courseId_)">{{course.batch_}}</td>
+                                    <td>{{course.type_}}</td>
+                                    <td>{{course.lecturer_}}</td>
+                                    <td>{{course.status_}}</td>
+                                    <td>
+                                        <input type="submit" class="btn btn-info btn-orange" value="刪除" ng-click="deleteRow(course.courseId_)">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+                
     	</div>
     </div>
 </div>

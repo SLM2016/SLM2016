@@ -51,17 +51,36 @@
                 margin-top: 20px;
                 background-color: #FFF;
                 @include box-shadow(0px 1px 3px 0px rgba(0, 0, 0, 0.1));
-                @include border-radius(3px);
-                .manage-title {
-                    height: 60px;
-                    line-height: 60px;
-                    padding: 0 24px;
-                    font-size: 16px;
+                @include border-radius(5px);
+                &.open-level {
+                    .content-title {
+                        .glyphicon {
+                            @include transform(rotate(90deg));
+                        }
+                    }
+                    .table-content {
+                        display: block;
+                    }
+                    
+                }
+                .content-title {
+                    height: 50px;
+                    line-height: 50px;
+                    background-color: #ff8f4f;
                     color: #FFF;
-                    background-color: #FF8400;
-                    @include border-radius(3px 3px 0 0);
+                    font-size: 20px;
+                    text-align: center;
+                    font-weight: bold;
+                    cursor: pointer;
+                    @include border-radius(5px 5px 0 0);
+                    .glyphicon {
+                        top: 0;
+                        font-size: 12px;
+                        margin-left: 10px;
+                    }
                 }
                 .table-content {
+                    display: none;
                     padding-top: 10px;
                     table {
                         thead {
@@ -82,6 +101,7 @@
                                 td {
                                     position: relative;
                                     height: 50px;
+                                    width: 15%;
                                     line-height: 50px;
                                     padding: 0;
                                     font-size: 14px;
@@ -89,8 +109,11 @@
                                     &:nth-of-type(0n+1) {
                                         padding-left: 20px;
                                     }
-                                    &.empty {
-                                        text-align: center;
+                                    &.batch {
+                                        width: 40%;
+                                        color: #0F8CF7;
+                                        text-decoration: underline;
+                                        cursor: pointer;
                                     }
                                 }
                                 &.selected {
