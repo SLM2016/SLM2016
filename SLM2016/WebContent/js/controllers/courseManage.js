@@ -22,10 +22,15 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
                     }
                 }
                 $scope.isCourseLoading = false;
+<<<<<<< HEAD
                 console.log($scope.courseGroupList)
+=======
+                $scope.courseList = result;
+                console.log(result);
+>>>>>>> d32c60f4b95e9877a34adf04f06ad4b079eec231
             }, function(error) {
                 $scope.isCourseLoading = false;
-            })
+            });
         }
 
         var isInCourseGroup = function(course) {
@@ -58,11 +63,9 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
                 });
             }, 500);
         }
-
         var openGroupLevel = function(group) {
             group.openLevel = !group.openLevel;
         }
-
         var goStudentManage = function(courseId) {
             $state.go(STATES.COURSEINFO_STUDENT, {
                 courseId: courseId

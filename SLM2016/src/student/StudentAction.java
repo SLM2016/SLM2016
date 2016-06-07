@@ -44,6 +44,9 @@ public class StudentAction extends HttpServlet {
 	private static final String OP_GET_STUDENT_LIST_BY_COURSE_ID = "5";
 	private static final String OP_UPDATE_STUDENT_RECEIPT_STATUS = "6";
 	private static final String OP_GET_CERTIFICATION_INFO = "7";
+	private static final String OP_UPDATE_STUDENT_COMPANY_INFO = "8";
+	
+	
 
 
 	private static Gson gson = new Gson();
@@ -99,6 +102,8 @@ public class StudentAction extends HttpServlet {
 		case OP_UPDATE_STUDENT_RECEIPT_STATUS:
 			updateStudentReceiptStatus(request, response);
 			break;
+		case OP_UPDATE_STUDENT_COMPANY_INFO:
+			updateStudentCompanyEINAndName(request, response);
 	
 		default:
 			break;
@@ -209,6 +214,39 @@ public class StudentAction extends HttpServlet {
 			studentModel.setReceiptEIN(receiptEIN);
 			studentModel.setReceiptStatus(receiptStatus);
 			studentModel.setPaymentStatus(paymentStatus);
+
+			if (studentDBManager.updateStudent(studentModel)) {
+				result.put("status", "true");
+			} else {
+
+				result.put("status", "false");
+			}
+
+		} catch (Exception e) {
+			result.put("status", "false");
+			e.printStackTrace();
+		}
+
+		out.println(gson.toJson(result));
+	}
+	
+	
+	private void updateStudentCompanyEINAndName(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		PrintWriter out = response.getWriter();
+		HashMap<String, String> result = new HashMap<String, String>();
+
+		try {
+
+			StudentModel studentModel;
+			StudentDBManager studentDBManager = new StudentDBManager();
+			String studentID = request.getParameter("studentId");
+			String companyEIN = request.getParameter("receipt_company_EIN");
+			String companyName = request.getParameter("receipt_company_name");
+
+			studentModel = studentDBManager.getStudentById(studentID);
+			studentModel.setReceiptCompanyEIN(companyEIN);
+			studentModel.setReceiptCompanyName(companyName);
 
 			if (studentDBManager.updateStudent(studentModel)) {
 				result.put("status", "true");
