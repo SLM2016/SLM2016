@@ -40,7 +40,7 @@
                             <th>功能</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="course in courseList track by $index" ng-dblclick="goStudentManage(course.courseId_)">
+                            <tr ng-repeat="course in courseList track by $index" ng-dblclick="goStudentManage(course.courseId_ , course.courseName_)">
                                 <!-- <td>{{course.courseName_}}</td> -->
                                 <td>{{course.type_}}</td>
                                 <td>{{course.batch_}}</td>

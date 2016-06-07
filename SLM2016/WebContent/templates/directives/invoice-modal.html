@@ -8,7 +8,7 @@
         	<div class="left">
         		<div class="form-group">
 				    <label>課程：</label>
-				    <span>{{course.courseName_}}</span>
+				    <span>{{course}}</span>
 				</div>
 				<div class="form-group">
 				    <label>日期：</label>
@@ -42,19 +42,19 @@
 				    <label>格式：</label>
 				    <span>{{data.receipt_type}}</span>
 				</div>
-				<div class="form-group">
+				<div class="form-group" ng-show = "isThreeInvoice">
 				    <label>統編與公司：</label>
 				    <div class="input-block" ng-class="{'has-error' : isCompanyidError, 'has-success' : isCompanyidSuccess}">
-				    	<input type="text" class="form-control id" placeholder="請輸入統編">
+				    	<input type="text" class="form-control id" placeholder="請輸入統編" ng-model = "data.companyid" ng-change="onCompanyIdChange()">
 						<span class="glyphicon glyphicon-ok form-control-feedback success" aria-hidden="true"></span>
 						<span class="glyphicon glyphicon-remove form-control-feedback error" aria-hidden="true"></span>
 				    </div>
 					<div class="input-block" ng-class="{'has-error' : isCompanyError, 'has-success' : isCompanySuccess}">
-				    	<input type="text" class="form-control" placeholder="請輸入公司名稱">
-				    	<span class="company-correct">正確名稱：{{data.correctCompany}}</span>
+				    	<input type="text" class="form-control" placeholder="請輸入公司名稱" ng-model = "data.company">
 				    	<span class="loading" ng-show="isCompanyLoading"><spin spin-size="small" class="spin-style"></spin></span>
 						<span class="glyphicon glyphicon-ok form-control-feedback success" aria-hidden="true"></span>
 						<span class="glyphicon glyphicon-remove form-control-feedback error" aria-hidden="true"></span>
+						<span class="company-correct" ng-click="changeCompanyData()" ng-show="isCompanyStatus">正確名稱：{{data.correctCompany}}</span>
 				    </div>
 				</div>
         	</div>
@@ -201,11 +201,6 @@
 			</div>
 		</form>
 		<button type="button" class="btn btn-primary" ng-click="saveStudentReceiptStatus()">儲存</button>
-		<div class="result-container" ng-class="{'show-result': isChangingStatus || isChangeSuccess || isChangeFail}">
-            <spin spin-size="medium" class="spin-style" ng-show="isChangingStatus"></spin>
-            <span class="label label-info" ng-show="isChangeSuccess">儲存成功</span>
-            <span class="label label-danger" ng-show="isChangeFail">儲存失敗</span>
-        </div>
     </div>
 </div>
 <div class="right-button" ng-click="nextStudent()" ng-class="{'stop': notHasNext()}"><span class="glyphicon glyphicon-menu-right"></span></div>

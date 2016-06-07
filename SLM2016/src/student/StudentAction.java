@@ -44,7 +44,7 @@ public class StudentAction extends HttpServlet {
 	private static final String OP_GET_STUDENT_LIST_BY_COURSE_ID = "5";
 	private static final String OP_UPDATE_STUDENT_RECEIPT_STATUS = "6";
 	private static final String OP_GET_CERTIFICATION_INFO = "7";
-	private static final String OP_UPDATE_STUDENT_COMPANY_INFO = "7";
+	private static final String OP_UPDATE_STUDENT_COMPANY_INFO = "8";
 	
 	
 

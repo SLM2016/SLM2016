@@ -3,6 +3,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
 
         var getStudentList = function() {
             $scope.isStudentLoading = true;
+
             StudentInfoService.getStudentListByCourseId($scope.courseId).then(function(result) {
                 $scope.isStudentLoading = false;
                 for (var i = 0; i < result.length; i++) {
@@ -169,11 +170,11 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.studentList = [];
         $scope.sendMailData = sendMailData;
         $scope.courseList = [];
-        $scope.currentCourse;
+        $scope.currentCourse = $stateParams.courseName;
         $scope.courseId = $stateParams.courseId;
         $scope.lastSelectIndex = 0;
         $scope.searchName = "";
-               
+
         /*==========================
              Methods
         ==========================*/

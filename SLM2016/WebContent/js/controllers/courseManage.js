@@ -7,9 +7,10 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
             CourseService.getCourseList().then(function(result) {
                 $scope.isCourseLoading = false;
                 $scope.courseList = result;
+                console.log(result);
             }, function(error) {
                 $scope.isCourseLoading = false;
-            })
+            });
         }
 
         var deleteRow = function(id) {
@@ -32,9 +33,10 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
             }, 500);
         }
 
-        var goStudentManage = function(courseId) {
+        var goStudentManage = function(courseId,courseName) {
             $state.go(STATES.COURSEINFO_STUDENT, {
-                courseId: courseId
+                courseId: courseId,
+                courseName: courseName
             })
         }
 

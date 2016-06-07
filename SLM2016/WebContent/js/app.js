@@ -83,7 +83,7 @@ var app = angular.module('app', [
         })
 
         .state(STATES.COURSEINFO_STUDENT, {
-            url: "/:courseId/manage",
+            url: "/:courseId/:courseName/manage",
             views: {
                 'content@courseInfo': {
                     templateUrl: "templates/studentManage.html",

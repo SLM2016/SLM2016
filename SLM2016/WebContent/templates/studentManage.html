@@ -45,7 +45,7 @@
                             <th>繳費狀態</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="s in studentList track by $index" ng-class="{'selected': s.isSelected}" ng-click="toggleSelectStudent(s, $index, $event)" ng-show="studentList.length > 0>
+                            <tr ng-repeat="s in studentList track by $index" ng-class="{'selected': s.isSelected}" ng-click="toggleSelectStudent(s, $index, $event)" ng-show="studentList.length > 0">
                                 <td style="text-align: center;">{{$index}}</td>
                                 <td>{{s.name}}</td>
                                 <td>{{s.company}}</td>
