@@ -29,11 +29,14 @@ public class CourseManagerServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// String simpleData = request.getHeader("simpleData");
 		String op = request.getParameter("op");
-		if (op.equals(OP_GET_COURSE_SIMPLE_DATA)) {
-			getCourseSimpleData(request, response);
-		} else if (op.equals(OP_GET_COURSE_INFO_BY_COURSE_ID)) {
-			doGetGetCourseInfoByCourseId(request, response);
-		} else {
+		if(op != null) {
+			if (op.equals(OP_GET_COURSE_SIMPLE_DATA)) {
+				getCourseSimpleData(request, response);
+			} else if (op.equals(OP_GET_COURSE_INFO_BY_COURSE_ID)) {
+				doGetGetCourseInfoByCourseId(request, response);
+			}
+		}
+		else {
 			List<Course> courses_ = new ArrayList<Course>();
 			String result = "";
 			try {

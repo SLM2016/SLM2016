@@ -6,7 +6,7 @@
                 <div class="top-nav">
                     <a class="nav" ng-click="goCourseManage()">課程管理</a>
                     <span class="glyphicon glyphicon-menu-right"></span>
-                    <span>{{courseId}}</span>
+                    <span>{{currentCourse.courseName_}} - {{currentCourse.batch_}}</span>
                 </div>
                 <div class="manage-topbar">
                     <div class="btn-group" role="group" aria-label="...">
@@ -40,19 +40,19 @@
                         <div class="left">
                             <div class="form-group">
                                 <label>課程名稱：</label>
-                                <span>{{course.courseName_}}</span>
+                                <span>{{currentCourse.courseName_}}</span>
                             </div>
                             <div class="form-group">
                                 <label>批次：</label>
-                                <span>{{currentStudent.timestamp}}</span>
+                                <span>{{currentCourse.batch_}}</span>
                             </div>
                             <div class="form-group">
                                 <label>類型：</label>
-                                <span>{{currentStudent.name}}</span>
+                                <span>{{currentCourse.type_}}</span>
                             </div>
                             <div class="form-group">
                                 <label>課程時間：</label>
-                                <span>{{currentStudent.name}}</span>
+                                <span>{{currentCourse.duration_}}</span>
                             </div>
                             <div class="form-group">
                                 <label>開課日期：</label>
@@ -64,22 +64,23 @@
                         <div class="right">
                             <div class="form-group">
                                 <label>地點：</label>
-                                <span>{{course.courseName_}}</span>
+                                <span>{{currentCourse.location_}}</span>
                             </div>
                             <div class="form-group">
                                 <label>講師：</label>
-                                <span>{{currentStudent.timestamp}}</span>
+                                <span>{{currentCourse.lecturer_}}</span>
                             </div>
                             <div class="form-group">
                                 <label>票種：</label>
-                                <span>{{currentStudent.name}}</span>
+                                <span>{{currentCourse.name}}</span>
                             </div>
                             <div class="form-group">
                                 <label>票價：</label>
-                                <span>{{currentStudent.name}}</span>
+                                <span>{{currentCourse.name}}</span>
                             </div>
                             <div class="form-group">
                                 <label>課程連結：</label>
+                                <span><a href=currentCourse.hyperlink_>{{currentCourse.hyperlink_}}</a></span>
                             </div>
                             <div class="form-group">
                                 <label>副本收件人：</label>

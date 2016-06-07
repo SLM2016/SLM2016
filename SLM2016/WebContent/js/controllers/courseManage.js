@@ -22,12 +22,7 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
                     }
                 }
                 $scope.isCourseLoading = false;
-<<<<<<< HEAD
                 console.log($scope.courseGroupList)
-=======
-                $scope.courseList = result;
-                console.log(result);
->>>>>>> d32c60f4b95e9877a34adf04f06ad4b079eec231
             }, function(error) {
                 $scope.isCourseLoading = false;
             });

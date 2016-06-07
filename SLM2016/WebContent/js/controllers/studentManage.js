@@ -2,7 +2,6 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
     function ($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService, $stateParams) {  
 
         var getStudentList = function() {
-            $scope.isStudentLoading = true;
 
             StudentInfoService.getStudentListByCourseId($scope.courseId).then(function(result) {
                 $scope.isStudentLoading = false;
@@ -10,6 +9,18 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
                     result[i].isSelected = false;
                 }
                 $scope.studentList = result;
+            }, function(error) {
+                $scope.isStudentLoading = false;
+                $scope.isStudentLoadError = true;
+            })
+        }
+
+        var getCourseInfo = function() {
+            $scope.isStudentLoading = true;
+
+            CourseService.getCourseById($scope.courseId).then(function(result) {
+                $scope.currentCourse = result[0];
+                getStudentList();
             }, function(error) {
                 $scope.isStudentLoading = false;
                 $scope.isStudentLoadError = true;
@@ -154,7 +165,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         }
               
     	var init = function() {
-            getStudentList();
+            getCourseInfo();
     	}
 
 		/*==========================
@@ -170,7 +181,7 @@ app.controller('StudentManageController', ['$scope', '$state', '$timeout', '$roo
         $scope.studentList = [];
         $scope.sendMailData = sendMailData;
         $scope.courseList = [];
-        $scope.currentCourse = $stateParams.courseName;
+        $scope.currentCourse;
         $scope.courseId = $stateParams.courseId;
         $scope.lastSelectIndex = 0;
         $scope.searchName = "";

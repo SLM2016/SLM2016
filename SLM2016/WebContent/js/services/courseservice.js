@@ -24,8 +24,27 @@ app.factory('CourseService', ['$q', '$http', '$timeout', '$rootScope',
             $http({
                 url: "/SLM2016/CourseManagerServlet",
                 method: "GET",
-                headers: {
-                    simpleData: true
+                params: {
+                    op: 1
+                }
+            }).success(function(data) {
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+
+        var getCourseById = function(courseId) {
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/CourseManagerServlet",
+                method: "GET",
+                params: {
+                    op: 2,
+                    courseId: courseId
                 }
             }).success(function(data) {
                 defer.resolve(data);
@@ -47,6 +66,7 @@ app.factory('CourseService', ['$q', '$http', '$timeout', '$rootScope',
 
         factory.getCourseList = getCourseList;
         factory.getCourseSimpleList = getCourseSimpleList;
+        factory.getCourseById = getCourseById;
 
         /*==========================
             init
