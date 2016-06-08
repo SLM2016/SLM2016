@@ -93,8 +93,9 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			$scope.date = parseMailData[index].courseDate;
     		$scope.studentId = parseMailData[index].studentId;
     		$scope.couresDuration = parseMailData[index].couresDuration;
-    		
-			makeCertification();   		
+
+			makeCertification();   					
+		}
 		
 		var numberChar = ["零","一","二","三","四","五","六","七","八","九"];
         var unitChar = ["","十"];
@@ -136,7 +137,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
             return result;
         }
 		
-		var makeCertification = function(){
+        var makeCertification = function(){
 			console.log("製作證書PNG中");
 			var data = new Object();
 			data.id_ = parseMailData[index].certificationId;
@@ -194,6 +195,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 		var init = function() { 
 			$scope.isCertificationLoading = true;
 			parseMailData = JSON.parse(StudentInfoService.getStudentSendMailData());
+
 			CourseService.getCourseList().then(function(courseData) {
 				var courseIndex;
 				for (var i = 0; i < courseData.length; i++) {
@@ -268,5 +270,5 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
     	
     	
         init();
-		}
+		
 }]);

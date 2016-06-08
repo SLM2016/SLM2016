@@ -130,6 +130,8 @@ var app = angular.module('app', [
                 }
             }
         })
+        
+        
 
         .state(STATES.OTHERS, {
             url: "/others",

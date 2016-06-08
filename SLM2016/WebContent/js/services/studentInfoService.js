@@ -170,7 +170,9 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 
             return defer.promise;
         }
-                
+
+
+
 		/*==========================
             Members
         ==========================*/
@@ -187,7 +189,6 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.getStudentListByCourseId = getStudentListByCourseId;
         factory.saveStudentFile = saveStudentFile;
         factory.updateStudentReceiptStatus = updateStudentReceiptStatus;
-
         factory.updateStudentReceiptCompanyInfo = updateStudentReceiptCompanyInfo;
         factory.getCertificationInfo = getCertificationInfo;       
         /*==========================

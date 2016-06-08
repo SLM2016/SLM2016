@@ -27,10 +27,16 @@ public class CourseManagerServlet extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String simpleData = request.getHeader("simpleData");
-		if (simpleData != null) {
-			getCourseSimpleData(request, response);
-		} else {
+		// String simpleData = request.getHeader("simpleData");
+		String op = request.getParameter("op");
+		if(op != null) {
+			if (op.equals(OP_GET_COURSE_SIMPLE_DATA)) {
+				getCourseSimpleData(request, response);
+			} else if (op.equals(OP_GET_COURSE_INFO_BY_COURSE_ID)) {
+				doGetGetCourseInfoByCourseId(request, response);
+			}
+		}
+		else {
 			List<Course> courses_ = new ArrayList<Course>();
 			String result = "";
 			try {
@@ -115,6 +121,28 @@ public class CourseManagerServlet extends HttpServlet {
 
 		}
 		String json = new Gson().toJson(result);
+		response.getWriter().write(json);
+	}
+
+	private void doGetGetCourseInfoByCourseId(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		List<Course> courses_ = new ArrayList<Course>();
+		String result = "";
+
+		String courseId = request.getParameter("courseId");
+		try {
+			result = courseManagerWithDb_.getCourseInfoByCourseId(courses_, courseId);
+		} catch (SQLException e) {
+
+		}
+		String json;
+		if (result != "Success") {
+			json = new Gson().toJson(result);
+		} else {
+			json = new Gson().toJson(courses_);
+		}
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
 	}
 }

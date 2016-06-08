@@ -118,7 +118,6 @@ public class StudentModelFactory {
 			Cell cell = row.getCell(phoneIndex);
 
 			String phoneContent = StudentExcelUtility.parseCell(cell);
-
 //			String phoneNumber = "";
 //
 //			String phonePattern1 = "^09\\d{2}-\\d{3}-\\d{3}";

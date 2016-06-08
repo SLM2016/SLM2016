@@ -15,80 +15,6 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
             })
         }
 
-    var changeCertificationBackground=function(file) {
-    	clearFile();
-    	var previewBackground = document.getElementById("previewBackground");
-    	var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
-    	$scope.imgFile = file;
-    	if($scope.imgFile!=null){
-    		previewBackground.style.display="none";
-    		uploadpreviewBackground.style.display="";
-    	}
-    	else
-    		previewBackground.style.display="";
-	} 
-    
-    var clearFile = function() {
-    	$scope.picFile = null;
-    	$scope.imgFile = null;
-    	$scope.imgFile;
-	}
-    
-    var getBackgound=function() {
-    	clearFile();
-    	var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
-    	var loadingBackground = document.getElementById("loadingBackground");
-    	loadingBackground.style.display="";
-    	uploadpreviewBackground.style.display="none";
-    	var previewBackground = document.getElementById("previewBackground");
-		previewBackground.style.display="none";
-    	var data=new Object();
-		data.id_="";
-		data.owner_="";
-		data.date_="";
-		data.courceDate_="";
-		data.courceName_="";
-		data.courceDuration_="";
-    	data.courceId_=$scope.currentCourse.courseId_;
-		$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
-		.done(function(data)
-		{
-			loadingBackground.style.display="none";
-			document.getElementById("blah").setAttribute('src','data:image/png;base64,'+data);
-			var previewBackground = document.getElementById("previewBackground");
-			previewBackground.style.display="";
-		});	
-	} 
-    
-    
-    
-    var uploadBackground=function() {
-    	if(!$scope.imgFile) {
-    		window.alert("請選取檔案");
-			return;
-		}      	 
-		    var defer = $q.defer();
-		    Upload.upload({
-		        url: '/SLM2016/UpdateCertificationBackgroundServlet',
-		        withCredential: true,
-		        data: {
-                    courseId: $scope.currentCourse.courseId_
-		        },
-		        file: $scope.imgFile
-		    }).success(function(data) {
-		    	if(data.status=="true"){
-		    		window.alert("上傳成功");
-		    		getBackgound();
-		    	}
-		    	else{
-		    		window.alert("上傳失敗");
-		    		console.log(data.status);
-		    	}
-			}).error(function(error) {
-				window.alert("上傳失敗");
-				console.log(error);
-			});   		    	
-	} 
         var getCourseInfo = function() {
             $scope.isStudentLoading = true;
 
@@ -145,12 +71,7 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
             }
 
             return selectedStudents;
-
         }
-              
-    	var init = function() {
-            getCourseList();          
-    	}
 
         var toggleSelectStudent = function(student, index, $event) {
             if($event.ctrlKey) {
@@ -189,7 +110,8 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
         			mailData[i].studentId = $scope.studentList[j].id;
         			mailData[i].studentName = $scope.studentList[j].name;
         			mailData[i].courseId = $scope.studentList[j].fk_course_info_id;
-        			mailData[i].address = $scope.studentList[j].email;      			
+        			mailData[i].address = $scope.studentList[j].email;      		
+        			mailData[i].certificationId = $scope.studentList[j].certification_id;    	
         			i++;
         		} 
         	}
@@ -252,6 +174,8 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
         var getBackgound=function() {
         	clearFile();
         	var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
+        	var loadingBackground = document.getElementById("loadingBackground");
+        	loadingBackground.style.display="";
         	uploadpreviewBackground.style.display="none";
         	var data=new Object();
 			data.id_="";
@@ -260,10 +184,11 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
 			data.courceDate_="";
 			data.courceName_="";
 			data.courceDuration_="";
-        	data.courseId=$scope.currentCourse.courseId_;
+        	data.courceId_=$scope.currentCourse.courseId_;
 			$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
 			.done(function(data)
-			{
+			{	
+				loadingBackground.style.display="none";
 				document.getElementById("blah").setAttribute('src','data:image/png;base64,'+data);
 				var previewBackground = document.getElementById("previewBackground");
 				previewBackground.style.display="";
@@ -338,7 +263,6 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
         $scope.getBackgound = getBackgound;
         $scope.changeCertificationBackground = changeCertificationBackground;
         $scope.toggleSelectStudent = toggleSelectStudent;
-
         $scope.changeStudentStatus = changeStudentStatus;
         $scope.openInvoiceModal = openInvoiceModal;
         $scope.goCourseManage = goCourseManage;

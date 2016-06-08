@@ -291,6 +291,8 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                     }
                 }
 
+
+
                 var onCompanyIdChange = function() {
                     $scope.data.companyidArray = $scope.data.companyid.split("");                   
                     if($scope.data.companyid.length == 0) {
@@ -469,7 +471,6 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                 $scope.invoiceYear = "";
                 $scope.isStudentPaid = false;
                 $scope.isResultShow = false;
-
                 $scope.isCompanyidError = false;
                 $scope.isCompanyidSuccess = false;
                 $scope.isCompanySuccess = false;
@@ -531,6 +532,7 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                 };
 
                 $scope.isInvoiceNumberEmpty = false;
+
 
                 /*==========================
                     Methods
