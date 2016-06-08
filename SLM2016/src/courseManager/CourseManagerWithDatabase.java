@@ -1,5 +1,6 @@
 package courseManager;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -490,12 +491,11 @@ public class CourseManagerWithDatabase {
 		CachedRowSet data = new CachedRowSetImpl();
 		String sqlString = "SELECT date FROM `course_has_date` WHERE `fk_course_id`='" + courseId + "'";
 		helper.excuteSql(sqlString, data);
-		data.next();
-//		System.out.println(data.getString("date"));
-//		if (data.getDataSourceName()==null)
-//			result = "";
-//		else
-		result = data.getString("date");
+		
+		if (!(data.next()))
+			result = "";
+		else
+			result = data.getString("date");
 		data.close();
 		return result;
 	}

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import org.apache.jasper.tagplugins.jstl.core.Out;
 import org.apache.poi.util.IOUtils;
 import com.google.gson.Gson;
 
@@ -396,32 +397,45 @@ public class StudentAction extends HttpServlet {
 		StudentDBManager studentDbManager = new StudentDBManager();
 		ArrayList<Integer>studentIds= studentDbManager.getStudentsByCourseId(courseId);
 		int studentSize = studentIds.size();
-//		System.out.println("studentSize = "+ studentSize+"\r");
-		CourseManagerWithDatabase courseManagerWithDatabase = new CourseManagerWithDatabase();
-		String date="";
-		String classCode ="";
-		boolean temp =true;
+		HashMap<String, String> result = new HashMap<String, String>();
 		try {
-			date = courseManagerWithDatabase.getDateByCourseId(courseId);
-			date = date.substring(2, 7);
-			classCode = courseManagerWithDatabase.getCodeByCourseId(courseId);
-			String certificationId = classCode;
-			if(date!="")
-				certificationId= certificationId +"-"+date;
-			for(int i=1; i<studentSize+1; i++){
-				if(i<10)
-					certificationId = certificationId + "-0" + i;
-				else
-					certificationId = certificationId + "-" +i;
-				temp = studentDbManager.updateStudentCertificationId(studentIds.get(i-1).intValue(), certificationId);
-				if(temp == false)
-					System.out.println("studentIds "+i+" is not update correct");
-				certificationId = classCode;
-				if(date!="")
-					certificationId= certificationId +"-"+date;
+			PrintWriter out = response.getWriter();
+			if (studentSize<1){
+				result.put("status", "false");
+				out.println(gson.toJson(result));
+				}
+			else{
+				CourseManagerWithDatabase courseManagerWithDatabase = new CourseManagerWithDatabase();
+				String date="";
+				String classCode ="";
+				boolean temp =true;
+				try {
+					date = courseManagerWithDatabase.getDateByCourseId(courseId);
+					classCode = courseManagerWithDatabase.getCodeByCourseId(courseId);
+					String certificationId = classCode;
+					if(date!=""){
+						date = date.substring(2, 7);
+						certificationId= certificationId +"-"+date;}
+					for(int i=1; i<studentSize+1; i++){
+						if(i<10)
+							certificationId = certificationId + "-0" + i;
+						else
+							certificationId = certificationId + "-" +i;
+						temp = studentDbManager.updateStudentCertificationId(studentIds.get(i-1).intValue(), certificationId);
+						if(temp == false)
+							System.out.println("studentIds "+i+" is not update correct");
+						certificationId = classCode;
+						if(date!="")
+							certificationId= certificationId +"-"+date;
+					}
+					result.put("status", "true");
+					out.println(gson.toJson(result));
+				} catch (SQLException esql) {
+					esql.printStackTrace();
+				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (IOException eio) {
+			eio.printStackTrace();
 		}
 	}
 }
