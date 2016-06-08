@@ -195,4 +195,14 @@ public class StudentDBManager {
 			return false;
 		}
 	}
+
+	public String getStudentNumByCourseId(String courseId) throws SQLException {
+
+		String sql = String.format(
+				"SELECT COUNT(*) as `student_num` FROM `student_info` where `fk_course_info_id` = '%s';", courseId);
+		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
+		Gson g = new Gson();
+		return g.toJson(result);
+		// "ON DUPLICATE KEY UPDATE `name` = '%s'
+	}
 }

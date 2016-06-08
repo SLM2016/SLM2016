@@ -46,6 +46,7 @@ public class StudentAction extends HttpServlet {
 	private static final String OP_GET_CERTIFICATION_INFO = "7";
 	private static final String OP_UPDATE_STUDENT_COMPANY_INFO = "8";
 	private static final String OP_DELETE_STUDENT_BY_ID = "9";
+	private static final String OP_GET_STUDENT_NUM_BY_COURSE_ID = "10";
 
 	private static Gson gson = new Gson();
 
@@ -67,6 +68,8 @@ public class StudentAction extends HttpServlet {
 		case OP_GET_CERTIFICATION_INFO:
 			getCertificationInfo(request, response);
 			break;
+		case OP_GET_STUDENT_NUM_BY_COURSE_ID:
+			getStudentNumByCourseId(request, response);
 		default:
 			break;
 		}
@@ -407,4 +410,27 @@ public class StudentAction extends HttpServlet {
 
 		out.println(gson.toJson(result));
 	}
+
+	private void getStudentNumByCourseId(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		// response.setContentType("application/json");
+		// response.setCharacterEncoding("UTF-8");
+		String courseId = request.getParameter("courseId");
+
+		StudentDBManager studentDbManager = new StudentDBManager();
+		String json = null;
+
+		try {
+			json = studentDbManager.getStudentNumByCourseId(courseId);
+
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
