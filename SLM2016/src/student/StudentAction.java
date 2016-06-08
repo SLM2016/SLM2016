@@ -396,7 +396,7 @@ public class StudentAction extends HttpServlet {
 		StudentDBManager studentDbManager = new StudentDBManager();
 		ArrayList<Integer>studentIds= studentDbManager.getStudentsByCourseId(courseId);
 		int studentSize = studentIds.size();
-		System.out.println("studentSize = "+ studentSize+"\r");
+//		System.out.println("studentSize = "+ studentSize+"\r");
 		CourseManagerWithDatabase courseManagerWithDatabase = new CourseManagerWithDatabase();
 		String date="";
 		String classCode ="";
@@ -412,8 +412,8 @@ public class StudentAction extends HttpServlet {
 					certificationId = certificationId + "-0" + i;
 				else
 					certificationId = certificationId + "-" +i;
-				System.out.println(certificationId);
-				System.out.println("");
+//				System.out.println(certificationId);
+//				System.out.println("");
 				temp = studentDbManager.updateStudentCertificationId(studentIds.get(i-1).intValue(), certificationId);
 				if(temp == false)
 					System.out.println("studentIds "+i+" is not update correct");

@@ -479,11 +479,8 @@ public class CourseManagerWithDatabase {
 		CachedRowSet data = new CachedRowSetImpl();
 		helper.excuteSql(sqlString, data);
 		data.next();
-		System.out.println(data.getString("code"));
 		result = data.getString("code");
 		data.close();
-		System.out.println("");
-		System.out.println(result);
 		return result;
 	}
 
@@ -493,23 +490,12 @@ public class CourseManagerWithDatabase {
 		CachedRowSet data = new CachedRowSetImpl();
 		String sqlString = "SELECT date FROM `course_has_date` WHERE `fk_course_id`='" + courseId + "'";
 		helper.excuteSql(sqlString, data);
-
 		data.next();
-		if (data.equals(null)) {
-			System.out.println("BCCCCC");
-		}
-
-		if (data.isLast()) {
-			System.out.println(data.getString("date").toString() + "~!!");
-
-		}
-
-		if (data.getString("date").isEmpty())
+		if (data.getDataSourceName()==null)
 			result = "";
 		else
 			result = data.getString("date");
 		data.close();
-		System.out.println(result);
 		return result;
 	}
 }
