@@ -403,6 +403,7 @@ public class StudentAction extends HttpServlet {
 		boolean temp =true;
 		try {
 			date = courseManagerWithDatabase.getDateByCourseId(courseId);
+			date = date.substring(2, 7);
 			classCode = courseManagerWithDatabase.getCodeByCourseId(courseId);
 			String certificationId = classCode;
 			if(date!="")
@@ -412,8 +413,6 @@ public class StudentAction extends HttpServlet {
 					certificationId = certificationId + "-0" + i;
 				else
 					certificationId = certificationId + "-" +i;
-//				System.out.println(certificationId);
-//				System.out.println("");
 				temp = studentDbManager.updateStudentCertificationId(studentIds.get(i-1).intValue(), certificationId);
 				if(temp == false)
 					System.out.println("studentIds "+i+" is not update correct");

@@ -491,10 +491,11 @@ public class CourseManagerWithDatabase {
 		String sqlString = "SELECT date FROM `course_has_date` WHERE `fk_course_id`='" + courseId + "'";
 		helper.excuteSql(sqlString, data);
 		data.next();
-		if (data.getDataSourceName()==null)
-			result = "";
-		else
-			result = data.getString("date");
+//		System.out.println(data.getString("date"));
+//		if (data.getDataSourceName()==null)
+//			result = "";
+//		else
+		result = data.getString("date");
 		data.close();
 		return result;
 	}

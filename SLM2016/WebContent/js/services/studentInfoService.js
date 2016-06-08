@@ -183,11 +183,13 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
                     courseId: courseId
                 }
             }).success(function(data) {
+            	location.reload(true);
                 defer.resolve(data);
+                alert("產生成功");
             }).error(function(data, status, headers, config) {
                 console.error("status : " + status);
+                alert("產生失敗");
             });
-
             return defer.promise;
         }
 
