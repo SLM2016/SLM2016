@@ -149,6 +149,7 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
             clearFile();
             var previewBackground = document.getElementById("previewBackground");
             var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
+            uploadpreviewBackground.style.display = "none";
             $scope.imgFile = file;
             if ($scope.imgFile != null) {
                 previewBackground.style.display = "none";
@@ -164,9 +165,11 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         var getBackgound = function() {
             clearFile();
             var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
+            var previewBackground = document.getElementById("previewBackground");
             var loadingBackground = document.getElementById("loadingBackground");
             loadingBackground.style.display = "";
             uploadpreviewBackground.style.display = "none";
+            previewBackground.style.display = "none";
             var data = new Object();
             data.id_ = "";
             data.owner_ = "";
@@ -189,6 +192,8 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
                 window.alert("請選取檔案");
                 return;
             }
+            var loadingBackground = document.getElementById("loadingBackground");
+            loadingBackground.style.display = "";
             var defer = $q.defer();
             Upload.upload({
                 url: '/SLM2016/UpdateCertificationBackgroundServlet',
