@@ -233,6 +233,12 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
         var goCourseManage = function() {
             $state.go(STATES.COURSEINFO_MANAGE)
         }
+        
+        var generatecertificationId = function() {
+        	var courseId = $scope.currentCourse.courseId_;
+        	StudentInfoService.generateCertificationId(courseId);
+        	console.log(courseId);
+        }
               
     	var init = function() {
             getCourseInfo();
@@ -269,6 +275,7 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
         $scope.getSelectedStudent = getSelectedStudent;
         $scope.selectAllStudent = selectAllStudent;
         $scope.selectStudents = selectStudents;
+        $scope.generatecertificationId = generatecertificationId;
 
         /*==========================
              init

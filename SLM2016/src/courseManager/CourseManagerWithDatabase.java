@@ -440,4 +440,47 @@ public class CourseManagerWithDatabase {
 		}
 		return result;
 	}
+	
+	public String getCodeByCourseId(String courseId) throws SQLException {
+		String result = "";
+		SqlHelper helper = new SqlHelper();
+		String sqlString = "SELECT code FROM `course_info` WHERE `id`='" + courseId + "'";
+		CachedRowSet data = new CachedRowSetImpl();
+		helper.excuteSql(sqlString, data);
+		data.next();
+		System.out.println(data.getString("code"));
+		result = data.getString("code");
+		data.close();
+		System.out.println("");
+		System.out.println(result);
+		return result;
+	}	
+	
+	public String getDateByCourseId(String courseId) throws SQLException {
+		String result = "";
+		SqlHelper helper = new SqlHelper();
+		CachedRowSet data = new CachedRowSetImpl();
+		String sqlString = "SELECT date FROM `course_has_date` WHERE `fk_course_id`='" + courseId + "'";
+		helper.excuteSql(sqlString, data);
+		
+		data.next();		
+		if(data.equals(null))
+		{
+			System.out.println("BCCCCC");
+		}
+		
+		if(data.isLast())
+		{
+			System.out.println(data.getString("date").toString()+"~!!");
+			
+		}
+		
+		if(data.getString("date").isEmpty())
+			result = "";
+		else 
+			result = data.getString("date");
+		data.close();
+		System.out.println(result);
+		return result;
+	}
 }
