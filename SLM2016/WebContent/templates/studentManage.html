@@ -1,6 +1,6 @@
 <div class="studentinfo">
     <div class="inner-wrapper">
-    	<loading ng-show="isCertificationLoading">證書產生中</loading>
+        <loading ng-show="isCertificationLoading">證書產生中</loading>
         <div class="manage" ng-show="!isCertificationLoading">
             <div class="fix-content">
                 <div class="top-nav">
@@ -21,20 +21,18 @@
                         <button type="button" class="btn btn-default" ng-class="{'disabled': getSelectedStudent().length == 0}">刪除學員</button>
                         <button type="button" class="btn btn-default" id="changeCertificationBackground" data-toggle="modal" data-target="#Background-Change-modal" ng-click="getBackgound()">更換證書底圖</button>
                         <button type="button" class="btn btn-default" id="generateStudentCertificationId" data-toggle="modal" data-target="#Generate-certificationid" ng-click="generatecertificationId()">產生證書編號</button>
-                        
                     </div>
                     <span class="select-info">已選取 {{getSelectedStudent().length}} 名學員</span>
                     <div class="student-search">
                         <div class="input-group">
-                              <input type="text" class="form-control" placeholder="學員搜尋" ng-model="searchName">
-                              <div class="input-group-addon">
-                                  <span class="glyphicon glyphicon-search"></span>
-                              </div>
+                            <input type="text" class="form-control" placeholder="學員搜尋" ng-model="searchName">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-                
             <loading ng-show="isStudentLoading"></loading>
             <div class="manage-content" ng-show="!isStudentLoading">
                 <div class="course-content">
@@ -126,37 +124,35 @@
                                 <td colspan="7" ng-show="studentList.length == 0" class="empty">此課程尚未有學員資料</td>
                             </tr>
                         </tbody>
-                    </table>                  
+                    </table>
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
 </div>
-
 <!-- Invoice Modal -->
 <div class="modal fade" id="invoice-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <invoice-modal></invoice-modal>
     </div>
 </div>
-
 <!-- Background Change Modal -->
 <div class="modal fade" id="Background-Change-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <Background-Change-modal>
-       		<input class="btn btn-info btn-orange" type="submit" value="瀏覽檔案" id="loadbackground_button" name="file" ngf-select="changeCertificationBackground($file)"  accept="image/png, image/jpeg, image/jpg" ng-model="picFile" ngf-max-size="20MB">
-       		<input class="btn btn-info btn-orange" type="submit" value="上傳" id="uploadbackground_button" name="uploadbackground_button" ng-click="uploadBackground(picFile)">
-        	<div id="loadingBackground" style="display:">              
-            	<spin spin-size="small" class="spin-style"></spin>
-			</div>
-        	<div id="previewBackground" style="display: none">
-        	<br>
-        	<img id="blah" src="#" alt="your image" height="700" width="1000" />
-        	</div>
-        	<div id="uploadpreviewBackground" style="display: ">
-        	<br>
-        	<img ngf-thumbnail="picFile" height="700" width="1000">
-        	</div>
+            <input class="btn btn-info btn-orange" type="submit" value="瀏覽檔案" id="loadbackground_button" name="file" ngf-select="changeCertificationBackground($file)" accept="image/png, image/jpeg, image/jpg" ng-model="picFile" ngf-max-size="20MB">
+            <input class="btn btn-info btn-orange" type="submit" value="上傳" id="uploadbackground_button" name="uploadbackground_button" ng-click="uploadBackground(picFile)">
+            <div id="loadingBackground" style="display:">
+                <spin spin-size="small" class="spin-style"></spin>
+            </div>
+            <div id="previewBackground" style="display: none">
+                <br>
+                <img id="blah" src="#" alt="your image" height="700" width="1000" />
+            </div>
+            <div id="uploadpreviewBackground" style="display: ">
+                <br>
+                <img ngf-thumbnail="picFile" height="700" width="1000">
+            </div>
         </Background-Change-modal>
     </div>
 </div>

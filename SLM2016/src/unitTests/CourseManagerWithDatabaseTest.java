@@ -21,6 +21,7 @@ public class CourseManagerWithDatabaseTest {
 		courseManagerWithDb_ = new CourseManagerWithDatabase();
 		Course course = new Course("test01");
 		course.setCourseName("Scurm敏捷方法實作班");
+		course.setCourseCode("Scurm");
 		course.setType("公開班");
 		course.setBatch("401");
 		course.addDate("2016-05-10");
@@ -46,6 +47,7 @@ public class CourseManagerWithDatabaseTest {
 		String result = courseManagerWithDb_.getCourseFromDatabase(courses);
 		assertEquals("Success", result);
 		assertEquals("Scurm敏捷方法實作班", courses.get(courses.size() - 1).getCourseName());
+		assertEquals("Scurm", courses.get(courses.size() - 1).getCourseCode());
 		assertEquals("公開班", courses.get(courses.size() - 1).getType());
 		assertEquals("401", courses.get(courses.size() - 1).getBatch());
 		assertEquals("2016-05-10", courses.get(courses.size() - 1).getDates().get(0));
@@ -58,7 +60,7 @@ public class CourseManagerWithDatabaseTest {
 		assertEquals("test@test.com", courses.get(courses.size() - 1).getCcAddresses().get(0));
 		assertEquals("http://teddysoft.tw", courses.get(courses.size() - 1).getHyperlink());
 	}
-	
+
 	@Test
 	public void testGetCourseSimpleDataFromDatabase() throws SQLException {
 		List<Course> courses = new ArrayList<Course>();
@@ -73,6 +75,7 @@ public class CourseManagerWithDatabaseTest {
 	public void testAddCourseIntoDatabase() throws SQLException {
 		Course course = new Course("test02");
 		course.setCourseName("Scurm敏捷方法實作班");
+		course.setCourseCode("Scurm");
 		course.setType("公開班");
 		course.setBatch("401");
 		course.addDate("2016-05-10");
@@ -94,22 +97,22 @@ public class CourseManagerWithDatabaseTest {
 		String result = courseManagerWithDb_.deleteCourseFromDatabase("test01");
 		assertEquals("Success", result);
 	}
-	
+
 	@Test
 	public void testGetCcAddressByCourseId() throws SQLException {
 		String result = courseManagerWithDb_.getCcAddressByCourseId("test01");
 		assertEquals("test@test.com", result);
 	}
-	
+
 	@Test
 	public void testGetHyperlinkByCourseId() throws SQLException {
 		String result = courseManagerWithDb_.getHyperlinkByCourseId("test01");
 		assertEquals("http://teddysoft.tw", result);
 	}
-	
+
 	@Test
-	public void testgetSignUpCourseIdByCourseNameAndBatchAndStatus() throws SQLException {
-		String result = courseManagerWithDb_.getCourseIdByCourseNameAndBatchAndStatus("Scurm敏捷方法實作班","401","報名中");
+	public void testGetSignUpCourseIdByCourseNameAndBatchAndStatus() throws SQLException {
+		String result = courseManagerWithDb_.getCourseIdByCourseNameAndBatchAndStatus("Scurm敏捷方法實作班", "401", "報名中");
 		assertEquals("test01", result);
 	}
 }

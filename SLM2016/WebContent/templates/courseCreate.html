@@ -14,7 +14,16 @@
                         <input-dropdown style="input-dropdown-large" input-placeholder="請輸入課名" input-name="courseName" input-required="false" selected-item="ctrl.selectedDropdownCourseNameItem" default-dropdown-items="ctrl.dropdownCourseNameItems" filter-list-method="ctrl.filterCourseNameList(userInput)" item-selected-method="ctrl.itemCourseNameSelected(item)">
                         </input-dropdown>
                     </form>
-                    <!-- <input type="text" class="form-control" id="Course" placeholder="請輸入課名" ng-model="data.courseName">-->
+                </div>
+                <div class="form-group code">
+                    <label for="companyName">課程代碼</label>
+                    <label style='color: Red'>*</label>
+                    <label for="companyName">(必填)</label>
+                </div>
+                <div class="form-group">
+                    <form id="courseCode">
+                        <input type="text" class="form-control" id="Code" placeholder="請輸入課程代碼" ng-model="data.code">
+                    </form>
                 </div>
                 <div class="ticketinput-wrapper company">
                     <div class="form-group id">
@@ -77,7 +86,6 @@
                             </input-dropdown>
                         </form>
                         <div id="otherTicket"></div>
-                        <!-- <input type="text" class="form-control" id="TicketType" placeholder="請輸入票種" ng-model="data.ticketType">-->
                     </div>
                     <div class="form-group">
                         <label for="companyName">價錢(NTD)</label>
@@ -105,7 +113,6 @@
                             <input-dropdown style="input-dropdown" input-placeholder="請輸入講師" input-name="ccAddress" input-required="false" selected-item="ctrl.selectedDropdownCcAddressItem" default-dropdown-items="ctrl.dropdownCcAddressItems" filter-list-method="ctrl.filterCcAddressList(userInput)" item-selected-method="ctrl.itemCcAddressSelected(item)">
                             </input-dropdown>
                         </form>
-                        <!--<input type="text" class="form-control" id="CcType" placeholder="請輸入副本收件者" ng-model="data.ccAddresses">-->
                     </div>
                     <div class="form-group">
                         <input class="btn btn-info btn-orange upload-btn" type="submit" value="新增" id="addcctype_button" name="addcclist_button" ng-click="clickAddCcButton()">
@@ -130,7 +137,6 @@
                         <input-dropdown style="input-dropdown" input-placeholder="請輸入地點" input-name="location" input-required="false" selected-item="ctrl.selectedDropdownLocationItem" default-dropdown-items="ctrl.dropdownLocationItems" filter-list-method="ctrl.filterLocationList(userInput)" item-selected-method="ctrl.itemLocationSelected(item)">
                         </input-dropdown>
                     </form>
-                    <!-- <input type="text" class="form-control" id="Location" placeholder="請輸入地點" ng-model="data.location">-->
                 </div>
                 <div class="form-group name">
                     <label for="companyName">講師</label>
@@ -154,7 +160,6 @@
                         <input-dropdown style="input-dropdown" input-placeholder="請選擇課程狀態" input-name="status" input-required="true" selected-item="ctrl.selectedDropdownStatusItem" default-dropdown-items="ctrl.dropdownStatusItems">
                         </input-dropdown>
                     </form>
-                    <!-- <input type="text" class="form-control" id="Status" placeholder="準備中" DISABLED>-->
                 </div>
                 <input class="btn btn-info btn-orange" type="submit" value="開課" id="upload_button" name="upload_button" ng-click="clickAddCourseButton()">
             </div>

@@ -7,14 +7,14 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
             console.log("getTeddyCourseData");
             CourseService.getCourseList().then(function(result) {
                 for (var i = 0; i < result.length; i++) {
-                    if(!isInCourseGroup(result[i])) {
+                    if (!isInCourseGroup(result[i])) {
                         var courseGroup = {
                             name: result[i].courseName_,
                             courseList: [],
                             openLevel: true
                         }
                         for (var j = 0; j < result.length; j++) {
-                            if(courseGroup.name == result[j].courseName_) {
+                            if (courseGroup.name == result[j].courseName_) {
                                 courseGroup.courseList.push(result[j]);
                             }
                         }
@@ -31,7 +31,7 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
         var isInCourseGroup = function(course) {
             var isInGroup = false
             for (var i = 0; i < $scope.courseGroupList.length; i++) {
-                if($scope.courseGroupList[i].name == course.courseName_) {
+                if ($scope.courseGroupList[i].name == course.courseName_) {
                     isInGroup = true;
                     break;
                 }
