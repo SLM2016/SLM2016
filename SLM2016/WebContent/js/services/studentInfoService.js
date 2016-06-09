@@ -187,9 +187,10 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
             	if(data.status == "true"){
             		location.reload(true);
             		alert("產生成功");}
-            	else{
-                    alert("產生失敗");
-            	}
+            	else if(data.status == "incorrect")
+                    alert("已經有證書編號");
+            	else
+            		alert("產生失敗");
             }).error(function(data, status, headers, config) {
                 console.error("status : " + status);
                 alert("產生失敗");

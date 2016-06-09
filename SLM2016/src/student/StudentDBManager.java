@@ -221,4 +221,18 @@ public class StudentDBManager {
 		}
 		return false;
 	}
+	public String getStudentCertificationId(int studentId) {
+		String certificationId = "";
+		SqlHelper helper = new SqlHelper();
+		String sql = String.format("SELECT `certification_id` FROM `student_info` WHERE `id` = '"+ studentId+" ';");
+		CachedRowSet data;
+		try {
+			data = new CachedRowSetImpl();
+			helper.excuteSql(sql, data);
+			certificationId = data.toString();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return certificationId;
+	}
 }

@@ -408,28 +408,43 @@ public class StudentAction extends HttpServlet {
 				CourseManagerWithDatabase courseManagerWithDatabase = new CourseManagerWithDatabase();
 				String date="";
 				String classCode ="";
+				String year ="";
+				String month = "";
 				boolean temp =true;
+				int count = 0;
 				try {
 					date = courseManagerWithDatabase.getDateByCourseId(courseId);
 					classCode = courseManagerWithDatabase.getCodeByCourseId(courseId);
 					String certificationId = classCode;
 					if(date!=""){
-						date = date.substring(2, 7);
-						certificationId= certificationId +"-"+date;}
+						year = date.substring(2, 3);
+						month = date.substring(6, 7);
+						certificationId = certificationId+year+month;}
 					for(int i=1; i<studentSize+1; i++){
 						if(i<10)
 							certificationId = certificationId + "-0" + i;
 						else
 							certificationId = certificationId + "-" +i;
-						temp = studentDbManager.updateStudentCertificationId(studentIds.get(i-1).intValue(), certificationId);
-						if(temp == false)
-							System.out.println("studentIds "+i+" is not update correct");
-						certificationId = classCode;
-						if(date!="")
-							certificationId= certificationId +"-"+date;
+						String studentCertificationId = studentDbManager.getStudentCertificationId(studentIds.get(i-1).intValue());
+						if(studentCertificationId!="")
+							continue;
+						else {
+							temp = studentDbManager.updateStudentCertificationId(studentIds.get(i-1).intValue(), certificationId);
+							if(temp == false)
+								System.out.println("studentIds "+i+" is not update correct");
+							certificationId = classCode;
+							if(date!="")
+								certificationId = certificationId+year+month;
+							count++;
+						}
 					}
-					result.put("status", "true");
-					out.println(gson.toJson(result));
+					if(count !=0){
+						result.put("status", "true");
+						out.println(gson.toJson(result));
+					} else{
+						result.put("status", "incorrect");
+						out.println(gson.toJson(result));
+					}
 				} catch (SQLException esql) {
 					esql.printStackTrace();
 				}
