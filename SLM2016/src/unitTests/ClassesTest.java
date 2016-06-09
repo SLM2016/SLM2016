@@ -28,7 +28,7 @@ public class ClassesTest {
 		assertEquals("軟體重構入門實作班", cloneObject.getClasses().get(1).getClassName());
 		assertEquals("Design Patterns這樣學就會了–入門實作班", cloneObject.getClasses().get(2).getClassName());
 	}
-	
+
 	@Test
 	public void testAddClass() {
 		ClassInfomation classInfomation = new ClassInfomation("Design Patterns這樣學就會了–進階實作班");

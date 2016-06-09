@@ -34,7 +34,6 @@
                     </select>
                 </div> -->
                 <button class="btn btn-info btn-orange" ng-click="uploadFile()" ng-class="{'disable': isCourseEmpty || isCourseLoading}">上傳</button>
-
                 <div class="result-container" ng-class="{'show-result': studentList.length > 0}">
                     <span class="label label-warning  num" ng-show="studentList.length > 0">此課程已有{{studentList.length}}名學員資料</span>
                     <!-- <spin spin-size="medium" class="spin-style" ng-show="isUploading"></spin>
@@ -80,10 +79,6 @@
                     </table>
                 </div>
             </div>
-            
-                
         </div>
     </div>
 </div>
-
-        

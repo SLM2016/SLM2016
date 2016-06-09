@@ -1,5 +1,6 @@
 package courseManager;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -142,6 +143,7 @@ public class CourseManagerWithDatabase {
 			String fk = data.getString("fk_status_id");
 			Course course = new Course(id);
 			course.setCourseName(data.getString("name"));
+			course.setCourseCode(data.getString("code"));
 			course.setType(data.getString("type"));
 			course.setBatch(data.getString("batch"));
 			course.setDuration(Integer.parseInt(data.getString("duration")));
@@ -233,9 +235,10 @@ public class CourseManagerWithDatabase {
 	private String addCourseIntoInfo(Course course, String id) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
-		String sqlString = "INSERT INTO `course_info` (`id`, `name`, `type`, `batch`, `duration`, `location`, `lecturer`, `fk_status_id`, `page_link`) VALUES (";
+		String sqlString = "INSERT INTO `course_info` (`id`, `name`, `code`, `type`, `batch`, `duration`, `location`, `lecturer`, `fk_status_id`, `page_link`) VALUES (";
 		sqlString += "'" + id + "', '";
 		sqlString += course.getCourseName() + "', '";
+		sqlString += course.getCourseCode() + "', '";
 		sqlString += course.getType() + "', '";
 		sqlString += course.getBatch() + "', ";
 		sqlString += course.getDuration() + ", '";
@@ -314,6 +317,7 @@ public class CourseManagerWithDatabase {
 
 	public String deleteCourseFromDatabase(String id) throws SQLException {
 		String result = "";
+		String path = getCertificationPathByCourseId(id);
 		result = deleteCourseFromDatabaseCcAddress(id);
 		if (result != "Success")
 			return result;
@@ -326,6 +330,11 @@ public class CourseManagerWithDatabase {
 		result = deleteCourseFromDatabaseInfo(id);
 		if (result != "Success")
 			return result;
+		if (path != null) {
+			result = deleteBackground(path);
+			if (result != "Success")
+				return result;
+		}
 		return "Success";
 	}
 
@@ -400,6 +409,29 @@ public class CourseManagerWithDatabase {
 		return result;
 	}
 
+	private String getCertificationPathByCourseId(String courseId) throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		String result = null;
+		String sqlString = "SELECT certificationPath FROM `course_info` WHERE `id`='" + courseId + "'";
+		CachedRowSet data = new CachedRowSetImpl();
+		helper.excuteSql(sqlString, data);
+		if (data.next()) {
+			result = data.getString("certificationPath");
+		}
+		data.close();
+		return result;
+	}
+
+	private String deleteBackground(String filePath) throws SQLException {
+		try {
+			java.io.File myDelFile = new java.io.File(filePath);
+			myDelFile.delete();
+			return "Success";
+		} catch (Exception e) {
+			return "刪除檔操作出錯";
+		}
+	}
+
 	public String getCourseInfoByCourseId(List<Course> courses, String courseId) throws SQLException {
 		String result = "";
 		SqlHelper helper = new SqlHelper();
@@ -438,6 +470,33 @@ public class CourseManagerWithDatabase {
 
 			courses.add(course);
 		}
+		return result;
+	}
+
+	public String getCodeByCourseId(String courseId) throws SQLException {
+		String result = "";
+		SqlHelper helper = new SqlHelper();
+		String sqlString = "SELECT code FROM `course_info` WHERE `id`='" + courseId + "'";
+		CachedRowSet data = new CachedRowSetImpl();
+		helper.excuteSql(sqlString, data);
+		data.next();
+		result = data.getString("code");
+		data.close();
+		return result;
+	}
+
+	public String getDateByCourseId(String courseId) throws SQLException {
+		String result = "";
+		SqlHelper helper = new SqlHelper();
+		CachedRowSet data = new CachedRowSetImpl();
+		String sqlString = "SELECT date FROM `course_has_date` WHERE `fk_course_id`='" + courseId + "'";
+		helper.excuteSql(sqlString, data);
+		
+		if (!(data.next()))
+			result = "";
+		else
+			result = data.getString("date");
+		data.close();
 		return result;
 	}
 }
