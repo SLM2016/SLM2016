@@ -36,7 +36,7 @@ var app = angular.module('app', [
         $sceProvider.enabled(false);
 
         // Start Page
-        $urlRouterProvider.otherwise("/");
+        $urlRouterProvider.otherwise("/courseInfo/manage");
 
         $stickyStateProvider.enableDebug(false);
 
@@ -83,7 +83,7 @@ var app = angular.module('app', [
         })
 
         .state(STATES.COURSEINFO_STUDENT, {
-            url: "/:courseId/:courseName/manage",
+            url: "/:courseId/manage",
             views: {
                 'content@courseInfo': {
                     templateUrl: "templates/studentManage.html",

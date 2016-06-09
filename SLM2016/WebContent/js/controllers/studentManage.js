@@ -226,6 +226,29 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
             });
         }
 
+        var fileChanged = function(files) {
+            $scope.isUploading = true;
+            var uploadConfirm = confirm("是否要上傳\"" + files.name + "\"?")
+            console.log(files);
+            if(uploadConfirm) {
+                StudentInfoService.uploadStudentFile(files, $scope.currentCourse.courseId_).then(function(result) {
+                    StudentInfoService.saveStudentFile(files, $scope.currentCourse.courseId_).then(function(result) {
+                        $scope.isUploading = false;
+                        if(result.status) {
+                            alert("上傳成功！");
+                            getStudentList();
+                        }
+                        else {
+                            alert('上傳失敗，請稍後再試')
+                        }
+                    });
+                },function(error) {
+                    $scope.isUploading = false;
+                    alert('上傳失敗，請稍後再試')
+                });
+            }
+        };
+
         var goCourseManage = function() {
             $state.go(STATES.COURSEINFO_MANAGE)
         }
@@ -265,6 +288,7 @@ app.controller('StudentManageController', ['$q','$scope', '$state', '$timeout', 
         $scope.getSelectedStudent = getSelectedStudent;
         $scope.selectAllStudent = selectAllStudent;
         $scope.selectStudents = selectStudents;
+        $scope.fileChanged = fileChanged;
 
         /*==========================
              init

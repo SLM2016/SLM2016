@@ -268,7 +268,7 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
             $scope.isDatePickerOpen = true;
         }
 
-        function deleteData() {
+        var deleteData = function() {
             $scope.data.batch = "";
             $scope.showDateList = [];
             $scope.data.duration = 0;
@@ -340,6 +340,7 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
         $scope.deleteDate = deleteDate;
         $scope.deleteCc = deleteCc;
         $scope.openDatePicker = openDatePicker;
+        $scope.deleteData = deleteData;
         init();
     }
 ]);
