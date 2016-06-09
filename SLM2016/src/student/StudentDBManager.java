@@ -4,8 +4,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.sql.rowset.CachedRowSet;
+
 import com.google.gson.Gson;
+import com.sun.rowset.CachedRowSetImpl;
+
 import util.SLMDBUtility;
+import util.SqlHelper;
 
 public class StudentDBManager {
 	SLMDBUtility slmDBUtility = null;
@@ -204,5 +209,48 @@ public class StudentDBManager {
 		Gson g = new Gson();
 		return g.toJson(result);
 		// "ON DUPLICATE KEY UPDATE `name` = '%s'
+	}
+	
+	public ArrayList getStudentsByCourseId(String id) {
+		SqlHelper helper = new SqlHelper();
+		String sql = String.format("SELECT id FROM `student_info` WHERE `fk_course_info_id` = '%s';", id);
+		ArrayList<Integer> result =new ArrayList<Integer>();
+		CachedRowSet data;
+		try {
+			data = new CachedRowSetImpl();
+			helper.excuteSql(sql, data);
+			while(data.next()){
+				result.add(Integer.parseInt(data.getString("id")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public boolean updateStudentCertificationId(int studentId, String certificationId){
+		SqlHelper helper = new SqlHelper();
+		String sql = String.format("UPDATE `student_info` SET `certification_id`= '"+certificationId+"' WHERE `id` = '"+ studentId+" ';");
+		CachedRowSet data;
+		try {
+			data = new CachedRowSetImpl();
+			helper.excuteSql(sql, data);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public String getStudentCertificationId(int studentId) throws SQLException {
+		String certificationId = "";
+		SqlHelper helper = new SqlHelper();
+		String sql = "SELECT certification_id FROM `student_info` WHERE `id` ='"+studentId+"'";
+		CachedRowSet data = new CachedRowSetImpl();
+		helper.excuteSql(sql, data);
+		data.next();
+		certificationId = data.getString("certification_id");
+		
+		return certificationId;
 	}
 }

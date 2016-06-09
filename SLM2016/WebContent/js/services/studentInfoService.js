@@ -171,7 +171,32 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
             return defer.promise;
         }
 
+        var generateCertificationId = function(courseId)
+        {
+            var defer = $q.defer();
 
+            $http({
+                url: "/SLM2016/StudentAction",
+                method: "POST",
+                params: {
+                    op: 11,
+                    courseId: courseId
+                }
+            }).success(function(data) {
+            	defer.resolve(data);
+            	if(data.status == "true"){
+            		location.reload(true);
+            		alert("產生成功");}
+            	else if(data.status == "incorrect")
+                    alert("已經有證書編號");
+            	else
+            		alert("產生失敗");
+            }).error(function(data, status, headers, config) {
+                console.error("status : " + status);
+                alert("產生失敗");
+            });
+            return defer.promise;
+        }
 
 		/*==========================
             Members
@@ -191,6 +216,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.updateStudentReceiptStatus = updateStudentReceiptStatus;
         factory.updateStudentReceiptCompanyInfo = updateStudentReceiptCompanyInfo;
         factory.getCertificationInfo = getCertificationInfo;       
+        factory.generateCertificationId = generateCertificationId;
         /*==========================
             init
         ==========================*/

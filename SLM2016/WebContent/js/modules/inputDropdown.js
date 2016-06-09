@@ -29,7 +29,6 @@ angular.module('inputDropdown', []).directive('inputDropdown', [function() {
         scope: {
             contentStyle: '@',
             defaultDropdownItems: '=',
-            //defaultSelectedItem: '=',
             selectedItem: '=',
             inputRequired: '=',
             inputClass:'@',
