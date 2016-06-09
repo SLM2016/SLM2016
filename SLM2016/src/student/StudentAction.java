@@ -430,7 +430,6 @@ public class StudentAction extends HttpServlet {
 							certificationId = certificationId + "-" +i;
 						String studentCertificationId = studentDbManager.getStudentCertificationId(studentIds.get(i-1).intValue());
 						if(!(studentCertificationId.isEmpty())){
-							System.out.println(studentCertificationId);
 							continue;}
 						else {
 							temp = studentDbManager.updateStudentCertificationId(studentIds.get(i-1).intValue(), certificationId);

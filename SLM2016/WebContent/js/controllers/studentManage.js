@@ -230,7 +230,6 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         var generatecertificationId = function() {
             var courseId = $scope.currentCourse.courseId_;
             StudentInfoService.generateCertificationId(courseId);
-            console.log(courseId);
         }
 
         var init = function() {
