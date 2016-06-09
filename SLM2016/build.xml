@@ -1,12 +1,11 @@
 ﻿<project name="SLM2016" default="publish"> 
     <property name="src.dir" value="src"/> 
-    <property name="bin.dir" value="bin"/>
+    <property name="build.dir" value="build"/>
 	<property name="libs" value="libs"/>
-	<property name="class.dir" value="${bin.dir}/classes"/>
+	<property name="class.dir" value="${build.dir}/classes"/>
 	<property name="webinf.lib.dir" value="WebContent/WEB-INF/lib"/>
-	<property name="war.dir" value="${bin.dir}/war"/>
-	<property name="report.dir" value="${bin.dir}/report"/>
-	<property name="junit.dir" value="libs/junit.jar"/>
+	<property name="war.dir" value="${build.dir}/war"/>
+	<property name="report.dir" value="${build.dir}/report"/>
 	
 	<path id="project.classpath">
 		<pathelement path="${class.dir}" />
@@ -23,7 +22,6 @@
     </target>
     
     <target name="prepare" depends="clean"> 
-    	<mkdir dir="${bin.dir}"/>
         <mkdir dir="${class.dir}"/>
     	<mkdir dir="${war.dir}"/>
     </target> 
@@ -45,8 +43,7 @@
 		<mkdir dir="${report.dir}"/>
 		<junit printsummary="yes">
 		    <classpath> 
-		          <pathelement location="${bin.dir}"/>
-		          <pathelement location="${junit.dir}"/>  
+		    	 <path refid="project.classpath"/>
 		    </classpath>
 			
 			<formatter type="xml"/>
