@@ -290,6 +290,7 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
             $scope.data.hyperlink = "";
             $scope.showCcList = [];
             $scope.showticketList = [];
+            $scope.data.price = 0;
             document.forms['courseName'].reset();
             document.forms['type'].reset();
             document.forms['ticketType'].reset();
@@ -306,6 +307,7 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
 
         var init = function() {
             $scope.data = {
+            	price: 0,
                 code: "",
                 batch: "",
                 duration: 0,
