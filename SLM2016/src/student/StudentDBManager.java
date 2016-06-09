@@ -221,18 +221,15 @@ public class StudentDBManager {
 		}
 		return false;
 	}
-	public String getStudentCertificationId(int studentId) {
+	public String getStudentCertificationId(int studentId) throws SQLException {
 		String certificationId = "";
 		SqlHelper helper = new SqlHelper();
-		String sql = String.format("SELECT `certification_id` FROM `student_info` WHERE `id` = '"+ studentId+" ';");
-		CachedRowSet data;
-		try {
-			data = new CachedRowSetImpl();
-			helper.excuteSql(sql, data);
-			certificationId = data.toString();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		String sql = "SELECT certification_id FROM `student_info` WHERE `id` ='"+studentId+"'";
+		CachedRowSet data = new CachedRowSetImpl();
+		helper.excuteSql(sql, data);
+		data.next();
+		certificationId = data.getString("certification_id");
+		
 		return certificationId;
 	}
 }

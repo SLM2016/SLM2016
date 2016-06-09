@@ -417,24 +417,25 @@ public class StudentAction extends HttpServlet {
 					classCode = courseManagerWithDatabase.getCodeByCourseId(courseId);
 					String certificationId = classCode;
 					if(date!=""){
-						year = date.substring(2, 3);
-						month = date.substring(6, 7);
+						year = date.substring(2, 4);
+						month = date.substring(5, 7);
 						certificationId = certificationId+year+month;}
 					for(int i=1; i<studentSize+1; i++){
+						certificationId = classCode;
+						if(date!="")
+							certificationId = certificationId+year+month;
 						if(i<10)
 							certificationId = certificationId + "-0" + i;
 						else
 							certificationId = certificationId + "-" +i;
 						String studentCertificationId = studentDbManager.getStudentCertificationId(studentIds.get(i-1).intValue());
-						if(studentCertificationId!="")
-							continue;
+						if(!(studentCertificationId.isEmpty())){
+							System.out.println(studentCertificationId);
+							continue;}
 						else {
 							temp = studentDbManager.updateStudentCertificationId(studentIds.get(i-1).intValue(), certificationId);
 							if(temp == false)
 								System.out.println("studentIds "+i+" is not update correct");
-							certificationId = classCode;
-							if(date!="")
-								certificationId = certificationId+year+month;
 							count++;
 						}
 					}
