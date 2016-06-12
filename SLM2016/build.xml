@@ -28,6 +28,7 @@
 
      <target name="compile" depends="prepare"> 
         <javac srcdir="${src.dir}" destdir="${class.dir}" classpathref="project.classpath" includeantruntime="false">
+		
         </javac>
     </target>
 
@@ -45,11 +46,12 @@
 		    <classpath> 
 		    	 <path refid="project.classpath"/>
 		    </classpath>
-			
 			<formatter type="xml"/>
 			
 			<batchtest fork="yes" todir="${report.dir}">
-			            <fileset dir="${src.dir}" includes="*Test.java"/>
+			            <fileset dir="${src.dir}">
+							<include name="**/*Test*.java"/>
+						</fileset>
 			</batchtest>
 		</junit> 
 	</target>
