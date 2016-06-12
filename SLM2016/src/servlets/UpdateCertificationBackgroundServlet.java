@@ -49,7 +49,9 @@ public class UpdateCertificationBackgroundServlet extends HttpServlet{
 		HashMap<String, String> result = new HashMap<String, String>();
 		PrintWriter out = response.getWriter();
 		String courseId = request.getParameter("courseId");		
-		String dirPath = String.format((getServletContext().getRealPath("images/").toString()+"%s.jpg"),courseId);
+		String folderPath = getServletContext().getRealPath("images/").toString();
+		folderPath = folderPath.substring(0, folderPath.length()-15);
+		String dirPath = String.format((folderPath+"%s.jpg"),courseId);
 		dirPath=dirPath.replace("\\","//");
 		System.out.println("dirPath:"+dirPath);
 		Part filePart = request.getPart("file");
