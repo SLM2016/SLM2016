@@ -84,7 +84,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 			return JSON.stringify(studentSendmailDataArray);
 		} 
 
-        var getStudentListByCourseId = function(courseId) {
+        var getStudentListByCourseId = function(courseId, page, pageItem) {
             var defer = $q.defer();
 
             $http({
@@ -92,7 +92,9 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
                 method: "GET",
                 params: {
                     op: 5,
-                    courseId: courseId
+                    courseId: courseId,
+                    page: page,
+                    pageItem: pageItem
                 }
             }).success(function(data) {
                 defer.resolve(data);
@@ -197,6 +199,25 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
             });
             return defer.promise;
         }
+        
+        var getStudentNumByCourseId = function(courseId) {
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/StudentAction",
+                method: "GET",
+                params: {
+                    op: 10,
+                    courseId: courseId
+                }
+            }).success(function(data) {
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
 
 		/*==========================
             Members
@@ -217,6 +238,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.updateStudentReceiptCompanyInfo = updateStudentReceiptCompanyInfo;
         factory.getCertificationInfo = getCertificationInfo;       
         factory.generateCertificationId = generateCertificationId;
+        factory.getStudentNumByCourseId = getStudentNumByCourseId;
         /*==========================
             init
         ==========================*/
