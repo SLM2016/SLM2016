@@ -311,8 +311,8 @@ public class StudentAction extends HttpServlet {
 		// response.setContentType("application/json");
 		// response.setCharacterEncoding("UTF-8");
 		String courseId = request.getParameter("courseId");
-	    String page = request.getParameter("page");
-	    String pageItem = request.getParameter("pageItem");
+		String page = request.getParameter("page");
+		String pageItem = request.getParameter("pageItem");
 
 		StudentDBManager studentDbManager = new StudentDBManager();
 		String json = null;
@@ -438,57 +438,59 @@ public class StudentAction extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void generateCertificationId(HttpServletRequest request, HttpServletResponse response) {
 		String courseId = request.getParameter("courseId");
 		StudentDBManager studentDbManager = new StudentDBManager();
-		ArrayList<Integer>studentIds= studentDbManager.getStudentsByCourseId(courseId);
+		ArrayList<Integer> studentIds = studentDbManager.getStudentsByCourseId(courseId);
 		int studentSize = studentIds.size();
 		HashMap<String, String> result = new HashMap<String, String>();
 		try {
 			PrintWriter out = response.getWriter();
-			if (studentSize<1){
+			if (studentSize < 1) {
 				result.put("status", "false");
 				out.println(gson.toJson(result));
-				}
-			else{
+			} else {
 				CourseManagerWithDatabase courseManagerWithDatabase = new CourseManagerWithDatabase();
-				String date="";
-				String classCode ="";
-				String year ="";
+				String date = "";
+				String classCode = "";
+				String year = "";
 				String month = "";
-				boolean temp =true;
+				boolean temp = true;
 				int count = 0;
 				try {
 					date = courseManagerWithDatabase.getDateByCourseId(courseId);
 					classCode = courseManagerWithDatabase.getCodeByCourseId(courseId);
 					String certificationId = classCode;
-					if(date!=""){
+					if (date != "") {
 						year = date.substring(2, 4);
 						month = date.substring(5, 7);
-						certificationId = certificationId+year+month;}
-					for(int i=1; i<studentSize+1; i++){
+						certificationId = certificationId + year + month;
+					}
+					for (int i = 1; i < studentSize + 1; i++) {
 						certificationId = classCode;
-						if(date!="")
-							certificationId = certificationId+year+month;
-						if(i<10)
+						if (date != "")
+							certificationId = certificationId + year + month;
+						if (i < 10)
 							certificationId = certificationId + "-0" + i;
 						else
-							certificationId = certificationId + "-" +i;
-						String studentCertificationId = studentDbManager.getStudentCertificationId(studentIds.get(i-1).intValue());
-						if(!(studentCertificationId.isEmpty())){
-							continue;}
-						else {
-							temp = studentDbManager.updateStudentCertificationId(studentIds.get(i-1).intValue(), certificationId);
-							if(temp == false)
-								System.out.println("studentIds "+i+" is not update correct");
+							certificationId = certificationId + "-" + i;
+						String studentCertificationId = studentDbManager
+								.getStudentCertificationId(studentIds.get(i - 1).intValue());
+						if (!(studentCertificationId.isEmpty())) {
+							continue;
+						} else {
+							temp = studentDbManager.updateStudentCertificationId(studentIds.get(i - 1).intValue(),
+									certificationId);
+							if (temp == false)
+								System.out.println("studentIds " + i + " is not update correct");
 							count++;
 						}
 					}
-					if(count !=0){
+					if (count != 0) {
 						result.put("status", "true");
 						out.println(gson.toJson(result));
-					} else{
+					} else {
 						result.put("status", "incorrect");
 						out.println(gson.toJson(result));
 					}
