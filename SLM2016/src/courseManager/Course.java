@@ -18,6 +18,7 @@ public class Course {
 	private String status_;
 	private List<String> ccAddresses_ = new ArrayList<String>();
 	private String hyperlink_;
+	private int studentNum_ = 0;
 
 	public Course(String id) {
 		courseId_ = id;
@@ -109,12 +110,20 @@ public class Course {
 		hyperlink_ = hyperlink;
 	}
 
+	public void setStudentNum(int studentNum) {
+		this.studentNum_ = studentNum;
+	}
+
 	public String getCourseId() {
 		return courseId_;
 	}
 
 	public String getCourseName() {
 		return courseName_;
+	}
+
+	public int getStudentNum() {
+		return studentNum_;
 	}
 
 	public String getCourseCode() {
