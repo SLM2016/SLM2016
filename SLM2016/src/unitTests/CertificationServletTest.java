@@ -32,7 +32,7 @@ public class CertificationServletTest{
 	public void tearDown() throws Exception {
 	}
 
-	@Test
+	/*@Test for local test
 	public void testDoPost() throws ServletException, IOException {
 		HttpServletRequest requestMock=Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse responseMock=Mockito.mock(HttpServletResponse.class);
@@ -58,7 +58,7 @@ public class CertificationServletTest{
 		Mockito.when(responseMock.getWriter()).thenReturn(new PrintWriter(output));
 		tag.doPost(requestMock, responseMock);
 		assertEquals(output.toString(), "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHUlEQVR42mP4//8/w38Ghv9wDCaRBaCYFEEsZgIADvU1y6BjSRkAAAAASUVORK5CYII=");
-	}
+	}*/
 		
 	public void testDoPost3(CertificationServlet tag) throws ServletException, IOException {
 		HttpServletRequest requestMock=Mockito.mock(HttpServletRequest.class);
