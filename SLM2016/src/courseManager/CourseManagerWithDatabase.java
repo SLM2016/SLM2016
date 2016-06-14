@@ -1,12 +1,13 @@
 package courseManager;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.sql.rowset.CachedRowSet;
 
+import com.google.gson.Gson;
 import com.sun.rowset.CachedRowSetImpl;
 
 import javafx.util.Pair;
@@ -491,7 +492,7 @@ public class CourseManagerWithDatabase {
 		CachedRowSet data = new CachedRowSetImpl();
 		String sqlString = "SELECT date FROM `course_has_date` WHERE `fk_course_id`='" + courseId + "'";
 		helper.excuteSql(sqlString, data);
-		
+
 		if (!(data.next()))
 			result = "";
 		else
@@ -499,4 +500,61 @@ public class CourseManagerWithDatabase {
 		data.close();
 		return result;
 	}
+
+	public String getCourseInfoTop5() throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		CachedRowSet data = new CachedRowSetImpl();
+		String sqlString = "SELECT * FROM `course_info`,`course_has_date` WHERE `course_info`.`id` = `course_has_date`.`fk_course_id` order by `course_has_date`.`date` asc;";
+		helper.excuteSql(sqlString, data);
+		ArrayList<String> courseIdList = new ArrayList<String>();
+		ArrayList<Course> courseList = new ArrayList<Course>();
+		ArrayList<Course> topNCourseIdList = new ArrayList<Course>();
+		int topN = 5;
+
+		while (data.next()) {
+			String fk = data.getString("fk_course_id");
+			if (!courseIdList.contains(fk)) {
+				courseIdList.add(fk);
+				Course course = new Course(data.getString("id"));
+				course.setCourseName(data.getString("name"));
+				course.setType(data.getString("type"));
+				course.setBatch(data.getString("batch"));
+				course.setDuration(Integer.parseInt(data.getString("duration")));
+				course.setLocation(data.getString("location"));
+				course.setLecturer(data.getString("lecturer"));
+				course.setHyperlink(data.getString("page_link"));
+				courseList.add(course);
+			}
+		}
+		for (int i = 0; i < courseList.size(); i++) {
+			topNCourseIdList.add(courseList.get(i));
+			if (topNCourseIdList.size() == topN) {
+				break;
+			}
+		}
+		Gson gson = new Gson();
+		return gson.toJson(topNCourseIdList);
+	}
+
+	public String updateCourseStatus(String courseId, String statusName) throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		CachedRowSet data = new CachedRowSetImpl();
+
+		HashMap<String, String> statusIDMap = new HashMap<String, String>();
+		HashMap<String, String> result = new HashMap<String, String>();
+		Gson gson = new Gson();
+		String sqlString = "SELECT * FROM `course_status`;";
+		helper.excuteSql(sqlString, data);
+
+		while (data.next()) {
+			statusIDMap.put(data.getString("name"), data.getString("id"));
+		}
+		sqlString = String.format("UPDATE `course_info` SET `fk_status_id`='%s' WHERE `id` = '%s'",
+				statusIDMap.get(statusName), courseId);
+		helper.excuteSql(sqlString, data);
+		result.put("status", "true");
+
+		return gson.toJson(result);
+	}
+
 }

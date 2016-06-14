@@ -20,6 +20,8 @@ public class CourseManagerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String OP_GET_COURSE_SIMPLE_DATA = "1";
 	private static final String OP_GET_COURSE_INFO_BY_COURSE_ID = "2";
+	private static final String OP_GET_COURSE_INFO_ORDER_BY_TIME_TOP_5 = "3";
+	private static final String OP_UPDATE_COURSE_STATUS = "4";
 	public CourseManagerWithDatabase courseManagerWithDb_ = new CourseManagerWithDatabase();
 
 	public CourseManagerServlet() {
@@ -34,6 +36,8 @@ public class CourseManagerServlet extends HttpServlet {
 				getCourseSimpleData(request, response);
 			} else if (op.equals(OP_GET_COURSE_INFO_BY_COURSE_ID)) {
 				doGetGetCourseInfoByCourseId(request, response);
+			} else if (op.equals(OP_GET_COURSE_INFO_ORDER_BY_TIME_TOP_5)) {
+				getCourseListTop5(request, response);
 			}
 		} else {
 			List<Course> courses_ = new ArrayList<Course>();
@@ -78,10 +82,18 @@ public class CourseManagerServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String requestString = request.getReader().readLine();
 		String header = request.getHeader("Delete");
-		if (header != null) {
-			doPostDeleteCourse(request, response, requestString);
+		String op = request.getParameter("op");
+
+		if (op != null) {
+			if (op.equals(OP_UPDATE_COURSE_STATUS)) {
+				updateCourseStatus(request, response);
+			}
 		} else {
-			doPostAddCourse(request, response, requestString);
+			if (header != null) {
+				doPostDeleteCourse(request, response, requestString);
+			} else {
+				doPostAddCourse(request, response, requestString);
+			}
 		}
 	}
 
@@ -143,5 +155,34 @@ public class CourseManagerServlet extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
+	}
+
+	private void getCourseListTop5(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String result = "";
+		try {
+			result = courseManagerWithDb_.getCourseInfoTop5();
+		} catch (SQLException e) {
+
+		}
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(result);
+	}
+
+	private void updateCourseStatus(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String courseId = request.getParameter("courseId");
+		String statusName = request.getParameter("statusName");
+		String result = "";
+
+		try {
+			result = courseManagerWithDb_.updateCourseStatus(courseId, statusName);
+		} catch (SQLException e) {
+
+		}
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(result);
 	}
 }
