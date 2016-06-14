@@ -132,9 +132,16 @@
                     height: 50px;
                     width: 300px;
                     vertical-align: top;
+                    &.button {
+                        width: auto;
+                    }
                     .input-group {
                         margin: auto;
                         margin-right: 20px;
+                    }
+                    .btn-group {
+                        height: 34px;
+                        margin: auto 0;
                     }
                 }
             }
@@ -216,6 +223,17 @@
                         }
                     }
                 }
+            }
+            .empty-content {
+                display: inline-block;
+                position: absolute;
+                bottom: -60px;
+                left: 50%;
+                font-size: 30px;
+                font-weight: bold;
+                color: #333;
+                transform: translateX(-50%);
+                z-index: 1;
             }
         }
     }

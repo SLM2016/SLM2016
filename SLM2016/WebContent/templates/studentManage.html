@@ -45,7 +45,7 @@
                                 <span>{{currentCourse.courseName_}}</span>
                             </div>
                             <div class="form-group">
-                                <label>批次：</label>
+                                <label>梯次：</label>
                                 <span>{{currentCourse.batch_}}</span>
                             </div>
                             <div class="form-group">
@@ -54,7 +54,7 @@
                             </div>
                             <div class="form-group">
                                 <label>課程時間：</label>
-                                <span>{{currentCourse.duration_}}</span>
+                                <span>{{currentCourse.duration_}} 小時</span>
                             </div>
                             <div class="form-group">
                                 <label>開課日期：</label>
@@ -67,10 +67,32 @@
                             </div>
                             <div class="form-group">
                                 <label>課程狀態：</label>
-                                <span>{{currentCourse.status_}}</span>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span>{{currentCourse.status_}}</span> 
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a ng-click="changeCourseStatus('準備中')">準備中</a></li>
+                                        <li><a ng-click="changeCourseStatus('報名中')">報名中</a></li>
+                                        <li><a ng-click="changeCourseStatus('取消')">取消</a></li>
+                                        <li><a ng-click="changeCourseStatus('確定開課')">確定開課</a></li>
+                                        <li><a ng-click="changeCourseStatus('停止報名')">停止報名</a></li>
+                                        <li><a ng-click="changeCourseStatus('上課中')">上課中</a></li>
+                                        <li><a ng-click="changeCourseStatus('課程結束')">課程結束</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>課程總人數：</label>
+                                <span>{{studentNum}} 人</span>
                             </div>
                         </div>
                         <div class="right">
+                            <div class="form-group">
+                                <label>課程代碼：</label>
+                                <span>{{currentCourse.courseCode_}}</span>
+                            </div>
                             <div class="form-group">
                                 <label>地點：</label>
                                 <span>{{currentCourse.location_}}</span>
@@ -125,7 +147,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="s in studentList track by $index" ng-class="{'selected': s.isSelected}" ng-click="toggleSelectStudent(s, $index, $event)" ng-show="studentList.length > 0">
-                                <td style="text-align: center;">{{$index}}</td>
+                                <td style="text-align: center;">{{$index + 1}}</td>
                                 <td>{{s.name}}</td>
                                 <td>{{s.company}}</td>
                                 <td>{{s.phone}}</td>
@@ -150,6 +172,9 @@
                     </table>
                 </div>
             </div>
+                <input class="btn btn-info btn-orange" type="submit" value="1" id="getStudentList" ng-show="studentNum > pageItem" ng-click="getStudentList(1)">
+	          	<input class="btn btn-info btn-orange" type="submit" value="2" id="getStudentList" ng-show="studentNum > pageItem" ng-click="getStudentList(2)">
+	           	<input class="btn btn-info btn-orange" type="submit" value="3" id="getStudentList" ng-show="studentNum > (pageItem*2)" ng-click="getStudentList(3)">
         </div>
     </div>
 </div>
