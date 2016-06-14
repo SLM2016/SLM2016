@@ -110,6 +110,37 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
             
         }
 
+        var deleteStudent = function()
+        {
+            var selectedStudents = getSelectedStudent();
+            console.log(selectedStudents);
+            var studentIds = "",studentName = "";
+            for(var i=0; i<selectedStudents.length; i++)
+            {
+                if(i == selectedStudents.length -1)
+                {
+                    studentIds += "'" + selectedStudents[i].id + "'";
+                    studentName += selectedStudents[i].name;
+                }
+                else
+                {
+                    studentIds += "'" + selectedStudents[i].id + "',";
+                    studentName += selectedStudents[i].name + "、";
+                }
+            }
+            console.log(studentIds);
+            var ans = confirm('確定刪除 '+ studentName +'?');
+            if(ans)
+            {
+                StudentInfoService.deleteSelectStudent(studentIds).then(function(result) {
+                    getCourseInfo();
+                    alert("學員刪除成功");
+                }, function(error) {
+                    alert("學員刪除失敗");
+                })
+            }
+        }
+
         var sendMailData = function() {
             var mailData = [];
             var i = 0;
@@ -342,7 +373,7 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         $scope.changeCourseStatus = changeCourseStatus;
         $scope.toggleCourseInfo = toggleCourseInfo;
         $scope.gotoCourseUrl = gotoCourseUrl;
-
+        $scope.deleteStudent = deleteStudent;
         /*==========================
              init
         ==========================*/

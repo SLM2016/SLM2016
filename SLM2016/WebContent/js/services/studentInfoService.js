@@ -173,6 +173,26 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
             return defer.promise;
         }
 
+        var deleteSelectStudent = function(studentIds)
+        {
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/StudentAction",
+                method: "POST",
+                params: {
+                    op: 9,
+                    studentIds: studentIds
+                }
+            }).success(function(data) {
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+
         var generateCertificationId = function(courseId)
         {
             var defer = $q.defer();
@@ -239,6 +259,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.getCertificationInfo = getCertificationInfo;       
         factory.generateCertificationId = generateCertificationId;
         factory.getStudentNumByCourseId = getStudentNumByCourseId;
+        factory.deleteSelectStudent = deleteSelectStudent;
         /*==========================
             init
         ==========================*/
