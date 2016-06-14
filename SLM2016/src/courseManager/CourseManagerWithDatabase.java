@@ -241,7 +241,7 @@ public class CourseManagerWithDatabase {
 		result = addCourseIntoCcAddress(course, id);
 		if (result != "Success")
 			return result;
-		return id;
+		return "Success";
 	}
 
 	private String addCourseIntoInfo(Course course, String id) throws SQLException {

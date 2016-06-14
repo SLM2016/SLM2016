@@ -152,11 +152,24 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
             data.status_ = vm.selectedDropdownStatusItem;
             console.log(data.hyperlink_)
             $.post("/SLM2016/CourseManagerServlet",
-                JSON.stringify(data)).done(function(data) {
-                $state.go(STATES.COURSEINFO_STUDENT, {
-                    courseId: data
-                })
-                deleteData();
+                JSON.stringify(data)).done(function(response) {
+                if (response == "Success") {
+                    window.alert("開課成功");
+                    deleteData();
+                    $.ajax({
+                        url: "/SLM2016/CourseManagerServlet",
+                        type: "POST",
+                        data: JSON.stringify(data),
+                        headers: {
+                            "GetId": true
+                        },
+                        success: function(data) {
+                            $state.go(STATES.COURSEINFO_STUDENT, {
+                                courseId: data
+                            })
+                        }
+                    })
+                }
             });
             setTimeout(function() {
                 $scope.$apply(function() {
@@ -281,7 +294,7 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
         var openDatePicker = function() {
             $scope.isDatePickerOpen = true;
         }
-        
+
         var deleteData = function() {
             $scope.data.code = "";
             $scope.data.batch = "";
@@ -310,7 +323,7 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
 
         var init = function() {
             $scope.data = {
-            	price: 0,
+                price: 0,
                 code: "",
                 batch: "",
                 duration: 0,

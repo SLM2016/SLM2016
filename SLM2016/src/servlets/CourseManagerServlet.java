@@ -41,7 +41,7 @@ public class CourseManagerServlet extends HttpServlet {
 			} else if (op.equals(OP_UPDATE_COURSE_STATUS)) {
 				updateCourseStatus(request, response);
 			}
-			
+
 		} else {
 			List<Course> courses_ = new ArrayList<Course>();
 			String result = "";
@@ -85,13 +85,16 @@ public class CourseManagerServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String requestString = request.getReader().readLine();
 		String header = request.getHeader("Delete");
-		String op = request.getParameter("op");
-
 		if (header != null) {
 			doPostDeleteCourse(request, response, requestString);
-		} else {
-			doPostAddCourse(request, response, requestString);
+			return;
 		}
+		header = request.getHeader("GetId");
+		if (header != null) {
+			doPostGetCourseId(request, response, requestString);
+			return;
+		}
+		doPostAddCourse(request, response, requestString);
 	}
 
 	private void doPostDeleteCourse(HttpServletRequest request, HttpServletResponse response, String requestString)
@@ -181,5 +184,23 @@ public class CourseManagerServlet extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(result);
+	}
+
+	private void doPostGetCourseId(HttpServletRequest request, HttpServletResponse response, String requestString)
+			throws ServletException, IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		Gson gson = new Gson();
+		Course course = gson.fromJson(requestString, Course.class);
+		String result = "fail";
+		try {
+			result = courseManagerWithDb_.getCourseIdByCourseNameAndBatchAndStatus(course.getCourseName(),
+					course.getBatch(), course.getStatus());
+		} catch (SQLException e) {
+
+		}
+		String json = new Gson().toJson(result);
+		response.getWriter().write(json);
 	}
 }
