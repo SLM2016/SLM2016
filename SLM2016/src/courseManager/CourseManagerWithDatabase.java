@@ -142,6 +142,14 @@ public class CourseManagerWithDatabase {
 		while (data.next()) {
 			String id = data.getString("id");
 			String fk = data.getString("fk_status_id");
+
+			String sqlForGetStudentNumber = String.format(
+					"SELECT COUNT(*) as `student_number` FROM `student_info` where `fk_course_info_id` = '%s'", id);
+			CachedRowSet studentNumberData = new CachedRowSetImpl();
+			helper.excuteSql(sqlForGetStudentNumber, studentNumberData);
+			studentNumberData.next();
+			int studentNumber = studentNumberData.getInt("student_number");
+
 			Course course = new Course(id);
 			course.setCourseName(data.getString("name"));
 			course.setCourseCode(data.getString("code"));
@@ -151,6 +159,7 @@ public class CourseManagerWithDatabase {
 			course.setLocation(data.getString("location"));
 			course.setLecturer(data.getString("lecturer"));
 			course.setHyperlink(data.getString("page_link"));
+			course.setStudentNum(studentNumber);
 			for (int i = 0; i < courseStatus_.size(); i++) {
 				if (courseStatus_.get(i).getKey().equals(fk)) {
 					course.setStatus(courseStatus_.get(i).getValue());
@@ -167,6 +176,8 @@ public class CourseManagerWithDatabase {
 			temp = getCourseFromCcAddress(course, id);
 			if (temp != "Success")
 				return temp;
+
+			studentNumberData.close();
 
 			courses.add(course);
 		}
@@ -481,6 +492,7 @@ public class CourseManagerWithDatabase {
 				return temp;
 
 			courses.add(course);
+			studentNumberData.close();
 		}
 		return result;
 	}
