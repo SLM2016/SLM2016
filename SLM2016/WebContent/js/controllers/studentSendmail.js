@@ -94,22 +94,8 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
     		$scope.studentId = parseMailData[index].studentId;
     		$scope.couresDuration = parseMailData[index].couresDuration;
     		$scope.address = parseMailData[index].address;
-    		
-    		StudentInfoService.getCertificationInfo(JSON.stringify(parseMailData[index].studentId)).then(function(certificationData) {
-    			var parse = JSON.parse(JSON.stringify(certificationData));   			
-    			
-    			if(parse[0].certification_img == ""){
-    				makeCertification();   				
-    			}  
-    			else{
-    				console.log("DB 有資料，直接顯示");
-    				document.getElementById("certificationImg").setAttribute('src','data:image/png;base64,'+parse[0].certification_img);
-    				$scope.isCertificationLoading = false;
-    			}
-            }, function(error) {
-            	console.log('Get DB Data Has Error');
-            	$scope.isCertificationLoading = false;
-            });		
+
+            makeCertification();
 		}
 		
 		var numberChar = ["零","一","二","三","四","五","六","七","八","九"];
