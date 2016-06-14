@@ -33,6 +33,10 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
             new Course('例外處理設計與重構實作班', 'EH0')
         ];
 
+        vm.itemLocationSelected = function(item) {
+            locationSelected = item;
+        }
+
         vm.filterCourseNameList = function(userInput) {
             courseNameSelected = new Course(userInput, '');
             document.getElementById('Code').readOnly = false;
@@ -146,13 +150,12 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
             data.ccAddresses_ = $scope.showCcList;
             data.type_ = typeSelected;
             data.status_ = vm.selectedDropdownStatusItem;
+            console.log(data.hyperlink_)
             $.post("/SLM2016/CourseManagerServlet",
                 JSON.stringify(data)).done(function(data) {
-                if (data == "Success") {
-                    window.alert("開課成功");
-                } else {
-                    window.alert("開課失敗\n" + data);
-                }
+                $state.go(STATES.COURSEINFO_STUDENT, {
+                    courseId: data
+                })
                 deleteData();
             });
             setTimeout(function() {
