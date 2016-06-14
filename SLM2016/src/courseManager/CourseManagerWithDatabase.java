@@ -230,7 +230,7 @@ public class  {
 		result = addCourseIntoCcAddress(course, id);
 		if (result != "Success")
 			return result;
-		return "Success";
+		return id;
 	}
 
 	private String addCourseIntoInfo(Course course, String id) throws SQLException {
