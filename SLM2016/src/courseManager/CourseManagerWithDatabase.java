@@ -447,9 +447,10 @@ public class CourseManagerWithDatabase {
 			String fk = data.getString("fk_status_id");
 
 			String sqlForGetStudentNumber = String.format(
-					"SELECT COUNT(*) as `student_number` FROM `student_info` where `fk_course_info_id` = '%s'", fk);
+					"SELECT COUNT(*) as `student_number` FROM `student_info` where `fk_course_info_id` = '%s'", id);
 			CachedRowSet studentNumberData = new CachedRowSetImpl();
 			helper.excuteSql(sqlForGetStudentNumber, studentNumberData);
+			studentNumberData.next();
 			int studentNumber = studentNumberData.getInt("student_number");
 
 			Course course = new Course(id);
@@ -526,10 +527,13 @@ public class CourseManagerWithDatabase {
 			if (!courseIdList.contains(fk)) {
 				courseIdList.add(fk);
 
+				String fk_status = data.getString("fk_status_id");
+
 				String sqlForGetStudentNumber = String.format(
 						"SELECT COUNT(*) as `student_number` FROM `student_info` where `fk_course_info_id` = '%s'", fk);
 				CachedRowSet studentNumberData = new CachedRowSetImpl();
 				helper.excuteSql(sqlForGetStudentNumber, studentNumberData);
+				studentNumberData.next();
 				int studentNumber = studentNumberData.getInt("student_number");
 
 				Course course = new Course(data.getString("id"));
@@ -543,7 +547,7 @@ public class CourseManagerWithDatabase {
 				course.setStudentNum(studentNumber);
 
 				for (int i = 0; i < courseStatus_.size(); i++) {
-					if (courseStatus_.get(i).getKey().equals(fk)) {
+					if (courseStatus_.get(i).getKey().equals(fk_status)) {
 						course.setStatus(courseStatus_.get(i).getValue());
 						break;
 					}

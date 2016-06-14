@@ -22,7 +22,6 @@ public class CourseManagerServlet extends HttpServlet {
 	private static final String OP_GET_COURSE_INFO_BY_COURSE_ID = "2";
 	private static final String OP_GET_COURSE_INFO_ORDER_BY_TIME_TOP_5 = "3";
 	private static final String OP_UPDATE_COURSE_STATUS = "4";
-	private static final String OP_GET_COURSE_STATUS = "5";
 	public CourseManagerWithDatabase courseManagerWithDb_ = new CourseManagerWithDatabase();
 
 	public CourseManagerServlet() {
