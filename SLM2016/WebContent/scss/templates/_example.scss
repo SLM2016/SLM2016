@@ -6,8 +6,7 @@
     width: 100%;
     .inner-wrapper {
         position: relative;
-        width: calc(100% - 40px - 240px);
-        margin-left: 280px;
+        width: 100%;
         @include border-radius(3px);
         background-color: #FFF;
         @include box-shadow(0px 1px 3px 0px rgba(0, 0, 0, 0.1));
@@ -23,84 +22,81 @@
             }
         }
         .page-topbar {
-                position: relative;
+            position: relative;
+            height: 40px;
+            width: 100%;
+            border-bottom: 2px solid #eee;
+            .topbar-item {
+                display: inline-block;
+                padding: 0 6px;
+                width: 100px;
                 height: 40px;
-                width: 100%;
-                border-bottom: 2px solid #eee;
-                .topbar-item {
-                    display: inline-block;
-                    padding: 0 6px;
-                    width: 100px;
-                    height: 40px;
-                    line-height: 40px;
-                    font-size: 14px;
-                    color: #666;
-                    cursor: pointer;
-                }
-                .date-info {
-                    display: inline-block;
-                    padding: 0 6px;
-                    height: 40px;
-                    line-height: 50px;
-                    font-size: 14px;
-                    color: #ff6812;
-                    float: right;
-                }
-                .switcher {
-                    position: absolute;
-                    top: 38px;
-                    left: 0;
-                    height: 2px;
-                    width: 100px;
-                    background-color: #ef5700;
+                line-height: 40px;
+                font-size: 14px;
+                color: #666;
+                cursor: pointer;
+            }
+            .date-info {
+                display: inline-block;
+                padding: 0 6px;
+                height: 40px;
+                line-height: 50px;
+                font-size: 14px;
+                color: #ff6812;
+                float: right;
+            }
+            .switcher {
+                position: absolute;
+                top: 38px;
+                left: 0;
+                height: 2px;
+                width: 100px;
+                background-color: #ef5700;
+                @include transition(all ease-in-out 150ms);
+                &.right {
                     @include transition(all ease-in-out 150ms);
-                    &.right {
-                        @include transition(all ease-in-out 150ms);
-                        @include transform(translateX(100%));
+                    @include transform(translateX(100%));
+                }
+                &.left {
+                    @include transition(all ease-in-out 150ms);
+                    @include transform(translateX(0));
+                }
+            }
+        }
+        .ticketinput-wrapper {
+            .form-group {
+                display: inline-block;
+                margin-right: 15px;
+                label {
+                    font-size: 14px;
+                    margin-bottom: 6px;
+                    font-weight: bold;
+                }
+            }
+            &.company {
+                .form-group {
+                    &.id {
+                        width: 450px;
                     }
-                    &.left {
-                        @include transition(all ease-in-out 150ms);
-                        @include transform(translateX(0));
+                    &.name {
+                        width: calc(100% - 350px - 20px);
+                    }
+                    &.button {
+                        width: calc(100% - 700px - 20px);
+                        margin-right: 0;
                     }
                 }
             }
-        
-        .ticketinput-wrapper {
-             .form-group {
-                 display: inline-block;
-                 margin-right: 15px;
-                 label {
-                     font-size: 14px;
-                     margin-bottom: 6px;
-                     font-weight: bold;
-                 }
-              }
-                                &.company {
-                                    .form-group {
-                                        &.id {
-                                            width: 450px;
-                                        }
-                                        &.name{
-                                            width: calc(100% - 350px - 20px);
-                                            
-                                        }
-                                        &.button{
-                                            width: calc(100% - 700px - 20px);
-                                            margin-right: 0;
-                                        }
-                                    }
-                                }
-                                &.dollar {
-                                    .form-group {
-                                        width: 22%;
-                                        vertical-align: top;
-                                        &:last-child {
-                                            width: calc(34% - 60px);
-                                            margin-right: 0;
-                                        }
-                                    }
-                                }
-          }
-        
+            &.dollar {
+                .form-group {
+                    width: 22%;
+                    vertical-align: top;
+                    &:last-child {
+                        width: calc(34% - 60px);
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
     }
 }

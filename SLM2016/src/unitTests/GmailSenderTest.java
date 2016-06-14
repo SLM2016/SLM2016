@@ -2,8 +2,6 @@ package unitTests;
 
 import static org.junit.Assert.*;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Base64;
 
 import org.junit.After;

@@ -117,141 +117,140 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
         
         function numberToChinese(number){
             var result = '';
-            
-            if(number === 0){
+
+            if (number === 0) {
                 return numberChar[0];
             }
 
-            while(number > 0){
+            while (number > 0) {
                 var section = number % 100;
                 result = sectionToChinese(section);
                 number = Math.floor(number / 100);
             }
-            if((result.length >= 2) && (result.indexOf("一") == 0)){
-            	result = result.replace("一","");
+            if ((result.length >= 2) && (result.indexOf("一") == 0)) {
+                result = result.replace("一", "");
             }
-             
+
             return result;
         }
-        
-        function sectionToChinese(section){
-            var tempChar = '', result = '';
+
+        function sectionToChinese(section) {
+            var tempChar = '',
+                result = '';
             var unitCharIndex = 0;
-            while(section > 0){
+            while (section > 0) {
                 var numberCharIndex = section % 10;
-                if(numberCharIndex !==0){
-                	tempChar = numberChar[numberCharIndex];
+                if (numberCharIndex !== 0) {
+                    tempChar = numberChar[numberCharIndex];
                     tempChar += unitChar[unitCharIndex]
                     result = tempChar + result;
-                }             
-                             
+                }
+
                 unitCharIndex++;
                 section = Math.floor(section / 10);
             }
-           
+
             return result;
         }
-		
-		var makeCertification = function(){
-			console.log("製作證書PNG中");
-			var data = new Object();
-			data.id_ = parseMailData[index].studentId;
-			data.owner_ =  parseMailData[index].studentName;
-			data.date_ = parseMailData[index].certificateDate;
-			data.courceDate_ = " 於 " + parseMailData[index].courseDate;
-			data.courceName_ = parseMailData[index].courseName;
-			data.courceDuration_ = "全期共"+parseMailData[index].couresDuration+"小時研習期滿，特此證明"; 
 
-			$.post("/SLM2016/CertificationServlet",JSON.stringify(data))
-			.done(function(imgData)
-			{
-				document.getElementById("certificationImg").setAttribute('src','data:image/png;base64,'+imgData);
-				
-				var saveData = new Object();
-				saveData.saveDB = "save";
-				saveData.studentId = parseMailData[index].studentId;
-				$.post("/SLM2016/CertificationServlet",JSON.stringify(saveData))
-				.done(function(pdfData)
-				{
-					console.log("save");
-					$scope.isCertificationLoading = false;
-					$scope.$apply();
-				});				
-			});
-		}
-		
-		var ClickNextButton = function(){	
+        var makeCertification = function() {
+            console.log("製作證書PNG中");
+            var data = new Object();
+            data.id_ = parseMailData[index].certificationId;
+            data.owner_ = parseMailData[index].studentName;
+            data.date_ = parseMailData[index].certificateDate;
+            data.courceDate_ = " 於 " + parseMailData[index].courseDate;
+            data.courceName_ = parseMailData[index].courseName;
+            data.courceDuration_ = "全期共" + parseMailData[index].couresDuration + "小時研習期滿，特此證明";
+            data.courceId_ = parseMailData[index].courseId;
 
-			if(++index <= parseMailData.length-1){	
-				previousButton.disabled = "";
-				setValue();
-			}	
-			if(index == parseMailData.length-1){
-				nextButton.disabled = "disabled";
-			}
-		
-			setemailcontent();
-		}
-		
-		var ClickPreviousButton = function(){	
-			
-			if(--index >= 0){
-				nextButton.disabled = "";
-				setValue();
-			}	
-			if(index == 0){
-				previousButton.disabled = "disabled";
-			} 		
-			
-			setemailcontent();
-		}
+            $.post("/SLM2016/CertificationServlet", JSON.stringify(data))
+                .done(function(imgData) {
+                    document.getElementById("certificationImg").setAttribute('src', 'data:image/png;base64,' + imgData);
 
-		var init = function() { 
-			$scope.isCertificationLoading = true;
-			parseMailData = JSON.parse(StudentInfoService.getStudentSendMailData());
+                    var saveData = new Object();
+                    saveData.saveDB = "save";
+                    saveData.studentId = parseMailData[index].studentId;
+                    $.post("/SLM2016/CertificationServlet", JSON.stringify(saveData))
+                        .done(function(pdfData) {
+                            console.log("save");
+                            $scope.isCertificationLoading = false;
+                            $scope.$apply();
+                        });
+                });
+        }
 
-			CourseService.getCourseList().then(function(courseData) {
-				var courseIndex;
-				for (var i = 0; i < courseData.length; i++) {
-					if(parseMailData[0].courseId == courseData[i].courseId_){
-						courseIndex = i;
-						break;
-					}
-				}
+        var ClickNextButton = function() {
 
-				var duration = Number(courseData[courseIndex].duration_);
-				var couresDuration = numberToChinese(duration);
-				var date = new Date(courseData[courseIndex].dates_[0]);
-				var dateInterval = courseData[courseIndex].dates_.length;
+            if (++index <= parseMailData.length - 1) {
+                previousButton.disabled = "";
+                setValue();
+            }
+            if (index == parseMailData.length - 1) {
+                nextButton.disabled = "disabled";
+            }
 
-				for(var i = 0; i < parseMailData.length; i++){
-					parseMailData[i].hasSent = false;
-					parseMailData[i].courseName = courseData[courseIndex].courseName_;
-					parseMailData[i].couresDuration = couresDuration;
-					parseMailData[i].courseDate = date.getFullYear()+ " 年 " + (date.getMonth()+1) + " 月 ";
-					for(var j = 0; j < dateInterval; j++){
-						var date = new Date(courseData[courseIndex].dates_[j]);      
-						if(j != dateInterval-1){
-							parseMailData[i].courseDate += date.getDate() + "、";
-						}
-						else{
-							parseMailData[i].courseDate += date.getDate() + " 日 ";
-							parseMailData[i].certificateDate = date.getFullYear()+ " 年 " + (date.getMonth()+1) + " 月 " + date.getDate() + " 日 ";
-						}                       	
-					}         
-				}
-				setValue();
-				setemailcontent();
-			}, function(error) {
-				console.log('Get DB Data Has Error');
-			})
+            setemailcontent();
+        }
 
-			if(parseMailData.length-1 > 0){
-				nextButton.disabled = "";
-			}		
-		}
+        var ClickPreviousButton = function() {
 
-		/*==========================
+            if (--index >= 0) {
+                nextButton.disabled = "";
+                setValue();
+            }
+            if (index == 0) {
+                previousButton.disabled = "disabled";
+            }
+
+            setemailcontent();
+        }
+
+        var init = function() {
+            $scope.isCertificationLoading = true;
+            parseMailData = JSON.parse(StudentInfoService.getStudentSendMailData());
+
+            CourseService.getCourseList().then(function(courseData) {
+                var courseIndex;
+                for (var i = 0; i < courseData.length; i++) {
+                    if (parseMailData[0].courseId == courseData[i].courseId_) {
+                        courseIndex = i;
+                        break;
+                    }
+                }
+
+                var duration = Number(courseData[courseIndex].duration_);
+                var couresDuration = numberToChinese(duration);
+                var date = new Date(courseData[courseIndex].dates_[0]);
+                var dateInterval = courseData[courseIndex].dates_.length;
+
+                for (var i = 0; i < parseMailData.length; i++) {
+                    parseMailData[i].hasSent = false;
+                    parseMailData[i].courseName = courseData[courseIndex].courseName_;
+                    parseMailData[i].couresDuration = couresDuration;
+                    parseMailData[i].courseDate = date.getFullYear() + " 年 " + (date.getMonth() + 1) + " 月 ";
+                    for (var j = 0; j < dateInterval; j++) {
+                        var date = new Date(courseData[courseIndex].dates_[j]);
+                        if (j != dateInterval - 1) {
+                            parseMailData[i].courseDate += date.getDate() + "、";
+                        } else {
+                            parseMailData[i].courseDate += date.getDate() + " 日 ";
+                            parseMailData[i].certificateDate = date.getFullYear() + " 年 " + (date.getMonth() + 1) + " 月 " + date.getDate() + " 日 ";
+                        }
+                    }
+                }
+                setValue();
+                setemailcontent();
+            }, function(error) {
+                console.log('Get DB Data Has Error');
+            })
+
+            if (parseMailData.length - 1 > 0) {
+                nextButton.disabled = "";
+            }
+        }
+
+        /*==========================
             Events
         ==========================*/
 
@@ -266,23 +265,24 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
         /*==========================
              init
         ==========================*/
- 
-    	var parseMailData;
-    	var index = 0;
-    	
-    	var nextButton = document.getElementById("next");
-    	var previousButton = document.getElementById("previous");
-    	
-    	var sendButton = document.getElementById("send");
-    	
-    	CKEDITOR.replace( 'editor1' );
-    	
-    	$scope.isCertificationLoading = false;
-    	$scope.Send = Send;
-    	$scope.ClickNextButton = ClickNextButton;
-    	$scope.ClickPreviousButton = ClickPreviousButton;
-    	
-    	
+
+        var parseMailData;
+        var index = 0;
+
+        var nextButton = document.getElementById("next");
+        var previousButton = document.getElementById("previous");
+
+        var sendButton = document.getElementById("send");
+
+        CKEDITOR.replace('editor1');
+
+        $scope.isCertificationLoading = false;
+        $scope.Send = Send;
+        $scope.ClickNextButton = ClickNextButton;
+        $scope.ClickPreviousButton = ClickPreviousButton;
+
+
         init();
-		
-}]);
+
+    }
+]);

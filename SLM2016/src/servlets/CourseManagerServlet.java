@@ -13,11 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import courseManager.Course;
 import courseManager.CourseManagerWithDatabase;
+import student.StudentDBManager;
 
 @WebServlet("/CourseManagerServlet")
 public class CourseManagerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String OP_INSERT_INTO_STUDENT = "1";
+	private static final String OP_GET_COURSE_SIMPLE_DATA = "1";
+	private static final String OP_GET_COURSE_INFO_BY_COURSE_ID = "2";
 	public CourseManagerWithDatabase courseManagerWithDb_ = new CourseManagerWithDatabase();
 
 	public CourseManagerServlet() {
@@ -25,15 +27,15 @@ public class CourseManagerServlet extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String op = "";
-		if(request.getParameter("op") != null) {
-			op = request.getParameter("op");
-		}
-		switch (op) {
-		case OP_INSERT_INTO_STUDENT:
-			getCourseSimpleData(request, response);
-			break;
-		default:
+		// String simpleData = request.getHeader("simpleData");
+		String op = request.getParameter("op");
+		if (op != null) {
+			if (op.equals(OP_GET_COURSE_SIMPLE_DATA)) {
+				getCourseSimpleData(request, response);
+			} else if (op.equals(OP_GET_COURSE_INFO_BY_COURSE_ID)) {
+				doGetGetCourseInfoByCourseId(request, response);
+			}
+		} else {
 			List<Course> courses_ = new ArrayList<Course>();
 			String result = "";
 			try {
@@ -50,8 +52,27 @@ public class CourseManagerServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
-			break;
 		}
+	}
+
+	private void getCourseSimpleData(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		List<Course> courses_ = new ArrayList<Course>();
+		String result = "";
+		try {
+			result = courseManagerWithDb_.getCourseSimpleDataFromDatabase(courses_);
+		} catch (SQLException e) {
+
+		}
+		String json;
+		if (result != "Success") {
+			json = new Gson().toJson(result);
+		} else {
+			json = new Gson().toJson(courses_);
+		}
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(json);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -70,6 +91,8 @@ public class CourseManagerServlet extends HttpServlet {
 		String result = "";
 		try {
 			result = courseManagerWithDb_.deleteCourseFromDatabase(id);
+			StudentDBManager studentDBManager = new StudentDBManager();
+			studentDBManager.deleteStudentsByCourseId(id);
 		} catch (SQLException e) {
 
 		}
@@ -80,26 +103,34 @@ public class CourseManagerServlet extends HttpServlet {
 
 	private void doPostAddCourse(HttpServletRequest request, HttpServletResponse response, String requestString)
 			throws ServletException, IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
 		Gson gson = new Gson();
 		Course course = gson.fromJson(requestString, Course.class);
 		String result = "success";
 		try {
-			result = courseManagerWithDb_.addCourseIntoDatabase(course);
+			if (courseManagerWithDb_.getCourseIdByCourseNameAndBatchAndStatus(course.getCourseName(), course.getBatch(),
+					course.getStatus()) != null) {
+				result = "已存在相同課程";
+			} else {
+				result = courseManagerWithDb_.addCourseIntoDatabase(course);
+			}
 		} catch (SQLException e) {
 
 		}
 		String json = new Gson().toJson(result);
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
 	}
 
-	private void getCourseSimpleData(HttpServletRequest request, HttpServletResponse response)
+	private void doGetGetCourseInfoByCourseId(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		List<Course> courses_ = new ArrayList<Course>();
 		String result = "";
+
+		String courseId = request.getParameter("courseId");
 		try {
-			result = courseManagerWithDb_.getCourseSimpleDataFromDatabase(courses_);
+			result = courseManagerWithDb_.getCourseInfoByCourseId(courses_, courseId);
 		} catch (SQLException e) {
 
 		}

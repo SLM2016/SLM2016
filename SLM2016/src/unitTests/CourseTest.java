@@ -24,6 +24,8 @@ public class CourseTest {
 	public void testClone() {
 		String courseName = "Scurm敏捷方法實作班";
 		course_.setCourseName(courseName);
+		String courseCode = "Scurm";
+		course_.setCourseCode(courseCode);
 		String type = "公開班";
 		course_.setType(type);
 		String batch = "401";
@@ -45,6 +47,7 @@ public class CourseTest {
 		Course cloneObject = course_.clone();
 		assertEquals("teddysoft-course01-1", cloneObject.getCourseId());
 		assertEquals(courseName, cloneObject.getCourseName());
+		assertEquals(courseCode, cloneObject.getCourseCode());
 		assertEquals(type, cloneObject.getType());
 		assertEquals(batch, cloneObject.getBatch());
 		assertEquals(1, cloneObject.getDates().size());
@@ -86,7 +89,7 @@ public class CourseTest {
 		course_.addDate(date);
 		assertEquals(date, course_.getDates().get(0));
 	}
-	
+
 	@Test
 	public void testDeleteDate() {
 		course_.addDate("2016/6/24");
@@ -120,7 +123,7 @@ public class CourseTest {
 		course_.deleteTicketType(0);
 		assertEquals(1, course_.getTicketTypes().size());
 		assertEquals("早鳥票", course_.getTicketTypes().get(0));
-		
+
 	}
 
 	@Test
@@ -161,14 +164,14 @@ public class CourseTest {
 		course_.setStatus(status);
 		assertEquals(status, course_.getStatus());
 	}
-	
+
 	@Test
 	public void testAddCcAddress() {
 		String ccAddress = "test@test";
 		course_.addCcAddresses(ccAddress);
 		assertEquals(ccAddress, course_.getCcAddresses().get(0));
 	}
-	
+
 	@Test
 	public void testDeleteCcAddress() {
 		course_.addCcAddresses("test@test");
@@ -178,11 +181,18 @@ public class CourseTest {
 		assertEquals(1, course_.getCcAddresses().size());
 		assertEquals("test2@test2.test", course_.getCcAddresses().get(0));
 	}
-	
+
 	@Test
 	public void testSetHyperlink() {
 		String hyperlink = "www.test.com";
 		course_.setHyperlink(hyperlink);
 		assertEquals(hyperlink, course_.getHyperlink());
+	}
+
+	@Test
+	public void testSetCourseCode() {
+		String courseCode = "DP";
+		course_.setCourseCode(courseCode);
+		assertEquals(courseCode, course_.getCourseCode());
 	}
 }

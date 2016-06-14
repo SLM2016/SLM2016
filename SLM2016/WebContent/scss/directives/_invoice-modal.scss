@@ -1,4 +1,7 @@
 #invoice-modal {
+    .modal-dialog {
+        margin: 18px auto;
+    }
     .modal-header {
         position: relative;
         .close {
@@ -45,14 +48,82 @@
                     .warning {
                         color: #F14342;
                     }
+                    .input-block {
+                        position: relative;
+                        display: inline-block;
+                        input {
+                            width: 170px;
+                            padding-right: 25px;
+                            &.id {
+                                width: 120px;
+                            }
+                        }
+                        .company-correct {
+                            position: absolute;
+                            display: none;
+                            bottom: -18px;
+                            left: -125px;
+                            font-size: 12px;
+                            color: #333;
+                            height: 14px;
+                            width: 295px;
+                            line-height: 14px;
+                            color: #0F8CF7;
+                            text-decoration: underline;
+                            cursor: pointer;
+                        }
+                        .loading {
+                            position: absolute;
+                            right: 10px;
+                            top: 50%;
+                            @include transform(translateY(-50%));
+                        }
+                        .success, .error {
+                            display: none;
+                        }
+                        &.has-error {
+                            .success {
+                                display: none;
+                            }
+                            .error {
+                                display: block;
+                            }
+                            .company-correct {
+                                display: block;
+                            }
+                        }
+                        &.has-success {
+                            .success {
+                                display: block;
+                            }
+                            .error {
+                                display: none;
+                            }
+                        }
+                    }
                 }
             }
         }
         .invoice-content {
+            .invoice-pager {
+                margin: 20px 0 5px;
+                text-align: center;
+                .pager {
+                    display: inline-block;
+                    width: 7px;
+                    height: 7px;
+                    margin: 0 5px;
+                    background-color: rgba(#333, 0.2);
+                    @include border-radius(50%);
+                    &.active {
+                        background-color: #333;
+                    }
+                }
+            }
             .invoice-wrapper {
                 height: 550px;
                 padding: 10px 30px;
-                margin: 15px auto 0;
+                margin: 0 auto;
                 text-align: center;
                 border: 2px dashed #ccc;
                 .invoice-title {
@@ -173,7 +244,7 @@
     }
     .modal-footer {
         text-align: left;
-        padding:  20px 30px;
+        padding:  15px 30px;
         .form-inline {
             display: inline-block;
             span {
@@ -193,16 +264,41 @@
                 }
             }
             .form-group {
-                margin-left: 40px;
+                margin-left: 30px;
                 label {
                     height: 35px;
                     line-height: 35px;
                     margin-right: 10px;
                 }
+                input {
+                    width: 130px;
+                    &.tax {
+                        width: 80px;
+                    }
+                }
             }
         }
         .btn {
             float: right;
+        }
+        .result-container {
+            display: none;
+            height: 34px;
+            margin-right: 20px;
+            float: right;
+            .label {
+                height: 24px;
+                line-height: 24px;
+                padding: 0 10px;
+                margin: auto 10px;
+            }
+            .spin-style {
+                margin: auto;
+            }
+
+            &.show-result {
+                @include display-flex(flex);
+            }
         }
     }
     .right-button, .left-button {

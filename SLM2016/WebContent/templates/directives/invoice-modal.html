@@ -19,11 +19,9 @@
 				    <span>{{currentStudent.name}}</span>
 				</div>
 				<div class="form-group">
-				    <label for="modal-tax-rate">稅率：</label>
-				    <div class="input-group">
-				     	<input type="text" class="form-control" id="modal-tax-rate" placeholder="請輸入稅率" ng-model="data.taxRate" ng-change="onTaxRateChange()">
-				    	<div class="input-group-addon">%</div>
-				    </div>
+				    <label>狀態：</label>
+				    <span ng-show="!isStudentPaid" class="warning">此學員尚未繳費</span>
+				    <span ng-show="isStudentPaid">此學員已繳費</span>
 				</div>
         	</div>
         	<div class="right">
@@ -44,14 +42,27 @@
 				    <label>格式：</label>
 				    <span>{{data.receipt_type}}</span>
 				</div>
-				<div class="form-group">
-				    <label>狀態：</label>
-				    <span ng-show="!isStudentPaid" class="warning">此學員尚未繳費</span>
-				    <span ng-show="isStudentPaid">此學員已繳費</span>
+				<div class="form-group" ng-show = "isThreeInvoice">
+				    <label>統編與公司：</label>
+				    <div class="input-block" ng-class="{'has-error' : isCompanyidError, 'has-success' : isCompanyidSuccess}">
+				    	<input type="text" class="form-control id" placeholder="請輸入統編" ng-model = "data.companyid" ng-change="onCompanyIdChange()">
+						<span class="glyphicon glyphicon-ok form-control-feedback success" aria-hidden="true"></span>
+						<span class="glyphicon glyphicon-remove form-control-feedback error" aria-hidden="true"></span>
+				    </div>
+					<div class="input-block" ng-class="{'has-error' : isCompanyError, 'has-success' : isCompanySuccess}">
+				    	<input type="text" class="form-control" placeholder="請輸入公司名稱" ng-model = "data.company">
+				    	<span class="loading" ng-show="isCompanyLoading"><spin spin-size="small" class="spin-style"></spin></span>
+						<span class="glyphicon glyphicon-ok form-control-feedback success" aria-hidden="true"></span>
+						<span class="glyphicon glyphicon-remove form-control-feedback error" aria-hidden="true"></span>
+						<span class="company-correct" ng-click="changeCompanyData()" ng-show="isCompanyStatus">正確名稱：{{data.correctCompany}}</span>
+				    </div>
 				</div>
         	</div>
 		</div>
 		<div class="invoice-content">
+			<div class="invoice-pager">
+				<span class="pager" ng-repeat="s in studentList" ng-class="{'active': currentStudent.id == s.id}"></span>
+			</div>
 			<!-- 三聯式 -->
 			<div class="invoice-wrapper" ng-show="invoiceType == 'THREE'">
 				<div class="invoice-title">
@@ -177,10 +188,17 @@
 			<label class="radio-inline">
 			    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" ng-model="data.radioStatus" value="已開立"> 已開立
 			</label>
-		    <div class="form-group">
+		    <div class="form-group" ng-class="{'has-error': isInvoiceNumberEmpty}">
 		    	<label for="invoiceNumber">發票號碼 : </label>
 		    	<input type="text" class="form-control" id="invoiceNumber" placeholder="請輸入發票號碼" ng-model="data.invoiceNumber" ng-change="onInvoiceNumberChange()">
 		    </div>
+		    <div class="form-group">
+			    <label for="modal-tax-rate">稅率：</label>
+			    <div class="input-group">
+			     	<input type="text" class="form-control tax" id="modal-tax-rate" placeholder="請輸入稅率" ng-model="data.taxRate" ng-change="onTaxRateChange()">
+			    	<div class="input-group-addon">%</div>
+			    </div>
+			</div>
 		</form>
 		<button type="button" class="btn btn-primary" ng-click="saveStudentReceiptStatus()">儲存</button>
     </div>

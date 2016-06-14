@@ -127,7 +127,29 @@ public class StudentModel {
 	}
 
 	public void setPhone(String phone) {
-		this.phone = phone;
+		
+		String phoneNumber = "";
+
+		String phonePattern1 = "^09\\d{2}-\\d{3}-\\d{3}";
+		String phonePattern2 = "^09\\d{2}-\\d{6}";
+		String phonePattern3 = "^9\\d{8}";
+
+		Pattern pattern1 = Pattern.compile(phonePattern1);
+		Pattern pattern2 = Pattern.compile(phonePattern2);
+		Pattern pattern3 = Pattern.compile(phonePattern3);
+
+		if (pattern1.matcher(phone).find()) {
+			phoneNumber = phone.substring(0, 4) + "-" + phone.substring(5, 8)
+					+ phone.substring(9, 12);
+
+		} else if (pattern2.matcher(phone).find()) {
+			phoneNumber = phone;
+		} else if (pattern3.matcher(phone).find()) {
+			phoneNumber = "0" + phone.substring(0, 3) + "-" + phone.substring(3, 9);
+		}
+		
+		
+		this.phone = phoneNumber;
 	}
 
 	public String getCompany() {
@@ -252,5 +274,30 @@ public class StudentModel {
 			this.setTicketPrice(ticketPrice);
 		}
 	}
+	
+	   public void setReceiptCommpanyTitleAndEIN(String companyTitleAndEIN) {
+	        String companyEINReg = "(\\d+,*)+";
+	        String companyTitleReg = ".*[\\s]";
+
+	        String companyEIN = "";
+	        String companyTitle = "";
+
+	        Pattern EINPattern = Pattern.compile(companyEINReg);
+	        Pattern TitlePattern = Pattern.compile(companyTitleReg);
+
+	        Matcher tMatcher = TitlePattern.matcher(companyTitleAndEIN);
+
+	        if (tMatcher.find()) {
+	            companyTitle = companyTitleAndEIN.substring(tMatcher.start(), tMatcher.end());
+	            this.setReceiptCompanyName(companyTitle);
+	        }
+
+	        Matcher eMatcher = EINPattern.matcher(companyTitleAndEIN);
+
+	        if (eMatcher.find()) {
+	            companyEIN = companyTitleAndEIN.substring(eMatcher.start(), eMatcher.end());
+	            this.setReceiptCompanyEIN(companyEIN);
+	        }
+	    }
 
 }
