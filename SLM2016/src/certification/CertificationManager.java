@@ -87,7 +87,6 @@ public class CertificationManager {
 		graphics.setFont(new Font("DFKai-SB", Font.PLAIN, template.getParticipateSize()));
 		if(isParticipateShowable(certification))
 		{
-			System.out.println("AAA");
 			graphics.drawString("參加", template.getParticipateLocation().x, template.getParticipateLocation().y);
 		}
 
