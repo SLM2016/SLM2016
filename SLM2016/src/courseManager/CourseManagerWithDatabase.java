@@ -13,7 +13,7 @@ import com.sun.rowset.CachedRowSetImpl;
 import javafx.util.Pair;
 import util.SqlHelper;
 
-public class CourseManagerWithDatabase {
+public class  {
 	private List<Pair<String, String>> courseStatus_ = new ArrayList<Pair<String, String>>();
 
 	public CourseManagerWithDatabase() {
@@ -556,6 +556,23 @@ public class CourseManagerWithDatabase {
 		result.put("status", "true");
 
 		return gson.toJson(result);
+	}
+
+	public String getCourseStatus(String courseId, String statusName) throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		CachedRowSet data = new CachedRowSetImpl();
+
+		HashMap<String, String> result = new HashMap<String, String>();
+		HashMap<String, String> statusIDMap = new HashMap<String, String>();
+		Gson gson = new Gson();
+		String sqlString = "SELECT * FROM `course_status`;";
+		helper.excuteSql(sqlString, data);
+
+		while (data.next()) {
+			statusIDMap.put(data.getString("id"), data.getString("name"));
+		}
+
+		return gson.toJson(statusIDMap);
 	}
 
 }
