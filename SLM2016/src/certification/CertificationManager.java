@@ -58,6 +58,16 @@ public class CertificationManager {
 			graphics.drawString(backward, template.getCourceNameLocation2().x, template.getCourceNameLocation2().y);
 		}
 	}
+	
+	private boolean isParticipateShowable(Certification certification)
+	{
+		return !(certification.getCourceDate().equals("") && 
+				 certification.getCourceDuration().equals("") && 
+				 certification.getCourceName().equals("") && 
+			     certification.getId().equals("") &&
+			     certification.getOwner().equals("") &&
+			     certification.getDate().equals(""));
+	}
 
 	private void setCertificationText(Image img, Certification certification) {
 		Graphics2D graphics = (Graphics2D) img.getGraphics();
@@ -75,7 +85,11 @@ public class CertificationManager {
 		graphics.drawString(certification.getCourceDate(), template.getCourceDateLocation().x, template.getCourceDateLocation().y);
 		
 		graphics.setFont(new Font("DFKai-SB", Font.PLAIN, template.getParticipateSize()));
-		graphics.drawString("參加", template.getParticipateLocation().x, template.getParticipateLocation().y);
+		if(isParticipateShowable(certification))
+		{
+			System.out.println("AAA");
+			graphics.drawString("參加", template.getParticipateLocation().x, template.getParticipateLocation().y);
+		}
 
 		setCourceName(graphics,template,certification);
 		
