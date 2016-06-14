@@ -1689,15 +1689,24 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   vertical-align: top;
 }
 /* line 135, ../scss/templates/_course.scss */
+.course-info .inner-wrapper .manage .manage-topbar .topbar-search.button {
+  width: auto;
+}
+/* line 138, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-topbar .topbar-search .input-group {
   margin: auto;
   margin-right: 20px;
 }
-/* line 141, ../scss/templates/_course.scss */
+/* line 142, ../scss/templates/_course.scss */
+.course-info .inner-wrapper .manage .manage-topbar .topbar-search .btn-group {
+  height: 34px;
+  margin: auto 0;
+}
+/* line 148, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .loader {
   margin-top: 20px;
 }
-/* line 144, ../scss/templates/_course.scss */
+/* line 151, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content {
   margin-top: 20px;
   background-color: #FFF;
@@ -1708,18 +1717,18 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
-/* line 151, ../scss/templates/_course.scss */
+/* line 158, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content.open-level .content-title .glyphicon {
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
 }
-/* line 155, ../scss/templates/_course.scss */
+/* line 162, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content.open-level .table-content {
   display: block;
 }
-/* line 159, ../scss/templates/_course.scss */
+/* line 166, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .content-title {
   height: 50px;
   line-height: 50px;
@@ -1733,29 +1742,29 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 5px;
   border-radius: 5px 5px 0 0;
 }
-/* line 169, ../scss/templates/_course.scss */
+/* line 176, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .content-title .glyphicon {
   top: 0;
   font-size: 12px;
   margin-left: 10px;
 }
-/* line 175, ../scss/templates/_course.scss */
+/* line 182, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content {
   display: none;
   padding-top: 10px;
 }
-/* line 181, ../scss/templates/_course.scss */
+/* line 188, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content table thead tr th {
   height: 40px;
   line-height: 40px;
   padding: 0;
   text-align: left;
 }
-/* line 186, ../scss/templates/_course.scss */
+/* line 193, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content table thead tr th:nth-of-type(0n+1) {
   padding-left: 20px;
 }
-/* line 194, ../scss/templates/_course.scss */
+/* line 201, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content table tbody tr td {
   position: relative;
   height: 50px;
@@ -1765,20 +1774,32 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-size: 14px;
   text-align: left;
 }
-/* line 202, ../scss/templates/_course.scss */
+/* line 209, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content table tbody tr td:nth-of-type(0n+1) {
   padding-left: 20px;
 }
-/* line 205, ../scss/templates/_course.scss */
+/* line 212, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content table tbody tr td.batch {
   width: 40%;
   color: #0F8CF7;
   text-decoration: underline;
   cursor: pointer;
 }
-/* line 212, ../scss/templates/_course.scss */
+/* line 219, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content table tbody tr.selected {
   background-color: #D1E1FD;
+}
+/* line 227, ../scss/templates/_course.scss */
+.course-info .inner-wrapper .manage .empty-content {
+  display: inline-block;
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  font-size: 30px;
+  font-weight: bold;
+  color: #333;
+  transform: translateX(-50%);
+  z-index: 1;
 }
 
 /* line 6, ../scss/directives/_loading.scss */
@@ -2682,17 +2703,22 @@ input:focus, textarea:focus {
 .btn.btn-orange:hover, .btn.btn-orange:focus {
   background-color: #FF7323;
   outline: none;
+  background-position: 0 -16px;
 }
-/* line 99, ../scss/style.scss */
+/* line 100, ../scss/style.scss */
 .btn.btn-orange:active:focus {
   border-color: #cd4a00;
 }
+/* line 106, ../scss/style.scss */
+.btn.btn-default:hover, .btn.btn-default:focus {
+  background-position: 0 -16px;
+}
 
-/* line 107, ../scss/style.scss */
+/* line 113, ../scss/style.scss */
 .form-group.has-error .form-control {
   border-color: #F14342;
 }
-/* line 109, ../scss/style.scss */
+/* line 115, ../scss/style.scss */
 .form-group.has-error .form-control:focus {
   border-color: #F14342;
 }
