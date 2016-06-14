@@ -1,12 +1,13 @@
 package courseManager;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.sql.rowset.CachedRowSet;
 
+import com.google.gson.Gson;
 import com.sun.rowset.CachedRowSetImpl;
 
 import javafx.util.Pair;
@@ -141,6 +142,14 @@ public class CourseManagerWithDatabase {
 		while (data.next()) {
 			String id = data.getString("id");
 			String fk = data.getString("fk_status_id");
+
+			String sqlForGetStudentNumber = String.format(
+					"SELECT COUNT(*) as `student_number` FROM `student_info` where `fk_course_info_id` = '%s'", id);
+			CachedRowSet studentNumberData = new CachedRowSetImpl();
+			helper.excuteSql(sqlForGetStudentNumber, studentNumberData);
+			studentNumberData.next();
+			int studentNumber = studentNumberData.getInt("student_number");
+
 			Course course = new Course(id);
 			course.setCourseName(data.getString("name"));
 			course.setCourseCode(data.getString("code"));
@@ -150,6 +159,7 @@ public class CourseManagerWithDatabase {
 			course.setLocation(data.getString("location"));
 			course.setLecturer(data.getString("lecturer"));
 			course.setHyperlink(data.getString("page_link"));
+			course.setStudentNum(studentNumber);
 			for (int i = 0; i < courseStatus_.size(); i++) {
 				if (courseStatus_.get(i).getKey().equals(fk)) {
 					course.setStatus(courseStatus_.get(i).getValue());
@@ -166,6 +176,8 @@ public class CourseManagerWithDatabase {
 			temp = getCourseFromCcAddress(course, id);
 			if (temp != "Success")
 				return temp;
+
+			studentNumberData.close();
 
 			courses.add(course);
 		}
@@ -229,7 +241,7 @@ public class CourseManagerWithDatabase {
 		result = addCourseIntoCcAddress(course, id);
 		if (result != "Success")
 			return result;
-		return "Success";
+		return id;
 	}
 
 	private String addCourseIntoInfo(Course course, String id) throws SQLException {
@@ -441,8 +453,17 @@ public class CourseManagerWithDatabase {
 		if (result != "Success")
 			return result;
 		while (data.next()) {
+
 			String id = data.getString("id");
 			String fk = data.getString("fk_status_id");
+
+			String sqlForGetStudentNumber = String.format(
+					"SELECT COUNT(*) as `student_number` FROM `student_info` where `fk_course_info_id` = '%s'", id);
+			CachedRowSet studentNumberData = new CachedRowSetImpl();
+			helper.excuteSql(sqlForGetStudentNumber, studentNumberData);
+			studentNumberData.next();
+			int studentNumber = studentNumberData.getInt("student_number");
+
 			Course course = new Course(id);
 			course.setCourseCode(data.getString("code"));
 			course.setCourseName(data.getString("name"));
@@ -452,6 +473,7 @@ public class CourseManagerWithDatabase {
 			course.setLocation(data.getString("location"));
 			course.setLecturer(data.getString("lecturer"));
 			course.setHyperlink(data.getString("page_link"));
+			course.setStudentNum(studentNumber);
 			for (int i = 0; i < courseStatus_.size(); i++) {
 				if (courseStatus_.get(i).getKey().equals(fk)) {
 					course.setStatus(courseStatus_.get(i).getValue());
@@ -470,6 +492,7 @@ public class CourseManagerWithDatabase {
 				return temp;
 
 			courses.add(course);
+			studentNumberData.close();
 		}
 		return result;
 	}
@@ -492,7 +515,7 @@ public class CourseManagerWithDatabase {
 		CachedRowSet data = new CachedRowSetImpl();
 		String sqlString = "SELECT date FROM `course_has_date` WHERE `fk_course_id`='" + courseId + "'";
 		helper.excuteSql(sqlString, data);
-		
+
 		if (!(data.next()))
 			result = "";
 		else
@@ -500,4 +523,97 @@ public class CourseManagerWithDatabase {
 		data.close();
 		return result;
 	}
+
+	public String getCourseInfoTop5() throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		CachedRowSet data = new CachedRowSetImpl();
+		String sqlString = "SELECT * FROM `course_info`,`course_has_date` WHERE `course_info`.`id` = `course_has_date`.`fk_course_id` order by `course_has_date`.`date` asc;";
+		helper.excuteSql(sqlString, data);
+		ArrayList<String> courseIdList = new ArrayList<String>();
+		ArrayList<Course> courseList = new ArrayList<Course>();
+		ArrayList<Course> topNCourseIdList = new ArrayList<Course>();
+		int topN = 5;
+
+		while (data.next()) {
+			String fk = data.getString("fk_course_id");
+			if (!courseIdList.contains(fk)) {
+				courseIdList.add(fk);
+
+				String fk_status = data.getString("fk_status_id");
+
+				String sqlForGetStudentNumber = String.format(
+						"SELECT COUNT(*) as `student_number` FROM `student_info` where `fk_course_info_id` = '%s'", fk);
+				CachedRowSet studentNumberData = new CachedRowSetImpl();
+				helper.excuteSql(sqlForGetStudentNumber, studentNumberData);
+				studentNumberData.next();
+				int studentNumber = studentNumberData.getInt("student_number");
+
+				Course course = new Course(data.getString("id"));
+				course.setCourseName(data.getString("name"));
+				course.setType(data.getString("type"));
+				course.setBatch(data.getString("batch"));
+				course.setDuration(Integer.parseInt(data.getString("duration")));
+				course.setLocation(data.getString("location"));
+				course.setLecturer(data.getString("lecturer"));
+				course.setHyperlink(data.getString("page_link"));
+				course.setStudentNum(studentNumber);
+
+				for (int i = 0; i < courseStatus_.size(); i++) {
+					if (courseStatus_.get(i).getKey().equals(fk_status)) {
+						course.setStatus(courseStatus_.get(i).getValue());
+						break;
+					}
+				}
+				courseList.add(course);
+				studentNumberData.close();
+			}
+		}
+		for (int i = 0; i < courseList.size(); i++) {
+			topNCourseIdList.add(courseList.get(i));
+			if (topNCourseIdList.size() == topN) {
+				break;
+			}
+		}
+		Gson gson = new Gson();
+		return gson.toJson(topNCourseIdList);
+	}
+
+	public String updateCourseStatus(String courseId, String statusName) throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		CachedRowSet data = new CachedRowSetImpl();
+
+		HashMap<String, String> statusIDMap = new HashMap<String, String>();
+		HashMap<String, String> result = new HashMap<String, String>();
+		Gson gson = new Gson();
+		String sqlString = "SELECT * FROM `course_status`;";
+		helper.excuteSql(sqlString, data);
+
+		while (data.next()) {
+			statusIDMap.put(data.getString("name"), data.getString("id"));
+		}
+		sqlString = String.format("UPDATE `course_info` SET `fk_status_id`='%s' WHERE `id` = '%s'",
+				statusIDMap.get(statusName), courseId);
+		helper.excuteSql(sqlString, data);
+		result.put("status", "true");
+
+		return gson.toJson(result);
+	}
+
+	public String getCourseStatus(String courseId, String statusName) throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		CachedRowSet data = new CachedRowSetImpl();
+
+		HashMap<String, String> result = new HashMap<String, String>();
+		HashMap<String, String> statusIDMap = new HashMap<String, String>();
+		Gson gson = new Gson();
+		String sqlString = "SELECT * FROM `course_status`;";
+		helper.excuteSql(sqlString, data);
+
+		while (data.next()) {
+			statusIDMap.put(data.getString("id"), data.getString("name"));
+		}
+
+		return gson.toJson(statusIDMap);
+	}
+
 }
