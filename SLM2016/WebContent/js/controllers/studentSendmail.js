@@ -1,5 +1,5 @@
-app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService',  
-    function ($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService) {  
+app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService', '$stateParams',
+    function ($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService, $stateParams) {  
 
 			function getcontext(){
 			  				  
