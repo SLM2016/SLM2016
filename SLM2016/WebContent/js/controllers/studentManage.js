@@ -128,7 +128,9 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
 
             if (mailData.length != 0) {
                 StudentInfoService.putStudentSendMailData(mailData);
-                $state.go('studentInfo.Sendmail');
+                $state.go(STATES.COURSEINFO_SENDMAIL, {
+                    courseId: $scope.courseId
+                });
             } else {
                 return;
             }
@@ -274,7 +276,24 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         }
 
         var changeCourseStatus = function(status) {
-            $scope.currentCourse.status_ = status;
+            CourseService.updateCourseStatus($scope.currentCourse.courseId_, status).then(function() {
+                $scope.currentCourse.status_ = status;
+            })
+        }
+
+        var toggleCourseInfo = function() {
+            $scope.isInfoOpen = !$scope.isInfoOpen;
+        }
+
+        var gotoCourseUrl = function() {
+            var url = $scope.currentCourse.hyperlink_;
+            
+            if(!url.includes("http")) {
+                url = "https://" + url
+            }
+            // $window.location.href = url;
+            var newWindow = window.open(url);
+            newWindow.focus();
         }
 
         var init = function() {
@@ -302,6 +321,7 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         $scope.initPage = 1;
         $scope.studentNum = 0;
         $scope.pageItem = 15;
+        $scope.isInfoOpen = false;
 
         /*==========================
              Methods
@@ -320,6 +340,8 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         $scope.generatecertificationId = generatecertificationId;
         $scope.getStudentList = getStudentList;
         $scope.changeCourseStatus = changeCourseStatus;
+        $scope.toggleCourseInfo = toggleCourseInfo;
+        $scope.gotoCourseUrl = gotoCourseUrl;
 
         /*==========================
              init

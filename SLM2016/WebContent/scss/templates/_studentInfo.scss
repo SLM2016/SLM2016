@@ -171,8 +171,6 @@
                     color: #333;
                     .nav {
                         display: inline-block;
-                        color: #0F8CF7;
-                        text-decoration: underline;
                         cursor: pointer;
                     }
                     .glyphicon {
@@ -251,6 +249,7 @@
                     @include box-shadow(0px 1px 3px 0px rgba(0, 0, 0, 0.1));
                     @include border-radius(3px);
                     .content-title {
+                        position: relative;
                         height: 50px;
                         line-height: 50px;
                         background-color: #ff8f4f;
@@ -258,13 +257,42 @@
                         font-size: 20px;
                         text-align: center;
                         font-weight: bold;
+                        cursor: pointer;
                         @include border-radius(3px 3px 0 0);
+                        
                     }
                 }
                 .course-content {
                     margin-bottom: 20px;
+                    .content-title {
+                        // background-color: #FFF;
+                        // color: #333;
+                        // border: 1px solid #ddd;
+                        // font-weight: normal;
+                        .glyphicon {
+                            top: 0;
+                            font-size: 12px;
+                            margin-left: 10px;
+                        }
+                        .btn-group {
+                            position: absolute;
+                            top: 50%;
+                            right: 20px;
+                            @include transform(translateY(-50%));
+                        }
+                    }
+                    &.open-level {
+                        .content-title {
+                            .glyphicon {
+                                @include transform(rotate(90deg));
+                            }
+                        }
+                        .content-info {
+                            @include display-flex(flex);
+                        }
+                    }
                     .content-info {
-                        @include display-flex(flex);
+                        display: none;
                         padding: 10px 0;
                         .left, .right {
                             display: inline-block;
@@ -278,6 +306,9 @@
                                     vertical-align: top;
                                     font-size: 16px;
                                     font-weight: bold;
+                                }
+                                a {
+                                    cursor: pointer;
                                 }
                             }
                         }

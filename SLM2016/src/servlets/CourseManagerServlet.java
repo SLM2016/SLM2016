@@ -38,7 +38,10 @@ public class CourseManagerServlet extends HttpServlet {
 				doGetGetCourseInfoByCourseId(request, response);
 			} else if (op.equals(OP_GET_COURSE_INFO_ORDER_BY_TIME_TOP_5)) {
 				getCourseListTop5(request, response);
+			} else if (op.equals(OP_UPDATE_COURSE_STATUS)) {
+				updateCourseStatus(request, response);
 			}
+			
 		} else {
 			List<Course> courses_ = new ArrayList<Course>();
 			String result = "";
@@ -84,16 +87,10 @@ public class CourseManagerServlet extends HttpServlet {
 		String header = request.getHeader("Delete");
 		String op = request.getParameter("op");
 
-		if (op != null) {
-			if (op.equals(OP_UPDATE_COURSE_STATUS)) {
-				updateCourseStatus(request, response);
-			}
+		if (header != null) {
+			doPostDeleteCourse(request, response, requestString);
 		} else {
-			if (header != null) {
-				doPostDeleteCourse(request, response, requestString);
-			} else {
-				doPostAddCourse(request, response, requestString);
-			}
+			doPostAddCourse(request, response, requestString);
 		}
 	}
 

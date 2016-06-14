@@ -670,6 +670,26 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   width: 100%;
 }
 /* line 7, ../scss/templates/_example.scss */
+.example .top-nav {
+  height: 22px;
+  line-height: 22px;
+  margin-bottom: 4px;
+  font-size: 16px;
+  color: #333;
+}
+/* line 13, ../scss/templates/_example.scss */
+.example .top-nav .nav {
+  display: inline-block;
+  cursor: pointer;
+}
+/* line 17, ../scss/templates/_example.scss */
+.example .top-nav .glyphicon {
+  margin: 0 5px;
+  height: 22px;
+  line-height: 22px;
+  font-size: 12px;
+}
+/* line 24, ../scss/templates/_example.scss */
 .example .inner-wrapper {
   position: relative;
   width: 100%;
@@ -681,11 +701,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
 }
-/* line 13, ../scss/templates/_example.scss */
+/* line 30, ../scss/templates/_example.scss */
 .example .inner-wrapper .info {
   padding: 25px 40px;
 }
-/* line 15, ../scss/templates/_example.scss */
+/* line 32, ../scss/templates/_example.scss */
 .example .inner-wrapper .info .title {
   margin-bottom: 20px;
   height: 57px;
@@ -694,14 +714,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   border-bottom: 1px solid #ccc;
   text-align: center;
 }
-/* line 24, ../scss/templates/_example.scss */
+/* line 41, ../scss/templates/_example.scss */
 .example .inner-wrapper .page-topbar {
   position: relative;
   height: 40px;
   width: 100%;
   border-bottom: 2px solid #eee;
 }
-/* line 29, ../scss/templates/_example.scss */
+/* line 46, ../scss/templates/_example.scss */
 .example .inner-wrapper .page-topbar .topbar-item {
   display: inline-block;
   padding: 0 6px;
@@ -712,7 +732,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   color: #666;
   cursor: pointer;
 }
-/* line 39, ../scss/templates/_example.scss */
+/* line 56, ../scss/templates/_example.scss */
 .example .inner-wrapper .page-topbar .date-info {
   display: inline-block;
   padding: 0 6px;
@@ -722,7 +742,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   color: #ff6812;
   float: right;
 }
-/* line 48, ../scss/templates/_example.scss */
+/* line 65, ../scss/templates/_example.scss */
 .example .inner-wrapper .page-topbar .switcher {
   position: absolute;
   top: 38px;
@@ -735,7 +755,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
 }
-/* line 56, ../scss/templates/_example.scss */
+/* line 73, ../scss/templates/_example.scss */
 .example .inner-wrapper .page-topbar .switcher.right {
   -moz-transition: all 150ms ease-in-out;
   -o-transition: all 150ms ease-in-out;
@@ -746,7 +766,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-transform: translateX(100%);
   transform: translateX(100%);
 }
-/* line 60, ../scss/templates/_example.scss */
+/* line 77, ../scss/templates/_example.scss */
 .example .inner-wrapper .page-topbar .switcher.left {
   -moz-transition: all 150ms ease-in-out;
   -o-transition: all 150ms ease-in-out;
@@ -757,36 +777,36 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-transform: translateX(0);
   transform: translateX(0);
 }
-/* line 67, ../scss/templates/_example.scss */
+/* line 84, ../scss/templates/_example.scss */
 .example .inner-wrapper .ticketinput-wrapper .form-group {
   display: inline-block;
   margin-right: 15px;
 }
-/* line 70, ../scss/templates/_example.scss */
+/* line 87, ../scss/templates/_example.scss */
 .example .inner-wrapper .ticketinput-wrapper .form-group label {
   font-size: 14px;
   margin-bottom: 6px;
   font-weight: bold;
 }
-/* line 78, ../scss/templates/_example.scss */
+/* line 95, ../scss/templates/_example.scss */
 .example .inner-wrapper .ticketinput-wrapper.company .form-group.id {
   width: 450px;
 }
-/* line 81, ../scss/templates/_example.scss */
+/* line 98, ../scss/templates/_example.scss */
 .example .inner-wrapper .ticketinput-wrapper.company .form-group.name {
   width: calc(100% - 350px - 20px);
 }
-/* line 84, ../scss/templates/_example.scss */
+/* line 101, ../scss/templates/_example.scss */
 .example .inner-wrapper .ticketinput-wrapper.company .form-group.button {
   width: calc(100% - 700px - 20px);
   margin-right: 0;
 }
-/* line 91, ../scss/templates/_example.scss */
+/* line 108, ../scss/templates/_example.scss */
 .example .inner-wrapper .ticketinput-wrapper.dollar .form-group {
   width: 22%;
   vertical-align: top;
 }
-/* line 94, ../scss/templates/_example.scss */
+/* line 111, ../scss/templates/_example.scss */
 .example .inner-wrapper .ticketinput-wrapper.dollar .form-group:last-child {
   width: calc(34% - 60px);
   margin-right: 0;
@@ -1321,18 +1341,16 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 172, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .fix-content .top-nav .nav {
   display: inline-block;
-  color: #0F8CF7;
-  text-decoration: underline;
   cursor: pointer;
 }
-/* line 178, ../scss/templates/_studentInfo.scss */
+/* line 176, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .fix-content .top-nav .glyphicon {
   margin: 0 5px;
   height: 22px;
   line-height: 22px;
   font-size: 12px;
 }
-/* line 185, ../scss/templates/_studentInfo.scss */
+/* line 183, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .fix-content .manage-topbar {
   padding: 0 20px;
   height: 50px;
@@ -1345,13 +1363,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-/* line 193, ../scss/templates/_studentInfo.scss */
+/* line 191, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .fix-content .manage-topbar .btn-group .btn {
   height: 35px;
   line-height: 35px;
   padding: 0 10px;
 }
-/* line 197, ../scss/templates/_studentInfo.scss */
+/* line 195, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .fix-content .manage-topbar .btn-group .btn .select-block {
   display: -webkit-flex;
   display: flex;
@@ -1363,18 +1381,18 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-/* line 204, ../scss/templates/_studentInfo.scss */
+/* line 202, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .fix-content .manage-topbar .btn-group .btn .select-block span {
   font-size: 12px;
 }
-/* line 210, ../scss/templates/_studentInfo.scss */
+/* line 208, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .fix-content .manage-topbar .select-info {
   display: inline-block;
   margin-left: 10px;
   height: 50px;
   line-height: 50px;
 }
-/* line 217, ../scss/templates/_studentInfo.scss */
+/* line 215, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .fix-content .manage-topbar .student-search {
   display: -webkit-inline-flex;
   display: inline-flex;
@@ -1383,25 +1401,25 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   vertical-align: top;
   float: right;
 }
-/* line 223, ../scss/templates/_studentInfo.scss */
+/* line 221, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .fix-content .manage-topbar .student-search .input-group {
   margin: auto;
 }
-/* line 225, ../scss/templates/_studentInfo.scss */
+/* line 223, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .fix-content .manage-topbar .student-search .input-group input {
   height: 35px;
   line-height: 35px;
   padding: 0 10px;
 }
-/* line 235, ../scss/templates/_studentInfo.scss */
+/* line 233, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .loader {
   margin-top: 75px;
 }
-/* line 238, ../scss/templates/_studentInfo.scss */
+/* line 236, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content {
   margin-top: 80px;
 }
-/* line 240, ../scss/templates/_studentInfo.scss */
+/* line 238, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .manage-title {
   height: 60px;
   line-height: 60px;
@@ -1413,7 +1431,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 3px;
   border-radius: 3px 3px 0 0;
 }
-/* line 249, ../scss/templates/_studentInfo.scss */
+/* line 247, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .student-content, .studentinfo .inner-wrapper .manage .manage-content .course-content {
   background-color: #FFF;
   -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
@@ -1423,8 +1441,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
-/* line 253, ../scss/templates/_studentInfo.scss */
+/* line 251, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .student-content .content-title, .studentinfo .inner-wrapper .manage .manage-content .course-content .content-title {
+  position: relative;
   height: 50px;
   line-height: 50px;
   background-color: #ff8f4f;
@@ -1432,47 +1451,79 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-size: 20px;
   text-align: center;
   font-weight: bold;
+  cursor: pointer;
   -moz-border-radius: 3px 3px 0 0;
   -webkit-border-radius: 3px;
   border-radius: 3px 3px 0 0;
 }
-/* line 264, ../scss/templates/_studentInfo.scss */
+/* line 265, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .course-content {
   margin-bottom: 20px;
 }
-/* line 266, ../scss/templates/_studentInfo.scss */
-.studentinfo .inner-wrapper .manage .manage-content .course-content .content-info {
+/* line 272, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .course-content .content-title .glyphicon {
+  top: 0;
+  font-size: 12px;
+  margin-left: 10px;
+}
+/* line 277, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .course-content .content-title .btn-group {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+/* line 286, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .course-content.open-level .content-title .glyphicon {
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+/* line 290, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .course-content.open-level .content-info {
   display: -webkit-flex;
   display: flex;
+}
+/* line 294, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .course-content .content-info {
+  display: none;
   padding: 10px 0;
 }
-/* line 269, ../scss/templates/_studentInfo.scss */
+/* line 297, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .course-content .content-info .left, .studentinfo .inner-wrapper .manage .manage-content .course-content .content-info .right {
   display: inline-block;
   -webkit-flex: 1;
   flex: 1;
   margin: 0 20px;
 }
-/* line 273, ../scss/templates/_studentInfo.scss */
+/* line 301, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .course-content .content-info .left .form-group, .studentinfo .inner-wrapper .manage .manage-content .course-content .content-info .right .form-group {
   line-height: 35px;
   margin-bottom: 0;
   vertical-align: top;
 }
-/* line 277, ../scss/templates/_studentInfo.scss */
+/* line 305, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .course-content .content-info .left .form-group label, .studentinfo .inner-wrapper .manage .manage-content .course-content .content-info .right .form-group label {
   vertical-align: top;
   font-size: 16px;
   font-weight: bold;
 }
-/* line 290, ../scss/templates/_studentInfo.scss */
+/* line 310, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .course-content .content-info .left .form-group a, .studentinfo .inner-wrapper .manage .manage-content .course-content .content-info .right .form-group a {
+  cursor: pointer;
+}
+/* line 321, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .student-content table thead tr th {
   height: 50px;
   line-height: 40px;
   padding: 0;
   text-align: left;
 }
-/* line 300, ../scss/templates/_studentInfo.scss */
+/* line 331, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .student-content table tbody tr td {
   position: relative;
   height: 50px;
@@ -1481,11 +1532,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-size: 14px;
   text-align: left;
 }
-/* line 307, ../scss/templates/_studentInfo.scss */
+/* line 338, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .student-content table tbody tr td.empty {
   text-align: center;
 }
-/* line 311, ../scss/templates/_studentInfo.scss */
+/* line 342, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .student-content table tbody tr.selected {
   background-color: #D1E1FD;
 }
@@ -1782,14 +1833,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .course-info .inner-wrapper .manage .manage-content .table-content table tbody tr td.batch {
   width: 40%;
   color: #0F8CF7;
-  text-decoration: underline;
   cursor: pointer;
 }
-/* line 219, ../scss/templates/_course.scss */
+/* line 218, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content table tbody tr.selected {
   background-color: #D1E1FD;
 }
-/* line 227, ../scss/templates/_course.scss */
+/* line 226, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .empty-content {
   display: inline-block;
   position: absolute;
@@ -2042,8 +2092,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
-/* line 24, ../scss/directives/_topbar.scss */
+/* line 25, ../scss/directives/_topbar.scss */
 #topbar .left .slogan {
   display: inline-block;
   margin: auto 0 10px;
@@ -2053,17 +2104,17 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   color: #FF5D01;
   font-weight: bold;
 }
-/* line 34, ../scss/directives/_topbar.scss */
+/* line 35, ../scss/directives/_topbar.scss */
 #topbar .right {
   -webkit-flex: 1;
   flex: 1;
   height: 70px;
 }
-/* line 37, ../scss/directives/_topbar.scss */
+/* line 38, ../scss/directives/_topbar.scss */
 #topbar .right .right-menu {
   text-align: right;
 }
-/* line 39, ../scss/directives/_topbar.scss */
+/* line 40, ../scss/directives/_topbar.scss */
 #topbar .right .right-menu .menu-item {
   position: relative;
   display: inline-block;
@@ -2072,28 +2123,28 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   margin: 10px 0;
   cursor: pointer;
 }
-/* line 46, ../scss/directives/_topbar.scss */
+/* line 47, ../scss/directives/_topbar.scss */
 #topbar .right .right-menu .menu-item .nav-button {
   width: 100%;
   height: 100%;
   display: -webkit-inline-flex;
   display: inline-flex;
 }
-/* line 50, ../scss/directives/_topbar.scss */
+/* line 51, ../scss/directives/_topbar.scss */
 #topbar .right .right-menu .menu-item .nav-button span {
   font-size: 20px;
   margin: auto;
   color: rgba(0, 0, 0, 0.55);
 }
-/* line 56, ../scss/directives/_topbar.scss */
+/* line 57, ../scss/directives/_topbar.scss */
 #topbar .right .right-menu .menu-item .nav-button:hover span {
   color: rgba(0, 0, 0, 0.85);
 }
-/* line 64, ../scss/directives/_topbar.scss */
+/* line 65, ../scss/directives/_topbar.scss */
 #topbar .nav-menu {
   width: 240px;
 }
-/* line 66, ../scss/directives/_topbar.scss */
+/* line 67, ../scss/directives/_topbar.scss */
 #topbar .nav-menu:before {
   content: "";
   position: absolute;
@@ -2111,7 +2162,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-/* line 78, ../scss/directives/_topbar.scss */
+/* line 79, ../scss/directives/_topbar.scss */
 #topbar .nav-menu:after {
   content: "";
   position: absolute;

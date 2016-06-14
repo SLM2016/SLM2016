@@ -1,10 +1,17 @@
 <div class="example">
     <div class="page-content">
+        <div class="top-nav">
+            <a class="nav" ng-click="goCourseManage()">課程管理</a>
+            <span class="glyphicon glyphicon-menu-right"></span>
+            <a class="nav" ng-click="goStudentManage()">{{currentCourse.courseName_}} - {{currentCourse.batch_}}</a>
+            <span class="glyphicon glyphicon-menu-right"></span>
+            <span>寄送證書</span>
+        </div>
         <div class="inner-wrapper">
             <div class="content">
                 <loading ng-show="isCertificationLoading"></loading>
                 <div class="info" ng-show="!isCertificationLoading">
-                    <div class="title">Send Mail</div>
+                    <div class="title">寄送證書</div>
                     <div class="row">
                         <div class="col-md-6">
                             <p class="lead">課程: {{courseName}}</p>
