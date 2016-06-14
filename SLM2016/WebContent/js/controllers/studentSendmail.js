@@ -93,6 +93,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			$scope.date = parseMailData[index].courseDate;
     		$scope.studentId = parseMailData[index].studentId;
     		$scope.couresDuration = parseMailData[index].couresDuration;
+    		$scope.address = parseMailData[index].address;
     		
     		StudentInfoService.getCertificationInfo(JSON.stringify(parseMailData[index].studentId)).then(function(certificationData) {
     			var parse = JSON.parse(JSON.stringify(certificationData));   			
