@@ -11,10 +11,12 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
                         var courseGroup = {
                             name: result[i].courseName_,
                             courseList: [],
-                            openLevel: true
+                            isOpen: false,
+                            isShow: true
                         }
                         for (var j = 0; j < result.length; j++) {
                             if (courseGroup.name == result[j].courseName_) {
+                                result[j].isShow = true;
                                 courseGroup.courseList.push(result[j]);
                             }
                         }
@@ -59,12 +61,113 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
             }, 500);
         }
         var openGroupLevel = function(group) {
-            group.openLevel = !group.openLevel;
+            group.isOpen = !group.isOpen;
         }
         var goStudentManage = function(courseId) {
             $state.go(STATES.COURSEINFO_STUDENT, {
                 courseId: courseId
             })
+        }
+
+        var changeStatusFilter = function(status) {
+            resetCourseGroupList();
+            $scope.searchKey.status = status;
+            for (var i = 0; i < $scope.courseGroupList.length; i++) {
+                var isGroupOpen = false;
+                var courseList = $scope.courseGroupList[i].courseList;
+                for (var j = 0; j < courseList.length; j++) {
+                    if(courseList[j].status_.includes(status)) {
+                        if($scope.searchKey.batch != '') {
+                            if(courseList[j].batch_.includes($scope.searchKey.batch)) {
+                                isGroupOpen = true;
+                                courseList[j].isShow = true;
+                            }
+                        }
+                        else {
+                            if(status != '') {
+                                isGroupOpen = true;
+                                courseList[j].isShow = true;
+                            }
+                        }
+                    }
+                }
+                $scope.courseGroupList[i].isShow = isGroupOpen;
+                $scope.courseGroupList[i].isOpen = isGroupOpen;
+            }
+        }
+
+        var isBatchSearchChange = function() {
+            resetCourseGroupList();
+            for (var i = 0; i < $scope.courseGroupList.length; i++) {
+                var isGroupOpen = false;
+                var courseList = $scope.courseGroupList[i].courseList;
+                for (var j = 0; j < courseList.length; j++) {
+                    if(courseList[j].batch_.includes($scope.searchKey.batch)) {
+                        if($scope.searchKey.status != '') {
+                            if(courseList[j].status_ == $scope.searchKey.status) {
+                                isGroupOpen = true;
+                                courseList[j].isShow = true;
+                            }
+                        }
+                        else {
+                            if($scope.searchKey.batch != '') {
+                                isGroupOpen = true;
+                                courseList[j].isShow = true;
+                            }
+                        }
+                    }
+                }
+                $scope.courseGroupList[i].isShow = isGroupOpen;
+                $scope.courseGroupList[i].isOpen = isGroupOpen;
+            }
+        }
+
+        var isGroupEmpty = function() {
+            var isEmpty = true;
+
+            if ($scope.searchKey.batch != "" || $scope.searchKey.status != "") {
+                for (var i = 0; i < $scope.courseGroupList.length; i++) {
+                    if($scope.courseGroupList[i].isShow) {
+                        isEmpty = false;
+                        break;
+                    }
+                }
+            }
+            else {
+                isEmpty = false;
+            }
+                
+            return isEmpty;
+        }
+
+        var resetCourseGroupList = function() {
+            for (var i = 0; i < $scope.courseGroupList.length; i++) {
+                $scope.courseGroupList[i].isShow = true;
+                $scope.courseGroupList[i].isOpen = false;
+                var courseList = $scope.courseGroupList[i].courseList;
+                for (var j = 0; j < courseList.length; j++) {
+                    courseList[j].isShow = false;
+                }
+            }
+        }
+
+        var changeCourseStatus = function(status, course) {
+            course.status_ = status;
+        }
+
+        var isCourseShow = function(course) {
+            if ($scope.searchKey.batch != "" || $scope.searchKey.status != "") 
+                return course.isShow
+            else 
+                return true;
+        }
+
+        var isCourseGroupShow = function(group) {
+            if ($scope.searchKey.batch != "" || $scope.searchKey.status != "") 
+                return group.isShow
+            else 
+                return true;
+            
         }
 
         var init = function() {
@@ -77,6 +180,10 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
 
         $scope.courseGroupList = [];
         $scope.isCourseLoading = false;
+        $scope.searchKey = {
+            batch: "",
+            status:""
+        }
 
         /*==========================
             Methods
@@ -85,6 +192,12 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
         $scope.deleteRow = deleteRow;
         $scope.goStudentManage = goStudentManage;
         $scope.openGroupLevel = openGroupLevel;
+        $scope.changeStatusFilter = changeStatusFilter;
+        $scope.changeCourseStatus = changeCourseStatus;
+        $scope.isCourseShow = isCourseShow;
+        $scope.isCourseGroupShow = isCourseGroupShow;
+        $scope.isGroupEmpty = isGroupEmpty;
+        $scope.isBatchSearchChange = isBatchSearchChange;
 
         /*==========================
             Init

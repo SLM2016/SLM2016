@@ -94,11 +94,17 @@ input, textarea {
 		&:hover, &:focus{
 			background-color: #FF7323;
 			outline: none;
+			background-position: 0 -16px;
 		}
 		&:active {
 			&:focus {
 				border-color: #cd4a00;
 			}
+		}
+	}
+	&.btn-default {
+		&:hover, &:focus{
+			background-position: 0 -16px;
 		}
 	}
 }

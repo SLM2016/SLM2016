@@ -445,6 +445,7 @@ public class CourseManagerWithDatabase {
 			String id = data.getString("id");
 			String fk = data.getString("fk_status_id");
 			Course course = new Course(id);
+			course.setCourseCode(data.getString("code"));
 			course.setCourseName(data.getString("name"));
 			course.setType(data.getString("type"));
 			course.setBatch(data.getString("batch"));

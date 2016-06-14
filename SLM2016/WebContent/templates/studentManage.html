@@ -67,14 +67,32 @@
                             </div>
                             <div class="form-group">
                                 <label>課程狀態：</label>
-                                <span>{{currentCourse.status_}}</span>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span>{{currentCourse.status_}}</span> 
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a ng-click="changeCourseStatus('準備中')">準備中</a></li>
+                                        <li><a ng-click="changeCourseStatus('報名中')">報名中</a></li>
+                                        <li><a ng-click="changeCourseStatus('取消')">取消</a></li>
+                                        <li><a ng-click="changeCourseStatus('確定開課')">確定開課</a></li>
+                                        <li><a ng-click="changeCourseStatus('停止報名')">停止報名</a></li>
+                                        <li><a ng-click="changeCourseStatus('上課中')">上課中</a></li>
+                                        <li><a ng-click="changeCourseStatus('課程結束')">課程結束</a></li>
+                                    </ul>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>課程總人數：</label>
-                                <span>20 人</span>
+                                <span>{{studentNum}} 人</span>
                             </div>
                         </div>
                         <div class="right">
+                            <div class="form-group">
+                                <label>課程代碼：</label>
+                                <span>{{currentCourse.courseCode_}}</span>
+                            </div>
                             <div class="form-group">
                                 <label>地點：</label>
                                 <span>{{currentCourse.location_}}</span>
@@ -129,7 +147,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="s in studentList track by $index" ng-class="{'selected': s.isSelected}" ng-click="toggleSelectStudent(s, $index, $event)" ng-show="studentList.length > 0">
-                                <td style="text-align: center;">{{$index}}</td>
+                                <td style="text-align: center;">{{$index + 1}}</td>
                                 <td>{{s.name}}</td>
                                 <td>{{s.company}}</td>
                                 <td>{{s.phone}}</td>
