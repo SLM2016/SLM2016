@@ -84,7 +84,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 			return JSON.stringify(studentSendmailDataArray);
 		} 
 
-        var getStudentListByCourseId = function(courseId) {
+        var getStudentListByCourseId = function(courseId, page, pageItem) {
             var defer = $q.defer();
 
             $http({
@@ -92,7 +92,9 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
                 method: "GET",
                 params: {
                     op: 5,
-                    courseId: courseId
+                    courseId: courseId,
+                    page: page,
+                    pageItem: pageItem
                 }
             }).success(function(data) {
                 defer.resolve(data);
@@ -179,7 +181,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
                 url: "/SLM2016/StudentAction",
                 method: "POST",
                 params: {
-                    op: 9,
+                    op: 11,
                     courseId: courseId
                 }
             }).success(function(data) {
@@ -190,11 +192,30 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
             	else if(data.status == "incorrect")
                     alert("已經有證書編號");
             	else
-            		alert("產生失敗");
+            		alert("課程內無學員，產生失敗");
             }).error(function(data, status, headers, config) {
                 console.error("status : " + status);
                 alert("產生失敗");
             });
+            return defer.promise;
+        }
+        
+        var getStudentNumByCourseId = function(courseId) {
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/StudentAction",
+                method: "GET",
+                params: {
+                    op: 10,
+                    courseId: courseId
+                }
+            }).success(function(data) {
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                console.error("status : " + status);
+            });
+
             return defer.promise;
         }
 
@@ -217,6 +238,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         factory.updateStudentReceiptCompanyInfo = updateStudentReceiptCompanyInfo;
         factory.getCertificationInfo = getCertificationInfo;       
         factory.generateCertificationId = generateCertificationId;
+        factory.getStudentNumByCourseId = getStudentNumByCourseId;
         /*==========================
             init
         ==========================*/

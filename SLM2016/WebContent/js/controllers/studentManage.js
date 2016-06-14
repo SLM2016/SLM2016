@@ -1,14 +1,27 @@
 app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService', '$stateParams', 'Upload',
     function($q, $scope, $state, $timeout, $rootScope, StudentInfoService, CourseService, $stateParams, Upload) {
 
-        var getStudentList = function() {
+        var getStudentList = function(page) {
+        	$scope.initPage = page;
 
-            StudentInfoService.getStudentListByCourseId($scope.courseId).then(function(result) {
+            StudentInfoService.getStudentListByCourseId($scope.courseId, $scope.initPage, $scope.pageItem).then(function(result) {
                 $scope.isStudentLoading = false;
                 for (var i = 0; i < result.length; i++) {
                     result[i].isSelected = false;
                 }
                 $scope.studentList = result;
+                if($scope.studentList.length > 0 )
+                	$scope.isStudentListEmpty = false;
+            }, function(error) {
+                $scope.isStudentLoading = false;
+                $scope.isStudentLoadError = true;
+            })
+        }
+        
+        var getStudentNumByCourseId = function() {
+
+            StudentInfoService.getStudentNumByCourseId($scope.courseId).then(function(result) {
+            	$scope.studentNum = parseInt(result[0].student_num);
             }, function(error) {
                 $scope.isStudentLoading = false;
                 $scope.isStudentLoadError = true;
@@ -20,7 +33,8 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
 
             CourseService.getCourseById($scope.courseId).then(function(result) {
                 $scope.currentCourse = result[0];
-                getStudentList();
+                getStudentList($scope.initPage);
+                getStudentNumByCourseId();
             }, function(error) {
                 $scope.isStudentLoading = false;
                 $scope.isStudentLoadError = true;
@@ -73,7 +87,9 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         var toggleSelectStudent = function(student, index, $event) {
             if ($event.ctrlKey) {
                 student.isSelected = !student.isSelected;
+                $scope.lastSelectIndex = index;
             } else if ($event.shiftKey) {
+                clearSelectedStudent();
                 if (index > $scope.lastSelectIndex) {
                     for (var i = $scope.lastSelectIndex; i <= index; i++) {
                         $scope.studentList[i].isSelected = true;
@@ -88,9 +104,10 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
             } else {
                 clearSelectedStudent();
                 student.isSelected = !student.isSelected;
+                $scope.lastSelectIndex = index;
             }
 
-            $scope.lastSelectIndex = index;
+            
         }
 
         var sendMailData = function() {
@@ -223,6 +240,30 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
             });
         }
 
+        var fileChanged = function(files) {
+            $scope.isUploading = true;
+            var uploadConfirm = confirm("是否要上傳\"" + files.name + "\"?")
+            console.log(files);
+            if(uploadConfirm) {
+                StudentInfoService.uploadStudentFile(files, $scope.currentCourse.courseId_).then(function(result) {
+                    StudentInfoService.saveStudentFile(files, $scope.currentCourse.courseId_).then(function(result) {
+                        $scope.isUploading = false;
+                        if(result.status) {
+                            alert("上傳成功！");
+                            getStudentList($scope.initPage);
+                            getStudentNumByCourseId();
+                        }
+                        else {
+                            alert('上傳失敗，請稍後再試')
+                        }
+                    });
+                },function(error) {
+                    $scope.isUploading = false;
+                    alert('上傳失敗，請稍後再試')
+                });
+            }
+        };
+
         var goCourseManage = function() {
             $state.go(STATES.COURSEINFO_MANAGE)
         }
@@ -230,7 +271,10 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         var generatecertificationId = function() {
             var courseId = $scope.currentCourse.courseId_;
             StudentInfoService.generateCertificationId(courseId);
-            console.log(courseId);
+        }
+
+        var changeCourseStatus = function(status) {
+            $scope.currentCourse.status_ = status;
         }
 
         var init = function() {
@@ -254,6 +298,10 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         $scope.courseId = $stateParams.courseId;
         $scope.lastSelectIndex = 0;
         $scope.searchName = "";
+        $scope.isStudentListEmpty = true;
+        $scope.initPage = 1;
+        $scope.studentNum = 0;
+        $scope.pageItem = 15;
 
         /*==========================
              Methods
@@ -268,7 +316,10 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         $scope.getSelectedStudent = getSelectedStudent;
         $scope.selectAllStudent = selectAllStudent;
         $scope.selectStudents = selectStudents;
+        $scope.fileChanged = fileChanged;
         $scope.generatecertificationId = generatecertificationId;
+        $scope.getStudentList = getStudentList;
+        $scope.changeCourseStatus = changeCourseStatus;
 
         /*==========================
              init

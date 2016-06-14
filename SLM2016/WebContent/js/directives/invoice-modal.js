@@ -361,6 +361,11 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                     var companyName = $scope.currentStudent.receipt_company_name;
                     console.log(companyId);
                     console.log(companyName);
+                    $scope.isCompanyLoading = true;
+                    $scope.isCompanyidError = false;
+                    $scope.isCompanyidSuccess = false;
+                    $scope.isCompanyError = false;
+                    $scope.isCompanySuccess = false;
                     companyNameService.getCompanyFromId(companyId, function(info) {
                         $scope.isCompanyLoading = false;
                         console.log($scope.isCompanyLoading);            

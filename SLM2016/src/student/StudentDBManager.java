@@ -19,8 +19,8 @@ public class StudentDBManager {
 		super();
 		slmDBUtility = new SLMDBUtility();
 	}
-	
-	public String getStudentList()  throws SQLException {
+
+	public String getStudentList() throws SQLException {
 		String sql = "select * from `student_info`;";
 		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
 		Gson g = new Gson();
@@ -43,18 +43,33 @@ public class StudentDBManager {
 		// } catch (SQLException e) {
 		// e.printStackTrace();
 		// }
-        
+
 		// return jsonArray.toString();
 		return g.toJson(result);
-                }
-        
-	public String getStudentListByCourseId(String courseId) throws SQLException {
+	}
+
+	public String getStudentListByCourseId(String courseId, String page, String pageItem) throws SQLException {
 		String sql = String.format("SELECT * FROM `student_info` WHERE `fk_course_info_id` = '%s';", courseId);
 		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
-		Gson g = new Gson();
-		return g.toJson(result);
+		ArrayList<HashMap<String, String>> rResult = new ArrayList<>();  
+		
+		int resultItem = result.size();
+		int _page = Integer.parseInt(page);
+        int _pageItem = Integer.parseInt(pageItem);
+	    int initialItem = (_page-1)*_pageItem;
+		int count = 0;
+		
+		if((initialItem + 1) < resultItem){
+	        while((count < _pageItem)&&(((initialItem + count) < resultItem))){
+	            rResult.add(result.get(initialItem + count));
+	            count++;
+	        }		    
+		}
+
+	    Gson g = new Gson();
+		return g.toJson(rResult);
 	}
-	
+
 	public ArrayList<HashMap<String, String>> getStudentByPhone(String phone) throws SQLException {
 
 		String sql = String.format("SELECT * FROM `student_info` WHERE `phone` = '%s';", phone);
@@ -63,8 +78,9 @@ public class StudentDBManager {
 		return result;
 	}
 
-	public String getCertificationInfo(String studentID) throws SQLException {	
-		String sql = "select certification_img from `student_info` where id = "+studentID;;		      		
+	public String getCertificationInfo(String studentID) throws SQLException {
+		String sql = "select certification_img from `student_info` where id = " + studentID;
+		;
 		return new Gson().toJson(slmDBUtility.selectSQL(sql));
 	}
 
@@ -158,6 +174,15 @@ public class StudentDBManager {
 		}
 	}
 
+	public boolean deleteStudentByStudentIds(String studentIds) throws SQLException {
+		String sql = String.format("DELETE FROM  `student_info` WHERE  `student_info`.`id` IN ( %s )", studentIds);
+		if (slmDBUtility.deleteSQL(sql)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public boolean deleteStudentsByCourseId(String courseId) throws SQLException {
 		String sql = String.format("DELETE FROM `student_info` WHERE `fk_course_info_id` =  '%s'", courseId);
 		if (slmDBUtility.deleteSQL(sql)) {
@@ -167,21 +192,21 @@ public class StudentDBManager {
 		}
 	}
 
-	//only get course data
+	// only get course data
 	public boolean insertGetMailInfo(String id, String name, String duration, String fk_status_id) throws SQLException {
 		String sql = String.format(
-				"INSERT INTO `course_info`(`id`,`name`,`duration`,`fk_status_id`) VALUES ('%s','%s','%s','%s')", 
-				id,name,duration,fk_status_id);
+				"INSERT INTO `course_info`(`id`,`name`,`duration`,`fk_status_id`) VALUES ('%s','%s','%s','%s')", id,
+				name, duration, fk_status_id);
 		String duplicate = String.format(
-				"ON DUPLICATE KEY UPDATE `id` = '%s',`name` = '%s',`duration` = '%s',`fk_status_id` = '%s'",
-				id,name,duration,fk_status_id);
+				"ON DUPLICATE KEY UPDATE `id` = '%s',`name` = '%s',`duration` = '%s',`fk_status_id` = '%s'", id, name,
+				duration, fk_status_id);
 		if (slmDBUtility.insertSQL((sql + duplicate))) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	public boolean deleteGetMailInfo(String id) throws SQLException {
 		String sql = String.format("DELETE FROM `course_info` WHERE `course_info`.`id` = '%s'", id);
 		if (slmDBUtility.deleteSQL(sql)) {
@@ -189,6 +214,16 @@ public class StudentDBManager {
 		} else {
 			return false;
 		}
+	}
+
+	public String getStudentNumByCourseId(String courseId) throws SQLException {
+
+		String sql = String.format(
+				"SELECT COUNT(*) as `student_num` FROM `student_info` where `fk_course_info_id` = '%s';", courseId);
+		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
+		Gson g = new Gson();
+		return g.toJson(result);
+		// "ON DUPLICATE KEY UPDATE `name` = '%s'
 	}
 	
 	public ArrayList getStudentsByCourseId(String id) {
@@ -221,18 +256,16 @@ public class StudentDBManager {
 		}
 		return false;
 	}
-	public String getStudentCertificationId(int studentId) {
+	
+	public String getStudentCertificationId(int studentId) throws SQLException {
 		String certificationId = "";
 		SqlHelper helper = new SqlHelper();
-		String sql = String.format("SELECT `certification_id` FROM `student_info` WHERE `id` = '"+ studentId+" ';");
-		CachedRowSet data;
-		try {
-			data = new CachedRowSetImpl();
-			helper.excuteSql(sql, data);
-			certificationId = data.toString();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		String sql = "SELECT certification_id FROM `student_info` WHERE `id` ='"+studentId+"'";
+		CachedRowSet data = new CachedRowSetImpl();
+		helper.excuteSql(sql, data);
+		data.next();
+		certificationId = data.getString("certification_id");
+		
 		return certificationId;
 	}
 }
