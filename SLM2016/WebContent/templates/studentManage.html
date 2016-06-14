@@ -19,9 +19,6 @@
                         <button type="button" class="btn btn-default" ng-class="{'disabled': getSelectedStudent().length == 0}" ng-click="sendMailData()">寄送證書</button>
                         <button type="button" class="btn btn-default" ng-class="{'disabled': getSelectedStudent().length == 0}" ng-click="openInvoiceModal()" data-toggle="modal" data-target="#invoice-modal">產生發票</button>
                         <button type="button" class="btn btn-default" ng-class="{'disabled': getSelectedStudent().length == 0}">刪除學員</button>
-                        <button type="button" class="btn btn-default" id="changeCertificationBackground" data-toggle="modal" data-target="#Background-Change-modal" ng-click="getBackgound()">更換證書底圖</button>
-                        <button type="button" class="btn btn-default" ngf-select="fileChanged($file)" ngf-accept="'.xlsx'">上傳學員資料</button>
-                        <button type="button" class="btn btn-default" id="generateStudentCertificationId" data-toggle="modal" data-target="#Generate-certificationid" ng-click="generatecertificationId()">產生證書編號</button>
                     </div>
                     <span class="select-info">已選取 {{getSelectedStudent().length}} 名學員</span>
                     <div class="student-search">
@@ -36,8 +33,16 @@
             </div>
             <loading ng-show="isStudentLoading"></loading>
             <div class="manage-content" ng-show="!isStudentLoading">
-                <div class="course-content">
-                    <div class="content-title">課程資訊</div>
+                <div class="course-content" ng-class="{'open-level': isInfoOpen}">
+                    <div class="content-title" ng-click="toggleCourseInfo()">
+                        <span>課程資訊</span>
+                        <span class="glyphicon glyphicon-menu-right"></span>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" id="changeCertificationBackground" data-toggle="modal" data-target="#Background-Change-modal" ng-click="getBackgound()">更換證書底圖</button>
+                            <button type="button" class="btn btn-default" ngf-select="fileChanged($file)" ngf-accept="'.xlsx'">上傳學員資料</button>
+                            <button type="button" class="btn btn-default" id="generateStudentCertificationId" data-toggle="modal" data-target="#Generate-certificationid" ng-click="generatecertificationId()">產生證書編號</button>
+                        </div>
+                    </div>
                     <div class="content-info">
                         <div class="left">
                             <div class="form-group">
@@ -120,16 +125,14 @@
                             </div>
                             <div class="form-group">
                                 <label>課程連結：</label>
-                                <span ng-show="currentCourse.hyperlink_ != ''"><a href=currentCourse.hyperlink_>{{currentCourse.hyperlink_}}</a></span>
-                                <span ng-show="currentCourse.hyperlink_ == ''">無課程連結</span>
+                                <span ng-show="currentCourse.hyperlink_ != ''"><a ng-click="gotoCourseUrl()">{{currentCourse.hyperlink_}}</a></span>
                             </div>
                             <div class="form-group">
                                 <label>副本收件人：</label>
-                                <span ng-repeat="cc in currentCourse.ccAddresses_ track by $index" ng-show="currentCourse.ccAddresses_.length > 0">
+                                <span ng-repeat="cc in currentCourse.ccAddresses_ track by $index">
                                     {{cc}}
                                     <b ng-show="$index < currentCourse.ccAddresses_.length - 1">/</b>
                                 </span>
-                                <span ng-show="currentCourse.ccAddresses_.length == 0">無副本收件人</span>
                             </div>
                         </div>
                     </div>

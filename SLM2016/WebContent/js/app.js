@@ -5,12 +5,8 @@ var STATES = {
     COURSEINFO_CREATE: "courseInfo.create",
     COURSEINFO_MANAGE: "courseInfo.manage",
     COURSEINFO_STUDENT: "courseInfo.student",
-
-    STUDENTINFO: "studentInfo",
-    STUDENT_INFO_IMPORT: "studentInfo.Import",
-    STUDENT_INFO_MANAGE: "studentInfo.Manage",
-    STUDENT_INFO_SENDMAIL: "studentInfo.Sendmail",
-
+    COURSEINFO_SENDMAIL: "courseInfo.Sendmail",
+    
     OTHERS: "others",
     OTHERS_CERTIFICATION: "others.certification",
     OTHERS_SENDMAIL: "others.sendMail",
@@ -91,47 +87,16 @@ var app = angular.module('app', [
                 }
             }
         })
-        
-        .state(STATES.STUDENTINFO, {
-            url: "/studentInfo",
-            views: {
-                'studentInfo@': {
-                    template: "<div ui-view=\"content\"></div>"
-                }
-            }
-        })
 
-        .state(STATES.STUDENT_INFO_IMPORT, {
-            url: "/import",
+        .state(STATES.COURSEINFO_SENDMAIL, {
+            url: "/:courseId/sendmail",
             views: {
-                'content@studentInfo': {
-                    templateUrl: "templates/studentImport.html",
-                    controller: 'StudentImportController',
-                }
-            }
-        })
-
-        .state(STATES.STUDENT_INFO_MANAGE, {
-            url: "/manage",
-            views: {
-                'content@studentInfo': {
-                    templateUrl: "templates/studentManage.html",
-                    controller: 'StudentManageController',
-                }
-            }
-        })
-        
-        .state(STATES.STUDENT_INFO_SENDMAIL, {
-            url: "/sendmail",
-            views: {
-                'content@studentInfo': {
+                'content@courseInfo': {
                     templateUrl: "templates/studentSendmail.html",
                     controller: 'StudentSendmailController',
                 }
             }
         })
-        
-        
 
         .state(STATES.OTHERS, {
             url: "/others",

@@ -55,6 +55,44 @@ app.factory('CourseService', ['$q', '$http', '$timeout', '$rootScope',
             return defer.promise;
         }
 
+        var getTopCourse = function() {
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/CourseManagerServlet",
+                method: "GET",
+                params: {
+                    op: 3
+                }
+            }).success(function(data) {
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+
+        var updateCourseStatus = function(courseId, status) {
+            var defer = $q.defer();
+
+            $http({
+                url: "/SLM2016/CourseManagerServlet",
+                method: "GET",
+                params: {
+                    op: 4,
+                    courseId: courseId,
+                    statusName: status
+                }
+            }).success(function(data) {
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                console.error("status : " + status);
+            });
+
+            return defer.promise;
+        }
+
 
 		/*==========================
             Members
@@ -67,6 +105,8 @@ app.factory('CourseService', ['$q', '$http', '$timeout', '$rootScope',
         factory.getCourseList = getCourseList;
         factory.getCourseSimpleList = getCourseSimpleList;
         factory.getCourseById = getCourseById;
+        factory.getTopCourse = getTopCourse;
+        factory.updateCourseStatus = updateCourseStatus;
 
         /*==========================
             init

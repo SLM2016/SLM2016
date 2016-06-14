@@ -1,5 +1,5 @@
-app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService',
-    function($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService) {
+app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService', '$stateParams',
+    function($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService, $stateParams) {
 
         function getcontext() {
 
@@ -194,6 +194,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
         }
 
         var init = function() {
+            getCourseInfo();
             $scope.isCertificationLoading = true;
             parseMailData = JSON.parse(StudentInfoService.getStudentSendMailData());
 
@@ -237,6 +238,25 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
             }
         }
 
+        var getCourseInfo = function() {
+            $scope.isStudentLoading = true;
+
+            CourseService.getCourseById($scope.courseId).then(function(result) {
+                $scope.currentCourse = result[0];
+            }, function(error) {
+            })
+        }
+
+        var goCourseManage = function() {
+            $state.go(STATES.COURSEINFO_MANAGE)
+        }
+
+        var goStudentManage = function() {
+            $state.go(STATES.COURSEINFO_STUDENT, {
+                courseId: $scope.courseId
+            })
+        }
+
         /*==========================
             Events
         ==========================*/
@@ -245,9 +265,16 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
             Members
         ==========================*/
 
+        $scope.isCertificationLoading = false;
+        $scope.courseId = $stateParams.courseId;
+        $scope.currentCourse;
+
         /*==========================
              Methods
         ==========================*/
+
+        $scope.goCourseManage = goCourseManage;
+        $scope.goStudentManage = goStudentManage;
 
         /*==========================
              init
@@ -263,7 +290,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 
         CKEDITOR.replace('editor1');
 
-        $scope.isCertificationLoading = false;
+
         $scope.Send = Send;
         $scope.ClickNextButton = ClickNextButton;
         $scope.ClickPreviousButton = ClickPreviousButton;

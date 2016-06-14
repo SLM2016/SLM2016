@@ -1,6 +1,13 @@
 app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$rootScope', '$q', 'CourseService',
     function($scope, $state, $timeout, $rootScope, $q, CourseService) {
 
+        var getTopCourse = function() {
+            CourseService.getTopCourse().then(function(result) {
+                $scope.topCourseList.courseList = result;
+            }, function(error) {
+            });
+        }
+
         var getTeddyCourseData = function() {
             $scope.isCourseLoading = true;
             $scope.courseGroupList = [];
@@ -79,12 +86,14 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
                     if(courseList[j].status_.includes(status)) {
                         if($scope.searchKey.batch != '') {
                             if(courseList[j].batch_.includes($scope.searchKey.batch)) {
+                                $scope.topCourseList.isShow = false;
                                 isGroupOpen = true;
                                 courseList[j].isShow = true;
                             }
                         }
                         else {
                             if(status != '') {
+                                $scope.topCourseList.isShow = false;
                                 isGroupOpen = true;
                                 courseList[j].isShow = true;
                             }
@@ -105,12 +114,14 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
                     if(courseList[j].batch_.includes($scope.searchKey.batch)) {
                         if($scope.searchKey.status != '') {
                             if(courseList[j].status_ == $scope.searchKey.status) {
+                                $scope.topCourseList.isShow = false;
                                 isGroupOpen = true;
                                 courseList[j].isShow = true;
                             }
                         }
                         else {
                             if($scope.searchKey.batch != '') {
+                                $scope.topCourseList.isShow = false;
                                 isGroupOpen = true;
                                 courseList[j].isShow = true;
                             }
@@ -141,6 +152,7 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
         }
 
         var resetCourseGroupList = function() {
+            $scope.topCourseList.isShow = true;
             for (var i = 0; i < $scope.courseGroupList.length; i++) {
                 $scope.courseGroupList[i].isShow = true;
                 $scope.courseGroupList[i].isOpen = false;
@@ -152,7 +164,9 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
         }
 
         var changeCourseStatus = function(status, course) {
-            course.status_ = status;
+            CourseService.updateCourseStatus(course.courseId_, status).then(function() {
+                course.status_ = status;
+            })
         }
 
         var isCourseShow = function(course) {
@@ -171,6 +185,7 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
         }
 
         var init = function() {
+            getTopCourse();
             getTeddyCourseData();
         }
 
@@ -179,6 +194,11 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
         ==========================*/
 
         $scope.courseGroupList = [];
+        $scope.topCourseList = {
+            courseList: [],
+            isOpen: true,
+            isShow: true
+        };
         $scope.isCourseLoading = false;
         $scope.searchKey = {
             batch: "",
