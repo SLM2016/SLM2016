@@ -169,6 +169,8 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
                             })
                         }
                     })
+                } else {
+                    window.alert("開課失敗" + response);
                 }
             });
             setTimeout(function() {
