@@ -442,8 +442,16 @@ public class CourseManagerWithDatabase {
 		if (result != "Success")
 			return result;
 		while (data.next()) {
+
 			String id = data.getString("id");
 			String fk = data.getString("fk_status_id");
+
+			String sqlForGetStudentNumber = String.format(
+					"SELECT COUNT(*) as `student_number` FROM `student_info` where `fk_course_info_id` = '%s'", fk);
+			CachedRowSet studentNumberData = new CachedRowSetImpl();
+			helper.excuteSql(sqlForGetStudentNumber, studentNumberData);
+			int studentNumber = studentNumberData.getInt("student_number");
+
 			Course course = new Course(id);
 			course.setCourseCode(data.getString("code"));
 			course.setCourseName(data.getString("name"));
@@ -453,6 +461,7 @@ public class CourseManagerWithDatabase {
 			course.setLocation(data.getString("location"));
 			course.setLecturer(data.getString("lecturer"));
 			course.setHyperlink(data.getString("page_link"));
+			course.setStudentNum(studentNumber);
 			for (int i = 0; i < courseStatus_.size(); i++) {
 				if (courseStatus_.get(i).getKey().equals(fk)) {
 					course.setStatus(courseStatus_.get(i).getValue());
@@ -516,6 +525,13 @@ public class CourseManagerWithDatabase {
 			String fk = data.getString("fk_course_id");
 			if (!courseIdList.contains(fk)) {
 				courseIdList.add(fk);
+
+				String sqlForGetStudentNumber = String.format(
+						"SELECT COUNT(*) as `student_number` FROM `student_info` where `fk_course_info_id` = '%s'", fk);
+				CachedRowSet studentNumberData = new CachedRowSetImpl();
+				helper.excuteSql(sqlForGetStudentNumber, studentNumberData);
+				int studentNumber = studentNumberData.getInt("student_number");
+
 				Course course = new Course(data.getString("id"));
 				course.setCourseName(data.getString("name"));
 				course.setType(data.getString("type"));
@@ -524,7 +540,16 @@ public class CourseManagerWithDatabase {
 				course.setLocation(data.getString("location"));
 				course.setLecturer(data.getString("lecturer"));
 				course.setHyperlink(data.getString("page_link"));
+				course.setStudentNum(studentNumber);
+
+				for (int i = 0; i < courseStatus_.size(); i++) {
+					if (courseStatus_.get(i).getKey().equals(fk)) {
+						course.setStatus(courseStatus_.get(i).getValue());
+						break;
+					}
+				}
 				courseList.add(course);
+				studentNumberData.close();
 			}
 		}
 		for (int i = 0; i < courseList.size(); i++) {
@@ -556,6 +581,23 @@ public class CourseManagerWithDatabase {
 		result.put("status", "true");
 
 		return gson.toJson(result);
+	}
+
+	public String getCourseStatus(String courseId, String statusName) throws SQLException {
+		SqlHelper helper = new SqlHelper();
+		CachedRowSet data = new CachedRowSetImpl();
+
+		HashMap<String, String> result = new HashMap<String, String>();
+		HashMap<String, String> statusIDMap = new HashMap<String, String>();
+		Gson gson = new Gson();
+		String sqlString = "SELECT * FROM `course_status`;";
+		helper.excuteSql(sqlString, data);
+
+		while (data.next()) {
+			statusIDMap.put(data.getString("id"), data.getString("name"));
+		}
+
+		return gson.toJson(statusIDMap);
 	}
 
 }
