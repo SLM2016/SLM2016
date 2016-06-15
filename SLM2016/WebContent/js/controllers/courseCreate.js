@@ -150,7 +150,6 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
             data.ccAddresses_ = $scope.showCcList;
             data.type_ = typeSelected;
             data.status_ = vm.selectedDropdownStatusItem;
-            console.log(data.hyperlink_)
             $.post("/SLM2016/CourseManagerServlet",
                 JSON.stringify(data)).done(function(response) {
                 if (response == "Success") {
@@ -180,7 +179,7 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
             }, 500);
         }
 
-        var clickAddTicketButton = function() {
+        function clickAddTicketButton() {
             var regex = /^[a-zA-Z]+$/;
             if (((ticketTicketTypeSelected) == null) || (($scope.data.price) == null) || (($scope.data.price.length) == 0) | ((ticketTicketTypeSelected.length) == 0)) {
                 window.alert("課程票價或票種請修正");
@@ -201,7 +200,7 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
             }
         }
 
-        var clickAddCcButton = function() {
+        function clickAddCcButton() {
             var lastAtPos = (ccAddressSelected).lastIndexOf('@');
             var lastDotPos = (ccAddressSelected).lastIndexOf('.');
             if (((ccAddressSelected) == null) || ((ccAddressSelected) == 0)) {
@@ -216,7 +215,7 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
             }
         }
 
-        var clickAddDateButton = function() {
+        function clickAddDateButton() {
             if ((($scope.data.dateAddresses) == null)) {
                 window.alert("請輸入日期");
             } else {
@@ -274,30 +273,30 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
             addCourse();
         }
 
-        var deleteTicket = function(index) {
+        function deleteTicket(index) {
             $scope.showticketList.splice(index, '1');
             $scope.ticketTypeList.splice(index, '1');
             $scope.ticketPriceList.splice(index, '1');
 
         }
 
-        var deleteDate = function(index) {
+        function deleteDate(index) {
             $scope.showDateList.splice(index, '1');
         }
 
-        var deleteCc = function(index) {
+        function deleteCc(index) {
             $scope.showCcList.splice(index, '1');
         }
 
-        var fileChanged = function(files) {
+        function fileChanged(files) {
             $scope.fileName = files;
         };
 
-        var openDatePicker = function() {
+        function openDatePicker() {
             $scope.isDatePickerOpen = true;
         }
 
-        var deleteData = function() {
+        function deleteData() {
             $scope.data.code = "";
             $scope.data.batch = "";
             $scope.showDateList = [];
