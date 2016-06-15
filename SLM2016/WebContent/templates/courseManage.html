@@ -50,8 +50,8 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="course in topCourseList.courseList track by $index">
-                                    <td class="course"><a>{{course.courseName_}}</a></td>
-                                    <td class="batch" ng-click="goStudentManage(course.courseId_)">{{course.batch_}}</td>
+                                    <td class="course" ng-click="goStudentManage(course.courseId_)"><a>{{course.courseName_}}</a></td>
+                                    <td class="batch">{{course.batch_}}</td>
                                     <td>{{course.type_}}</td>
                                     <td>{{course.studentNum_}} 人</td>
                                     <td>{{course.lecturer_}}</td>
