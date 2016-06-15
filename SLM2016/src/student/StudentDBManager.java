@@ -49,38 +49,44 @@ public class StudentDBManager {
 	}
 
 	public String getStudentListByCourseId(String courseId, String page, String pageItem) throws SQLException {
-		String sql = String.format("SELECT * FROM `student_info` WHERE `fk_course_info_id` = '%s';", courseId);
+		String sql = String.format(
+				"SELECT `id`,`name`,`email`,`nickname`,`phone`,`company`,`apartment`,`title`,`ticket_type`,`ticket_price`,`receipt_type`,`receipt_company_name`,`receipt_company_EIN`,`receipt_EIN`,`student_status`,`payment_status`,`receipt_status`,`vege_meat`,`team_members`,`comment`,`timestamp`,`fk_course_info_id`,`certification_id` FROM `student_info` WHERE `fk_course_info_id` = '%s';",
+				courseId);
 		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
-		ArrayList<HashMap<String, String>> rResult = new ArrayList<>();  
-		
+		ArrayList<HashMap<String, String>> rResult = new ArrayList<>();
+
 		int resultItem = result.size();
 		int _page = Integer.parseInt(page);
-        int _pageItem = Integer.parseInt(pageItem);
-	    int initialItem = (_page-1)*_pageItem;
+		int _pageItem = Integer.parseInt(pageItem);
+		int initialItem = (_page - 1) * _pageItem;
 		int count = 0;
-		
-		if((initialItem + 1) < resultItem){
-	        while((count < _pageItem)&&(((initialItem + count) < resultItem))){
-	            rResult.add(result.get(initialItem + count));
-	            count++;
-	        }		    
+
+		if ((initialItem + 1) < resultItem) {
+			while ((count < _pageItem) && (((initialItem + count) < resultItem))) {
+				rResult.add(result.get(initialItem + count));
+				count++;
+			}
 		}
 
-	    Gson g = new Gson();
+		Gson g = new Gson();
 		return g.toJson(rResult);
 	}
-	
+
 	public String getStudentListByCourseId(String courseId) throws SQLException {
-		String sql = String.format("SELECT * FROM `student_info` WHERE `fk_course_info_id` = '%s';", courseId);
+		String sql = String.format(
+				"SELECT `id`,`name`,`email`,`nickname`,`phone`,`company`,`apartment`,`title`,`ticket_type`,`ticket_price`,`receipt_type`,`receipt_company_name`,`receipt_company_EIN`,`receipt_EIN`,`student_status`,`payment_status`,`receipt_status`,`vege_meat`,`team_members`,`comment`,`timestamp`,`fk_course_info_id`,`certification_id` FROM `student_info` WHERE `fk_course_info_id` = '%s';",
+				courseId);
 		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
 
-	    Gson g = new Gson();
+		Gson g = new Gson();
 		return g.toJson(result);
 	}
 
 	public ArrayList<HashMap<String, String>> getStudentByPhone(String phone) throws SQLException {
 
-		String sql = String.format("SELECT * FROM `student_info` WHERE `phone` = '%s';", phone);
+		String sql = String.format(
+				"SELECT `id`,`name`,`email`,`nickname`,`phone`,`company`,`apartment`,`title`,`ticket_type`,`ticket_price`,`receipt_type`,`receipt_company_name`,`receipt_company_EIN`,`receipt_EIN`,`student_status`,`payment_status`,`receipt_status`,`vege_meat`,`team_members`,`comment`,`timestamp`,`fk_course_info_id`,`certification_id` FROM `student_info` WHERE `phone` = '%s';",
+				phone);
 		ArrayList<HashMap<String, String>> result = slmDBUtility.selectSQL(sql);
 
 		return result;
@@ -233,16 +239,16 @@ public class StudentDBManager {
 		return g.toJson(result);
 		// "ON DUPLICATE KEY UPDATE `name` = '%s'
 	}
-	
+
 	public ArrayList getStudentsByCourseId(String id) {
 		SqlHelper helper = new SqlHelper();
 		String sql = String.format("SELECT id FROM `student_info` WHERE `fk_course_info_id` = '%s';", id);
-		ArrayList<Integer> result =new ArrayList<Integer>();
+		ArrayList<Integer> result = new ArrayList<Integer>();
 		CachedRowSet data;
 		try {
 			data = new CachedRowSetImpl();
 			helper.excuteSql(sql, data);
-			while(data.next()){
+			while (data.next()) {
 				result.add(Integer.parseInt(data.getString("id")));
 			}
 		} catch (SQLException e) {
@@ -250,10 +256,11 @@ public class StudentDBManager {
 		}
 		return result;
 	}
-	
-	public boolean updateStudentCertificationId(int studentId, String certificationId){
+
+	public boolean updateStudentCertificationId(int studentId, String certificationId) {
 		SqlHelper helper = new SqlHelper();
-		String sql = String.format("UPDATE `student_info` SET `certification_id`= '"+certificationId+"' WHERE `id` = '"+ studentId+" ';");
+		String sql = String.format("UPDATE `student_info` SET `certification_id`= '" + certificationId
+				+ "' WHERE `id` = '" + studentId + " ';");
 		CachedRowSet data;
 		try {
 			data = new CachedRowSetImpl();
@@ -264,16 +271,16 @@ public class StudentDBManager {
 		}
 		return false;
 	}
-	
+
 	public String getStudentCertificationId(int studentId) throws SQLException {
 		String certificationId = "";
 		SqlHelper helper = new SqlHelper();
-		String sql = "SELECT certification_id FROM `student_info` WHERE `id` ='"+studentId+"'";
+		String sql = "SELECT certification_id FROM `student_info` WHERE `id` ='" + studentId + "'";
 		CachedRowSet data = new CachedRowSetImpl();
 		helper.excuteSql(sql, data);
 		data.next();
 		certificationId = data.getString("certification_id");
-		
+
 		return certificationId;
 	}
 }
