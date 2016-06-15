@@ -163,12 +163,17 @@ public class StudentModel {
 		Pattern pattern3 = Pattern.compile(phonePattern3);
 
 		if (pattern1.matcher(phone).find()) {
-			phoneNumber = phone.substring(0, 4) + "-" + phone.substring(5, 8) + phone.substring(9, 12);
+			// phoneNumber = phone.substring(0, 4) + "-" + phone.substring(5, 8)
+			// + phone.substring(9, 12);
+			phoneNumber = phone;
 
 		} else if (pattern2.matcher(phone).find()) {
-			phoneNumber = phone;
+			// phoneNumber = phone;
+			phoneNumber = phone.substring(0, 4) + "-" + phone.substring(5, 8) + "-" + phone.substring(8, 11);
 		} else if (pattern3.matcher(phone).find()) {
-			phoneNumber = "0" + phone.substring(0, 3) + "-" + phone.substring(3, 9);
+			phoneNumber = "0" + phone.substring(0, 3) + "-" + phone.substring(3, 6) + "-" + phone.substring(6, 9);
+		} else {
+			phoneNumber = "0000-000-000";
 		}
 
 		this.phone = phoneNumber;
