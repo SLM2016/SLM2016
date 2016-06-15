@@ -311,14 +311,15 @@ public class StudentAction extends HttpServlet {
 		// response.setContentType("application/json");
 		// response.setCharacterEncoding("UTF-8");
 		String courseId = request.getParameter("courseId");
-		String page = request.getParameter("page");
-		String pageItem = request.getParameter("pageItem");
+//		String page = request.getParameter("page");
+//		String pageItem = request.getParameter("pageItem");
 
 		StudentDBManager studentDbManager = new StudentDBManager();
 		String json = null;
 
 		try {
-			json = studentDbManager.getStudentListByCourseId(courseId, page, pageItem);
+//			json = studentDbManager.getStudentListByCourseId(courseId, page, pageItem);
+			json = studentDbManager.getStudentListByCourseId(courseId);
 
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
@@ -466,34 +467,38 @@ public class StudentAction extends HttpServlet {
 						year = date.substring(2, 4);
 						month = date.substring(5, 7);
 						certificationId = certificationId + year + month;
-					}
-					for (int i = 1; i < studentSize + 1; i++) {
-						certificationId = classCode;
-						if (date != "")
-							certificationId = certificationId + year + month;
-						if (i < 10)
-							certificationId = certificationId + "-0" + i;
-						else
-							certificationId = certificationId + "-" + i;
-						String studentCertificationId = studentDbManager
-								.getStudentCertificationId(studentIds.get(i - 1).intValue());
-						if (!(studentCertificationId.isEmpty())) {
-							continue;
-						} else {
-							temp = studentDbManager.updateStudentCertificationId(studentIds.get(i - 1).intValue(),
-									certificationId);
-							if (temp == false)
-								System.out.println("studentIds " + i + " is not update correct");
-							count++;
+						for (int i = 1; i < studentSize + 1; i++) {
+							certificationId = classCode;
+							if (date != "")
+								certificationId = certificationId + year + month;
+							if (i < 10)
+								certificationId = certificationId + "-0" + i;
+							else
+								certificationId = certificationId + "-" + i;
+							String studentCertificationId = studentDbManager
+									.getStudentCertificationId(studentIds.get(i - 1).intValue());
+							if (!(studentCertificationId.isEmpty())) {
+								continue;
+							} else {
+								temp = studentDbManager.updateStudentCertificationId(studentIds.get(i - 1).intValue(),
+										certificationId);
+								if (temp == false)
+									System.out.println("studentIds " + i + " is not update correct");
+								count++;
+							}
 						}
-					}
-					if (count != 0) {
-						result.put("status", "true");
-						out.println(gson.toJson(result));
+						if (count != 0) {
+							result.put("status", "true");
+							out.println(gson.toJson(result));
+						} else {
+							result.put("status", "incorrect");
+							out.println(gson.toJson(result));
+						}
 					} else {
-						result.put("status", "incorrect");
+						result.put("status", "noDate");
 						out.println(gson.toJson(result));
 					}
+					
 				} catch (SQLException esql) {
 					esql.printStackTrace();
 				}

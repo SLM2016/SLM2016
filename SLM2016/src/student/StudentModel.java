@@ -29,6 +29,7 @@ public class StudentModel {
 	private String receiptStatus = "";
 	private String certificationImg = "";
 	private String certificationPdf = "";
+	private String certificationId = "";
 
 	public String getCertificationImg() {
 		return certificationImg;
@@ -44,6 +45,14 @@ public class StudentModel {
 
 	public void setCertificationPdf(String certificationPdf) {
 		this.certificationPdf = certificationPdf;
+	}
+	
+	public String getCertificationId() {
+		return certificationId;
+	}
+
+	public void setCertificationId(String certificationId) {
+		this.certificationId = certificationId;
 	}
 
 	public String getId() {

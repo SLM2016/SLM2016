@@ -279,6 +279,9 @@
                             top: 50%;
                             right: 20px;
                             @include transform(translateY(-50%));
+                            .spin-style {
+                                display: inline-block;
+                            }
                         }
                     }
                     &.open-level {

@@ -84,7 +84,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 			return JSON.stringify(studentSendmailDataArray);
 		} 
 
-        var getStudentListByCourseId = function(courseId, page, pageItem) {
+        var getStudentListByCourseId = function(courseId) {
             var defer = $q.defer();
 
             $http({
@@ -92,9 +92,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
                 method: "GET",
                 params: {
                     op: 5,
-                    courseId: courseId,
-                    page: page,
-                    pageItem: pageItem
+                    courseId: courseId
                 }
             }).success(function(data) {
                 defer.resolve(data);
@@ -211,7 +209,9 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
             		alert("產生成功");}
             	else if(data.status == "incorrect")
                     alert("已經有證書編號");
-            	else
+            	else if(data.status == "noDate")
+            		alert("沒有課程日期，產生失敗");
+            	else 
             		alert("課程內無學員，產生失敗");
             }).error(function(data, status, headers, config) {
                 console.error("status : " + status);

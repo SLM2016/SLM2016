@@ -1,14 +1,14 @@
 app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService', '$stateParams', 'Upload',
     function($q, $scope, $state, $timeout, $rootScope, StudentInfoService, CourseService, $stateParams, Upload) {
 
-        var getStudentList = function(page) {
-        	$scope.initPage = page;
+        var getStudentList = function() {
 
-            StudentInfoService.getStudentListByCourseId($scope.courseId, $scope.initPage, $scope.pageItem).then(function(result) {
+            StudentInfoService.getStudentListByCourseId($scope.courseId).then(function(result) {
                 $scope.isStudentLoading = false;
                 for (var i = 0; i < result.length; i++) {
                     result[i].isSelected = false;
                 }
+                console.log(result)
                 $scope.studentList = result;
                 if($scope.studentList.length > 0 )
                 	$scope.isStudentListEmpty = false;
@@ -33,7 +33,7 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
 
             CourseService.getCourseById($scope.courseId).then(function(result) {
                 $scope.currentCourse = result[0];
-                getStudentList($scope.initPage);
+                getStudentList();
                 getStudentNumByCourseId();
             }, function(error) {
                 $scope.isStudentLoading = false;
@@ -274,6 +274,9 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         }
 
         var fileChanged = function(files) {
+            if($scope.isUploading) {
+                return;
+            }
             $scope.isUploading = true;
             var uploadConfirm = confirm("是否要上傳\"" + files.name + "\"?")
             console.log(files);
@@ -283,7 +286,7 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
                         $scope.isUploading = false;
                         if(result.status) {
                             alert("上傳成功！");
-                            getStudentList($scope.initPage);
+                            getStudentList();
                             getStudentNumByCourseId();
                         }
                         else {
@@ -349,10 +352,9 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         $scope.lastSelectIndex = 0;
         $scope.searchName = "";
         $scope.isStudentListEmpty = true;
-        $scope.initPage = 1;
         $scope.studentNum = 0;
-        $scope.pageItem = 15;
         $scope.isInfoOpen = false;
+        $scope.isUploading = false;
 
         /*==========================
              Methods
