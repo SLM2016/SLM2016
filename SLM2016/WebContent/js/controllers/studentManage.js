@@ -213,6 +213,7 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         }
 
         var getBackgound = function() {
+            $scope.isInfoOpen = !$scope.isInfoOpen;
             clearFile();
             var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
             var previewBackground = document.getElementById("previewBackground");
@@ -306,6 +307,7 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
 
         var generatecertificationId = function() {
             var courseId = $scope.currentCourse.courseId_;
+            $scope.isInfoOpen = !$scope.isInfoOpen;
             StudentInfoService.generateCertificationId(courseId);
         }
 
