@@ -21,14 +21,6 @@
                         <button type="button" class="btn btn-default" ng-class="{'disabled': getSelectedStudent().length == 0}" ng-click="deleteStudent()">刪除學員</button>
                     </div>
                     <span class="select-info">已選取 {{getSelectedStudent().length}} 名學員</span>
-                    <div class="student-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="學員搜尋" ng-model="searchName">
-                            <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <loading ng-show="isStudentLoading"></loading>
