@@ -205,9 +205,9 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                         $scope.data.itemTotalDollar = $scope.currentStudent.ticket_price;
                         $scope.data.salesDollar = getAllPriceToInt($scope.currentStudent.ticket_price);
                         $scope.data.businessTax = Math.round($scope.data.salesDollar * $scope.data.taxRate / 100);
-                        $scope.data.totalDollar = parseInt($scope.data.businessTax) + parseInt($scope.data.salesDollar);
+                        $scope.data.totalDollar = $scope.data.salesDollar;
                         $scope.data.invoiceNumber = $scope.currentStudent.receipt_EIN;
-                        $scope.data.salesDollar = getAllPriceToString($scope.data.salesDollar);
+                        $scope.data.salesDollar = getAllPriceToString($scope.data.salesDollar - $scope.data.businessTax);
                         $scope.data.businessTax = getAllPriceToString($scope.data.businessTax);
                         $scope.data.totalDollar = getAllPriceToString($scope.data.totalDollar);
                         getNumWordArray($scope.data.totalDollar);
