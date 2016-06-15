@@ -84,7 +84,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
 			return JSON.stringify(studentSendmailDataArray);
 		} 
 
-        var getStudentListByCourseId = function(courseId, page, pageItem) {
+        var getStudentListByCourseId = function(courseId) {
             var defer = $q.defer();
 
             $http({
@@ -92,9 +92,7 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
                 method: "GET",
                 params: {
                     op: 5,
-                    courseId: courseId,
-                    page: page,
-                    pageItem: pageItem
+                    courseId: courseId
                 }
             }).success(function(data) {
                 defer.resolve(data);

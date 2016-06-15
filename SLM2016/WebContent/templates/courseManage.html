@@ -37,10 +37,10 @@
                         <span>最新課程</span>
                         <span class="glyphicon glyphicon-menu-right"></span>
                     </div>
-                    <div class="table-content">
+                    <div class="table-content new">
                         <table class="table table-hover" border="1" cellpadding="9">
                             <thead>
-                                <!-- <th>課名</th> -->
+                                <th>課名</th>
                                 <th>梯次</th>
                                 <th>類型</th>
                                 <th>人數</th>
@@ -50,8 +50,8 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="course in topCourseList.courseList track by $index">
-                                    <!-- <td>{{course.courseName_}}</td> -->
-                                    <td class="batch" ng-click="goStudentManage(course.courseId_)"><a>{{course.batch_}}</a></td>
+                                    <td class="course"><a>{{course.courseName_}}</a></td>
+                                    <td class="batch" ng-click="goStudentManage(course.courseId_)">{{course.batch_}}</td>
                                     <td>{{course.type_}}</td>
                                     <td>{{course.studentNum_}} 人</td>
                                     <td>{{course.lecturer_}}</td>
