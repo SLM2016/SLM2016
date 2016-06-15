@@ -278,6 +278,9 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
             if($scope.isUploading) {
                 return;
             }
+            if(!files) {
+                return;
+            }
             $scope.isUploading = true;
             var uploadConfirm = confirm("是否要上傳\"" + files.name + "\"?")
             console.log(files);
