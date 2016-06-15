@@ -311,14 +311,15 @@ public class StudentAction extends HttpServlet {
 		// response.setContentType("application/json");
 		// response.setCharacterEncoding("UTF-8");
 		String courseId = request.getParameter("courseId");
-		String page = request.getParameter("page");
-		String pageItem = request.getParameter("pageItem");
+//		String page = request.getParameter("page");
+//		String pageItem = request.getParameter("pageItem");
 
 		StudentDBManager studentDbManager = new StudentDBManager();
 		String json = null;
 
 		try {
-			json = studentDbManager.getStudentListByCourseId(courseId, page, pageItem);
+//			json = studentDbManager.getStudentListByCourseId(courseId, page, pageItem);
+			json = studentDbManager.getStudentListByCourseId(courseId);
 
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
