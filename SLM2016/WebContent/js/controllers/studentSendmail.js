@@ -91,7 +91,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			$scope.courseName = parseMailData[index].courseName;
 			$scope.studentName = parseMailData[index].studentName;
 			$scope.date = parseMailData[index].courseDate;
-    		$scope.studentId = parseMailData[index].studentId;
+            $scope.studentId = parseMailData[index].certificationId;
     		$scope.couresDuration = parseMailData[index].couresDuration;
     		$scope.address = parseMailData[index].address;
 

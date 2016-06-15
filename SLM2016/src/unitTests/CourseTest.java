@@ -195,4 +195,11 @@ public class CourseTest {
 		course_.setCourseCode(courseCode);
 		assertEquals(courseCode, course_.getCourseCode());
 	}
+	
+	@Test
+	public void testSetStudentNum() {
+		int number = 5;
+		course_.setStudentNum(number);
+		assertEquals(number, course_.getStudentNum());
+	}
 }

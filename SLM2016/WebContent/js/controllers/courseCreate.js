@@ -131,7 +131,7 @@ app.controller("CourseCreateController", ['$scope', '$state', '$timeout', '$root
         vm.dropdownStatusItems = ['準備中', '報名中', '取消', '確定開課', '停止報名', '上課中', '課程結束'];
         vm.selectedDropdownStatusItem = vm.dropdownStatusItems[0];
 
-        var changeloadType = function(type) {
+        function changeloadType(type) {
             $scope.loadType = type;
         }
 
