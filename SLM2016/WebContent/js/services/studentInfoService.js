@@ -211,7 +211,9 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
             		alert("產生成功");}
             	else if(data.status == "incorrect")
                     alert("已經有證書編號");
-            	else
+            	else if(data.status == "noDate")
+            		alert("沒有課程日期，產生失敗");
+            	else 
             		alert("課程內無學員，產生失敗");
             }).error(function(data, status, headers, config) {
                 console.error("status : " + status);
