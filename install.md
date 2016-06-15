@@ -227,6 +227,37 @@
 
 	sudo service tomcat7 restart
 
+# Mysql 設定
+
+登入 mysql
+	mysql -p -uroot
+
+它會請你輸入密碼不過不會顯示，輸入完按下 enter，這邊密碼為 teddysoft
+
+建立 DB
+
+	CREATE DATABASE SLM2016;
+
+建立使用者
+
+	CREATE USER 'SLM2016'@'localhost' IDENTIFIED BY 'Teddysoft';
+
+給予使用者 DB 權限
+
+	GRANT ALL PRIVILEGES ON SLM2016.* TO 'SLM2016'@'localhost';
+
+離開 mysql command
+
+	Ctrl + c
+
+下載 table sql
+
+	wget
+
+匯入 table 
+
+	mysql -u SLM2016 -p SLM2016 < SLM2016.sql
+
 #Jenkins基本系統設定
 
 1.點選左方目錄的「管理Jenkins」，進入後點選「管理外掛程式」，如下圖所示:
@@ -302,19 +333,23 @@ Deploy to Websphere container Plugin,並將此檔案打勾，如下圖所示:
 
 ![](http://i.imgur.com/8kCxHkE.jpg)
 
-11.在「建置後動作」中點選「新增建置後動作」，選擇「Deploy war/ear to a container」，選擇後如下圖所示:
+11.在「建置後動作」中點選「發布JUnit測試結果報告」，在「測試報告XML」中填入 SLM2016/build/report/*.xml ，下面會顯示紅色表示正常，如下圖所示:
+
+![](http://i.imgur.com/nerWtpn.jpg)
+
+12.在「建置後動作」中點選「新增建置後動作」，選擇「Deploy war/ear to a container」，選擇後如下圖所示:
 
 ![](http://i.imgur.com/Qtx2p2u.jpg)
 
-12.將「Containers」的「Add Container」點選展開，選擇Tomcat 7.X，如下圖所示:
+13.將「Containers」的「Add Container」點選展開，選擇Tomcat 7.X，如下圖所示:
 
 ![](http://i.imgur.com/diMJLlI.jpg)
 
-13.在「WAR/EAR files」欄位中輸入War檔位置，以本例輸入SLM2016/build/war/SLM2016.war，在「Tomcat 7.X」底下欄位「Manager user name」中輸入 slm2016 、「Manager password」中填入 teddysoft 、「Tomcat URL」中輸入http://45.32.62.194:8080，即可完成設定，如下圖所示:
+14.在「WAR/EAR files」欄位中輸入War檔位置，以本例輸入SLM2016/build/war/SLM2016.war，在「Tomcat 7.X」底下欄位「Manager user name」中輸入 slm2016 、「Manager password」中填入 teddysoft 、「Tomcat URL」中輸入http://45.32.62.194:8080，即可完成設定，如下圖所示:
 
 ![](http://i.imgur.com/Blu73W3.jpg)
 
-14.都輸入完成後即可按下下方的「儲存」，即完成專案的設定
+15.都輸入完成後即可按下下方的「儲存」，即完成專案的設定
 
 ![](http://i.imgur.com/ZAv0lX9.png)
 
