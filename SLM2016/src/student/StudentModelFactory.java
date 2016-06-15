@@ -30,6 +30,7 @@ public class StudentModelFactory {
 	private final String INDEX_TEAM_MEMBERS = "teamMembers";
 	private final String INDEX_COMMENT = "comment";
 	private final String INDEX_TIMESTAMP = "timestamp";
+	private final String INDEX_PAYMENT_STATUS = "paymentStatus";
 
 	private String courseId = "";
 	private Map<String, String> fieldChange;
@@ -118,25 +119,27 @@ public class StudentModelFactory {
 			Cell cell = row.getCell(phoneIndex);
 
 			String phoneContent = StudentExcelUtility.parseCell(cell);
-//			String phoneNumber = "";
-//
-//			String phonePattern1 = "^09\\d{2}-\\d{3}-\\d{3}";
-//			String phonePattern2 = "^09\\d{2}-\\d{6}";
-//			String phonePattern3 = "^9\\d{8}";
-//
-//			Pattern pattern1 = Pattern.compile(phonePattern1);
-//			Pattern pattern2 = Pattern.compile(phonePattern2);
-//			Pattern pattern3 = Pattern.compile(phonePattern3);
-//
-//			if (pattern1.matcher(phoneContent).find()) {
-//				phoneNumber = phoneContent.substring(0, 4) + "-" + phoneContent.substring(5, 8)
-//						+ phoneContent.substring(9, 12);
-//
-//			} else if (pattern2.matcher(phoneContent).find()) {
-//				phoneNumber = phoneContent;
-//			} else if (pattern3.matcher(phoneContent).find()) {
-//				phoneNumber = "0" + phoneContent.substring(0, 3) + "-" + phoneContent.substring(3, 9);
-//			}
+			// String phoneNumber = "";
+			//
+			// String phonePattern1 = "^09\\d{2}-\\d{3}-\\d{3}";
+			// String phonePattern2 = "^09\\d{2}-\\d{6}";
+			// String phonePattern3 = "^9\\d{8}";
+			//
+			// Pattern pattern1 = Pattern.compile(phonePattern1);
+			// Pattern pattern2 = Pattern.compile(phonePattern2);
+			// Pattern pattern3 = Pattern.compile(phonePattern3);
+			//
+			// if (pattern1.matcher(phoneContent).find()) {
+			// phoneNumber = phoneContent.substring(0, 4) + "-" +
+			// phoneContent.substring(5, 8)
+			// + phoneContent.substring(9, 12);
+			//
+			// } else if (pattern2.matcher(phoneContent).find()) {
+			// phoneNumber = phoneContent;
+			// } else if (pattern3.matcher(phoneContent).find()) {
+			// phoneNumber = "0" + phoneContent.substring(0, 3) + "-" +
+			// phoneContent.substring(3, 9);
+			// }
 
 			studentModel.setPhone(phoneContent);
 		}
@@ -252,6 +255,13 @@ public class StudentModelFactory {
 			studentModel.setComment(comment);
 		}
 
+		int paymentStatusIndex = checkIndexExist(nameIndexMap, INDEX_PAYMENT_STATUS);
+		if (paymentStatusIndex != -1) {
+			Cell cell = row.getCell(paymentStatusIndex);
+			String paymentStatus = StudentExcelUtility.parseCell(cell);
+			studentModel.setPaymentStatus(paymentStatus);
+		}
+
 		studentModel.setFkCourseInfoId(courseId);
 
 		return studentModel;
@@ -279,5 +289,6 @@ public class StudentModelFactory {
 		fieldChange.put("票種", INDEX_TICKET_TYPE);
 		fieldChange.put("若您報名四人以上團報票，請填寫所有團報人員姓名，以供辨識。", INDEX_TEAM_MEMBERS);
 		fieldChange.put("有話想對主辦單位說嗎？歡迎留言！", INDEX_COMMENT);
+		fieldChange.put("已繳費", INDEX_PAYMENT_STATUS);
 	}
 }
