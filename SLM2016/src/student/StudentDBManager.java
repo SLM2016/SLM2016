@@ -106,9 +106,10 @@ public class StudentDBManager {
 				studentModel.getCompany(), studentModel.getApartment(), studentModel.getTitle(),
 				studentModel.getTicketType(), studentModel.getTicketPrice(), studentModel.getReceiptType(),
 				studentModel.getReceiptCompanyName(), studentModel.getReceiptCompanyEIN(), studentModel.getReceiptEIN(),
-				"已報名", "未繳費", "未開立", studentModel.getVegeMeat(), studentModel.getTeamMembers(),
-				studentModel.getComment(), studentModel.getTimestamp(), studentModel.getFkCourseInfoId(),
-				studentModel.getCertificationImg(), studentModel.getCertificationPdf());
+				studentModel.getStudentStatus(), studentModel.getPaymentStatus(), studentModel.getReceiptStatus(),
+				studentModel.getVegeMeat(), studentModel.getTeamMembers(), studentModel.getComment(),
+				studentModel.getTimestamp(), studentModel.getFkCourseInfoId(), studentModel.getCertificationImg(),
+				studentModel.getCertificationPdf());
 
 		// "ON DUPLICATE KEY UPDATE `name` = '%s'
 
