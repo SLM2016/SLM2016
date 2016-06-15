@@ -103,6 +103,9 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
                 $scope.courseGroupList[i].isShow = isGroupOpen;
                 $scope.courseGroupList[i].isOpen = isGroupOpen;
             }
+            if($scope.searchKey.status != '' || $scope.searchKey.batch != '') {
+                $scope.topCourseList.isShow = false;
+            }
         }
 
         var isBatchSearchChange = function() {
@@ -114,14 +117,12 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
                     if(courseList[j].batch_.includes($scope.searchKey.batch)) {
                         if($scope.searchKey.status != '') {
                             if(courseList[j].status_ == $scope.searchKey.status) {
-                                $scope.topCourseList.isShow = false;
                                 isGroupOpen = true;
                                 courseList[j].isShow = true;
                             }
                         }
                         else {
                             if($scope.searchKey.batch != '') {
-                                $scope.topCourseList.isShow = false;
                                 isGroupOpen = true;
                                 courseList[j].isShow = true;
                             }
@@ -130,6 +131,9 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
                 }
                 $scope.courseGroupList[i].isShow = isGroupOpen;
                 $scope.courseGroupList[i].isOpen = isGroupOpen;
+            }
+            if($scope.searchKey.status != '' || $scope.searchKey.batch != '') {
+                $scope.topCourseList.isShow = false;
             }
         }
 
