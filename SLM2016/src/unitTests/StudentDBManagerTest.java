@@ -47,7 +47,7 @@ public class StudentDBManagerTest {
 		s.setNickname(nickname);
 		String email = "testHelloEmail@gmail.com";
 		s.setEmail(email);
-		String phone = "0912-987-654";
+		String phone = "0912-987555";
 		s.setPhone(phone);
 		String company = "測試公司";
 		s.setCompany(company);
