@@ -66,14 +66,15 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 							dataType: 'json',
 							success: function (data) {		   
 								var parseData = JSON.parse(JSON.stringify(data));
-								$('#sendMailSuccess').show();
-								$('#sendMailAlert').html('<div class="alert alert alert-success alert-dismissible"><a class="close" data-dismiss="alert">×</a><span>'+parseData.studentName+" "+parseData.result+'</span></div>')								
+								// $('#sendMailSuccess').show();
+								// $('#sendMailAlert').html('<div class="alert alert alert-success alert-dismissible"><a class="close" data-dismiss="alert">×</a><span>'+parseData.studentName+" "+parseData.result+'</span></div>')
+                                alert('寄送成功，' + parseData.studentName + " " + parseData.result);								
 							}
 						});				
 					}
 				}
 				else{
-					$('#sendMailWarning').show();
+					alert('此學員的證書已寄送過了!')
 				}
 			}
 	  
@@ -81,11 +82,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 			$scope.isCertificationLoading = true;
 			
 			if(parseMailData[index].hasSent){
-				$('#sendMailWarning').show();
-			} 
-			else{
-				$('#sendMailSuccess').hide();
-				$('#sendMailWarning').hide();
+				alert('此學員的證書已寄送過了!');
 			}
 			
 			$scope.courseName = parseMailData[index].courseName;
