@@ -1,107 +1,108 @@
-app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService', '$stateParams',
-    function ($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService, $stateParams) {  
+app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$rootScope', 'StudentInfoService', 'CourseService',
+    function($scope, $state, $timeout, $rootScope, StudentInfoService, CourseService) {
 
-			function getcontext(){
-			  				  
-			   var saveData = $.ajax({
-			        url: "http://httpbin.org/post",
-			        type: "POST",
-			        data: { emailcontent:g, method: "example" },
-			        dataType: "json"
-			    });
-			}
-			function setcontent(d){
-				var kk=getcontent();
-				CKEDITOR.instances.editor1.setData(kk+d+'<br>');
-			
-			}
-			function getcontent() {
-			  	  return CKEDITOR.instances.editor1.getData();
-			}
-			function removeemailcontent() {
-				
-			}
-			function howManydays(D){			
-				var res = String(D).split("、");
-				return res.length;
-			}
-			function setemailcontent(){				
-				var con="Hi "+
-				parseMailData[index].studentName+",<br><br>"+
-				"很開心這次和大家一起進行了"+howManydays(parseMailData[index].courseDate)+"天的課程，希望透過上課的講解與實作練習能對"+parseMailData[index].courseName+"有更深的瞭解與應用的機會。<br><br>"+
-				"附件為本次課程證書，請參考。<br><br>"+
-				"課程照片將放在："+'<a href="https://www.facebook.com/groups/ezScrum/">https://www.facebook.com/groups/ezScrum/</a>'+"<br><br>"+
-				
-				"我們也會持續舉辦C.C. Agile每月聚會或不定期舉辦泰迪軟體學員同樂會，歡迎和我們保持聯絡，課後任何有疑問都可以來聊聊。<br><br>"+
-				"更多消息可參考："+"<br>"+
-				"搞笑談軟工FB社團"+ '<a href="https://www.facebook.com/groups/teddy.tw/">https://www.facebook.com/groups/teddy.tw/</a>'+"<br>"+
-				"泰迪軟體敏捷開發課程社團"+ '<a href="https://www.facebook.com/groups/ezScrum/">https://www.facebook.com/groups/ezScrum/</a>'+"<br>";
-				CK=CKEDITOR.instances['editor1'];
-				if (CK) {
-					   CKEDITOR.remove(CKEDITOR.instances['editor1']); //Does the same as line below
-					   CKEDITOR.add(CK);
-				 }
-				CKEDITOR.instances.editor1.setData(con);
-			}
+        function getcontext() {
+
+            var saveData = $.ajax({
+                url: "http://httpbin.org/post",
+                type: "POST",
+                data: { emailcontent: g, method: "example" },
+                dataType: "json"
+            });
+        }
+
+        function setcontent(d) {
+            var kk = getcontent();
+            CKEDITOR.instances.editor1.setData(kk + d + '<br>');
+
+        }
+
+        function getcontent() {
+            return CKEDITOR.instances.editor1.getData();
+        }
+
+        function removeemailcontent() {
+
+        }
+
+        function howManydays(D) {
+            var res = String(D).split("、");
+            return res.length;
+        }
+
+        function setemailcontent() {
+            var con = "Hi " +
+                parseMailData[index].studentName + ",<br><br>" +
+                "很開心這次和大家一起進行了" + howManydays(parseMailData[index].courseDate) + "天的課程，希望透過上課的講解與實作練習能對" + parseMailData[index].courseName + "有更深的瞭解與應用的機會。<br><br>" +
+                "附件為本次課程證書，請參考。<br><br>" +
+                "課程照片將放在：" + '<a href="https://www.facebook.com/groups/ezScrum/">https://www.facebook.com/groups/ezScrum/</a>' + "<br><br>" +
+
+                "我們也會持續舉辦C.C. Agile每月聚會或不定期舉辦泰迪軟體學員同樂會，歡迎和我們保持聯絡，課後任何有疑問都可以來聊聊。<br><br>" +
+                "更多消息可參考：" + "<br>" +
+                "搞笑談軟工FB社團" + '<a href="https://www.facebook.com/groups/teddy.tw/">https://www.facebook.com/groups/teddy.tw/</a>' + "<br>" +
+                "泰迪軟體敏捷開發課程社團" + '<a href="https://www.facebook.com/groups/ezScrum/">https://www.facebook.com/groups/ezScrum/</a>' + "<br>";
+            CK = CKEDITOR.instances['editor1'];
+            if (CK) {
+                CKEDITOR.remove(CKEDITOR.instances['editor1']); //Does the same as line below
+                CKEDITOR.add(CK);
+            }
+            CKEDITOR.instances.editor1.setData(con);
+        }
 
 
-		
-			var Send =function(){	
-				if(!parseMailData[index].hasSent){
-					var mailData = new Object();
-					mailData.id_ = parseMailData[index].studentId;
-					mailData.courseName_ = parseMailData[index].courseName;
-					mailData.addresses_ = parseMailData[index].address;
-					mailData.text_ = getcontent();
 
-					if (confirm("是否確認寄送!?") == true){
-						parseMailData[index].hasSent = true;
-						$.ajax({
-							url: 'SendGmailServlet',
-							type: 'post',
-							data: JSON.stringify(mailData),
-							headers: {
-								isSendCertification: 1
-							},
-							dataType: 'json',
-							success: function (data) {		   
-								var parseData = JSON.parse(JSON.stringify(data));
-								$('#sendMailSuccess').show();
-								$('#sendMailAlert').html('<div class="alert alert alert-success alert-dismissible"><a class="close" data-dismiss="alert">×</a><span>'+parseData.studentName+" "+parseData.result+'</span></div>')								
-							}
-						});				
-					}
-				}
-				else{
-					$('#sendMailWarning').show();
-				}
-			}
-	  
-		var setValue = function(){ 		
-			$scope.isCertificationLoading = true;
-			
-			if(parseMailData[index].hasSent){
-				$('#sendMailWarning').show();
-			} 
-			else{
-				$('#sendMailSuccess').hide();
-				$('#sendMailWarning').hide();
-			}
-			
-			$scope.courseName = parseMailData[index].courseName;
-			$scope.studentName = parseMailData[index].studentName;
-			$scope.date = parseMailData[index].courseDate;
-    		$scope.studentId = parseMailData[index].studentId;
-    		$scope.couresDuration = parseMailData[index].couresDuration;
-    		$scope.address = parseMailData[index].address;
+        var Send = function() {
+            if (!parseMailData[index].hasSent) {
+                var mailData = new Object();
+                mailData.id_ = parseMailData[index].studentId;
+                mailData.courseName_ = parseMailData[index].courseName;
+                mailData.addresses_ = parseMailData[index].address;
+                mailData.text_ = getcontent();
+
+                if (confirm("是否確認寄送!?") == true) {
+                    parseMailData[index].hasSent = true;
+                    $.ajax({
+                        url: 'SendGmailServlet',
+                        type: 'post',
+                        data: JSON.stringify(mailData),
+                        headers: {
+                            isSendCertification: 1
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            var parseData = JSON.parse(JSON.stringify(data));
+                            alert('寄送成功，' + parseData.studentName + " " + parseData.result);
+                        }
+                    });
+                }
+            } else {
+                alert('此學員的證書已寄送過了!')
+            }
+        }
+
+        var setValue = function() {
+            $scope.isCertificationLoading = true;
+
+            if (parseMailData[index].hasSent) {
+                $('#sendMailWarning').show();
+            } else {
+                $('#sendMailSuccess').hide();
+                $('#sendMailWarning').hide();
+            }
+
+            $scope.courseName = parseMailData[index].courseName;
+            $scope.studentName = parseMailData[index].studentName;
+            $scope.date = parseMailData[index].courseDate;
+            $scope.studentId = parseMailData[index].certificationId;
+            $scope.couresDuration = parseMailData[index].couresDuration;
 
             makeCertification();
-		}
-		
-		var numberChar = ["零","一","二","三","四","五","六","七","八","九"];
-        var unitChar = ["","十"];
-        
-        function numberToChinese(number){
+        }
+
+        var numberChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+        var unitChar = ["", "十"];
+
+        function numberToChinese(number) {
             var result = '';
 
             if (number === 0) {
@@ -193,7 +194,6 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
         }
 
         var init = function() {
-            getCourseInfo();
             $scope.isCertificationLoading = true;
             parseMailData = JSON.parse(StudentInfoService.getStudentSendMailData());
 
@@ -237,25 +237,6 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
             }
         }
 
-        var getCourseInfo = function() {
-            $scope.isStudentLoading = true;
-
-            CourseService.getCourseById($scope.courseId).then(function(result) {
-                $scope.currentCourse = result[0];
-            }, function(error) {
-            })
-        }
-
-        var goCourseManage = function() {
-            $state.go(STATES.COURSEINFO_MANAGE)
-        }
-
-        var goStudentManage = function() {
-            $state.go(STATES.COURSEINFO_STUDENT, {
-                courseId: $scope.courseId
-            })
-        }
-
         /*==========================
             Events
         ==========================*/
@@ -264,16 +245,9 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
             Members
         ==========================*/
 
-        $scope.isCertificationLoading = false;
-        $scope.courseId = $stateParams.courseId;
-        $scope.currentCourse;
-
         /*==========================
              Methods
         ==========================*/
-
-        $scope.goCourseManage = goCourseManage;
-        $scope.goStudentManage = goStudentManage;
 
         /*==========================
              init
@@ -289,7 +263,7 @@ app.controller('StudentSendmailController', ['$scope', '$state', '$timeout', '$r
 
         CKEDITOR.replace('editor1');
 
-
+        $scope.isCertificationLoading = false;
         $scope.Send = Send;
         $scope.ClickNextButton = ClickNextButton;
         $scope.ClickPreviousButton = ClickPreviousButton;
