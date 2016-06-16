@@ -231,6 +231,9 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
             uploadpreviewBackground.style.display = "none";
             previewBackground.style.display = "none";
             viewBackground.style.display = "none";
+            $scope.isViewing=false;
+    		document.getElementById("viewTempResult_button").value="預覽套用結果";
+            
             var data = new Object();
             data.id_ = "";
             data.owner_ = "";
