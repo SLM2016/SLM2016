@@ -199,11 +199,11 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
             clearFile();
             var previewBackground = document.getElementById("previewBackground");
             document.getElementById("uploadpreviewBackground").style.display = "none";
+            document.getElementById("viewBackground").style.display = "none";
             
             $scope.imgFile = file;
             if ($scope.imgFile != null) {
                 previewBackground.style.display = "none";
-                document.getElementById("viewBackground").style.display = "none";
                 uploadpreviewBackground.style.display = "";
                 document.getElementById("uploadbackground_button").style.visibility="visible";
                 document.getElementById("viewTempResult_button").disabled=true;
