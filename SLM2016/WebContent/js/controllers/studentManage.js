@@ -200,6 +200,8 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
             var previewBackground = document.getElementById("previewBackground");
             document.getElementById("uploadpreviewBackground").style.display = "none";
             document.getElementById("viewBackground").style.display = "none";
+            $scope.isViewing=false;
+    		document.getElementById("viewTempResult_button").value="預覽套用結果";
             
             $scope.imgFile = file;
             if ($scope.imgFile != null) {
