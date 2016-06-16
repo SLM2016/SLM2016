@@ -193,7 +193,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <Background-Change-modal>
             <input class="btn btn-info btn-orange" type="submit" value="瀏覽檔案" id="loadbackground_button" name="file" ngf-select="changeCertificationBackground($file)" accept="image/png, image/jpeg, image/jpg" ng-model="picFile" ngf-max-size="20MB">
-            <input class="btn btn-info btn-orange" type="submit" value="上傳" id="uploadbackground_button" name="uploadbackground_button" ng-click="uploadBackground(picFile)">
+            <input class="btn btn-info btn-orange" type="submit" value="預覽套用結果" id="viewTempResult_button" name="viewTempResult_button" ng-click="viewTempResult()">
+            <input class="btn btn-info btn-orange" type="submit" value="上傳" id="uploadbackground_button" name="uploadbackground_button" ng-click="uploadBackground(picFile)">       
            	<font color="white" style="background-color:#888888;"size="4" face="monospace">&nbsp;※建議證書底圖尺寸:&nbsp;1754*1240 &nbsp;&nbsp;※支援JPG、PNG 格式的圖檔。</font>
             <div id="loadingBackground" style="display:">
                 <spin spin-size="small" class="spin-style"></spin>
@@ -205,6 +206,10 @@
             <div id="uploadpreviewBackground" style="display: ">
                 <br>
                 <img ngf-thumbnail="picFile" height="700" width="1000">
+            </div>
+            <div id="viewBackground" style="display: none">
+                <br>
+                <img id="viewImg" src="#" alt="your image" height="700" width="1000" />
             </div>
              
         </Background-Change-modal>

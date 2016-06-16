@@ -198,12 +198,13 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         var changeCertificationBackground = function(file) {
             clearFile();
             var previewBackground = document.getElementById("previewBackground");
-            var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
-            uploadpreviewBackground.style.display = "none";
+            document.getElementById("uploadpreviewBackground").style.display = "none";
             $scope.imgFile = file;
             if ($scope.imgFile != null) {
                 previewBackground.style.display = "none";
                 uploadpreviewBackground.style.display = "";
+                document.getElementById("uploadbackground_button").style.visibility="visible";
+                document.getElementById("viewTempResult_button").disabled=true;
             } else
                 previewBackground.style.display = "";
         }
@@ -213,14 +214,19 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         }
 
         var getBackgound = function() {
+            $scope.isViewing=false;
             $scope.isInfoOpen = !$scope.isInfoOpen;
             clearFile();
+            document.getElementById("uploadbackground_button").style.visibility ="hidden";
+            document.getElementById("viewTempResult_button").disabled=false;
             var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
             var previewBackground = document.getElementById("previewBackground");
             var loadingBackground = document.getElementById("loadingBackground");
+            var viewBackground = document.getElementById("viewBackground");
             loadingBackground.style.display = "";
             uploadpreviewBackground.style.display = "none";
             previewBackground.style.display = "none";
+            viewBackground.style.display = "none";
             var data = new Object();
             data.id_ = "";
             data.owner_ = "";
@@ -257,6 +263,8 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
                 if (data.status == "true") {
                     window.alert("上傳成功");
                     getBackgound();
+                    document.getElementById("uploadbackground_button").style.visibility="hidden";
+                    document.getElementById("viewTempResult_button").disabled=false;
                 } else {
                     window.alert("上傳失敗");
                     console.log(data.status);
@@ -266,6 +274,48 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
                 console.log(error);
             });
         }
+        
+        var viewTempResult=function(){
+        	if($scope.isViewing)
+        	{
+        		document.getElementById("viewTempResult_button").value="預覽套用結果";
+        		clearFile();
+                document.getElementById("previewBackground").style.display = "";
+                document.getElementById("viewBackground").style.display = "none";
+        	}
+        	else
+        	{
+        		document.getElementById("viewTempResult_button").value="預覽當前底圖";
+        		
+        		clearFile();
+                var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
+                var previewBackground = document.getElementById("previewBackground");
+                var loadingBackground = document.getElementById("loadingBackground");
+                var viewBackground = document.getElementById("viewBackground");
+                loadingBackground.style.display = "";
+                uploadpreviewBackground.style.display = "none";
+                previewBackground.style.display = "none";
+                viewBackground.style.display = "none";
+                
+                
+                var data = new Object();
+                data.id_ = "SC01603-33";
+                data.owner_ = "陳泰迪";
+                data.date_ = "2016 年 4 月 23 日";
+                data.courceDate_ = " 於  2016 年 4 月 16、17、23 日 ";
+                data.courceName_ = "Design Patterns 這樣學就會了：入門實作班";
+                data.courceDuration_ = "全期共十八小時研習期滿，特此證明";
+                
+                $.post("/SLM2016/CertificationServlet", JSON.stringify(data))
+                    .done(function(data) {
+                        loadingBackground.style.display = "none";
+                        document.getElementById("viewImg").setAttribute('src', 'data:image/png;base64,' + data);
+                        var viewBackground = document.getElementById("viewBackground");
+                        viewBackground.style.display = "";
+                    });
+        	}
+    		$scope.isViewing=!$scope.isViewing;
+       }
 
         var openInvoiceModal = function() {
             $rootScope.$broadcast("OPEN_INVOICE_MODAL", {
@@ -346,6 +396,7 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         /*==========================
             Members
         ==========================*/
+        $scope.isViewing=false;
         $scope.isCourseEmpty = false;
         $scope.isStudentLoadError = false;
         $scope.isStudentLoading = false;
@@ -364,6 +415,7 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         /*==========================
              Methods
         ==========================*/
+        $scope.viewTempResult = viewTempResult;
         $scope.uploadBackground = uploadBackground;
         $scope.getBackgound = getBackgound;
         $scope.changeCertificationBackground = changeCertificationBackground;
