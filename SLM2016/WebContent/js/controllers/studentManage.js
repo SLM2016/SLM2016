@@ -199,9 +199,11 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
             clearFile();
             var previewBackground = document.getElementById("previewBackground");
             document.getElementById("uploadpreviewBackground").style.display = "none";
+            
             $scope.imgFile = file;
             if ($scope.imgFile != null) {
                 previewBackground.style.display = "none";
+                document.getElementById("viewBackground").style.display = "none";
                 uploadpreviewBackground.style.display = "";
                 document.getElementById("uploadbackground_button").style.visibility="visible";
                 document.getElementById("viewTempResult_button").disabled=true;
@@ -305,6 +307,7 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
                 data.courceDate_ = " 於  2016 年 4 月 16、17、23 日 ";
                 data.courceName_ = "Design Patterns 這樣學就會了：入門實作班";
                 data.courceDuration_ = "全期共十八小時研習期滿，特此證明";
+                data.courceId_ = $scope.currentCourse.courseId_;
                 
                 $.post("/SLM2016/CertificationServlet", JSON.stringify(data))
                     .done(function(data) {
