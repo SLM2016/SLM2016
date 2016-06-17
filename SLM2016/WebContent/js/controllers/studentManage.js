@@ -268,11 +268,12 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
                 } else {
 
                 }
-            }
-            if (confirm("是否確認上傳!?") == false) {
-                return;
             } else {
+                if (confirm("是否確認上傳!?") == false) {
+                    return;
+                } else {
 
+                }
             }
             var loadingBackground = document.getElementById("loadingBackground");
             loadingBackground.style.display = "";
