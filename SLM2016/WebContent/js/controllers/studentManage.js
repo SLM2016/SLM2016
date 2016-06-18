@@ -202,16 +202,8 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
             if ($scope.imgFile != null) {
                 previewBackground.style.display = "none";
                 uploadpreviewBackground.style.display = "";
-                console.log($scope.imgFile);
-                var img = new Image();
-                img.src = window.URL.createObjectURL(file);
-                setTimeout(function() {
-                    if (img.naturalWidth != 1754 || img.naturalHeight != 1240) {
-                        document.getElementById("warningMessage").style.display = "";
-                    } else {
-                        document.getElementById("warningMessage").style.display = "none";
-                    }
-                }, 300);
+                document.getElementById('statusLabel').innerHTML = '已選擇證書底圖預覽';
+                checkImageSize(file);
                 document.getElementById("uploadbackground_button").style.visibility = "visible";
                 document.getElementById("viewTempResult_button").disabled = true;
             } else
@@ -226,6 +218,7 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
             $scope.isViewing = false;
             $scope.isInfoOpen = !$scope.isInfoOpen;
             clearFile();
+            document.getElementById('statusLabel').innerHTML = '目前證書底圖預覽';
             document.getElementById("warningMessage").style.display = "none";
             document.getElementById("uploadbackground_button").style.visibility = "hidden";
             document.getElementById("viewTempResult_button").disabled = false;
@@ -255,6 +248,18 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
                     var previewBackground = document.getElementById("previewBackground");
                     previewBackground.style.display = "";
                 });
+        }
+
+        function checkImageSize(file) {
+            var img = new Image();
+            img.src = window.URL.createObjectURL(file);
+            setTimeout(function() {
+                if (img.naturalWidth != 1754 || img.naturalHeight != 1240) {
+                    document.getElementById("warningMessage").style.display = "";
+                } else {
+                    document.getElementById("warningMessage").style.display = "none";
+                }
+            }, 300);
         }
 
         var uploadBackground = function() {
@@ -304,12 +309,13 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         var viewTempResult = function() {
             if ($scope.isViewing) {
                 document.getElementById("viewTempResult_button").value = "預覽套用結果";
+                document.getElementById('statusLabel').innerHTML = '目前證書底圖預覽';
                 clearFile();
                 document.getElementById("previewBackground").style.display = "";
                 document.getElementById("viewBackground").style.display = "none";
             } else {
                 document.getElementById("viewTempResult_button").value = "預覽當前底圖";
-
+                document.getElementById('statusLabel').innerHTML = '完整證書預覽';
                 clearFile();
                 var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
                 var previewBackground = document.getElementById("previewBackground");

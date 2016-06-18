@@ -196,22 +196,22 @@
             <input class="btn btn-info btn-orange" type="submit" value="上傳" id="uploadbackground_button" name="uploadbackground_button" ng-click="uploadBackground(picFile)">
             <font color="white" style="background-color:#888888;" size="4" face="monospace">
                 &nbsp;※建議證書底圖尺寸:&nbsp;1754*1240 &nbsp;&nbsp;※支援JPG、PNG 格式的圖檔。
+                <br>
                 <div id="warningMessage" style="display: none">
                     <span style="color: Yellow">選取圖片與建議格式大小不符，可能會不符合預期！</span>
                 </div>
             </font>
+            <br>
+            <br>
+            <label id="statusLabel" style="color: Yellow"></label>
             <div id="loadingBackground" style="display:">
                 <spin spin-size="small" class="spin-style"></spin>
             </div>
             <div id="previewBackground" style="display: none">
                 <br>
-                <label style="color: Yellow">目前證書底圖預覽</label>
-                <br>
                 <img id="blah" src="#" alt="your image" height="700" width="1000" />
             </div>
             <div id="uploadpreviewBackground" style="display: ">
-                <br>
-                <label style="color: Yellow">目前選取證書底圖預覽</label>
                 <br>
                 <img id="selectImagePreview" ngf-thumbnail="picFile" height="700" width="1000">
             </div>
