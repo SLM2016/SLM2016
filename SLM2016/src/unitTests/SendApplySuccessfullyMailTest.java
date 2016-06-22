@@ -23,7 +23,7 @@ public class SendApplySuccessfullyMailTest {
 	@Test
 	public void testSend() {
 		String studentName = "Chelly";
-		String eMailAddress = "t104598007@ntut.org.tw";
+		String eMailAddress = "Alice@clarence.party";
 		String ccAddresses = "";
 		String courseName = "Scrum敏捷方法實作班";
 		String courseHyperLink = "http://teddysoft.tw/courses/scrum/";
