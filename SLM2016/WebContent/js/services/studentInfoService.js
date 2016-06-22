@@ -194,30 +194,33 @@ app.factory("StudentInfoService", [ '$q', '$rootScope', '$http', 'Upload',
         var generateCertificationId = function(courseId)
         {
             var defer = $q.defer();
-
-            $http({
-                url: "/SLM2016/StudentAction",
-                method: "POST",
-                params: {
-                    op: 11,
-                    courseId: courseId
-                }
-            }).success(function(data) {
-            	defer.resolve(data);
-            	if(data.status == "true"){
-            		location.reload(true);
-            		alert("產生成功");}
-            	else if(data.status == "incorrect")
-                    alert("已經有證書編號");
-            	else if(data.status == "noDate")
-            		alert("沒有課程日期，產生失敗");
-            	else 
-            		alert("課程內無學員，產生失敗");
-            }).error(function(data, status, headers, config) {
-                console.error("status : " + status);
-                alert("產生失敗");
-            });
-            return defer.promise;
+            var createCertificationIdConfirm = confirm("是否要產生證書編號?");
+            if(createCertificationIdConfirm){
+	            $http({
+	                url: "/SLM2016/StudentAction",
+	                method: "POST",
+	                params: {
+	                    op: 11,
+	                    courseId: courseId
+	                }
+	            }).success(function(data) {
+	            	defer.resolve(data);
+	            	if(data.status == "true"){
+	            		location.reload(true);
+	            		alert("產生成功");}
+	            	else if(data.status == "incorrect")
+	                    alert("已經有證書編號");
+	            	else if(data.status == "noDate")
+	            		alert("沒有課程日期，產生失敗");
+	            	else 
+	            		alert("課程內無學員，產生失敗");
+	            }).error(function(data, status, headers, config) {
+	                console.error("status : " + status);
+	                alert("產生失敗");
+	            });
+	            return defer.promise;
+            }
+            
         }
         
         var getStudentNumByCourseId = function(courseId) {
