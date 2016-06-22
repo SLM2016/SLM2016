@@ -535,6 +535,7 @@ public class CourseManagerWithDatabase {
 		int topN = 5;
 
 		while (data.next()) {
+			String id = data.getString("id");
 			String fk = data.getString("fk_course_id");
 			if (!courseIdList.contains(fk)) {
 				courseIdList.add(fk);
@@ -564,6 +565,7 @@ public class CourseManagerWithDatabase {
 						break;
 					}
 				}
+				getCourseFromDate(course, id);
 				courseList.add(course);
 				studentNumberData.close();
 			}
@@ -574,6 +576,7 @@ public class CourseManagerWithDatabase {
 				break;
 			}
 		}
+		
 		Gson gson = new Gson();
 		return gson.toJson(topNCourseIdList);
 	}
