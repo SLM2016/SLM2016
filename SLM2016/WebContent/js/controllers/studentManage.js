@@ -10,18 +10,18 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
                 }
                 console.log(result)
                 $scope.studentList = result;
-                if($scope.studentList.length > 0 )
-                	$scope.isStudentListEmpty = false;
+                if ($scope.studentList.length > 0)
+                    $scope.isStudentListEmpty = false;
             }, function(error) {
                 $scope.isStudentLoading = false;
                 $scope.isStudentLoadError = true;
             })
         }
-        
+
         var getStudentNumByCourseId = function() {
 
             StudentInfoService.getStudentNumByCourseId($scope.courseId).then(function(result) {
-            	$scope.studentNum = parseInt(result[0].student_num);
+                $scope.studentNum = parseInt(result[0].student_num);
             }, function(error) {
                 $scope.isStudentLoading = false;
                 $scope.isStudentLoadError = true;
@@ -107,31 +107,26 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
                 $scope.lastSelectIndex = index;
             }
 
-            
+
         }
 
-        var deleteStudent = function()
-        {
+        var deleteStudent = function() {
             var selectedStudents = getSelectedStudent();
             console.log(selectedStudents);
-            var studentIds = "",studentName = "";
-            for(var i=0; i<selectedStudents.length; i++)
-            {
-                if(i == selectedStudents.length -1)
-                {
+            var studentIds = "",
+                studentName = "";
+            for (var i = 0; i < selectedStudents.length; i++) {
+                if (i == selectedStudents.length - 1) {
                     studentIds += "'" + selectedStudents[i].id + "'";
                     studentName += selectedStudents[i].name;
-                }
-                else
-                {
+                } else {
                     studentIds += "'" + selectedStudents[i].id + "',";
                     studentName += selectedStudents[i].name + "、";
                 }
             }
             console.log(studentIds);
-            var ans = confirm('確定刪除 '+ studentName +'?');
-            if(ans)
-            {
+            var ans = confirm('確定刪除 ' + studentName + '?');
+            if (ans) {
                 StudentInfoService.deleteSelectStudent(studentIds).then(function(result) {
                     getCourseInfo();
                     alert("學員刪除成功");
@@ -198,12 +193,19 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         var changeCertificationBackground = function(file) {
             clearFile();
             var previewBackground = document.getElementById("previewBackground");
-            var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
-            uploadpreviewBackground.style.display = "none";
+            document.getElementById("uploadpreviewBackground").style.display = "none";
+            document.getElementById("viewBackground").style.display = "none";
+            $scope.isViewing = false;
+            document.getElementById("viewTempResult_button").value = "預覽套用結果";
+
             $scope.imgFile = file;
             if ($scope.imgFile != null) {
                 previewBackground.style.display = "none";
                 uploadpreviewBackground.style.display = "";
+                document.getElementById('statusLabel').innerHTML = '已選擇證書底圖預覽';
+                checkImageSize(file);
+                document.getElementById("uploadbackground_button").style.visibility = "visible";
+                document.getElementById("viewTempResult_button").disabled = true;
             } else
                 previewBackground.style.display = "";
         }
@@ -213,14 +215,24 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         }
 
         var getBackgound = function() {
+            $scope.isViewing = false;
             $scope.isInfoOpen = !$scope.isInfoOpen;
             clearFile();
+            document.getElementById('statusLabel').innerHTML = '目前證書底圖預覽';
+            document.getElementById("warningMessage").style.display = "none";
+            document.getElementById("uploadbackground_button").style.visibility = "hidden";
+            document.getElementById("viewTempResult_button").disabled = false;
             var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
             var previewBackground = document.getElementById("previewBackground");
             var loadingBackground = document.getElementById("loadingBackground");
+            var viewBackground = document.getElementById("viewBackground");
             loadingBackground.style.display = "";
             uploadpreviewBackground.style.display = "none";
             previewBackground.style.display = "none";
+            viewBackground.style.display = "none";
+            $scope.isViewing = false;
+            document.getElementById("viewTempResult_button").value = "預覽套用結果";
+
             var data = new Object();
             data.id_ = "";
             data.owner_ = "";
@@ -238,10 +250,35 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
                 });
         }
 
+        function checkImageSize(file) {
+            var img = new Image();
+            img.src = window.URL.createObjectURL(file);
+            setTimeout(function() {
+                if (img.naturalWidth != 1754 || img.naturalHeight != 1240) {
+                    document.getElementById("warningMessage").style.display = "";
+                } else {
+                    document.getElementById("warningMessage").style.display = "none";
+                }
+            }, 300);
+        }
+
         var uploadBackground = function() {
             if (!$scope.imgFile) {
                 window.alert("請選取檔案");
                 return;
+            }
+            if (document.getElementById("warningMessage").style.display == "") {
+                if (confirm("圖片大小不符合！！！是否確認上傳!?") == false) {
+                    return;
+                } else {
+
+                }
+            } else {
+                if (confirm("是否確認上傳!?") == false) {
+                    return;
+                } else {
+
+                }
             }
             var loadingBackground = document.getElementById("loadingBackground");
             loadingBackground.style.display = "";
@@ -257,6 +294,8 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
                 if (data.status == "true") {
                     window.alert("上傳成功");
                     getBackgound();
+                    document.getElementById("uploadbackground_button").style.visibility = "hidden";
+                    document.getElementById("viewTempResult_button").disabled = false;
                 } else {
                     window.alert("上傳失敗");
                     console.log(data.status);
@@ -267,6 +306,47 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
             });
         }
 
+        var viewTempResult = function() {
+            if ($scope.isViewing) {
+                document.getElementById("viewTempResult_button").value = "預覽套用結果";
+                document.getElementById('statusLabel').innerHTML = '目前證書底圖預覽';
+                clearFile();
+                document.getElementById("previewBackground").style.display = "";
+                document.getElementById("viewBackground").style.display = "none";
+            } else {
+                document.getElementById("viewTempResult_button").value = "預覽當前底圖";
+                document.getElementById('statusLabel').innerHTML = '完整證書預覽';
+                clearFile();
+                var uploadpreviewBackground = document.getElementById("uploadpreviewBackground");
+                var previewBackground = document.getElementById("previewBackground");
+                var loadingBackground = document.getElementById("loadingBackground");
+                var viewBackground = document.getElementById("viewBackground");
+                loadingBackground.style.display = "";
+                uploadpreviewBackground.style.display = "none";
+                previewBackground.style.display = "none";
+                viewBackground.style.display = "none";
+
+
+                var data = new Object();
+                data.id_ = "SC01603-33";
+                data.owner_ = "陳泰迪";
+                data.date_ = "2016 年 4 月 23 日";
+                data.courceDate_ = " 於  2016 年 4 月 16、17、23 日 ";
+                data.courceName_ = "Design Patterns 這樣學就會了：入門實作班";
+                data.courceDuration_ = "全期共十八小時研習期滿，特此證明";
+                data.courceId_ = $scope.currentCourse.courseId_;
+
+                $.post("/SLM2016/CertificationServlet", JSON.stringify(data))
+                    .done(function(data) {
+                        loadingBackground.style.display = "none";
+                        document.getElementById("viewImg").setAttribute('src', 'data:image/png;base64,' + data);
+                        var viewBackground = document.getElementById("viewBackground");
+                        viewBackground.style.display = "";
+                    });
+            }
+            $scope.isViewing = !$scope.isViewing;
+        }
+
         var openInvoiceModal = function() {
             $rootScope.$broadcast("OPEN_INVOICE_MODAL", {
                 list: getSelectedStudent(),
@@ -275,29 +355,28 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         }
 
         var fileChanged = function(files) {
-            if($scope.isUploading) {
+            if ($scope.isUploading) {
                 return;
             }
-            if(!files) {
+            if (!files) {
                 return;
             }
             $scope.isUploading = true;
             var uploadConfirm = confirm("是否要上傳\"" + files.name + "\"?")
             console.log(files);
-            if(uploadConfirm) {
+            if (uploadConfirm) {
                 StudentInfoService.uploadStudentFile(files, $scope.currentCourse.courseId_).then(function(result) {
                     StudentInfoService.saveStudentFile(files, $scope.currentCourse.courseId_).then(function(result) {
                         $scope.isUploading = false;
-                        if(result.status) {
+                        if (result.status) {
                             alert("上傳成功！");
                             getStudentList();
                             getStudentNumByCourseId();
-                        }
-                        else {
+                        } else {
                             alert('上傳失敗，請稍後再試')
                         }
                     });
-                },function(error) {
+                }, function(error) {
                     $scope.isUploading = false;
                     alert('上傳失敗，請稍後再試')
                 });
@@ -326,8 +405,8 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
 
         var gotoCourseUrl = function() {
             var url = $scope.currentCourse.hyperlink_;
-            
-            if(!url.includes("http")) {
+
+            if (!url.includes("http")) {
                 url = "https://" + url
             }
             // $window.location.href = url;
@@ -346,6 +425,7 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         /*==========================
             Members
         ==========================*/
+        $scope.isViewing = false;
         $scope.isCourseEmpty = false;
         $scope.isStudentLoadError = false;
         $scope.isStudentLoading = false;
@@ -364,6 +444,7 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         /*==========================
              Methods
         ==========================*/
+        $scope.viewTempResult = viewTempResult;
         $scope.uploadBackground = uploadBackground;
         $scope.getBackgound = getBackgound;
         $scope.changeCertificationBackground = changeCertificationBackground;
