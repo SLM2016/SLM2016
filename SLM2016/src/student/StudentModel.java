@@ -153,30 +153,26 @@ public class StudentModel {
 	public void setPhone(String phone) {
 
 		String phoneNumber = "";
+		String phoneTemp = phone.replaceAll("-", "");
 
-		String phonePattern1 = "^09\\d{2}-\\d{3}-\\d{3}";
-		String phonePattern2 = "^09\\d{2}-\\d{6}";
-		String phonePattern3 = "^9\\d{8}";
-
-		Pattern pattern1 = Pattern.compile(phonePattern1);
-		Pattern pattern2 = Pattern.compile(phonePattern2);
-		Pattern pattern3 = Pattern.compile(phonePattern3);
-
-		if (pattern1.matcher(phone).find()) {
-			phoneNumber = phone.substring(0, 4) + "-" + phone.substring(5, 8) + phone.substring(9, 12);
-			// phoneNumber = phone;
-
-		} else if (pattern2.matcher(phone).find()) {
-			phoneNumber = phone;
-			// phoneNumber = phone.substring(0, 4) + "-" + phone.substring(5, 8)
-			// + "-" + phone.substring(8, 11);
-		} else if (pattern3.matcher(phone).find()) {
-//			phoneNumber = "0" + phone.substring(0, 3) + "-" + phone.substring(3, 6) + "-" + phone.substring(6, 9);
-			phoneNumber = "0" + phone.substring(0, 3) + "-" + phone.substring(3, 9) ;
+		if (phoneTemp.charAt(0) != '0') {
+			phoneTemp = "0" + phoneTemp;
 		}
-		// else {
-		// phoneNumber = "0000-000-000";
-		// }
+
+		if (phoneTemp.length() == 9 || phoneTemp.length() == 10) {
+			if (phoneTemp.substring(0, 2).equals("09") && phoneTemp.length() == 10) {
+				phoneNumber = phoneTemp.substring(0, 4) + "-" + phoneTemp.substring(4, 7) + "-"
+						+ phoneTemp.substring(7, 10);
+			} else if (phoneTemp.substring(0, 2).equals("09")) {
+				phoneNumber = phoneTemp;
+			} else {
+				int homeLength = phoneTemp.length();
+				phoneNumber = String.format("(%s)%s-%s", phoneTemp.substring(0, 2),
+						phoneTemp.substring(2, homeLength - 4), phoneTemp.substring(homeLength - 4, homeLength));
+			}
+		} else {
+			phoneNumber = phoneTemp;
+		}
 
 		this.phone = phoneNumber;
 	}
