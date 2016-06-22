@@ -191,11 +191,11 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                 var getStudentData = function()
                 {
                     $scope.isInvoiceNumberEmpty = false;
-                    if($scope.currentStudent.receipt_type.indexOf("三聯式") > -1){
+                    if($scope.currentStudent.receipt_type.indexOf("三聯式") > -1 || $scope.currentStudent.receipt_company_name != "" || $scope.currentStudent.receipt_company_EIN != ""){
                         var number = 0;
                         $scope.invoiceType = "THREE"
                         $scope.isThreeInvoice = true;
-                        $scope.data.receipt_type = $scope.currentStudent.receipt_type;
+                        $scope.data.receipt_type = "公司報帳用（三聯式）";
                         $scope.data.company = $scope.currentStudent.receipt_company_name;
                         $scope.isStudentPaid = getStudentPaid();
                         getStudentReceiptStatus();
