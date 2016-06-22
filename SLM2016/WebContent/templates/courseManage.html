@@ -34,7 +34,7 @@
             <div class="content-wrapper" ng-show="!isCourseLoading">
                 <div class="manage-content" ng-class="{'open-level': topCourseList.isOpen}" ng-show="topCourseList.isShow">
                     <div class="content-title" ng-click="openGroupLevel(topCourseList)">
-                        <span>最新課程</span>
+                        <span>近期課程 TOP5</span>
                         <span class="glyphicon glyphicon-menu-right"></span>
                     </div>
                     <div class="table-content new">
@@ -42,9 +42,8 @@
                             <thead>
                                 <th>課名</th>
                                 <th>梯次</th>
-                                <th>類型</th>
                                 <th>人數</th>
-                                <th>講師</th>
+                                <th>上課日期</th>
                                 <th>狀態</th>
                                 <th>功能</th>
                             </thead>
@@ -52,9 +51,10 @@
                                 <tr ng-repeat="course in topCourseList.courseList track by $index">
                                     <td class="course" ng-click="goStudentManage(course.courseId_)"><a>{{course.courseName_}}</a></td>
                                     <td class="batch">{{course.batch_}}</td>
-                                    <td>{{course.type_}}</td>
                                     <td>{{course.studentNum_}} 人</td>
-                                    <td>{{course.lecturer_}}</td>
+                                    <td class="date">
+                                        <span ng-repeat="d in course.dates_">{{d}}</span>
+                                    </td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -90,9 +90,8 @@
                             <thead>
                                 <!-- <th>課名</th> -->
                                 <th>梯次</th>
-                                <th>類型</th>
                                 <th>人數</th>
-                                <th>講師</th>
+                                <th>上課日期</th>
                                 <th>狀態</th>
                                 <th>功能</th>
                             </thead>
@@ -100,9 +99,10 @@
                                 <tr ng-repeat="course in group.courseList track by $index" ng-show="isCourseShow(course)">
                                     <!-- <td>{{course.courseName_}}</td> -->
                                     <td class="batch" ng-click="goStudentManage(course.courseId_)"><a>{{course.batch_}}</a></td>
-                                    <td>{{course.type_}}</td>
                                     <td>{{course.studentNum_}} 人</td>
-                                    <td>{{course.lecturer_}}</td>
+                                    <td class="date">
+                                        <span ng-repeat="d in course.dates_">{{d}}</span>
+                                    </td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

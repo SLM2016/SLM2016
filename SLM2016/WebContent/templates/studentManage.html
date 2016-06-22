@@ -91,6 +91,13 @@
                                 <label>課程總人數：</label>
                                 <span>{{studentNum}} 人</span>
                             </div>
+                            <div class="form-group">
+                                <label>用餐統計：</label>
+                                <span>
+                                    <b>{{meatNum}}</b> 葷
+                                    <b>{{vageNum}}</b> 素
+                                </span>
+                            </div>
                         </div>
                         <div class="right">
                             <div class="form-group">
@@ -140,10 +147,12 @@
                     <table class="table table-hover">
                         <thead>
                             <th style="text-align: center;width:80px;">序號</th>
-                            <th>學員名稱</th>
-                            <th>公司</th>
+                            <th>名稱</th>
+                            <th>暱稱</th>
                             <th>電話</th>
                             <th>電子郵件</th>
+                            <th>葷 / 素</th>
+                            <th>公司</th>
                             <th>證書編號</th>
                             <th>繳費狀態</th>
                         </thead>
@@ -151,9 +160,11 @@
                             <tr ng-repeat="s in studentList track by $index" ng-class="{'selected': s.isSelected}" ng-click="toggleSelectStudent(s, $index, $event)" ng-show="studentList.length > 0">
                                 <td style="text-align: center;">{{$index + 1}}</td>
                                 <td>{{s.name}}</td>
-                                <td>{{s.company}}</td>
+                                <td>{{s.nickname}}</td>
                                 <td>{{s.phone}}</td>
                                 <td>{{s.email}}</td>
+                                <td>{{s.vege_meat}}</td>
+                                <td>{{s.company}}</td>
                                 <td>{{s.certification_id}}</td>
                                 <td>
                                     <button id="status-label" type="button" class="btn btn-default status-toggle" data-toggle="dropdown">

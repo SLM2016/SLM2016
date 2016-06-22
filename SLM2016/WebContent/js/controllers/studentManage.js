@@ -10,12 +10,24 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
                 }
                 console.log(result)
                 $scope.studentList = result;
+                calStudentMeal();
                 if ($scope.studentList.length > 0)
                     $scope.isStudentListEmpty = false;
             }, function(error) {
                 $scope.isStudentLoading = false;
                 $scope.isStudentLoadError = true;
             })
+        }
+
+        var calStudentMeal = function() {
+            for (var i = 0; i < $scope.studentList.length; i++) {
+                if($scope.studentList[i].vege_meat == "素食") {
+                    $scope.vageNum++;
+                }
+                else {
+                    $scope.meatNum++;
+                }
+            }
         }
 
         var getStudentNumByCourseId = function() {
@@ -440,6 +452,8 @@ app.controller('StudentManageController', ['$q', '$scope', '$state', '$timeout',
         $scope.studentNum = 0;
         $scope.isInfoOpen = false;
         $scope.isUploading = false;
+        $scope.vageNum = 0;
+        $scope.meatNum = 0;
 
         /*==========================
              Methods
