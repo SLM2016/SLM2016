@@ -191,11 +191,11 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                 var getStudentData = function()
                 {
                     $scope.isInvoiceNumberEmpty = false;
-                    if($scope.currentStudent.receipt_type == "公司報帳用（三聯式）" && $scope.currentStudent.receipt_company_EIN != ""){
+                    if($scope.currentStudent.receipt_type.indexOf("三聯式") > -1 || $scope.currentStudent.receipt_company_name != "" || $scope.currentStudent.receipt_company_EIN != ""){
                         var number = 0;
                         $scope.invoiceType = "THREE"
                         $scope.isThreeInvoice = true;
-                        $scope.data.receipt_type = $scope.currentStudent.receipt_type;
+                        $scope.data.receipt_type = "公司報帳用（三聯式）";
                         $scope.data.company = $scope.currentStudent.receipt_company_name;
                         $scope.isStudentPaid = getStudentPaid();
                         getStudentReceiptStatus();
@@ -251,6 +251,8 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                         }
                         $scope.currentStudent = $scope.studentList[i];
                         alert("發票編號儲存成功");
+                        $scope.data.radioStatus = "已開立";
+                        $scope.$apply();
                         console.log($scope.currentStudent);
                         console.log(result);
                     }, function(error) {
@@ -317,6 +319,7 @@ app.directive('invoiceModal', ['$rootScope', 'StudentInfoService',
                         }
                         else {
                             $scope.currentStudent.receipt_company_name = $scope.data.company;
+                            $scope.currentStudent.receipt_company_EIN = $scope.data.companyid;
                             getCompanyNameIdWidget();
                         }
                     }

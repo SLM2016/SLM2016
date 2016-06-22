@@ -4,6 +4,9 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
         var getTopCourse = function() {
             CourseService.getTopCourse().then(function(result) {
                 $scope.topCourseList.courseList = result;
+                for (var i = 0; i < $scope.topCourseList.courseList.length; i++) {
+                    convertCourseDate($scope.topCourseList.courseList[i]);
+                }
             }, function(error) {
             });
         }
@@ -31,10 +34,24 @@ app.controller("CourseManageController", ['$scope', '$state', '$timeout', '$root
                     }
                 }
                 $scope.isCourseLoading = false;
+                for (var i = 0; i < $scope.courseGroupList.length; i++) {
+                    for (var j = 0; j < $scope.courseGroupList[i].courseList.length; j++) {
+                        convertCourseDate($scope.courseGroupList[i].courseList[j]);
+                    }
+                }
                 console.log($scope.courseGroupList)
             }, function(error) {
                 $scope.isCourseLoading = false;
             });
+        }
+
+        var convertCourseDate = function(course) {
+            for (var z = 0; z < course.dates_.length; z++) {
+                var day = moment(course.dates_[z], "MM-DD-YYYY E");
+                var dayString = day.toString();
+                var weekDay = dayString.split(" ")[0].split("")[1];
+                course.dates_[z] = course.dates_[z] +  "(" + weekDay +  ")";
+            }
         }
 
         var isInCourseGroup = function(course) {

@@ -1520,14 +1520,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .studentinfo .inner-wrapper .manage .manage-content .course-content .content-info .left .form-group a, .studentinfo .inner-wrapper .manage .manage-content .course-content .content-info .right .form-group a {
   cursor: pointer;
 }
-/* line 324, ../scss/templates/_studentInfo.scss */
+/* line 316, ../scss/templates/_studentInfo.scss */
+.studentinfo .inner-wrapper .manage .manage-content .course-content .content-info .left .form-group b, .studentinfo .inner-wrapper .manage .manage-content .course-content .content-info .right .form-group b {
+  color: #F14342;
+  font-weight: bold;
+}
+/* line 328, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .student-content table thead tr th {
   height: 50px;
   line-height: 40px;
   padding: 0;
   text-align: left;
 }
-/* line 334, ../scss/templates/_studentInfo.scss */
+/* line 338, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .student-content table tbody tr td {
   position: relative;
   height: 50px;
@@ -1536,11 +1541,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-size: 14px;
   text-align: left;
 }
-/* line 341, ../scss/templates/_studentInfo.scss */
+/* line 345, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .student-content table tbody tr td.empty {
   text-align: center;
 }
-/* line 345, ../scss/templates/_studentInfo.scss */
+/* line 349, ../scss/templates/_studentInfo.scss */
 .studentinfo .inner-wrapper .manage .manage-content .student-content table tbody tr.selected {
   background-color: #D1E1FD;
 }
@@ -1812,68 +1817,63 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .course-info .inner-wrapper .manage .manage-content .table-content.new table tbody tr td {
   position: relative;
   height: 50px;
-  width: 12%;
   line-height: 50px;
   padding: 0;
   font-size: 14px;
   text-align: left;
 }
-/* line 197, ../scss/templates/_course.scss */
+/* line 196, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content.new table tbody tr td:nth-of-type(0n+1) {
   padding-left: 20px;
 }
-/* line 200, ../scss/templates/_course.scss */
+/* line 199, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content.new table tbody tr td.batch {
-  width: 20%;
   color: #333;
   cursor: default;
 }
-/* line 205, ../scss/templates/_course.scss */
+/* line 203, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content.new table tbody tr td.course {
-  width: 20%;
   color: #0F8CF7;
   cursor: pointer;
 }
-/* line 211, ../scss/templates/_course.scss */
+/* line 208, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content.new table tbody tr.selected {
   background-color: #D1E1FD;
 }
-/* line 221, ../scss/templates/_course.scss */
+/* line 218, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content table thead tr th {
   height: 40px;
   line-height: 40px;
   padding: 0;
   text-align: left;
 }
-/* line 226, ../scss/templates/_course.scss */
+/* line 223, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content table thead tr th:nth-of-type(0n+1) {
   padding-left: 20px;
 }
-/* line 234, ../scss/templates/_course.scss */
+/* line 231, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content table tbody tr td {
   position: relative;
   height: 50px;
-  width: 12%;
   line-height: 50px;
   padding: 0;
   font-size: 14px;
   text-align: left;
 }
-/* line 242, ../scss/templates/_course.scss */
+/* line 238, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content table tbody tr td:nth-of-type(0n+1) {
   padding-left: 20px;
 }
-/* line 245, ../scss/templates/_course.scss */
+/* line 241, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content table tbody tr td.batch {
-  width: 40%;
   color: #0F8CF7;
   cursor: pointer;
 }
-/* line 251, ../scss/templates/_course.scss */
+/* line 246, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .manage-content .table-content table tbody tr.selected {
   background-color: #D1E1FD;
 }
-/* line 259, ../scss/templates/_course.scss */
+/* line 254, ../scss/templates/_course.scss */
 .course-info .inner-wrapper .manage .empty-content {
   display: inline-block;
   position: absolute;

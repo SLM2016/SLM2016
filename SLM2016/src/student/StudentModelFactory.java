@@ -186,8 +186,8 @@ public class StudentModelFactory {
 			Cell cell = row.getCell(companyNameAndEINIndex);
 			String companyNameAndEIN = StudentExcelUtility.parseCell(cell);
 
-			if (companyNameAndEIN != "") {
-				String einPattern = "\\d{8}";
+			if (!companyNameAndEIN.equals("")) {
+				String einPattern = "\\d{6,}";
 
 				Pattern pattern = Pattern.compile(einPattern);
 				Matcher matcher = pattern.matcher(companyNameAndEIN);
@@ -196,8 +196,8 @@ public class StudentModelFactory {
 					studentModel.setReceiptCompanyEIN(receiptCompanyEIN);
 
 				}
-				String receiptCompanyName = companyNameAndEIN.replaceAll("\\d{8}", "").replaceAll("[^\\u4e00-\\u9fa5]",
-						"");
+				String receiptCompanyName = companyNameAndEIN.replaceAll(einPattern, "")
+						.replaceAll("[^\\u4e00-\\u9fa5]", "");
 				studentModel.setReceiptCompanyName(receiptCompanyName);
 			}
 		}
