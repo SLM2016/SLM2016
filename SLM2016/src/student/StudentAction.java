@@ -459,6 +459,7 @@ public class StudentAction extends HttpServlet {
 				String month = "";
 				boolean temp = true;
 				int count = 0;
+				int nowCetificationId = 1;
 				try {
 					date = courseManagerWithDatabase.getDateByCourseId(courseId);
 					classCode = courseManagerWithDatabase.getCodeByCourseId(courseId);
@@ -471,13 +472,18 @@ public class StudentAction extends HttpServlet {
 							certificationId = classCode;
 							if (date != "")
 								certificationId = certificationId + year + month;
-							if (i < 10)
-								certificationId = certificationId + "-0" + i;
+							if (nowCetificationId < 10)
+								certificationId = certificationId + "-0" + nowCetificationId;
 							else
-								certificationId = certificationId + "-" + i;
+								certificationId = certificationId + "-" + nowCetificationId;
 							String studentCertificationId = studentDbManager
 									.getStudentCertificationId(studentIds.get(i - 1).intValue());
 							if (!(studentCertificationId.isEmpty())) {
+								String[] temps = studentCertificationId.split("-");
+								String tem = temps[1];
+								int now = Integer.valueOf(tem);
+								if(now > nowCetificationId)
+									nowCetificationId = now+1;
 								continue;
 							} else {
 								temp = studentDbManager.updateStudentCertificationId(studentIds.get(i - 1).intValue(),
@@ -485,6 +491,7 @@ public class StudentAction extends HttpServlet {
 								if (temp == false)
 									System.out.println("studentIds " + i + " is not update correct");
 								count++;
+								nowCetificationId++;
 							}
 						}
 						if (count != 0) {
